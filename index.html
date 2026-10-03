@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guinée Invest Hub</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fa;
+      color: #172033;
+    }
+
+    header {
+      background: #0b1f3a;
+      color: white;
+      padding: 20px;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0b1f3a, #164e63);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    button {
+      border: none;
+      padding: 14px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+    }
+
+    .primary {
+      background: #ffffff;
+      color: #0b1f3a;
+    }
+
+    .secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+
+    .section {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 30px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #667085;
+      line-height: 1.5;
+    }
+
+    footer {
+      background: #0b1f3a;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">🇬🇳 Guinée Invest Hub</div>
+    <div>Investir • Projets • Guinée</div>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Investissez en Guinée</h1>
+
+  <p>
+    Découvrez des projets guinéens et mettez en relation
+    investisseurs et entrepreneurs pour développer des opportunités
+    en Guinée.
+  </p>
+
+  <div class="buttons">
+    <button class="primary" onclick="showMessage()">
+      Découvrir les projets
+    </button>
+
+    <button class="secondary" onclick="showMessage()">
+      Soumettre un projet
+    </button>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Pourquoi Guinée Invest Hub ?</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>💼 Projets guinéens</h3>
+      <p>
+        Découvrez des projets et opportunités d'investissement
+        développés en Guinée.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>🤝 Investisseurs</h3>
+      <p>
+        Facilitez la mise en relation entre investisseurs
+        et porteurs de projets.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>📈 Opportunités</h3>
+      <p>
+        Explorez différents secteurs et identifiez
+        des opportunités économiques.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 Guinée Invest Hub — Tous droits réservés.
+</footer>
+
+<script>
+  function showMessage() {
+    alert("La plateforme Guinée Invest Hub est en cours de développement.");
+  }
+</script>
+
+</body>
+</html>
