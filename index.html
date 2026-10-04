@@ -4,238 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guinée Invest Hub</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f7f5;
-    }
-
-    header {
-      background: #087443;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 430px;
-      margin: 40px auto;
-      padding: 20px;
-    }
-
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.08);
-    }
-
-    h2 {
-      text-align: center;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      margin: 8px 0;
-      box-sizing: border-box;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 10px;
-      border: 0;
-      border-radius: 10px;
-      background: #087443;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    #message {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
-  </style>
 </head>
 
 <body>
 
-<header>
-  <h1>🇬🇳 Guinée Invest Hub</h1>
-</header>
+<h1>🇬🇳 Guinée Invest Hub</h1>
 
-<div class="container">
+<h2>Test du bouton</h2>
 
-  <div class="card" id="authBox">
+<input id="email" type="email" placeholder="Votre e-mail">
 
-    <h2>Créer un compte</h2>
+<button id="testBtn" type="button">
+  TESTER LE BOUTON
+</button>
 
-    <input id="email" type="email" placeholder="Votre adresse e-mail">
-
-    <input id="password" type="password" placeholder="Mot de passe (6 caractères minimum)">
-
-    <button id="signupBtn" type="button">
-      Créer un compte
-    </button>
-
-    <button id="loginBtn" type="button">
-      Se connecter
-    </button>
-
-    <div id="message"></div>
-
-  </div>
-
-  <div class="card" id="userBox" style="display:none;">
-
-    <h2>Bienvenue 👋</h2>
-
-    <p id="userEmail"></p>
-
-    <button id="logoutBtn" type="button">
-      Se déconnecter
-    </button>
-
-  </div>
-
-</div>
+<p id="message"></p>
 
 <script>
-
-const SUPABASE_URL =
-  "https://phwnkvglvebbajixwjau.supabase.co";
-
-const SUPABASE_KEY =
-  
-sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-const emailInput =
-  document.getElementById("email");
-
-const passwordInput =
-  document.getElementById("password");
-
-const signupBtn =
-  document.getElementById("signupBtn");
-
-const loginBtn =
-  document.getElementById("loginBtn");
-
-const logoutBtn =
-  document.getElementById("logoutBtn");
-
-const message =
-  document.getElementById("message");
-
-const authBox =
-  document.getElementById("authBox");
-
-const userBox =
-  document.getElementById("userBox");
-
-const userEmail =
-  document.getElementById("userEmail");
-
-
-function showMessage(text) {
-  message.textContent = text;
-}
-
-
-signupBtn.onclick = async function () {
-
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-
-  if (!email) {
-    showMessage("⚠️ Entre ton adresse e-mail.");
-    return;
-  }
-
-  if (password.length < 6) {
-    showMessage("⚠️ Minimum 6 caractères.");
-    return;
-  }
-
-  showMessage("⏳ Création du compte...");
-
-  const result =
-    await supabaseClient.auth.signUp({
-      email: email,
-      password: password
-    });
-
-  if (result.error) {
-    showMessage("❌ " + result.error.message);
-    return;
-  }
-
-  showMessage("✅ Compte créé avec succès !");
-};
-
-
-loginBtn.onclick = async function () {
-
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-
-  if (!email || !password) {
-    showMessage("⚠️ Remplis les deux champs.");
-    return;
-  }
-
-  showMessage("⏳ Connexion...");
-
-  const result =
-    await supabaseClient.auth.signInWithPassword({
-      email: email,
-      password: password
-    });
-
-  if (result.error) {
-    showMessage("❌ " + result.error.message);
-    return;
-  }
-
-  showUser(result.data.user);
-};
-
-
-function showUser(user) {
-
-  authBox.style.display = "none";
-  userBox.style.display = "block";
-
-  userEmail.textContent =
-    "Connecté avec : " + user.email;
-}
-
-
-logoutBtn.onclick = async function () {
-
-  await supabaseClient.auth.signOut();
-
-  userBox.style.display = "none";
-  authBox.style.display = "block";
-};
-
-
+  document.getElementById("testBtn").onclick = function() {
+    document.getElementById("message").textContent =
+      "✅ JAVASCRIPT FONCTIONNE !";
+  };
 </script>
 
 </body>
 </html>
+      
