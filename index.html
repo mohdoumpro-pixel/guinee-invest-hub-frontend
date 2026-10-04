@@ -3,38 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Guinée Invest Hub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f7f5;
       margin: 0;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #eef8f1, #ffffff);
+      color: #17251c;
+    }
+
+    .header {
+      background: #087f3e;
+      color: white;
+      padding: 18px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      font-size: 14px;
     }
 
     .container {
-      max-width: 500px;
-      margin: 50px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      width: 92%;
+      max-width: 520px;
+      margin: 40px auto;
     }
 
-    h1 {
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.10);
+    }
+
+    h2 {
       text-align: center;
-      color: #087f3e;
+      margin-top: 0;
+    }
+
+    .description {
+      text-align: center;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      font-weight: bold;
     }
 
     input {
       width: 100%;
       padding: 14px;
-      margin: 8px 0;
-      box-sizing: border-box;
-      border: 1px solid #ddd;
+      border: 1px solid #d8d8d8;
       border-radius: 10px;
       font-size: 16px;
     }
@@ -42,181 +79,453 @@
     button {
       width: 100%;
       padding: 15px;
-      margin-top: 10px;
-      border: 0;
+      margin-top: 15px;
+      border: none;
       border-radius: 10px;
       background: #087f3e;
       color: white;
       font-size: 16px;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #333;
+    }
+
+    button.danger {
+      background: #b42318;
+    }
+
+    button:active {
+      transform: scale(.99);
     }
 
     #message {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 18px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    #dashboard {
+      display: none;
+    }
+
+    .welcome {
+      text-align: center;
+      color: #087f3e;
+      font-size: 22px;
       font-weight: bold;
     }
 
-    #userBox {
-      display: none;
+    .feature {
+      padding: 15px;
+      margin-top: 12px;
+      background: #f4f8f5;
+      border-radius: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin: 25px 0;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
-
-  <h1>🇬🇳 Guinée Invest Hub</h1>
-
-  <h2>Créer un compte</h2>
-
-  <input id="email" type="email" placeholder="Votre adresse e-mail">
-
-  <input id="password" type="password" placeholder="Votre mot de passe">
-
-  <button type="button" onclick="creerCompte()">
-    Créer un compte
-  </button>
-
-  <button type="button" onclick="connexion()">
-    Se connecter
-  </button>
-
-  <div id="userBox">
-    <h2>Bienvenue 👋</h2>
-    <p id="userEmail"></p>
-
-    <button type="button" onclick="deconnexion()">
-      Se déconnecter
-    </button>
+  <div class="header">
+    <h1>🇬🇳 Guinée Invest Hub</h1>
+    <p>Investir en Guinée. Construire l'avenir.</p>
   </div>
 
-  <p id="message"></p>
 
-</div>
+  <div class="container">
 
-<script>
+    <!-- AUTHENTIFICATION -->
 
-window.clientSupabase = window.supabase.createClient(
-  "https://phwnkvglvebbajixwjau.supabase.co",
-  sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
-);
+    <div class="card" id="authCard">
+
+      <h2>Bienvenue 👋</h2>
+
+      <p class="description">
+        Créez votre compte pour découvrir les opportunités
+        d'investissement et les projets guinéens.
+      </p>
 
 
-function creerCompte() {
+      <label for="email">
+        Adresse e-mail
+      </label>
 
-  var email = document.getElementById("email").value.trim();
-  var password = document.getElementById("password").value;
-  var message = document.getElementById("message");
+      <input
+        id="email"
+        type="email"
+        placeholder="exemple@email.com"
+        autocomplete="email"
+      >
 
-  if (!email || !password) {
-    message.textContent = "⚠️ Remplis tous les champs.";
-    return;
-  }
 
-  if (password.length < 6) {
-    message.textContent = "⚠️ Minimum 6 caractères pour le mot de passe.";
-    return;
-  }
+      <label for="password">
+        Mot de passe
+      </label>
 
-  message.textContent = "⏳ Création du compte...";
-setTimeout(function() {
-  message.textContent = "✅ LE CODE CONTINUE À S'EXÉCUTER";
-}, 3000);
-  window.clientSupabase.auth.signUp({
-  email: email,
-  password: password
-})
-.then(function(result) {
-fetch("https://phwnkvglvebbajixwjau.supabase.co/auth/v1/settings")
-  .then(function(response) {
-    message.textContent =
-      "✅ SUPABASE EST ACCESSIBLE : " + response.status;
-  })
-  .catch(function(error) {
-    message.textContent =
-      "❌ SUPABASE INACCESSIBLE";
-  });
-  if (result.error) {
-    message.textContent = "❌ " + result.error.message;
-  } else {
-    message.textContent = "✅ COMPTE CRÉÉ !";
-  }
+      <input
+        id="password"
+        type="password"
+        placeholder="Minimum 6 caractères"
+        autocomplete="current-password"
+      >
 
-})
-.catch(function(error) {
 
-  message.textContent = "❌ " + error.message;
+      <button id="signupButton" type="button">
+        Créer mon compte
+      </button>
 
-});
-console.log("SUPABASE : début inscription");
-    if (result.error) {
-      message.textContent = "❌ " + result.error.message;
-      return;
+
+      <button
+        id="loginButton"
+        type="button"
+        class="secondary"
+      >
+        Se connecter
+      </button>
+
+
+      <p id="message"></p>
+
+    </div>
+
+
+    <!-- TABLEAU DE BORD -->
+
+    <div class="card" id="dashboard">
+
+      <div class="welcome">
+        Bienvenue sur Guinée Invest Hub 🇬🇳
+      </div>
+
+      <p id="connectedEmail"></p>
+
+      <div class="feature">
+        💰 <strong>Investisseurs</strong><br>
+        Découvrez des projets guinéens.
+      </div>
+
+      <div class="feature">
+        🚀 <strong>Porteurs de projets</strong><br>
+        Présentez votre projet aux investisseurs.
+      </div>
+
+      <div class="feature">
+        🤝 <strong>Opportunités</strong><br>
+        Connectez-vous avec des partenaires.
+      </div>
+
+      <button id="logoutButton" class="danger" type="button">
+        Se déconnecter
+      </button>
+
+    </div>
+
+    <div class="footer">
+      © 2026 Guinée Invest Hub
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /*
+      =========================================
+      CONFIGURATION SUPABASE
+      =========================================
+    */
+
+    const SUPABASE_URL =
+      "https://phwnkvglvebbajixwjau.supabase.co";
+
+    const SUPABASE_KEY =
+      sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+
+
+    /*
+      =========================================
+      CLIENT SUPABASE
+      =========================================
+    */
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    /*
+      =========================================
+      ELEMENTS
+      =========================================
+    */
+
+    const emailInput =
+      document.getElementById("email");
+
+    const passwordInput =
+      document.getElementById("password");
+
+    const signupButton =
+      document.getElementById("signupButton");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const logoutButton =
+      document.getElementById("logoutButton");
+
+    const message =
+      document.getElementById("message");
+
+    const authCard =
+      document.getElementById("authCard");
+
+    const dashboard =
+      document.getElementById("dashboard");
+
+    const connectedEmail =
+      document.getElementById("connectedEmail");
+
+
+    /*
+      =========================================
+      MESSAGE
+      =========================================
+    */
+
+    function showMessage(text) {
+
+      message.textContent = text;
+
     }
-console.log("SUPABASE : réponse reçue", result);
-    message.textContent = "✅ COMPTE CRÉÉ AVEC SUCCÈS !";
-
-  }).catch(function(error) {
-
-    message.textContent = "❌ " + error.message;
-
-  });
-}
 
 
-function connexion() {
+    /*
+      =========================================
+      AFFICHER UTILISATEUR
+      =========================================
+    */
 
-  var email = document.getElementById("email").value.trim();
-  var password = document.getElementById("password").value;
-  var message = document.getElementById("message");
+    function showDashboard(user) {
 
-  if (!email || !password) {
-    message.textContent = "⚠️ Remplis tous les champs.";
-    return;
-  }
+      if (!user) {
 
-  message.textContent = "⏳ Connexion...";
+        authCard.style.display = "block";
+        dashboard.style.display = "none";
 
-  window.clientSupabase.auth.signInWithPassword({
-    email: email,
-    password: password
-  }).then(function(result) {
+        return;
+      }
 
-    if (result.error) {
-      message.textContent = "❌ " + result.error.message;
-      return;
+      authCard.style.display = "none";
+      dashboard.style.display = "block";
+
+      connectedEmail.textContent =
+        "Connecté avec : " + user.email;
     }
 
-    document.getElementById("userBox").style.display = "block";
-    document.getElementById("userEmail").textContent =
-      "Connecté avec : " + result.data.user.email;
 
-    message.textContent = "✅ Connexion réussie !";
+    /*
+      =========================================
+      CREATION DE COMPTE
+      =========================================
+    */
 
-  }).catch(function(error) {
+    signupButton.addEventListener("click", async function() {
 
-    message.textContent = "❌ " + error.message;
+      const email =
+        emailInput.value.trim();
 
-  });
-}
+      const password =
+        passwordInput.value;
 
 
-function deconnexion() {
+      if (!email || !password) {
 
-  window.clientSupabase.auth.signOut().then(function() {
+        showMessage(
+          "⚠️ Veuillez remplir tous les champs."
+        );
 
-    document.getElementById("userBox").style.display = "none";
+        return;
+      }
 
-    document.getElementById("message").textContent =
-      "✅ Déconnecté.";
 
-  });
+      if (password.length < 6) {
 
-}
+        showMessage(
+          "⚠️ Le mot de passe doit contenir au moins 6 caractères."
+        );
 
-</script>
+        return;
+      }
+
+
+      showMessage(
+        "⏳ Création du compte..."
+      );
+
+
+      const result =
+        await supabaseClient.auth.signUp({
+
+          email: email,
+
+          password: password
+
+        });
+
+
+      if (result.error) {
+
+        showMessage(
+          "❌ " + result.error.message
+        );
+
+        return;
+      }
+
+
+      showMessage(
+        "✅ Votre compte a été créé avec succès !"
+      );
+
+
+      if (result.data.user) {
+
+        setTimeout(function() {
+
+          showDashboard(
+            result.data.user
+          );
+
+        }, 800);
+
+      }
+
+    });
+
+
+    /*
+      =========================================
+      CONNEXION
+      =========================================
+    */
+
+    loginButton.addEventListener("click", async function() {
+
+      const email =
+        emailInput.value.trim();
+
+      const password =
+        passwordInput.value;
+
+
+      if (!email || !password) {
+
+        showMessage(
+          "⚠️ Veuillez remplir tous les champs."
+        );
+
+        return;
+      }
+
+
+      showMessage(
+        "⏳ Connexion..."
+      );
+
+
+      const result =
+        await supabaseClient.auth.signInWithPassword({
+
+          email: email,
+
+          password: password
+
+        });
+
+
+      if (result.error) {
+
+        showMessage(
+          "❌ " + result.error.message
+        );
+
+        return;
+      }
+
+
+      showDashboard(
+        result.data.user
+      );
+
+    });
+
+
+    /*
+      =========================================
+      DECONNEXION
+      =========================================
+    */
+
+    logoutButton.addEventListener("click", async function() {
+
+      await supabaseClient.auth.signOut();
+
+      dashboard.style.display = "none";
+      authCard.style.display = "block";
+
+      emailInput.value = "";
+      passwordInput.value = "";
+
+      showMessage(
+        "✅ Vous êtes déconnecté."
+      );
+
+    });
+
+
+    /*
+      =========================================
+      VERIFICATION SESSION
+      =========================================
+    */
+
+    async function checkSession() {
+
+      const result =
+        await supabaseClient.auth.getSession();
+
+      if (
+        result.data &&
+        result.data.session &&
+        result.data.session.user
+      ) {
+
+        showDashboard(
+          result.data.session.user
+        );
+
+      }
+
+    }
+
+
+    checkSession();
+
+  </script>
 
 </body>
 </html>
