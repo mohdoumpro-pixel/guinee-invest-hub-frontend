@@ -3,115 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Guinée Invest Hub</title>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f7f6;
       margin: 0;
-      padding: 30px;
+      font-family: Arial, sans-serif;
+      background: #f3f7f5;
+      color: #222;
+    }
+
+    header {
+      background: #087443;
+      color: white;
+      padding: 20px;
       text-align: center;
     }
 
-    .box {
-      max-width: 420px;
-      margin: 50px auto;
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .container {
+      max-width: 430px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
       background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
     }
 
     input {
-      width: 90%;
+      width: 100%;
       padding: 14px;
       margin: 8px 0;
       border: 1px solid #ddd;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
     }
 
     button {
-      width: 95%;
+      width: 100%;
       padding: 14px;
-      margin: 8px 0;
+      margin-top: 10px;
       border: none;
-      border-radius: 8px;
-      background: #0b7a4b;
+      border-radius: 10px;
+      background: #087443;
       color: white;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #095f3b;
+    button:active {
+      transform: scale(0.98);
     }
 
     #message {
       margin-top: 15px;
+      text-align: center;
       font-weight: bold;
+      min-height: 24px;
     }
 
-    #userArea {
+    #userBox {
       display: none;
+      text-align: center;
+    }
+
+    .logout {
+      background: #b42318;
+    }
+
+    .small {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-top: 15px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="box">
-
+  <header>
     <h1>🇬🇳 Guinée Invest Hub</h1>
+  </header>
 
-    <h2>Créer un compte / Se connecter</h2>
+  <div class="container">
 
-    <div id="authArea">
+    <!-- CONNEXION / INSCRIPTION -->
+    <div class="card" id="authBox">
+
+      <h2>Créer un compte</h2>
 
       <input
-        type="email"
         id="email"
-        placeholder="Votre adresse email"
+        type="email"
+        placeholder="Votre adresse e-mail"
+        autocomplete="email"
       >
 
       <input
-        type="password"
         id="password"
-        placeholder="Votre mot de passe"
+        type="password"
+        placeholder="Mot de passe (6 caractères minimum)"
+        autocomplete="new-password"
       >
 
-      <button type="button" id="signupBtn">
+      <button id="signupBtn" type="button">
         Créer un compte
       </button>
 
-      <button type="button" id="loginBtn">
+      <button id="loginBtn" type="button">
         Se connecter
       </button>
 
       <div id="message"></div>
 
+      <p class="small">
+        Plateforme guinéenne pour investisseurs et entrepreneurs.
+      </p>
+
     </div>
 
-    <div id="userArea">
+    <!-- UTILISATEUR CONNECTÉ -->
+    <div class="card" id="userBox">
+
       <h2>Bienvenue 👋</h2>
+
       <p id="userEmail"></p>
-      <button type="button" id="logoutBtn">
+
+      <button id="logoutBtn" class="logout" type="button">
         Se déconnecter
       </button>
+
     </div>
 
   </div>
 
   <script>
 
+    // =====================================================
+    // CONFIGURATION SUPABASE
+    // =====================================================
+
     const SUPABASE_URL =
       "https://phwnkvglvebbajixwjau.supabase.co";
 
     const SUPABASE_KEY =
-  sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+      sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+
+
+    // =====================================================
+    // CONNEXION SUPABASE
+    // =====================================================
 
     const supabaseClient =
       window.supabase.createClient(
@@ -119,30 +183,55 @@
         SUPABASE_KEY
       );
 
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const message = document.getElementById("message");
+
+    // =====================================================
+    // ELEMENTS
+    // =====================================================
+
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
 
     const signupBtn = document.getElementById("signupBtn");
     const loginBtn = document.getElementById("loginBtn");
     const logoutBtn = document.getElementById("logoutBtn");
 
+    const message = document.getElementById("message");
+
+    const authBox = document.getElementById("authBox");
+    const userBox = document.getElementById("userBox");
+    const userEmail = document.getElementById("userEmail");
+
+
+    // =====================================================
+    // MESSAGE
+    // =====================================================
+
     function showMessage(text) {
       message.textContent = text;
     }
 
+
+    // =====================================================
+    // CREER UN COMPTE
+    // =====================================================
+
     signupBtn.addEventListener("click", async function () {
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      const userEmailValue = email.value.trim();
+      const userPasswordValue = password.value;
 
-      if (!email || !password) {
-        showMessage("⚠️ Entre ton email et ton mot de passe.");
+      if (!userEmailValue) {
+        showMessage("⚠️ Entre ton adresse e-mail.");
         return;
       }
 
-      if (password.length < 6) {
-        showMessage("⚠️ Le mot de passe doit avoir au moins 6 caractères.");
+      if (!userPasswordValue) {
+        showMessage("⚠️ Entre ton mot de passe.");
+        return;
+      }
+
+      if (userPasswordValue.length < 6) {
+        showMessage("⚠️ Le mot de passe doit contenir au moins 6 caractères.");
         return;
       }
 
@@ -150,8 +239,8 @@
 
       const { data, error } =
         await supabaseClient.auth.signUp({
-          email: email,
-          password: password
+          email: userEmailValue,
+          password: userPasswordValue
         });
 
       if (error) {
@@ -161,17 +250,25 @@
 
       if (data.user) {
         showMessage("✅ Compte créé avec succès !");
+
+        email.value = "";
+        password.value = "";
       }
 
     });
 
+
+    // =====================================================
+    // SE CONNECTER
+    // =====================================================
+
     loginBtn.addEventListener("click", async function () {
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      const userEmailValue = email.value.trim();
+      const userPasswordValue = password.value;
 
-      if (!email || !password) {
-        showMessage("⚠️ Entre ton email et ton mot de passe.");
+      if (!userEmailValue || !userPasswordValue) {
+        showMessage("⚠️ Entre ton e-mail et ton mot de passe.");
         return;
       }
 
@@ -179,8 +276,8 @@
 
       const { data, error } =
         await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: password
+          email: userEmailValue,
+          password: userPasswordValue
         });
 
       if (error) {
@@ -188,34 +285,60 @@
         return;
       }
 
-      if (data.user) {
-        showMessage("✅ Connexion réussie !");
-        showUser(data.user);
-      }
+      showUser(data.user);
 
     });
 
-    logoutBtn.addEventListener("click", async function () {
 
-      await supabaseClient.auth.signOut();
-
-      document.getElementById("authArea").style.display = "block";
-      document.getElementById("userArea").style.display = "none";
-
-    });
+    // =====================================================
+    // AFFICHER UTILISATEUR
+    // =====================================================
 
     function showUser(user) {
 
-      document.getElementById("authArea").style.display = "none";
-      document.getElementById("userArea").style.display = "block";
-      document.getElementById("userEmail").textContent = user.email;
+      authBox.style.display = "none";
+      userBox.style.display = "block";
+
+      userEmail.textContent =
+        "Connecté avec : " + user.email;
 
     }
 
+
+    // =====================================================
+    // DECONNEXION
+    // =====================================================
+
+    logoutBtn.addEventListener("click", async function () {
+
+      const { error } =
+        await supabaseClient.auth.signOut();
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      userBox.style.display = "none";
+      authBox.style.display = "block";
+
+      showMessage("");
+
+    });
+
+
+    // =====================================================
+    // VERIFIER SI DEJA CONNECTE
+    // =====================================================
+
     async function checkUser() {
 
-      const { data } =
+      const { data, error } =
         await supabaseClient.auth.getUser();
+
+      if (error) {
+        return;
+      }
 
       if (data.user) {
         showUser(data.user);
