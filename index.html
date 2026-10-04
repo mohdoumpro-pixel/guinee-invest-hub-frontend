@@ -4,29 +4,60 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guinée Invest Hub</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
 
 <h1>🇬🇳 Guinée Invest Hub</h1>
 
-<h2>Test du bouton</h2>
+<h2>Test Supabase</h2>
 
 <input id="email" type="email" placeholder="Votre e-mail">
 
+<input id="password" type="password" placeholder="Mot de passe">
+
 <button id="testBtn" type="button">
-  TESTER LE BOUTON
+  TESTER SUPABASE
 </button>
 
 <p id="message"></p>
 
 <script>
-  document.getElementById("testBtn").onclick = function() {
+
+const SUPABASE_URL =
+  "https://phwnkvglvebbajixwjau.supabase.co";
+
+const SUPABASE_KEY =
+  sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+document.getElementById("testBtn").onclick = async function() {
+
+  document.getElementById("message").textContent =
+    "⏳ Connexion à Supabase...";
+
+  const { data, error } =
+    await supabaseClient.auth.getSession();
+
+  if (error) {
     document.getElementById("message").textContent =
-      "✅ JAVASCRIPT FONCTIONNE !";
-  };
+      "❌ Erreur Supabase : " + error.message;
+    return;
+  }
+
+  document.getElementById("message").textContent =
+    "✅ SUPABASE FONCTIONNE !";
+
+};
+
 </script>
 
 </body>
 </html>
-      
