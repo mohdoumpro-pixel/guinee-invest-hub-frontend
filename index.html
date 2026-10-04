@@ -29,10 +29,6 @@
       color: #087f3e;
     }
 
-    h2 {
-      text-align: center;
-    }
-
     input {
       width: 100%;
       padding: 14px;
@@ -45,9 +41,9 @@
 
     button {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       margin-top: 10px;
-      border: none;
+      border: 0;
       border-radius: 10px;
       background: #087f3e;
       color: white;
@@ -75,40 +71,25 @@
 
   <h2>Créer un compte</h2>
 
-  <div id="authBox">
+  <input id="email" type="email" placeholder="Votre adresse e-mail">
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Votre adresse e-mail"
-    >
+  <input id="password" type="password" placeholder="Votre mot de passe">
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Votre mot de passe"
-    >
+  <button type="button" onclick="creerCompte()">
+    Créer un compte
+  </button>
 
-    <button id="signupBtn" type="button">
-      Créer un compte
-    </button>
-
-    <button id="loginBtn" type="button">
-      Se connecter
-    </button>
-
-  </div>
+  <button type="button" onclick="connexion()">
+    Se connecter
+  </button>
 
   <div id="userBox">
-
     <h2>Bienvenue 👋</h2>
-
     <p id="userEmail"></p>
 
-    <button id="logoutBtn" type="button">
+    <button type="button" onclick="deconnexion()">
       Se déconnecter
     </button>
-
   </div>
 
   <p id="message"></p>
@@ -117,152 +98,99 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function() {
-
-  const SUPABASE_URL =
-    "https://phwnkvglvebbajixwjau.supabase.co";
-
-  const SUPABASE_KEY =
-    sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
-
-  const client =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+window.clientSupabase = window.supabase.createClient(
+  "https://phwnkvglvebbajixwjau.supabase.co",
+  sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+);
 
 
-  const signupBtn =
-    document.getElementById("signupBtn");
+function creerCompte() {
 
-  const loginBtn =
-    document.getElementById("loginBtn");
+  var email = document.getElementById("email").value.trim();
+  var password = document.getElementById("password").value;
+  var message = document.getElementById("message");
 
-  const logoutBtn =
-    document.getElementById("logoutBtn");
-
-  const email =
-    document.getElementById("email");
-
-  const password =
-    document.getElementById("password");
-
-  const message =
-    document.getElementById("message");
-
-  const authBox =
-    document.getElementById("authBox");
-
-  const userBox =
-    document.getElementById("userBox");
-
-  const userEmail =
-    document.getElementById("userEmail");
-
-
-  function msg(text) {
-    message.textContent = text;
+  if (!email || !password) {
+    message.textContent = "⚠️ Remplis tous les champs.";
+    return;
   }
 
+  if (password.length < 6) {
+    message.textContent = "⚠️ Minimum 6 caractères pour le mot de passe.";
+    return;
+  }
 
-  signupBtn.onclick = async function() {
+  message.textContent = "⏳ Création du compte...";
 
-    const e = email.value.trim();
-    const p = password.value;
+  window.clientSupabase.auth.signUp({
+    email: email,
+    password: password
+  }).then(function(result) {
 
-    if (!e || !p) {
-      msg("⚠️ Remplis tous les champs.");
+    if (result.error) {
+      message.textContent = "❌ " + result.error.message;
       return;
     }
 
-    if (p.length < 6) {
-      msg("⚠️ Le mot de passe doit avoir au moins 6 caractères.");
+    message.textContent = "✅ COMPTE CRÉÉ AVEC SUCCÈS !";
+
+  }).catch(function(error) {
+
+    message.textContent = "❌ " + error.message;
+
+  });
+}
+
+
+function connexion() {
+
+  var email = document.getElementById("email").value.trim();
+  var password = document.getElementById("password").value;
+  var message = document.getElementById("message");
+
+  if (!email || !password) {
+    message.textContent = "⚠️ Remplis tous les champs.";
+    return;
+  }
+
+  message.textContent = "⏳ Connexion...";
+
+  window.clientSupabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  }).then(function(result) {
+
+    if (result.error) {
+      message.textContent = "❌ " + result.error.message;
       return;
     }
 
-    msg("⏳ Création du compte...");
+    document.getElementById("userBox").style.display = "block";
+    document.getElementById("userEmail").textContent =
+      "Connecté avec : " + result.data.user.email;
 
-    try {
+    message.textContent = "✅ Connexion réussie !";
 
-      const result = await client.auth.signUp({
-        email: e,
-        password: p
-      });
+  }).catch(function(error) {
 
-      if (result.error) {
-        msg("❌ " + result.error.message);
-        return;
-      }
+    message.textContent = "❌ " + error.message;
 
-      msg("✅ Compte créé avec succès !");
-
-      email.value = "";
-      password.value = "";
-
-    } catch (err) {
-
-      msg("❌ Erreur : " + err.message);
-
-    }
-
-  };
+  });
+}
 
 
-  loginBtn.onclick = async function() {
+function deconnexion() {
 
-    const e = email.value.trim();
-    const p = password.value;
+  window.clientSupabase.auth.signOut().then(function() {
 
-    if (!e || !p) {
-      msg("⚠️ Remplis tous les champs.");
-      return;
-    }
+    document.getElementById("userBox").style.display = "none";
 
-    msg("⏳ Connexion...");
+    document.getElementById("message").textContent =
+      "✅ Déconnecté.";
 
-    try {
+  });
 
-      const result =
-        await client.auth.signInWithPassword({
-          email: e,
-          password: p
-        });
-
-      if (result.error) {
-        msg("❌ " + result.error.message);
-        return;
-      }
-
-      msg("✅ Connexion réussie !");
-
-      authBox.style.display = "none";
-      userBox.style.display = "block";
-
-      userEmail.textContent =
-        "Connecté avec : " + result.data.user.email;
-
-    } catch (err) {
-
-      msg("❌ Erreur : " + err.message);
-
-    }
-
-  };
-
-
-  logoutBtn.onclick = async function() {
-
-    await client.auth.signOut();
-
-    authBox.style.display = "block";
-    userBox.style.display = "none";
-
-    msg("✅ Vous êtes déconnecté.");
-
-  };
-
-
-});
+}
 
 </script>
 
