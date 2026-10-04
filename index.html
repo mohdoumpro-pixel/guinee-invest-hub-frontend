@@ -126,12 +126,12 @@ function creerCompte() {
     email: email,
     password: password
   }).then(function(result) {
-
+console.log("SUPABASE : début inscription");
     if (result.error) {
       message.textContent = "❌ " + result.error.message;
       return;
     }
-
+console.log("SUPABASE : réponse reçue", result);
     message.textContent = "✅ COMPTE CRÉÉ AVEC SUCCÈS !";
 
   }).catch(function(error) {
