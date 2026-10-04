@@ -3,43 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Guinée Invest Hub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f7f5;
-      color: #17251c;
+      margin: 0;
+      padding: 20px;
     }
 
     .container {
-      width: 90%;
       max-width: 500px;
-      margin: 60px auto;
+      margin: 50px auto;
       background: white;
       padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
     }
 
     h1 {
       text-align: center;
       color: #087f3e;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 30px;
     }
 
     h2 {
@@ -48,8 +35,9 @@
 
     input {
       width: 100%;
-      padding: 15px;
+      padding: 14px;
       margin: 8px 0;
+      box-sizing: border-box;
       border: 1px solid #ddd;
       border-radius: 10px;
       font-size: 16px;
@@ -57,23 +45,14 @@
 
     button {
       width: 100%;
-      padding: 15px;
-      margin-top: 12px;
+      padding: 14px;
+      margin-top: 10px;
       border: none;
       border-radius: 10px;
       background: #087f3e;
       color: white;
       font-size: 16px;
       font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #066832;
-    }
-
-    .secondary {
-      background: #333;
     }
 
     #message {
@@ -90,364 +69,202 @@
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1>🇬🇳 Guinée Invest Hub</h1>
+  <h1>🇬🇳 Guinée Invest Hub</h1>
 
-    <p class="subtitle">
-      La plateforme qui connecte les investisseurs aux projets guinéens.
-    </p>
+  <h2>Créer un compte</h2>
 
-    <!-- CONNEXION / INSCRIPTION -->
+  <div id="authBox">
 
-    <div id="authBox">
+    <input
+      id="email"
+      type="email"
+      placeholder="Votre adresse e-mail"
+    >
 
-      <h2>Créer un compte</h2>
+    <input
+      id="password"
+      type="password"
+      placeholder="Votre mot de passe"
+    >
 
-      <input
-        id="email"
-        type="email"
-        placeholder="Votre adresse e-mail"
-      >
+    <button id="signupBtn" type="button">
+      Créer un compte
+    </button>
 
-      <input
-        id="password"
-        type="password"
-        placeholder="Votre mot de passe"
-      >
-
-      <button
-        id="signupBtn"
-        type="button"
-        onclick="creerCompte()"
-      >
-        Créer un compte
-      </button>
-
-      <button
-        id="loginBtn"
-        type="button"
-        onclick="connecterCompte()"
-        class="secondary"
-      >
-        Se connecter
-      </button>
-
-    </div>
-
-
-    <!-- UTILISATEUR CONNECTÉ -->
-
-    <div id="userBox">
-
-      <h2>Bienvenue 👋</h2>
-
-      <p id="userEmail"></p>
-
-      <button
-        type="button"
-        onclick="deconnecter()"
-        class="secondary"
-      >
-        Se déconnecter
-      </button>
-
-    </div>
-
-
-    <p id="message"></p>
+    <button id="loginBtn" type="button">
+      Se connecter
+    </button>
 
   </div>
 
+  <div id="userBox">
 
-  <script>
+    <h2>Bienvenue 👋</h2>
 
-    // ==============================
-    // SUPABASE
-    // ==============================
+    <p id="userEmail"></p>
 
-    const SUPABASE_URL =
-      "https://phwnkvglvebbajixwjau.supabase.co";
+    <button id="logoutBtn" type="button">
+      Se déconnecter
+    </button>
 
-    const SUPABASE_KEY =
-      sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+  </div>
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
+  <p id="message"></p>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  const SUPABASE_URL =
+    "https://phwnkvglvebbajixwjau.supabase.co";
+
+  const SUPABASE_KEY =
+    sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+
+  const client =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
 
-    // ==============================
-    // MESSAGE
-    // ==============================
+  const signupBtn =
+    document.getElementById("signupBtn");
 
-    function afficherMessage(texte) {
+  const loginBtn =
+    document.getElementById("loginBtn");
 
-      document.getElementById("message").textContent = texte;
+  const logoutBtn =
+    document.getElementById("logoutBtn");
 
+  const email =
+    document.getElementById("email");
+
+  const password =
+    document.getElementById("password");
+
+  const message =
+    document.getElementById("message");
+
+  const authBox =
+    document.getElementById("authBox");
+
+  const userBox =
+    document.getElementById("userBox");
+
+  const userEmail =
+    document.getElementById("userEmail");
+
+
+  function msg(text) {
+    message.textContent = text;
+  }
+
+
+  signupBtn.onclick = async function() {
+
+    const e = email.value.trim();
+    const p = password.value;
+
+    if (!e || !p) {
+      msg("⚠️ Remplis tous les champs.");
+      return;
     }
 
+    if (p.length < 6) {
+      msg("⚠️ Le mot de passe doit avoir au moins 6 caractères.");
+      return;
+    }
 
-    // ==============================
-    // CREER UN COMPTE
-    // ==============================
+    msg("⏳ Création du compte...");
 
-    async function creerCompte() {
+    try {
 
-      const email =
-        document.getElementById("email").value.trim();
+      const result = await client.auth.signUp({
+        email: e,
+        password: p
+      });
 
-      const password =
-        document.getElementById("password").value;
-
-
-      if (!email || !password) {
-
-        afficherMessage(
-          "⚠️ Remplis tous les champs."
-        );
-
+      if (result.error) {
+        msg("❌ " + result.error.message);
         return;
       }
 
+      msg("✅ Compte créé avec succès !");
 
-      if (password.length < 6) {
+      email.value = "";
+      password.value = "";
 
-        afficherMessage(
-          "⚠️ Le mot de passe doit contenir au moins 6 caractères."
-        );
+    } catch (err) {
 
+      msg("❌ Erreur : " + err.message);
+
+    }
+
+  };
+
+
+  loginBtn.onclick = async function() {
+
+    const e = email.value.trim();
+    const p = password.value;
+
+    if (!e || !p) {
+      msg("⚠️ Remplis tous les champs.");
+      return;
+    }
+
+    msg("⏳ Connexion...");
+
+    try {
+
+      const result =
+        await client.auth.signInWithPassword({
+          email: e,
+          password: p
+        });
+
+      if (result.error) {
+        msg("❌ " + result.error.message);
         return;
       }
 
+      msg("✅ Connexion réussie !");
 
-      afficherMessage(
-        "⏳ Création du compte..."
-      );
+      authBox.style.display = "none";
+      userBox.style.display = "block";
 
+      userEmail.textContent =
+        "Connecté avec : " + result.data.user.email;
 
-      try {
+    } catch (err) {
 
-        const result =
-          await supabaseClient.auth.signUp({
-
-            email: email,
-
-            password: password
-
-          });
-
-
-        const data = result.data;
-        const error = result.error;
-
-
-        if (error) {
-
-          afficherMessage(
-            "❌ " + error.message
-          );
-
-          return;
-        }
-
-
-        if (data && data.user) {
-
-          afficherMessage(
-            "✅ Compte créé avec succès !"
-          );
-
-          document.getElementById("email").value = "";
-
-          document.getElementById("password").value = "";
-
-        }
-
-      } catch (error) {
-
-        afficherMessage(
-          "❌ Erreur : " + error.message
-        );
-
-      }
+      msg("❌ Erreur : " + err.message);
 
     }
 
+  };
 
-    // ==============================
-    // CONNEXION
-    // ==============================
 
-    async function connecterCompte() {
+  logoutBtn.onclick = async function() {
 
-      const email =
-        document.getElementById("email").value.trim();
+    await client.auth.signOut();
 
-      const password =
-        document.getElementById("password").value;
+    authBox.style.display = "block";
+    userBox.style.display = "none";
 
+    msg("✅ Vous êtes déconnecté.");
 
-      if (!email || !password) {
+  };
 
-        afficherMessage(
-          "⚠️ Remplis tous les champs."
-        );
 
-        return;
-      }
+});
 
-
-      afficherMessage(
-        "⏳ Connexion..."
-      );
-
-
-      try {
-
-        const result =
-          await supabaseClient.auth.signInWithPassword({
-
-            email: email,
-
-            password: password
-
-          });
-
-
-        const data = result.data;
-        const error = result.error;
-
-
-        if (error) {
-
-          afficherMessage(
-            "❌ " + error.message
-          );
-
-          return;
-        }
-
-
-        afficherMessage(
-          "✅ Connexion réussie !"
-        );
-
-
-        afficherUtilisateur(
-          data.user
-        );
-
-
-      } catch (error) {
-
-        afficherMessage(
-          "❌ Erreur : " + error.message
-        );
-
-      }
-
-    }
-
-
-    // ==============================
-    // AFFICHER UTILISATEUR
-    // ==============================
-
-    function afficherUtilisateur(user) {
-
-      if (!user) {
-
-        document.getElementById("authBox").style.display =
-          "block";
-
-        document.getElementById("userBox").style.display =
-          "none";
-
-        return;
-
-      }
-
-
-      document.getElementById("authBox").style.display =
-        "none";
-
-      document.getElementById("userBox").style.display =
-        "block";
-
-
-      document.getElementById("userEmail").textContent =
-        "Connecté avec : " + user.email;
-
-    }
-
-
-    // ==============================
-    // DECONNEXION
-    // ==============================
-
-    async function deconnecter() {
-
-      await supabaseClient.auth.signOut();
-
-      document.getElementById("authBox").style.display =
-        "block";
-
-      document.getElementById("userBox").style.display =
-        "none";
-
-      afficherMessage(
-        "✅ Vous êtes déconnecté."
-      );
-
-    }
-
-
-    // ==============================
-    // VERIFIER LA SESSION
-    // ==============================
-
-    async function verifierSession() {
-
-      try {
-
-        const result =
-          await supabaseClient.auth.getSession();
-
-
-        if (result.data && result.data.session) {
-
-          afficherUtilisateur(
-            result.data.session.user
-          );
-
-        }
-
-      } catch (error) {
-
-        console.log(error);
-
-      }
-
-    }
-
-
-    verifierSession();
-
-  </script>
+</script>
 
 </body>
 </html>
-      
-      
-
-    
-    
-
-
-
-  
-  
-
