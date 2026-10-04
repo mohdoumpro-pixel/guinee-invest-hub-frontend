@@ -129,7 +129,15 @@ setTimeout(function() {
   password: password
 })
 .then(function(result) {
-
+fetch("https://phwnkvglvebbajixwjau.supabase.co/auth/v1/settings")
+  .then(function(response) {
+    message.textContent =
+      "✅ SUPABASE EST ACCESSIBLE : " + response.status;
+  })
+  .catch(function(error) {
+    message.textContent =
+      "❌ SUPABASE INACCESSIBLE";
+  });
   if (result.error) {
     message.textContent = "❌ " + result.error.message;
   } else {
