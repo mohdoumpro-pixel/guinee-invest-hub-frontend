@@ -3,529 +3,266 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Guinée Invest Hub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #eef8f1, #ffffff);
-      color: #17251c;
-    }
-
-    .header {
-      background: #087f3e;
-      color: white;
-      padding: 18px 20px;
-      text-align: center;
-    }
-
-    .header h1 {
+      background: #f4f7f5;
       margin: 0;
-      font-size: 24px;
+      padding: 30px 15px;
     }
 
-    .header p {
-      margin: 6px 0 0;
-      font-size: 14px;
-    }
-
-    .container {
-      width: 92%;
-      max-width: 520px;
-      margin: 40px auto;
-    }
-
-    .card {
+    .box {
+      max-width: 420px;
+      margin: 50px auto;
       background: white;
-      padding: 28px;
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.10);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.1);
     }
 
-    h2 {
+    h1 {
       text-align: center;
-      margin-top: 0;
+      color: #087443;
     }
 
-    .description {
-      text-align: center;
-      color: #666;
-      line-height: 1.5;
-    }
-
-    label {
-      display: block;
-      margin-top: 16px;
-      margin-bottom: 6px;
-      font-weight: bold;
+    input, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 8px;
+      font-size: 16px;
     }
 
     input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #d8d8d8;
-      border-radius: 10px;
-      font-size: 16px;
+      border: 1px solid #ccc;
     }
 
     button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 15px;
       border: none;
-      border-radius: 10px;
-      background: #087f3e;
+      background: #087443;
       color: white;
-      font-size: 16px;
-      font-weight: bold;
       cursor: pointer;
+      font-weight: bold;
     }
 
-    button.secondary {
-      background: #333;
-    }
-
-    button.danger {
-      background: #b42318;
-    }
-
-    button:active {
-      transform: scale(.99);
+    button:hover {
+      background: #065c35;
     }
 
     #message {
+      margin-top: 15px;
       text-align: center;
-      margin-top: 18px;
       font-weight: bold;
-      line-height: 1.5;
     }
 
     #dashboard {
       display: none;
-    }
-
-    .welcome {
       text-align: center;
-      color: #087f3e;
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .feature {
-      padding: 15px;
-      margin-top: 12px;
-      background: #f4f8f5;
-      border-radius: 12px;
-    }
-
-    .footer {
-      text-align: center;
-      color: #777;
-      font-size: 13px;
-      margin: 25px 0;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="header">
-    <h1>🇬🇳 Guinée Invest Hub</h1>
-    <p>Investir en Guinée. Construire l'avenir.</p>
-  </div>
+<div class="box" id="auth">
+
+  <h1>🇬🇳 Guinée Invest Hub</h1>
+
+  <input
+    id="email"
+    type="email"
+    placeholder="Votre e-mail"
+  >
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Mot de passe"
+  >
+
+  <button id="signup">
+    Créer mon compte
+  </button>
+
+  <button id="login">
+    Se connecter
+  </button>
+
+  <p id="message"></p>
+
+</div>
 
 
-  <div class="container">
+<div class="box" id="dashboard">
 
-    <!-- AUTHENTIFICATION -->
+  <h1>🇬🇳 Bienvenue</h1>
 
-    <div class="card" id="authCard">
+  <p id="userEmail"></p>
 
-      <h2>Bienvenue 👋</h2>
+  <button id="logout">
+    Se déconnecter
+  </button>
 
-      <p class="description">
-        Créez votre compte pour découvrir les opportunités
-        d'investissement et les projets guinéens.
-      </p>
-
-
-      <label for="email">
-        Adresse e-mail
-      </label>
-
-      <input
-        id="email"
-        type="email"
-        placeholder="exemple@email.com"
-        autocomplete="email"
-      >
+</div>
 
 
-      <label for="password">
-        Mot de passe
-      </label>
+<script>
 
-      <input
-        id="password"
-        type="password"
-        placeholder="Minimum 6 caractères"
-        autocomplete="current-password"
-      >
+const SUPABASE_URL =
+  "https://phwnkvglvebbajixwjau.supabase.co";
 
+const SUPABASE_KEY =
+  sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
 
-      <button id="signupButton" type="button">
-        Créer mon compte
-      </button>
+const client =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-      <button
-        id="loginButton"
-        type="button"
-        class="secondary"
-      >
-        Se connecter
-      </button>
+const email =
+  document.getElementById("email");
+
+const password =
+  document.getElementById("password");
+
+const message =
+  document.getElementById("message");
+
+const auth =
+  document.getElementById("auth");
+
+const dashboard =
+  document.getElementById("dashboard");
+
+const userEmail =
+  document.getElementById("userEmail");
 
 
-      <p id="message"></p>
+document.getElementById("signup").onclick =
+async function () {
 
-    </div>
+  message.textContent = "Création du compte...";
 
+  const e = email.value.trim();
+  const p = password.value;
 
-    <!-- TABLEAU DE BORD -->
+  if (!e || !p) {
+    message.textContent =
+      "❌ Remplis les deux champs.";
+    return;
+  }
 
-    <div class="card" id="dashboard">
+  if (p.length < 6) {
+    message.textContent =
+      "❌ Mot de passe : 6 caractères minimum.";
+    return;
+  }
 
-      <div class="welcome">
-        Bienvenue sur Guinée Invest Hub 🇬🇳
-      </div>
+  try {
 
-      <p id="connectedEmail"></p>
+    const result =
+      await client.auth.signUp({
+        email: e,
+        password: p
+      });
 
-      <div class="feature">
-        💰 <strong>Investisseurs</strong><br>
-        Découvrez des projets guinéens.
-      </div>
-
-      <div class="feature">
-        🚀 <strong>Porteurs de projets</strong><br>
-        Présentez votre projet aux investisseurs.
-      </div>
-
-      <div class="feature">
-        🤝 <strong>Opportunités</strong><br>
-        Connectez-vous avec des partenaires.
-      </div>
-
-      <button id="logoutButton" class="danger" type="button">
-        Se déconnecter
-      </button>
-
-    </div>
-
-    <div class="footer">
-      © 2026 Guinée Invest Hub
-    </div>
-
-  </div>
-
-
-  <script>
-
-    /*
-      =========================================
-      CONFIGURATION SUPABASE
-      =========================================
-    */
-
-    const SUPABASE_URL =
-      "https://phwnkvglvebbajixwjau.supabase.co";
-
-    const SUPABASE_KEY =
-      sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
-
-
-    /*
-      =========================================
-      CLIENT SUPABASE
-      =========================================
-    */
-
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
-
-
-    /*
-      =========================================
-      ELEMENTS
-      =========================================
-    */
-
-    const emailInput =
-      document.getElementById("email");
-
-    const passwordInput =
-      document.getElementById("password");
-
-    const signupButton =
-      document.getElementById("signupButton");
-
-    const loginButton =
-      document.getElementById("loginButton");
-
-    const logoutButton =
-      document.getElementById("logoutButton");
-
-    const message =
-      document.getElementById("message");
-
-    const authCard =
-      document.getElementById("authCard");
-
-    const dashboard =
-      document.getElementById("dashboard");
-
-    const connectedEmail =
-      document.getElementById("connectedEmail");
-
-
-    /*
-      =========================================
-      MESSAGE
-      =========================================
-    */
-
-    function showMessage(text) {
-
-      message.textContent = text;
-
+    if (result.error) {
+      message.textContent =
+        "❌ " + result.error.message;
+      return;
     }
 
+    message.textContent =
+      "✅ Compte créé avec succès !";
 
-    /*
-      =========================================
-      AFFICHER UTILISATEUR
-      =========================================
-    */
+  } catch (error) {
 
-    function showDashboard(user) {
+    message.textContent =
+      "❌ " + error.message;
 
-      if (!user) {
+  }
 
-        authCard.style.display = "block";
-        dashboard.style.display = "none";
+};
 
-        return;
-      }
 
-      authCard.style.display = "none";
-      dashboard.style.display = "block";
+document.getElementById("login").onclick =
+async function () {
 
-      connectedEmail.textContent =
-        "Connecté avec : " + user.email;
+  message.textContent =
+    "Connexion...";
+
+  try {
+
+    const result =
+      await client.auth.signInWithPassword({
+        email: email.value.trim(),
+        password: password.value
+      });
+
+    if (result.error) {
+      message.textContent =
+        "❌ " + result.error.message;
+      return;
     }
 
+    afficherDashboard(result.data.user);
 
-    /*
-      =========================================
-      CREATION DE COMPTE
-      =========================================
-    */
+  } catch (error) {
 
-    signupButton.addEventListener("click", async function() {
+    message.textContent =
+      "❌ " + error.message;
 
-      const email =
-        emailInput.value.trim();
+  }
 
-      const password =
-        passwordInput.value;
+};
 
 
-      if (!email || !password) {
+document.getElementById("logout").onclick =
+async function () {
 
-        showMessage(
-          "⚠️ Veuillez remplir tous les champs."
-        );
+  await client.auth.signOut();
 
-        return;
-      }
+  dashboard.style.display = "none";
+  auth.style.display = "block";
 
+};
 
-      if (password.length < 6) {
 
-        showMessage(
-          "⚠️ Le mot de passe doit contenir au moins 6 caractères."
-        );
+function afficherDashboard(user) {
 
-        return;
-      }
+  auth.style.display = "none";
+  dashboard.style.display = "block";
 
+  userEmail.textContent =
+    "Connecté : " + user.email;
 
-      showMessage(
-        "⏳ Création du compte..."
-      );
+}
 
 
-      const result =
-        await supabaseClient.auth.signUp({
+async function verifierConnexion() {
 
-          email: email,
+  const result =
+    await client.auth.getSession();
 
-          password: password
+  if (result.data.session) {
+    afficherDashboard(
+      result.data.session.user
+    );
+  }
 
-        });
+}
 
 
-      if (result.error) {
+verifierConnexion();
 
-        showMessage(
-          "❌ " + result.error.message
-        );
-
-        return;
-      }
-
-
-      showMessage(
-        "✅ Votre compte a été créé avec succès !"
-      );
-
-
-      if (result.data.user) {
-
-        setTimeout(function() {
-
-          showDashboard(
-            result.data.user
-          );
-
-        }, 800);
-
-      }
-
-    });
-
-
-    /*
-      =========================================
-      CONNEXION
-      =========================================
-    */
-
-    loginButton.addEventListener("click", async function() {
-
-      const email =
-        emailInput.value.trim();
-
-      const password =
-        passwordInput.value;
-
-
-      if (!email || !password) {
-
-        showMessage(
-          "⚠️ Veuillez remplir tous les champs."
-        );
-
-        return;
-      }
-
-
-      showMessage(
-        "⏳ Connexion..."
-      );
-
-
-      const result =
-        await supabaseClient.auth.signInWithPassword({
-
-          email: email,
-
-          password: password
-
-        });
-
-
-      if (result.error) {
-
-        showMessage(
-          "❌ " + result.error.message
-        );
-
-        return;
-      }
-
-
-      showDashboard(
-        result.data.user
-      );
-
-    });
-
-
-    /*
-      =========================================
-      DECONNEXION
-      =========================================
-    */
-
-    logoutButton.addEventListener("click", async function() {
-
-      await supabaseClient.auth.signOut();
-
-      dashboard.style.display = "none";
-      authCard.style.display = "block";
-
-      emailInput.value = "";
-      passwordInput.value = "";
-
-      showMessage(
-        "✅ Vous êtes déconnecté."
-      );
-
-    });
-
-
-    /*
-      =========================================
-      VERIFICATION SESSION
-      =========================================
-    */
-
-    async function checkSession() {
-
-      const result =
-        await supabaseClient.auth.getSession();
-
-      if (
-        result.data &&
-        result.data.session &&
-        result.data.session.user
-      ) {
-
-        showDashboard(
-          result.data.session.user
-        );
-
-      }
-
-    }
-
-
-    checkSession();
-
-  </script>
+</script>
 
 </body>
 </html>
