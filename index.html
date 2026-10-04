@@ -121,7 +121,9 @@ function creerCompte() {
   }
 
   message.textContent = "⏳ Création du compte...";
-
+setTimeout(function() {
+  message.textContent = "✅ LE CODE CONTINUE À S'EXÉCUTER";
+}, 3000);
   window.clientSupabase.auth.signUp({
     email: email,
     password: password
