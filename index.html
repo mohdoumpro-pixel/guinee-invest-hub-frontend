@@ -24,7 +24,15 @@
   alert("CLIENT SUPABASE CRÉÉ");
 </script>
 <h2>Test Supabase</h2>
-
+<script>
+  testSupabase.auth.getSession().then(function(result) {
+    if (result.error) {
+      alert("ERREUR AUTH : " + result.error.message);
+    } else {
+      alert("AUTH SUPABASE FONCTIONNE");
+    }
+  });
+</script>
 <input id="email" type="email" placeholder="Votre e-mail">
 
 <input id="password" type="password" placeholder="Mot de passe">
