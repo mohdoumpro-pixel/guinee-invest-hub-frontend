@@ -3,45 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Guinée Invest Hub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<script>
-  alert("SUPABASE EST CHARGÉ");
-</script>
-<body>
-<script>
-  alert(typeof window.supabase);
-</script>
-<h1>🇬🇳 Guinée Invest Hub</h1>
-<script>
-  const testSupabase = window.supabase.createClient(
-    "https://phwnkvglvebbajixwjau.supabase.co",
-    "TA_CLE_PUBLISHABLE"
-  );
 
-  alert("CLIENT SUPABASE CRÉÉ");
-</script>
-<h2>Test Supabase</h2>
-<script>
-  testSupabase.auth.getSession().then(function(result) {
-    if (result.error) {
-      alert("ERREUR AUTH : " + result.error.message);
-    } else {
-      alert("AUTH SUPABASE FONCTIONNE");
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f5;
+      margin: 0;
+      padding: 20px;
+      color: #17251c;
     }
-  });
-</script>
-<input id="email" type="email" placeholder="Votre e-mail">
 
-<input id="password" type="password" placeholder="Mot de passe">
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    }
 
-<button id="testBtn" type="button">
-  TESTER SUPABASE
-</button>
+    h1 {
+      text-align: center;
+      color: #087f3e;
+    }
 
-<p id="message"></p>
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #087f3e;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #066832;
+    }
+
+    #logoutBtn {
+      background: #555;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    #userBox {
+      display: none;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🇬🇳 Guinée Invest Hub</h1>
+
+  <div id="authBox">
+
+    <h2>Créer un compte</h2>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Votre adresse e-mail"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Votre mot de passe"
+    >
+
+    <button id="signupBtn" type="button">
+      Créer un compte
+    </button>
+
+    <button id="loginBtn" type="button">
+      Se connecter
+    </button>
+
+  </div>
+
+  <div id="userBox">
+
+    <h2>Bienvenue 👋</h2>
+
+    <p id="userEmail"></p>
+
+    <button id="logoutBtn" type="button">
+      Se déconnecter
+    </button>
+
+  </div>
+
+  <p id="message"></p>
+
+</div>
 
 <script>
 
@@ -57,24 +141,146 @@ const supabaseClient =
     SUPABASE_KEY
   );
 
-document.getElementById("testBtn").onclick = async function() {
+const emailInput =
+  document.getElementById("email");
 
-  document.getElementById("message").textContent =
-    "⏳ Connexion à Supabase...";
+const passwordInput =
+  document.getElementById("password");
 
-  const { data, error } =
-    await supabaseClient.auth.getSession();
+const signupBtn =
+  document.getElementById("signupBtn");
 
-  if (error) {
-    document.getElementById("message").textContent =
-      "❌ Erreur Supabase : " + error.message;
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+const message =
+  document.getElementById("message");
+
+const authBox =
+  document.getElementById("authBox");
+
+const userBox =
+  document.getElementById("userBox");
+
+const userEmail =
+  document.getElementById("userEmail");
+
+
+function showMessage(text) {
+  message.textContent = text;
+}
+
+
+signupBtn.onclick = async function () {
+
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !password) {
+    showMessage("⚠️ Remplis tous les champs.");
     return;
   }
 
-  document.getElementById("message").textContent =
-    "✅ SUPABASE FONCTIONNE !";
+  if (password.length < 6) {
+    showMessage("⚠️ Le mot de passe doit avoir au moins 6 caractères.");
+    return;
+  }
 
+  showMessage("⏳ Création du compte...");
+
+  const { data, error } =
+    await supabaseClient.auth.signUp({
+      email: email,
+      password: password
+    });
+
+  if (error) {
+    showMessage("❌ " + error.message);
+    return;
+  }
+
+  if (data.user) {
+    showMessage("✅ Compte créé avec succès !");
+
+    emailInput.value = "";
+    passwordInput.value = "";
+
+    setTimeout(function () {
+      updateUser(data.user);
+    }, 500);
+  }
 };
+
+
+loginBtn.onclick = async function () {
+
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !password) {
+    showMessage("⚠️ Remplis tous les champs.");
+    return;
+  }
+
+  showMessage("⏳ Connexion...");
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+  if (error) {
+    showMessage("❌ " + error.message);
+    return;
+  }
+
+  showMessage("✅ Connexion réussie !");
+
+  updateUser(data.user);
+};
+
+
+logoutBtn.onclick = async function () {
+
+  await supabaseClient.auth.signOut();
+
+  authBox.style.display = "block";
+  userBox.style.display = "none";
+
+  showMessage("✅ Vous êtes déconnecté.");
+};
+
+
+function updateUser(user) {
+
+  if (!user) {
+    authBox.style.display = "block";
+    userBox.style.display = "none";
+    return;
+  }
+
+  authBox.style.display = "none";
+  userBox.style.display = "block";
+
+  userEmail.textContent =
+    "Connecté avec : " + user.email;
+}
+
+
+async function checkUser() {
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+  updateUser(data.session?.user);
+}
+
+
+checkUser();
 
 </script>
 
