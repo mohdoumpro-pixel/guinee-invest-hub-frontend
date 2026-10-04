@@ -10,6 +10,10 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -18,42 +22,60 @@
     }
 
     .container {
-      max-width: 420px;
-      margin: 60px auto;
-      padding: 25px;
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 30px 20px;
     }
 
     .card {
       background: white;
       padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 45px;
+      margin-bottom: 5px;
     }
 
     h1 {
       text-align: center;
       color: #087f5b;
-      margin-bottom: 10px;
+      margin: 5px 0 10px;
     }
 
     h2 {
       text-align: center;
+      margin-top: 25px;
+    }
+
+    .description {
+      text-align: center;
+      color: #666;
+      line-height: 1.5;
     }
 
     input {
       width: 100%;
-      box-sizing: border-box;
-      padding: 14px;
-      margin: 8px 0;
+      padding: 15px;
+      margin-top: 10px;
       border: 1px solid #ddd;
       border-radius: 10px;
       font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #087f5b;
     }
 
     button {
       width: 100%;
-      padding: 14px;
-      margin-top: 10px;
+      padding: 15px;
+      margin-top: 12px;
       border: none;
       border-radius: 10px;
       background: #087f5b;
@@ -67,26 +89,43 @@
       opacity: 0.9;
     }
 
+    #login {
+      background: #1864ab;
+    }
+
     #logout {
       background: #c92a2a;
     }
 
     #message {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 18px;
       font-weight: bold;
+      min-height: 24px;
     }
 
     #dashboard {
       display: none;
     }
 
-    .success {
-      text-align: center;
-      padding: 15px;
+    .welcome {
       background: #e6fcf5;
-      border-radius: 10px;
-      margin: 20px 0;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .welcome h2 {
+      color: #087f5b;
+      margin-top: 0;
+    }
+
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      margin-top: 25px;
     }
   </style>
 </head>
@@ -95,13 +134,19 @@
 
   <div class="container">
 
-    <!-- AUTHENTIFICATION -->
+    <!-- ========================= -->
+    <!-- CONNEXION / INSCRIPTION -->
+    <!-- ========================= -->
+
     <div id="auth" class="card">
 
-      <h1>🇬🇳 Guinée Invest Hub</h1>
+      <div class="logo">🇬🇳</div>
 
-      <p style="text-align:center;">
-        La plateforme pour connecter investisseurs et projets guinéens.
+      <h1>Guinée Invest Hub</h1>
+
+      <p class="description">
+        La plateforme qui connecte les investisseurs
+        aux projets guinéens.
       </p>
 
       <h2>Créer un compte</h2>
@@ -130,17 +175,33 @@
 
       <p id="message"></p>
 
+      <div class="footer">
+        Guinée Invest Hub 🇬🇳
+      </div>
+
     </div>
 
 
+    <!-- ========================= -->
     <!-- TABLEAU DE BORD -->
+    <!-- ========================= -->
+
     <div id="dashboard" class="card">
 
-      <h1>🇬🇳 Guinée Invest Hub</h1>
+      <div class="logo">🇬🇳</div>
 
-      <div class="success">
+      <h1>Guinée Invest Hub</h1>
+
+      <div class="welcome">
+
         <h2>✅ Bienvenue !</h2>
+
         <p id="userEmail"></p>
+
+        <p>
+          Votre compte est connecté.
+        </p>
+
       </div>
 
       <button id="logout" type="button">
@@ -152,7 +213,10 @@
   </div>
 
 
-  <!-- CODE JAVASCRIPT -->
+  <!-- ========================= -->
+  <!-- JAVASCRIPT -->
+  <!-- ========================= -->
+
   <script>
 
     const SUPABASE_URL =
@@ -168,7 +232,8 @@
       );
 
 
-    // Éléments de la page
+    // Éléments HTML
+
     const email =
       document.getElementById("email");
 
@@ -197,7 +262,10 @@
       document.getElementById("logout");
 
 
-    // CRÉATION DU COMPTE
+    // =========================
+    // CRÉER UN COMPTE
+    // =========================
+
     signup.onclick = async function () {
 
       message.textContent =
@@ -249,6 +317,9 @@
         message.textContent =
           "✅ Compte créé avec succès !";
 
+        email.value = "";
+        password.value = "";
+
       }
 
       catch (error) {
@@ -261,7 +332,10 @@
     };
 
 
-    // CONNEXION
+    // =========================
+    // SE CONNECTER
+    // =========================
+
     login.onclick = async function () {
 
       message.textContent =
@@ -318,7 +392,10 @@
     };
 
 
-    // DÉCONNEXION
+    // =========================
+    // SE DÉCONNECTER
+    // =========================
+
     logout.onclick = async function () {
 
       await client.auth.signOut();
@@ -329,10 +406,17 @@
       auth.style.display =
         "block";
 
+      email.value = "";
+      password.value = "";
+      message.textContent = "";
+
     };
 
 
-    // AFFICHER LE DASHBOARD
+    // =========================
+    // AFFICHER DASHBOARD
+    // =========================
+
     function afficherDashboard(user) {
 
       auth.style.display =
@@ -347,17 +431,33 @@
     }
 
 
-    // VÉRIFIER SI L'UTILISATEUR EST DÉJÀ CONNECTÉ
+    // =========================
+    // VÉRIFIER LA SESSION
+    // =========================
+
     async function verifierConnexion() {
 
-      const result =
-        await client.auth.getSession();
+      try {
+
+        const result =
+          await client.auth.getSession();
 
 
-      if (result.data.session) {
+        if (result.data.session) {
 
-        afficherDashboard(
-          result.data.session.user
+          afficherDashboard(
+            result.data.session.user
+          );
+
+        }
+
+      }
+
+      catch (error) {
+
+        console.log(
+          "Erreur session :",
+          error.message
         );
 
       }
@@ -365,7 +465,8 @@
     }
 
 
-    // LANCER LA VÉRIFICATION
+    // Vérification au démarrage
+
     verifierConnexion();
 
   </script>
