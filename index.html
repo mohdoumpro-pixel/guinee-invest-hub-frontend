@@ -15,7 +15,14 @@
   alert(typeof window.supabase);
 </script>
 <h1>🇬🇳 Guinée Invest Hub</h1>
+<script>
+  const testSupabase = window.supabase.createClient(
+    "https://phwnkvglvebbajixwjau.supabase.co",
+    "TA_CLE_PUBLISHABLE"
+  );
 
+  alert("CLIENT SUPABASE CRÉÉ");
+</script>
 <h2>Test Supabase</h2>
 
 <input id="email" type="email" placeholder="Votre e-mail">
