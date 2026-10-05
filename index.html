@@ -6,7 +6,6 @@
 
   <title>🇬🇳 Guinée Invest Hub</title>
 
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -22,9 +21,8 @@
     }
 
     .container {
-      width: 100%;
-      max-width: 430px;
-      margin: 0 auto;
+      max-width: 450px;
+      margin: auto;
       padding: 30px 20px;
     }
 
@@ -32,24 +30,21 @@
       background: white;
       padding: 25px;
       border-radius: 18px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
     }
 
     .logo {
       text-align: center;
       font-size: 45px;
-      margin-bottom: 5px;
     }
 
     h1 {
       text-align: center;
       color: #087f5b;
-      margin: 5px 0 10px;
     }
 
     h2 {
       text-align: center;
-      margin-top: 25px;
     }
 
     .description {
@@ -61,15 +56,10 @@
     input {
       width: 100%;
       padding: 15px;
-      margin-top: 10px;
+      margin: 8px 0;
       border: 1px solid #ddd;
       border-radius: 10px;
       font-size: 16px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #087f5b;
     }
 
     button {
@@ -85,10 +75,6 @@
       cursor: pointer;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
-
     #login {
       background: #1864ab;
     }
@@ -97,14 +83,25 @@
       background: #c92a2a;
     }
 
-    #message {
-      text-align: center;
-      margin-top: 18px;
-      font-weight: bold;
-      min-height: 24px;
+    .role-button {
+      background: #f1f3f5;
+      color: #222;
+      border: 2px solid #ddd;
     }
 
-    #dashboard {
+    .role-button:hover {
+      border-color: #087f5b;
+    }
+
+    #message {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 15px;
+      min-height: 25px;
+    }
+
+    #dashboard,
+    #roleChoice {
       display: none;
     }
 
@@ -113,363 +110,517 @@
       padding: 20px;
       border-radius: 12px;
       text-align: center;
-      margin-top: 20px;
+      margin: 20px 0;
     }
 
-    .welcome h2 {
-      color: #087f5b;
-      margin-top: 0;
-    }
-
-    .footer {
+    .role {
       text-align: center;
-      color: #888;
-      font-size: 13px;
-      margin-top: 25px;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <!-- ========================= -->
-    <!-- CONNEXION / INSCRIPTION -->
-    <!-- ========================= -->
+  <!-- AUTHENTIFICATION -->
 
-    <div id="auth" class="card">
+  <div id="auth" class="card">
 
-      <div class="logo">🇬🇳</div>
+    <div class="logo">🇬🇳</div>
 
-      <h1>Guinée Invest Hub</h1>
+    <h1>Guinée Invest Hub</h1>
 
-      <p class="description">
-        La plateforme qui connecte les investisseurs
-        aux projets guinéens.
-      </p>
+    <p class="description">
+      Connectons les investisseurs aux projets guinéens.
+    </p>
 
-      <h2>Créer un compte</h2>
+    <h2>Créer un compte</h2>
 
-      <input
-        id="email"
-        type="email"
-        placeholder="Votre adresse e-mail"
-        autocomplete="email"
-      >
+    <input
+      id="email"
+      type="email"
+      placeholder="Votre adresse e-mail"
+    >
 
-      <input
-        id="password"
-        type="password"
-        placeholder="Votre mot de passe"
-        autocomplete="new-password"
-      >
+    <input
+      id="password"
+      type="password"
+      placeholder="Votre mot de passe"
+    >
 
-      <button id="signup" type="button">
-        Créer mon compte
-      </button>
+    <button id="signup" type="button">
+      Créer mon compte
+    </button>
 
-      <button id="login" type="button">
-        Se connecter
-      </button>
+    <button id="login" type="button">
+      Se connecter
+    </button>
 
-      <p id="message"></p>
-
-      <div class="footer">
-        Guinée Invest Hub 🇬🇳
-      </div>
-
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- TABLEAU DE BORD -->
-    <!-- ========================= -->
-
-    <div id="dashboard" class="card">
-
-      <div class="logo">🇬🇳</div>
-
-      <h1>Guinée Invest Hub</h1>
-
-      <div class="welcome">
-
-        <h2>✅ Bienvenue !</h2>
-
-        <p id="userEmail"></p>
-
-        <p>
-          Votre compte est connecté.
-        </p>
-
-      </div>
-
-      <button id="logout" type="button">
-        Se déconnecter
-      </button>
-
-    </div>
+    <p id="message"></p>
 
   </div>
 
 
-  <!-- ========================= -->
-  <!-- JAVASCRIPT -->
-  <!-- ========================= -->
+  <!-- CHOIX DU PROFIL -->
 
-  <script>
+  <div id="roleChoice" class="card">
 
-    const SUPABASE_URL =
-      "https://phwnkvglvebbajixwjau.supabase.co";
+    <div class="logo">👤</div>
 
-    const SUPABASE_KEY =
-      "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
+    <h1>Votre profil</h1>
 
-    const client =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+    <p class="description">
+      Choisissez votre type de compte.
+    </p>
+
+    <button
+      id="investisseur"
+      class="role-button"
+      type="button">
+      💰 Investisseur
+    </button>
+
+    <button
+      id="porteur"
+      class="role-button"
+      type="button">
+      🚀 Porteur de projet
+    </button>
+
+    <p id="roleMessage"></p>
+
+  </div>
+
+
+  <!-- TABLEAU DE BORD -->
+
+  <div id="dashboard" class="card">
+
+    <div class="logo">🇬🇳</div>
+
+    <h1>Guinée Invest Hub</h1>
+
+    <div class="welcome">
+
+      <h2>✅ Bienvenue !</h2>
+
+      <p id="userEmail"></p>
+
+      <div class="role" id="userRole"></div>
+
+    </div>
+
+    <button id="logout" type="button">
+      Se déconnecter
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  // ==========================
+  // SUPABASE
+  // ==========================
+
+  const SUPABASE_URL =
+    "https://phwnkvglvebbajixwjau.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
+
+  const client =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  // ==========================
+  // ELEMENTS
+  // ==========================
+
+  const email =
+    document.getElementById("email");
+
+  const password =
+    document.getElementById("password");
+
+  const message =
+    document.getElementById("message");
+
+  const auth =
+    document.getElementById("auth");
+
+  const roleChoice =
+    document.getElementById("roleChoice");
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+  const userEmail =
+    document.getElementById("userEmail");
+
+  const userRole =
+    document.getElementById("userRole");
+
+  const roleMessage =
+    document.getElementById("roleMessage");
+
+
+  let currentUser = null;
+
+
+  // ==========================
+  // CREER UN COMPTE
+  // ==========================
+
+  document.getElementById("signup").onclick =
+  async function () {
+
+    message.textContent =
+      "⏳ Création du compte...";
+
+    const e = email.value.trim();
+    const p = password.value;
+
+    if (!e || !p) {
+
+      message.textContent =
+        "❌ Remplis les deux champs.";
+
+      return;
+    }
+
+    if (p.length < 6) {
+
+      message.textContent =
+        "❌ Mot de passe : 6 caractères minimum.";
+
+      return;
+    }
+
+    try {
+
+      const result =
+        await client.auth.signUp({
+          email: e,
+          password: p
+        });
+
+      if (result.error) {
+
+        message.textContent =
+          "❌ " + result.error.message;
+
+        return;
+      }
+
+      if (result.data.user) {
+
+        currentUser =
+          result.data.user;
+
+        message.textContent =
+          "✅ Compte créé !";
+
+        setTimeout(function () {
+
+          afficherChoixRole();
+
+        }, 500);
+
+      }
+
+    } catch (error) {
+
+      message.textContent =
+        "❌ " + error.message;
+
+    }
+
+  };
+
+
+  // ==========================
+  // CONNEXION
+  // ==========================
+
+  document.getElementById("login").onclick =
+  async function () {
+
+    message.textContent =
+      "⏳ Connexion...";
+
+    try {
+
+      const result =
+        await client.auth.signInWithPassword({
+          email: email.value.trim(),
+          password: password.value
+        });
+
+      if (result.error) {
+
+        message.textContent =
+          "❌ " + result.error.message;
+
+        return;
+      }
+
+      currentUser =
+        result.data.user;
+
+      await chargerProfil(currentUser);
+
+    } catch (error) {
+
+      message.textContent =
+        "❌ " + error.message;
+
+    }
+
+  };
+
+
+  // ==========================
+  // AFFICHER CHOIX ROLE
+  // ==========================
+
+  function afficherChoixRole() {
+
+    auth.style.display =
+      "none";
+
+    dashboard.style.display =
+      "none";
+
+    roleChoice.style.display =
+      "block";
+
+  }
+
+
+  // ==========================
+  // CHOISIR INVESTISSEUR
+  // ==========================
+
+  document.getElementById("investisseur").onclick =
+  async function () {
+
+    await enregistrerRole(
+      "investisseur"
+    );
+
+  };
+
+
+  // ==========================
+  // CHOISIR PORTEUR
+  // ==========================
+
+  document.getElementById("porteur").onclick =
+  async function () {
+
+    await enregistrerRole(
+      "porteur_projet"
+    );
+
+  };
+
+
+  // ==========================
+  // ENREGISTRER LE ROLE
+  // ==========================
+
+  async function enregistrerRole(role) {
+
+    roleMessage.textContent =
+      "⏳ Enregistrement...";
+
+    if (!currentUser) {
+
+      roleMessage.textContent =
+        "❌ Utilisateur introuvable.";
+
+      return;
+    }
+
+    try {
+
+      const result =
+        await client
+          .from("profiles")
+          .upsert({
+            id: currentUser.id,
+            role: role
+          });
+
+      if (result.error) {
+
+        roleMessage.textContent =
+          "❌ " + result.error.message;
+
+        return;
+      }
+
+      afficherDashboardAvecRole(
+        currentUser,
+        role
       );
 
+    } catch (error) {
 
-    // Éléments HTML
+      roleMessage.textContent =
+        "❌ " + error.message;
 
-    const email =
-      document.getElementById("email");
+    }
 
-    const password =
-      document.getElementById("password");
-
-    const message =
-      document.getElementById("message");
-
-    const auth =
-      document.getElementById("auth");
-
-    const dashboard =
-      document.getElementById("dashboard");
-
-    const userEmail =
-      document.getElementById("userEmail");
-
-    const signup =
-      document.getElementById("signup");
-
-    const login =
-      document.getElementById("login");
-
-    const logout =
-      document.getElementById("logout");
+  }
 
 
-    // =========================
-    // CRÉER UN COMPTE
-    // =========================
+  // ==========================
+  // CHARGER LE PROFIL
+  // ==========================
 
-    signup.onclick = async function () {
+  async function chargerProfil(user) {
 
-      message.textContent =
-        "⏳ Création du compte...";
+    try {
 
-      const e =
-        email.value.trim();
+      const result =
+        await client
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .maybeSingle();
 
-      const p =
-        password.value;
+      if (
+        result.data &&
+        result.data.role
+      ) {
 
+        afficherDashboardAvecRole(
+          user,
+          result.data.role
+        );
 
-      if (!e || !p) {
+      } else {
 
-        message.textContent =
-          "❌ Remplis les deux champs.";
-
-        return;
-      }
-
-
-      if (p.length < 6) {
-
-        message.textContent =
-          "❌ Le mot de passe doit contenir au moins 6 caractères.";
-
-        return;
-      }
-
-
-      try {
-
-        const result =
-          await client.auth.signUp({
-            email: e,
-            password: p
-          });
-
-
-        if (result.error) {
-
-          message.textContent =
-            "❌ " + result.error.message;
-
-          return;
-        }
-
-
-        message.textContent =
-          "✅ Compte créé avec succès !";
-
-        email.value = "";
-        password.value = "";
+        afficherChoixRole();
 
       }
 
-      catch (error) {
+    } catch (error) {
 
-        message.textContent =
-          "❌ " + error.message;
+      afficherChoixRole();
 
-      }
+    }
 
-    };
-
-
-    // =========================
-    // SE CONNECTER
-    // =========================
-
-    login.onclick = async function () {
-
-      message.textContent =
-        "⏳ Connexion...";
+  }
 
 
-      const e =
-        email.value.trim();
+  // ==========================
+  // DASHBOARD
+  // ==========================
 
-      const p =
-        password.value;
+  function afficherDashboardAvecRole(
+    user,
+    role
+  ) {
+
+    auth.style.display =
+      "none";
+
+    roleChoice.style.display =
+      "none";
+
+    dashboard.style.display =
+      "block";
+
+    userEmail.textContent =
+      "Connecté : " + user.email;
+
+    if (role === "investisseur") {
+
+      userRole.textContent =
+        "💰 Investisseur";
+
+    } else {
+
+      userRole.textContent =
+        "🚀 Porteur de projet";
+
+    }
+
+  }
 
 
-      if (!e || !p) {
+  // ==========================
+  // DECONNEXION
+  // ==========================
 
-        message.textContent =
-          "❌ Remplis les deux champs.";
+  document.getElementById("logout").onclick =
+  async function () {
 
-        return;
-      }
+    await client.auth.signOut();
 
+    currentUser = null;
 
-      try {
+    dashboard.style.display =
+      "none";
 
-        const result =
-          await client.auth.signInWithPassword({
-            email: e,
-            password: p
-          });
+    roleChoice.style.display =
+      "none";
 
+    auth.style.display =
+      "block";
 
-        if (result.error) {
+    email.value = "";
+    password.value = "";
 
-          message.textContent =
-            "❌ " + result.error.message;
-
-          return;
-        }
+  };
 
 
-        afficherDashboard(
-          result.data.user
+  // ==========================
+  // VERIFIER SESSION
+  // ==========================
+
+  async function verifierConnexion() {
+
+    try {
+
+      const result =
+        await client.auth.getSession();
+
+      if (result.data.session) {
+
+        currentUser =
+          result.data.session.user;
+
+        await chargerProfil(
+          currentUser
         );
 
       }
 
-      catch (error) {
+    } catch (error) {
 
-        message.textContent =
-          "❌ " + error.message;
-
-      }
-
-    };
-
-
-    // =========================
-    // SE DÉCONNECTER
-    // =========================
-
-    logout.onclick = async function () {
-
-      await client.auth.signOut();
-
-      dashboard.style.display =
-        "none";
-
-      auth.style.display =
-        "block";
-
-      email.value = "";
-      password.value = "";
-      message.textContent = "";
-
-    };
-
-
-    // =========================
-    // AFFICHER DASHBOARD
-    // =========================
-
-    function afficherDashboard(user) {
-
-      auth.style.display =
-        "none";
-
-      dashboard.style.display =
-        "block";
-
-      userEmail.textContent =
-        "Connecté : " + user.email;
+      console.log(error);
 
     }
 
-
-    // =========================
-    // VÉRIFIER LA SESSION
-    // =========================
-
-    async function verifierConnexion() {
-
-      try {
-
-        const result =
-          await client.auth.getSession();
+  }
 
 
-        if (result.data.session) {
+  verifierConnexion();
 
-          afficherDashboard(
-            result.data.session.user
-          );
-
-        }
-
-      }
-
-      catch (error) {
-
-        console.log(
-          "Erreur session :",
-          error.message
-        );
-
-      }
-
-    }
-
-
-    // Vérification au démarrage
-
-    verifierConnexion();
-
-  </script>
+</script>
 
 </body>
 </html>
