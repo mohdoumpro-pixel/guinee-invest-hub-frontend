@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Guinée Invest Hub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -11,159 +10,175 @@
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f7fb;
       color: #172033;
     }
 
     header {
-      background: #0b6b43;
+      background: linear-gradient(135deg, #0b5d3b, #087f5b);
       color: white;
-      padding: 20px;
+      padding: 28px 20px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 25px;
+      margin: 0 0 8px;
+      font-size: 28px;
     }
 
     header p {
-      margin-top: 7px;
+      margin: 0;
+      opacity: .9;
     }
 
     .container {
-      width: 94%;
-      max-width: 1100px;
+      width: min(1100px, 94%);
       margin: 25px auto;
     }
 
     .card {
       background: white;
-      border-radius: 14px;
-      padding: 20px;
+      border-radius: 16px;
+      padding: 22px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.07);
-    }
-
-    h2 {
-      margin-bottom: 15px;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 9px;
-      margin: 8px 0 12px;
-      font-size: 16px;
-    }
-
-    button {
-      border: none;
-      border-radius: 9px;
-      padding: 12px 16px;
-      cursor: pointer;
-      font-size: 15px;
-      background: #0b6b43;
-      color: white;
-      margin: 4px;
-    }
-
-    .danger {
-      background: #c62828;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .stat {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,.06);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 25px;
-      color: #0b6b43;
-      margin-top: 8px;
-    }
-
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .project {
-      border: 1px solid #e1e6eb;
-      border-radius: 12px;
-      padding: 17px;
-      background: white;
-    }
-
-    .project h3 {
-      margin: 9px 0;
-    }
-
-    .sector {
-      display: inline-block;
-      background: #e8f5ee;
-      color: #0b6b43;
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .amount {
-      font-weight: bold;
-      margin: 12px 0;
-    }
-
-    .message {
-      padding: 13px;
-      border-radius: 9px;
-      margin-bottom: 15px;
-      display: none;
-    }
-
-    .success {
-      display: block;
-      background: #e7f7ed;
-      color: #176b3b;
-    }
-
-    .error {
-      display: block;
-      background: #fdeaea;
-      color: #a52222;
-    }
-
-    .empty {
-      color: #777;
-      padding: 10px 0;
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
     }
 
     .hidden {
       display: none !important;
     }
 
-    @media (max-width: 700px) {
-      .stats,
-      .projects {
+    h2 {
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d7dde5;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 18px;
+      background: #087f5b;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      margin: 5px 0;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .logout {
+      background: #c62828;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .stat {
+      background: #f0f8f5;
+      padding: 18px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      color: #087f5b;
+      margin-top: 5px;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .project {
+      border: 1px solid #e2e7ed;
+      border-radius: 14px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .project h3 {
+      margin-top: 0;
+      color: #087f5b;
+    }
+
+    .sector {
+      display: inline-block;
+      background: #e8f5ef;
+      color: #087f5b;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .amount {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .interest {
+      background: #f59f00;
+      width: 100%;
+    }
+
+    .message {
+      padding: 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+      display: none;
+    }
+
+    .success {
+      display: block;
+      background: #dff5e8;
+      color: #146c43;
+    }
+
+    .error {
+      display: block;
+      background: #fde2e2;
+      color: #a61e1e;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 25px;
+      color: #697386;
+    }
+
+    .interest-project {
+      border-left: 4px solid #087f5b;
+      padding: 15px;
+      margin-bottom: 12px;
+      background: #f7faf9;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .stats {
         grid-template-columns: 1fr;
       }
     }
@@ -174,7 +189,7 @@
 
 <header>
   <h1>🇬🇳 Guinée Invest Hub</h1>
-  <p>Investir dans les projets guinéens</p>
+  <p>Connecter les investisseurs aux projets guinéens</p>
 </header>
 
 <div class="container">
@@ -183,8 +198,7 @@
 
   <!-- CONNEXION -->
   <div id="authCard" class="card">
-
-    <h2>🔐 Connexion</h2>
+    <h2>💰 Espace Investisseur</h2>
 
     <input
       type="email"
@@ -198,253 +212,353 @@
       placeholder="Votre mot de passe"
     >
 
-    <select id="role">
-      <option value="investisseur">Investisseur</option>
-      <option value="porteur">Porteur de projet</option>
-    </select>
-
     <button id="loginBtn">
-      Se connecter
+      🔐 Se connecter
     </button>
 
     <button id="signupBtn">
-      Créer un compte
+      📝 Créer un compte
     </button>
-
   </div>
-
 
   <!-- ESPACE INVESTISSEUR -->
   <div id="investorSpace" class="hidden">
 
     <div class="card">
-
       <h2>💰 Espace Investisseur</h2>
 
       <p id="userEmail"></p>
 
-      <button id="logoutBtn" class="danger">
-        🚪 Déconnexion
+      <button id="logoutBtn" class="logout">
+        🚪 Se déconnecter
       </button>
-
     </div>
-
 
     <!-- STATISTIQUES -->
-    <div class="stats">
-
-      <div class="stat">
-        🚀 Projets disponibles
-        <strong id="projectCount">0</strong>
-      </div>
-
-      <div class="stat">
-        ❤️ Mes intérêts
-        <strong id="interestCount">0</strong>
-      </div>
-
-      <div class="stat">
-        🇬🇳 Marché
-        <strong>Guinée</strong>
-      </div>
-
-    </div>
-
-
-    <!-- RECHERCHE -->
     <div class="card">
+      <h2>📊 Tableau de bord</h2>
 
-      <h2>🔎 Rechercher un projet</h2>
+      <div class="stats">
 
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Nom, secteur..."
-      >
+        <div class="stat">
+          Projets disponibles
+          <strong id="projectCount">0</strong>
+        </div>
 
+        <div class="stat">
+          Mes intérêts
+          <strong id="interestCount">0</strong>
+        </div>
+
+      </div>
     </div>
-
 
     <!-- MES INTÉRÊTS -->
     <div class="card">
-
       <h2>❤️ Mes intérêts</h2>
 
       <div id="myInterests">
-        Chargement...
+        <p class="empty">Chargement...</p>
       </div>
-
     </div>
-
 
     <!-- PROJETS -->
     <div class="card">
-
       <h2>🚀 Projets disponibles</h2>
 
-      <div id="projects">
-        Chargement...
-      </div>
+      <input
+        type="text"
+        id="search"
+        placeholder="🔎 Rechercher un projet..."
+      >
 
+      <div id="projects" class="projects">
+        <p class="empty">Chargement des projets...</p>
+      </div>
     </div>
 
   </div>
 
 </div>
 
-
 <script>
 
-/* =====================================
-   SUPABASE
-===================================== */
+  /* =====================================================
+     SUPABASE
+  ===================================================== */
 
-const SUPABASE_URL =
-  "https://phwnkvglvebbajixwjau.supabase.co";
+  const SUPABASE_URL =
+    "https://phwnkvglvebbajixwjau.supabase.co";
 
-const SUPABASE_KEY =
-  "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
+  /*
+    ⚠️ GARDE TA CLÉ PUBLISHABLE EXISTANTE ICI.
+    NE METS PAS LA SECRET KEY.
+  */
 
-const sb =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  const SUPABASE_KEY =
+    "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
 
-
-/* =====================================
-   VARIABLES
-===================================== */
-
-let currentUser = null;
-
-let projects = [];
-
-
-/* =====================================
-   MESSAGE
-===================================== */
-
-function showMessage(text, type = "success") {
-
-  const box =
-    document.getElementById("message");
-
-  box.textContent = text;
-
-  box.className =
-    "message " + type;
-
-  setTimeout(() => {
-
-    box.className = "message";
-
-  }, 5000);
-}
-
-
-/* =====================================
-   FORMAT ARGENT
-===================================== */
-
-function formatMoney(amount) {
-
-  return new Intl.NumberFormat(
-    "fr-FR"
-  ).format(Number(amount) || 0) + " GNF";
-
-}
-
-
-/* =====================================
-   CHARGER LES PROJETS SUPABASE
-===================================== */
-
-async function loadProjects() {
-
-  const container =
-    document.getElementById("projects");
-
-  container.innerHTML =
-    "<p class='empty'>Chargement des projets...</p>";
-
-
-  const {
-    data,
-    error
-  } = await sb
-    .from("projects")
-    .select(
-      "id,title,description,sector,amount,status"
-    )
-    .eq(
-      "status",
-      "approved"
-    )
-    .order(
-      "title",
-      {
-        ascending: true
-      }
+  const sb =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
     );
 
 
-  if (error) {
+  /* =====================================================
+     VARIABLES
+  ===================================================== */
 
-    console.error(error);
+  let currentUser = null;
+  let projects = [];
+
+
+  /* =====================================================
+     MESSAGE
+  ===================================================== */
+
+  function showMessage(text, type) {
+
+    const box =
+      document.getElementById("message");
+
+    box.textContent = text;
+
+    box.className =
+      "message " + type;
+
+    setTimeout(() => {
+      box.className = "message";
+    }, 5000);
+  }
+
+
+  /* =====================================================
+     FORMAT ARGENT
+  ===================================================== */
+
+  function formatMoney(value) {
+
+    const number =
+      Number(value || 0);
+
+    return number.toLocaleString("fr-FR") + " GNF";
+  }
+
+
+  /* =====================================================
+     CONNEXION
+  ===================================================== */
+
+  async function login() {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    if (!email || !password) {
+
+      showMessage(
+        "Veuillez remplir tous les champs.",
+        "error"
+      );
+
+      return;
+    }
+
+    const { error } =
+      await sb.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if (error) {
+
+      showMessage(
+        error.message,
+        "error"
+      );
+
+      return;
+    }
+
+    showMessage(
+      "✅ Connexion réussie.",
+      "success"
+    );
+  }
+
+
+  /* =====================================================
+     CRÉATION COMPTE
+  ===================================================== */
+
+  async function signup() {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    if (!email || !password) {
+
+      showMessage(
+        "Veuillez remplir tous les champs.",
+        "error"
+      );
+
+      return;
+    }
+
+    const { data, error } =
+      await sb.auth.signUp({
+        email,
+        password
+      });
+
+    if (error) {
+
+      showMessage(
+        error.message,
+        "error"
+      );
+
+      return;
+    }
+
+    if (data.user) {
+
+      await sb
+        .from("profiles")
+        .upsert({
+          id: data.user.id,
+          role: "investor"
+        });
+    }
+
+    showMessage(
+      "✅ Compte créé avec succès.",
+      "success"
+    );
+  }
+
+
+  /* =====================================================
+     CHARGER L'UTILISATEUR
+  ===================================================== */
+
+  async function loadUser() {
+
+    const { data } =
+      await sb.auth.getUser();
+
+    currentUser =
+      data?.user || null;
+
+    const authCard =
+      document.getElementById("authCard");
+
+    const investorSpace =
+      document.getElementById("investorSpace");
+
+    if (!currentUser) {
+
+      authCard.classList.remove("hidden");
+      investorSpace.classList.add("hidden");
+
+      return;
+    }
+
+    authCard.classList.add("hidden");
+    investorSpace.classList.remove("hidden");
+
+    document.getElementById("userEmail").textContent =
+      "Connecté : " + currentUser.email;
+
+    await loadProjects();
+    await loadInterestCount();
+    await loadMyInterests();
+  }
+
+
+  /* =====================================================
+     CHARGER LES PROJETS
+     
+     IMPORTANT :
+     LE FILTRE STATUS = APPROVED A ÉTÉ SUPPRIMÉ.
+  ===================================================== */
+
+  async function loadProjects() {
+
+    const container =
+      document.getElementById("projects");
 
     container.innerHTML =
-      "<p class='empty'>Impossible de charger les projets.</p>";
+      "<p class='empty'>Chargement des projets...</p>";
+
+    const {
+      data,
+      error
+    } = await sb
+      .from("projects")
+      .select(
+        "id,title,description,sector,amount,amount_required,status"
+      )
+      .order(
+        "title",
+        {
+          ascending: true
+        }
+      );
+
+    if (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        "<p class='empty'>Impossible de charger les projets.</p>";
+
+      document.getElementById(
+        "projectCount"
+      ).textContent = "0";
+
+      return;
+    }
+
+    projects =
+      data || [];
 
     document.getElementById(
       "projectCount"
-    ).textContent = "0";
+    ).textContent =
+      projects.length;
 
-    return;
-
+    displayProjects(projects);
   }
 
 
-  projects =
-    data || [];
+  /* =====================================================
+     AFFICHER LES PROJETS
+  ===================================================== */
 
+  function displayProjects(list) {
 
-  document.getElementById(
-    "projectCount"
-  ).textContent =
-    projects.length;
+    const container =
+      document.getElementById("projects");
 
+    if (!list.length) {
 
-  displayProjects(projects);
+      container.innerHTML =
+        "<p class='empty'>Aucun projet disponible pour le moment.</p>";
 
-}
-
-
-/* =====================================
-   AFFICHER LES PROJETS
-===================================== */
-
-function displayProjects(list) {
-
-  const container =
-    document.getElementById("projects");
-
-
-  if (!list || list.length === 0) {
+      return;
+    }
 
     container.innerHTML =
-      "<p class='empty'>Aucun projet approuvé pour le moment.</p>";
-
-    return;
-
-  }
-
-
-  container.innerHTML = `
-
-    <div class="projects">
-
-      ${list.map(project => `
+      list.map(project => `
 
         <div class="project">
 
@@ -461,10 +575,14 @@ function displayProjects(list) {
           </p>
 
           <div class="amount">
-            💰 ${formatMoney(project.amount)}
+            ${formatMoney(
+              project.amount_required ??
+              project.amount
+            )}
           </div>
 
           <button
+            class="interest"
             onclick="registerInterest('${project.id}')"
           >
             ❤️ Je suis intéressé
@@ -472,722 +590,351 @@ function displayProjects(list) {
 
         </div>
 
-      `).join("")}
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================
-   ENREGISTRER UN INTÉRÊT
-===================================== */
-
-async function registerInterest(projectId) {
-
-  if (!currentUser) {
-
-    showMessage(
-      "Vous devez être connecté.",
-      "error"
-    );
-
-    return;
-
+      `).join("");
   }
 
 
-  const project =
-    projects.find(
-      p => p.id === projectId
-    );
+  /* =====================================================
+     ENREGISTRER UN INTÉRÊT
+  ===================================================== */
 
+  async function registerInterest(projectId) {
 
-  if (!project) {
+    if (!currentUser) {
 
-    showMessage(
-      "Projet introuvable.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const {
-    data: existing,
-    error: checkError
-  } = await sb
-    .from("interests")
-    .select("id")
-    .eq(
-      "user_id",
-      currentUser.id
-    )
-    .eq(
-      "project_id",
-      projectId
-    )
-    .maybeSingle();
-
-
-  if (checkError) {
-
-    console.error(checkError);
-
-    showMessage(
-      "Erreur lors de la vérification.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if (existing) {
-
-    showMessage(
-      "Vous êtes déjà intéressé par ce projet.",
-      "success"
-    );
-
-    return;
-
-  }
-
-
-  const {
-    error
-  } = await sb
-    .from("interests")
-    .insert({
-
-      user_id:
-        currentUser.id,
-
-      project_id:
-        projectId
-
-    });
-
-
-  if (error) {
-
-    console.error(error);
-
-    showMessage(
-      "Impossible d'enregistrer votre intérêt.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  showMessage(
-    "✅ Votre intérêt a été enregistré.",
-    "success"
-  );
-
-
-  await loadInterestCount();
-
-  await loadMyInterests();
-
-}
-
-
-/* =====================================
-   COMPTEUR INTÉRÊTS
-===================================== */
-
-async function loadInterestCount() {
-
-  if (!currentUser) {
-
-    document.getElementById(
-      "interestCount"
-    ).textContent = "0";
-
-    return;
-
-  }
-
-
-  const {
-    count,
-    error
-  } = await sb
-    .from("interests")
-    .select(
-      "*",
-      {
-        count: "exact",
-        head: true
-      }
-    )
-    .eq(
-      "user_id",
-      currentUser.id
-    );
-
-
-  if (error) {
-
-    console.error(error);
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "interestCount"
-  ).textContent =
-    count || 0;
-
-}
-
-
-/* =====================================
-   MES INTÉRÊTS
-===================================== */
-
-async function loadMyInterests() {
-
-  const container =
-    document.getElementById(
-      "myInterests"
-    );
-
-
-  if (!container) return;
-
-
-  if (!currentUser) {
-
-    container.innerHTML =
-      "<p class='empty'>Connexion en cours...</p>";
-
-    return;
-
-  }
-
-
-  container.innerHTML =
-    "<p class='empty'>Chargement...</p>";
-
-
-  const {
-    data,
-    error
-  } = await sb
-    .from("interests")
-    .select(
-      "project_id,created_at"
-    )
-    .eq(
-      "user_id",
-      currentUser.id
-    )
-    .order(
-      "created_at",
-      {
-        ascending: false
-      }
-    );
-
-
-  if (error) {
-
-    console.error(error);
-
-    container.innerHTML =
-      "<p class='empty'>Impossible de charger vos intérêts.</p>";
-
-    return;
-
-  }
-
-
-  if (!data || data.length === 0) {
-
-    container.innerHTML =
-      "<p class='empty'>Vous n’avez encore manifesté aucun intérêt.</p>";
-
-    return;
-
-  }
-
-
-  const cards =
-    data.map(item => {
-
-      const project =
-        projects.find(
-          p =>
-            p.id === item.project_id
-        );
-
-
-      if (!project) return "";
-
-
-      return `
-
-        <div class="project">
-
-          <span class="sector">
-            ${project.sector || "Projet"}
-          </span>
-
-          <h3>
-            ${project.title}
-          </h3>
-
-          <p>
-            ${project.description || ""}
-          </p>
-
-          <div class="amount">
-            💰 ${formatMoney(project.amount)}
-          </div>
-
-          <p>
-            ✅ Intérêt enregistré
-          </p>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-
-  if (!cards) {
-
-    container.innerHTML =
-      "<p class='empty'>Les projets associés ne sont plus disponibles.</p>";
-
-    return;
-
-  }
-
-
-  container.innerHTML =
-    `<div class="projects">${cards}</div>`;
-
-}
-
-
-/* =====================================
-   INSCRIPTION
-===================================== */
-
-async function signup() {
-
-  const email =
-    document.getElementById(
-      "email"
-    ).value.trim();
-
-  const password =
-    document.getElementById(
-      "password"
-    ).value;
-
-  const role =
-    document.getElementById(
-      "role"
-    ).value;
-
-
-  if (!email || !password) {
-
-    showMessage(
-      "Veuillez remplir tous les champs.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if (password.length < 6) {
-
-    showMessage(
-      "Le mot de passe doit contenir au moins 6 caractères.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const {
-    data,
-    error
-  } =
-    await sb.auth.signUp({
-
-      email,
-      password
-
-    });
-
-
-  if (error) {
-
-    showMessage(
-      error.message,
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if (!data.user) {
-
-    showMessage(
-      "Compte créé.",
-      "success"
-    );
-
-    return;
-
-  }
-
-
-  const {
-    error: profileError
-  } =
-    await sb
-      .from("profiles")
-      .upsert({
-
-        id:
-          data.user.id,
-
-        role:
-          role
-
-      });
-
-
-  if (profileError) {
-
-    console.error(
-      profileError
-    );
-
-  }
-
-
-  showMessage(
-    "✅ Compte créé avec succès.",
-    "success"
-  );
-
-
-  await loadUser();
-
-}
-
-
-/* =====================================
-   CONNEXION
-===================================== */
-
-async function login() {
-
-  const email =
-    document.getElementById(
-      "email"
-    ).value.trim();
-
-  const password =
-    document.getElementById(
-      "password"
-    ).value;
-
-
-  if (!email || !password) {
-
-    showMessage(
-      "Veuillez remplir tous les champs.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const {
-    data,
-    error
-  } =
-    await sb.auth.signInWithPassword({
-
-      email,
-      password
-
-    });
-
-
-  if (error) {
-
-    showMessage(
-      error.message,
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  currentUser =
-    data.user;
-
-
-  await loadUser();
-
-
-  showMessage(
-    "✅ Connexion réussie.",
-    "success"
-  );
-
-}
-
-
-/* =====================================
-   CHARGER UTILISATEUR
-===================================== */
-
-async function loadUser() {
-
-  const {
-    data
-  } =
-    await sb.auth.getUser();
-
-
-  currentUser =
-    data?.user || null;
-
-
-  const authCard =
-    document.getElementById(
-      "authCard"
-    );
-
-  const investorSpace =
-    document.getElementById(
-      "investorSpace"
-    );
-
-
-  if (!currentUser) {
-
-    authCard.classList.remove(
-      "hidden"
-    );
-
-    investorSpace.classList.add(
-      "hidden"
-    );
-
-    return;
-
-  }
-
-
-  authCard.classList.add(
-    "hidden"
-  );
-
-  investorSpace.classList.remove(
-    "hidden"
-  );
-
-
-  document.getElementById(
-    "userEmail"
-  ).textContent =
-    "Connecté : " +
-    currentUser.email;
-
-
-  await loadProjects();
-
-  await loadInterestCount();
-
-  await loadMyInterests();
-
-}
-
-
-/* =====================================
-   DÉCONNEXION
-===================================== */
-
-async function logout() {
-
-  await sb.auth.signOut();
-
-
-  currentUser =
-    null;
-
-  projects =
-    [];
-
-
-  document.getElementById(
-    "investorSpace"
-  ).classList.add(
-    "hidden"
-  );
-
-
-  document.getElementById(
-    "authCard"
-  ).classList.remove(
-    "hidden"
-  );
-
-
-  showMessage(
-    "Vous êtes déconnecté.",
-    "success"
-  );
-
-}
-
-
-/* =====================================
-   RECHERCHE
-===================================== */
-
-document
-  .getElementById(
-    "searchInput"
-  )
-  .addEventListener(
-    "input",
-    function () {
-
-      const value =
-        this.value
-          .toLowerCase()
-          .trim();
-
-
-      const filtered =
-        projects.filter(
-          project =>
-
-            (project.title || "")
-              .toLowerCase()
-              .includes(value)
-
-            ||
-
-            (project.sector || "")
-              .toLowerCase()
-              .includes(value)
-
-            ||
-
-            (project.description || "")
-              .toLowerCase()
-              .includes(value)
-
-        );
-
-
-      displayProjects(
-        filtered
+      showMessage(
+        "Vous devez être connecté.",
+        "error"
       );
 
-    }
-  );
-
-
-/* =====================================
-   BOUTONS
-===================================== */
-
-document
-  .getElementById(
-    "loginBtn"
-  )
-  .addEventListener(
-    "click",
-    login
-  );
-
-
-document
-  .getElementById(
-    "signupBtn"
-  )
-  .addEventListener(
-    "click",
-    signup
-  );
-
-
-document
-  .getElementById(
-    "logoutBtn"
-  )
-  .addEventListener(
-    "click",
-    logout
-  );
-
-
-/* =====================================
-   SESSION SUPABASE
-===================================== */
-
-sb.auth.onAuthStateChange(
-  async (event, session) => {
-
-    currentUser =
-      session?.user || null;
-
-    if (event === "SIGNED_IN") {
-      await loadUser();
+      return;
     }
 
-    if (event === "SIGNED_OUT") {
-      await loadUser();
+    const project =
+      projects.find(
+        p => p.id === projectId
+      );
+
+    if (!project) {
+
+      showMessage(
+        "Projet introuvable.",
+        "error"
+      );
+
+      return;
     }
 
+    const {
+      data: existing,
+      error: checkError
+    } = await sb
+      .from("interests")
+      .select("id")
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .eq(
+        "project_id",
+        projectId
+      )
+      .maybeSingle();
+
+    if (checkError) {
+
+      showMessage(
+        "Erreur lors de la vérification.",
+        "error"
+      );
+
+      return;
+    }
+
+    if (existing) {
+
+      showMessage(
+        "Vous êtes déjà intéressé par ce projet.",
+        "success"
+      );
+
+      return;
+    }
+
+    const { error } =
+      await sb
+        .from("interests")
+        .insert({
+          user_id: currentUser.id,
+          project_id: projectId
+        });
+
+    if (error) {
+
+      showMessage(
+        "Impossible d'enregistrer votre intérêt.",
+        "error"
+      );
+
+      return;
+    }
+
+    showMessage(
+      "✅ Votre intérêt a été enregistré.",
+      "success"
+    );
+
+    await loadInterestCount();
+    await loadMyInterests();
   }
-);
 
 
-/* =====================================
-   DÉMARRAGE
-===================================== */
+  /* =====================================================
+     COMPTER LES INTÉRÊTS
+  ===================================================== */
 
-loadUser();
+  async function loadInterestCount() {
+
+    if (!currentUser) return;
+
+    const {
+      count,
+      error
+    } = await sb
+      .from("interests")
+      .select(
+        "*",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      );
+
+    if (!error) {
+
+      document.getElementById(
+        "interestCount"
+      ).textContent =
+        count || 0;
+    }
+  }
+
+
+  /* =====================================================
+     MES INTÉRÊTS
+  ===================================================== */
+
+  async function loadMyInterests() {
+
+    const container =
+      document.getElementById("myInterests");
+
+    container.innerHTML =
+      "<p class='empty'>Chargement...</p>";
+
+    if (!currentUser) {
+
+      container.innerHTML =
+        "<p class='empty'>Connectez-vous pour voir vos intérêts.</p>";
+
+      return;
+    }
+
+    const {
+      data,
+      error
+    } = await sb
+      .from("interests")
+      .select(
+        "id, project_id, created_at"
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+    if (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        "<p class='empty'>Impossible de charger vos intérêts.</p>";
+
+      return;
+    }
+
+    if (!data || !data.length) {
+
+      container.innerHTML =
+        "<p class='empty'>Vous n'avez encore aucun projet dans vos intérêts.</p>";
+
+      return;
+    }
+
+    container.innerHTML =
+      data.map(item => {
+
+        const project =
+          projects.find(
+            p => p.id === item.project_id
+          );
+
+        if (!project) {
+
+          return `
+            <div class="interest-project">
+              <strong>Projet associé</strong>
+              <p>Ce projet n'est plus disponible.</p>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="interest-project">
+
+            <strong>
+              ${project.title}
+            </strong>
+
+            <p>
+              ${project.sector || "Projet"}
+            </p>
+
+            <strong>
+              ${formatMoney(
+                project.amount_required ??
+                project.amount
+              )}
+            </strong>
+
+          </div>
+        `;
+
+      }).join("");
+  }
+
+
+  /* =====================================================
+     RECHERCHE
+  ===================================================== */
+
+  document
+    .getElementById("search")
+    .addEventListener(
+      "input",
+      function() {
+
+        const search =
+          this.value
+            .toLowerCase()
+            .trim();
+
+        const filtered =
+          projects.filter(project => {
+
+            return (
+              (project.title || "")
+                .toLowerCase()
+                .includes(search)
+
+              ||
+
+              (project.description || "")
+                .toLowerCase()
+                .includes(search)
+
+              ||
+
+              (project.sector || "")
+                .toLowerCase()
+                .includes(search)
+            );
+          });
+
+        displayProjects(filtered);
+      }
+    );
+
+
+  /* =====================================================
+     DÉCONNEXION
+  ===================================================== */
+
+  async function logout() {
+
+    await sb.auth.signOut();
+
+    showMessage(
+      "Vous êtes déconnecté.",
+      "success"
+    );
+  }
+
+
+  /* =====================================================
+     BOUTONS
+  ===================================================== */
+
+  document
+    .getElementById("loginBtn")
+    .addEventListener(
+      "click",
+      login
+    );
+
+  document
+    .getElementById("signupBtn")
+    .addEventListener(
+      "click",
+      signup
+    );
+
+  document
+    .getElementById("logoutBtn")
+    .addEventListener(
+      "click",
+      logout
+    );
+
+
+  /* =====================================================
+     AUTH STATE
+  ===================================================== */
+
+  sb.auth.onAuthStateChange(
+    async (event, session) => {
+
+      currentUser =
+        session?.user || null;
+
+      if (
+        event === "SIGNED_IN" ||
+        event === "SIGNED_OUT"
+      ) {
+
+        await loadUser();
+      }
+    }
+  );
+
+
+  /* =====================================================
+     DÉMARRAGE
+  ===================================================== */
+
+  loadUser();
 
 </script>
 
 </body>
-  </html>
+</html>
