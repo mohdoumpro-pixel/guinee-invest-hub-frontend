@@ -23,8 +23,10 @@ window.supabase.createClient(
   SUPABASE_KEY
 );
 
-document.getElementById("test").onclick =
-async function () {
+document.getElementById("test").onclick = function () {
+  document.getElementById("result").textContent =
+    "✅ LE CLIC SUPABASE FONCTIONNE";
+};
 
   document.getElementById("result").textContent =
   "⏳ Test...";
