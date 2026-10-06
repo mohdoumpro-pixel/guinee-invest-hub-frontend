@@ -244,16 +244,38 @@
       margin-bottom: 5px;
     }
 
-    .user-info {
-      text-align: center;
-      padding: 10px;
-      color: #667085;
+    .portfolio-stats {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(180px, 1fr)
+      );
+      gap: 14px;
+      margin: 15px 0 22px;
     }
 
-    .empty {
+    .portfolio-card {
+      padding: 18px;
+      border-radius: 14px;
+      background: #f2f7f4;
+      border: 1px solid #dcebe3;
+    }
+
+    .portfolio-card .icon {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .portfolio-card .label {
       color: #667085;
-      text-align: center;
-      padding: 20px;
+      font-size: 14px;
+    }
+
+    .portfolio-card .value {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #0b5d3b;
     }
 
     .confirmed-box {
@@ -273,6 +295,48 @@
       color: #8a5a00;
       border: 1px solid #f4d58b;
       border-radius: 10px;
+    }
+
+    .payment-history {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 14px;
+    }
+
+    .payment-badge {
+      display: inline-block;
+      padding: 6px 9px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .badge-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .badge-verified {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .badge-rejected {
+      background: #f8d7da;
+      color: #842029;
+    }
+
+    .user-info {
+      text-align: center;
+      padding: 10px;
+      color: #667085;
+    }
+
+    .empty {
+      color: #667085;
+      text-align: center;
+      padding: 20px;
     }
 
     @media (max-width: 600px) {
@@ -320,7 +384,7 @@
     class="nav-btn"
     onclick="showSection('myInvestmentsSection')"
   >
-    💰 Mes investissements
+    💰 Mon portefeuille
   </button>
 
   <button
@@ -345,7 +409,10 @@
 
   <!-- ACCUEIL -->
 
-  <section id="home" class="section">
+  <section
+    id="home"
+    class="section"
+  >
 
     <h2>
       Bienvenue sur Guinée Invest Hub 🇬🇳
@@ -356,7 +423,10 @@
       vos demandes d'investissement.
     </p>
 
-    <div id="userInfo" class="user-info">
+    <div
+      id="userInfo"
+      class="user-info"
+    >
       Vous n'êtes pas connecté.
     </div>
 
@@ -444,7 +514,7 @@
   </section>
 
 
-  <!-- MES INVESTISSEMENTS -->
+  <!-- PORTEFEUILLE -->
 
   <section
     id="myInvestmentsSection"
@@ -452,8 +522,84 @@
   >
 
     <h2>
-      💰 Mes investissements
+      💰 Mon portefeuille
     </h2>
+
+    <div
+      id="portfolioStats"
+      class="portfolio-stats"
+    >
+
+      <div class="portfolio-card">
+        <div class="icon">💰</div>
+        <div class="label">
+          Total investi
+        </div>
+        <div
+          id="portfolioTotal"
+          class="value"
+        >
+          0 GNF
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="icon">✅</div>
+        <div class="label">
+          Investi approuvé
+        </div>
+        <div
+          id="portfolioApproved"
+          class="value"
+        >
+          0 GNF
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="icon">⏳</div>
+        <div class="label">
+          En attente
+        </div>
+        <div
+          id="portfolioPending"
+          class="value"
+        >
+          0 GNF
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="icon">📊</div>
+        <div class="label">
+          Nombre de projets
+        </div>
+        <div
+          id="portfolioProjects"
+          class="value"
+        >
+          0
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="icon">💳</div>
+        <div class="label">
+          Paiements confirmés
+        </div>
+        <div
+          id="portfolioPayments"
+          class="value"
+        >
+          0
+        </div>
+      </div>
+
+    </div>
+
+    <h3>
+      📋 Historique de mes investissements
+    </h3>
 
     <div id="myInvestments">
       <p class="empty">
@@ -544,12 +690,6 @@
   const SUPABASE_URL =
     "https://phwnkvglvebbajixwjau.supabase.co";
 
-  /*
-    IMPORTANT :
-    Garde ici ta vraie clé publishable
-    déjà utilisée dans ton projet.
-  */
-
   const SUPABASE_KEY =
     "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
 
@@ -610,6 +750,24 @@
   }
 
 
+  function formatDate(date) {
+
+    if (!date) {
+      return "Date inconnue";
+    }
+
+    return new Intl.DateTimeFormat(
+      "fr-FR",
+      {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }
+    ).format(
+      new Date(date)
+    );
+  }
+
+
   /* ================================
      NAVIGATION
   ================================= */
@@ -633,19 +791,22 @@
     }
 
     if (
-      id === "projectsSection"
+      id ===
+      "projectsSection"
     ) {
       loadProjects();
     }
 
     if (
-      id === "myInvestmentsSection"
+      id ===
+      "myInvestmentsSection"
     ) {
       loadMyInvestments();
     }
 
     if (
-      id === "adminSection"
+      id ===
+      "adminSection"
     ) {
 
       if (
@@ -899,7 +1060,9 @@
     }
 
     document
-      .getElementById("userInfo")
+      .getElementById(
+        "userInfo"
+      )
       .innerHTML = `
         Connecté avec :
         <strong>
@@ -909,34 +1072,54 @@
         </strong>
 
         ${
-          currentProfile?.role === "admin"
+          currentProfile?.role ===
+          "admin"
+
             ? " — 🛡️ Administrateur"
+
             : " — 👤 Investisseur"
         }
       `;
 
     document
-      .getElementById("logoutBtn")
-      .classList.remove("hidden");
+      .getElementById(
+        "logoutBtn"
+      )
+      .classList.remove(
+        "hidden"
+      );
 
     document
-      .getElementById("loginHomeBtn")
-      .classList.add("hidden");
+      .getElementById(
+        "loginHomeBtn"
+      )
+      .classList.add(
+        "hidden"
+      );
 
     if (
       currentProfile &&
-      currentProfile.role === "admin"
+      currentProfile.role ===
+      "admin"
     ) {
 
       document
-        .getElementById("adminNav")
-        .classList.remove("hidden");
+        .getElementById(
+          "adminNav"
+        )
+        .classList.remove(
+          "hidden"
+        );
 
     } else {
 
       document
-        .getElementById("adminNav")
-        .classList.add("hidden");
+        .getElementById(
+          "adminNav"
+        )
+        .classList.add(
+          "hidden"
+        );
     }
   }
 
@@ -953,19 +1136,33 @@
     currentProfile = null;
 
     document
-      .getElementById("logoutBtn")
-      .classList.add("hidden");
+      .getElementById(
+        "logoutBtn"
+      )
+      .classList.add(
+        "hidden"
+      );
 
     document
-      .getElementById("adminNav")
-      .classList.add("hidden");
+      .getElementById(
+        "adminNav"
+      )
+      .classList.add(
+        "hidden"
+      );
 
     document
-      .getElementById("loginHomeBtn")
-      .classList.remove("hidden");
+      .getElementById(
+        "loginHomeBtn"
+      )
+      .classList.remove(
+        "hidden"
+      );
 
     document
-      .getElementById("userInfo")
+      .getElementById(
+        "userInfo"
+      )
       .innerHTML =
       "Vous n'êtes pas connecté.";
 
@@ -1030,7 +1227,9 @@
   }
 
 
-  function renderProjects(list) {
+  function renderProjects(
+    list
+  ) {
 
     const container =
       document.getElementById(
@@ -1106,7 +1305,9 @@
                   id="investmentAmount-${project.id}"
                   type="number"
                   min="1"
-                  placeholder="Montant à investir en GNF"
+                  placeholder="
+                    Montant à investir en GNF
+                  "
                 >
 
                 <label>
@@ -1136,9 +1337,6 @@
 
                 </select>
 
-
-                <!-- ORANGE MONEY -->
-
                 <div
                   id="orangePayment-${project.id}"
                   class="orange-payment hidden"
@@ -1166,19 +1364,20 @@
                   <input
                     id="payerPhone-${project.id}"
                     type="tel"
-                    placeholder="📱 Numéro Orange utilisé"
+                    placeholder="
+                      📱 Numéro Orange utilisé
+                    "
                   >
 
                   <input
                     id="transactionReference-${project.id}"
                     type="text"
-                    placeholder="🧾 Référence de transaction"
+                    placeholder="
+                      🧾 Référence de transaction
+                    "
                   >
 
                 </div>
-
-
-                <!-- MTN -->
 
                 <div
                   id="mtnPayment-${project.id}"
@@ -1199,7 +1398,6 @@
                   </p>
 
                 </div>
-
 
                 <button
                   class="primary"
@@ -1229,7 +1427,9 @@
      MOYEN DE PAIEMENT
   ================================= */
 
-  function updatePaymentMethod(projectId) {
+  function updatePaymentMethod(
+    projectId
+  ) {
 
     const select =
       document.getElementById(
@@ -1254,11 +1454,15 @@
     }
 
     if (orange) {
-      orange.classList.add("hidden");
+      orange.classList.add(
+        "hidden"
+      );
     }
 
     if (mtn) {
-      mtn.classList.add("hidden");
+      mtn.classList.add(
+        "hidden"
+      );
     }
 
     if (
@@ -1286,7 +1490,9 @@
      AFFICHER FORMULAIRE
   ================================= */
 
-  function showInvestmentBox(projectId) {
+  function showInvestmentBox(
+    projectId
+  ) {
 
     if (!currentUser) {
 
@@ -1320,7 +1526,9 @@
      INVESTISSEMENT
   ================================= */
 
-  async function submitInvestment(projectId) {
+  async function submitInvestment(
+    projectId
+  ) {
 
     if (!currentUser) {
 
@@ -1375,7 +1583,6 @@
     const method =
       paymentSelect.value;
 
-
     if (
       !amount ||
       amount <= 0
@@ -1390,7 +1597,6 @@
       return;
     }
 
-
     if (!method) {
 
       message.innerHTML = `
@@ -1401,9 +1607,6 @@
 
       return;
     }
-
-
-    /* ORANGE */
 
     if (
       method ===
@@ -1425,7 +1628,6 @@
         return;
       }
 
-
       if (
         !transactionReference ||
         !transactionReference.value.trim()
@@ -1442,9 +1644,6 @@
       }
     }
 
-
-    /* MTN */
-
     if (
       method ===
       "mtn_mobile_money"
@@ -1460,15 +1659,11 @@
       return;
     }
 
-
     message.innerHTML = `
       <div class="message">
         ⏳ Enregistrement de votre demande...
       </div>
     `;
-
-
-    /* CREATION INVESTISSEMENT */
 
     const {
       data: investment,
@@ -1477,7 +1672,6 @@
       await sb
         .from("investments")
         .insert({
-
           user_id:
             currentUser.id,
 
@@ -1489,11 +1683,9 @@
 
           status:
             "pending"
-
         })
         .select()
         .single();
-
 
     if (investmentError) {
 
@@ -1511,9 +1703,6 @@
 
       return;
     }
-
-
-    /* CREATION PAIEMENT */
 
     const {
       error: paymentError
@@ -1549,7 +1738,6 @@
 
         });
 
-
     if (paymentError) {
 
       console.error(
@@ -1575,7 +1763,6 @@
 
       return;
     }
-
 
     message.innerHTML = `
       <div class="message">
@@ -1625,9 +1812,7 @@
       </div>
     `;
 
-
     input.value = "";
-
     paymentSelect.value = "";
 
     if (payerPhone) {
@@ -1647,8 +1832,7 @@
 
 
   /* ================================
-     MES INVESTISSEMENTS
-     NOUVEAU SYSTEME DE STATUT
+     MON PORTEFEUILLE
   ================================= */
 
   async function loadMyInvestments() {
@@ -1670,9 +1854,6 @@
       return;
     }
 
-
-    /* INVESTISSEMENTS */
-
     const {
       data: investments,
       error: investmentError
@@ -1691,7 +1872,6 @@
           }
         );
 
-
     if (investmentError) {
 
       container.innerHTML = `
@@ -1704,25 +1884,6 @@
 
       return;
     }
-
-
-    if (
-      !investments ||
-      !investments.length
-    ) {
-
-      container.innerHTML = `
-        <p class="empty">
-          Vous n'avez encore
-          aucun investissement.
-        </p>
-      `;
-
-      return;
-    }
-
-
-    /* PAIEMENTS */
 
     const {
       data: payments,
@@ -1742,23 +1903,152 @@
           }
         );
 
-
     if (paymentError) {
 
-      console.error(
-        paymentError
-      );
+      container.innerHTML = `
+        <div class="error-box">
+          ❌ Impossible de charger
+          l'historique des paiements.
+          <br><br>
+          ${escapeHtml(
+            paymentError.message
+          )}
+        </div>
+      `;
+
+      return;
     }
 
+    const investmentList =
+      investments || [];
 
     const paymentList =
       payments || [];
 
+    /* ================================
+       CALCULS PORTEFEUILLE
+    ================================= */
 
-    /* AFFICHAGE */
+    const totalInvested =
+      investmentList.reduce(
+        (total, item) =>
+          total +
+          Number(
+            item.amount || 0
+          ),
+        0
+      );
+
+    const approvedInvestments =
+      investmentList.filter(
+        item =>
+          item.status ===
+          "approved"
+      );
+
+    const approvedAmount =
+      approvedInvestments.reduce(
+        (total, item) =>
+          total +
+          Number(
+            item.amount || 0
+          ),
+        0
+      );
+
+    const pendingAmount =
+      investmentList
+        .filter(
+          item =>
+            item.status ===
+            "pending"
+        )
+        .reduce(
+          (total, item) =>
+            total +
+            Number(
+              item.amount || 0
+            ),
+          0
+        );
+
+    const confirmedPayments =
+      paymentList.filter(
+        payment =>
+          payment.status ===
+          "verified"
+      ).length;
+
+    const projectCount =
+      new Set(
+        investmentList.map(
+          item =>
+            item.project_id
+        )
+      ).size;
+
+
+    document
+      .getElementById(
+        "portfolioTotal"
+      )
+      .textContent =
+      formatMoney(
+        totalInvested
+      );
+
+    document
+      .getElementById(
+        "portfolioApproved"
+      )
+      .textContent =
+      formatMoney(
+        approvedAmount
+      );
+
+    document
+      .getElementById(
+        "portfolioPending"
+      )
+      .textContent =
+      formatMoney(
+        pendingAmount
+      );
+
+    document
+      .getElementById(
+        "portfolioProjects"
+      )
+      .textContent =
+      projectCount;
+
+    document
+      .getElementById(
+        "portfolioPayments"
+      )
+      .textContent =
+      confirmedPayments;
+
+
+    if (!investmentList.length) {
+
+      container.innerHTML = `
+        <p class="empty">
+          Vous n'avez encore
+          aucun investissement.
+        </p>
+      `;
+
+      return;
+    }
+
+
+    /* ================================
+       HISTORIQUE
+    ================================= */
 
     container.innerHTML =
-      investments.map(
+      investmentList.map(
         investment => {
 
           const project =
@@ -1768,9 +2058,6 @@
                 investment.project_id
             );
 
-
-          /* PAIEMENT CORRESPONDANT */
-
           const payment =
             paymentList.find(
               p =>
@@ -1779,37 +2066,8 @@
             );
 
 
-          /* STATUT PAIEMENT */
-
-          let paymentStatus =
-            "⏳ Paiement en attente";
-
-
-          if (
-            payment &&
-            payment.status ===
-            "verified"
-          ) {
-
-            paymentStatus =
-              "✅ Paiement confirmé";
-
-          } else if (
-            payment &&
-            payment.status ===
-            "rejected"
-          ) {
-
-            paymentStatus =
-              "❌ Paiement rejeté";
-          }
-
-
-          /* STATUT INVESTISSEMENT */
-
           let investmentStatus =
             "⏳ Investissement en attente";
-
 
           if (
             investment.status ===
@@ -1829,163 +2087,204 @@
           }
 
 
-          /* MESSAGE FINAL */
+          let paymentStatus =
+            "⏳ Paiement en attente";
+
+          let paymentClass =
+            "badge-pending";
+
+          if (
+            payment?.status ===
+            "verified"
+          ) {
+
+            paymentStatus =
+              "✅ Paiement confirmé";
+
+            paymentClass =
+              "badge-verified";
+
+          } else if (
+            payment?.status ===
+            "rejected"
+          ) {
+
+            paymentStatus =
+              "❌ Paiement rejeté";
+
+            paymentClass =
+              "badge-rejected";
+          }
+
 
           let finalMessage = "";
 
 
           if (
-            payment &&
-            payment.status ===
-            "verified" &&
             investment.status ===
-            "approved"
-          ) {
-
-            finalMessage = `
-
-              <div class="confirmed-box">
-
-                🎉
-                <strong>
-                  Investissement confirmé !
-                </strong>
-
-                <br><br>
-
-                Votre paiement a été vérifié
-                et votre investissement est
-                officiellement approuvé.
-
-              </div>
-
-            `;
-
-          } else if (
-            payment &&
-            payment.status ===
+            "approved" &&
+            payment?.status ===
             "verified"
           ) {
 
             finalMessage = `
-
-              <div class="message">
-
-                🟢
-                <strong>
-                  Paiement confirmé
-                </strong>
-
+              <div class="confirmed-box">
+                🎉 <strong>Investissement confirmé !</strong>
                 <br><br>
-
-                Votre paiement Orange Money
-                a été vérifié par
-                l'administrateur.
-
-                <br><br>
-
-                ⏳ Votre investissement est
-                encore en attente
-                d'approbation.
-
+                Votre paiement a été vérifié
+                et votre investissement est
+                officiellement approuvé.
               </div>
-
             `;
 
           } else if (
-            payment &&
-            payment.status ===
+            payment?.status ===
+            "verified" &&
+            investment.status ===
+            "pending"
+          ) {
+
+            finalMessage = `
+              <div class="pending-box">
+                🟢 <strong>Paiement confirmé</strong>
+                <br><br>
+                Votre paiement Orange Money
+                a été vérifié par l'administrateur.
+                <br><br>
+                ⏳ Votre investissement est encore
+                en attente d'approbation.
+              </div>
+            `;
+
+          } else if (
+            payment?.status ===
             "rejected"
           ) {
 
             finalMessage = `
-
               <div class="error-box">
-
-                ❌
-                <strong>
-                  Paiement rejeté
-                </strong>
-
+                ❌ <strong>Paiement rejeté</strong>
                 <br><br>
-
-                Votre paiement n'a pas été
-                validé par l'administrateur.
-
+                Le paiement associé à cet investissement
+                n'a pas été validé.
               </div>
-
             `;
-
           }
 
 
           return `
-
             <div class="investment-item">
 
+              <h3 style="margin-top:0;color:#0b5d3b;">
+                ${
+                  escapeHtml(
+                    project?.title ||
+                    "Projet"
+                  )
+                }
+              </h3>
+
               <strong>
-                💰
-                ${formatMoney(
+                💰 ${formatMoney(
                   investment.amount
                 )}
               </strong>
 
               <br><br>
 
-              Projet :
-              <strong>
-                ${escapeHtml(
-                  project?.title ||
-                  "Projet"
-                )}
-              </strong>
-
-              <br><br>
-
-              💳 Paiement :
-              <span class="status">
-                ${paymentStatus}
-              </span>
+              📅
+              ${formatDate(
+                investment.created_at
+              )}
 
               <br>
 
-              📊 Investissement :
-              <span class="status">
+              📊
+              <strong>
                 ${investmentStatus}
+              </strong>
+
+              <br>
+
+              <span
+                class="
+                  payment-badge
+                  ${paymentClass}
+                "
+              >
+                ${paymentStatus}
               </span>
 
-
               ${
-                payment &&
-                payment.method ===
-                "orange_money"
-
+                payment
                   ? `
+                    <div class="payment-history">
 
-                    <br><br>
+                      <strong>
+                        💳 Informations du paiement
+                      </strong>
 
-                    🟠 Orange Money
+                      <br><br>
 
-                    <br>
+                      Moyen :
+                      ${
+                        payment.method ===
+                        "orange_money"
+                          ? "🟠 Orange Money"
+                          : escapeHtml(
+                              payment.method ||
+                              "Non renseigné"
+                            )
+                      }
 
-                    🧾 Référence :
-                    <strong>
+                      <br>
+
+                      📱 Numéro :
+                      ${escapeHtml(
+                        payment.payer_phone ||
+                        "Non renseigné"
+                      )}
+
+                      <br>
+
+                      🧾 Référence :
                       ${escapeHtml(
                         payment.transaction_reference ||
                         "Non renseignée"
                       )}
-                    </strong>
 
+                      <br>
+
+                      💰 Montant payé :
+                      ${formatMoney(
+                        payment.amount
+                      )}
+
+                      ${
+                        payment.verified_at
+                          ? `
+                            <br>
+                            🕐 Vérifié le :
+                            ${formatDate(
+                              payment.verified_at
+                            )}
+                          `
+                          : ""
+                      }
+
+                    </div>
                   `
-
-                  : ""
+                  : `
+                    <div class="pending-box">
+                      💳 Aucun paiement associé
+                      à cet investissement.
+                    </div>
+                  `
               }
-
 
               ${finalMessage}
 
             </div>
-
           `;
 
         }
@@ -2011,7 +2310,6 @@
     ) {
       return;
     }
-
 
     const [
       profilesResult,
@@ -2048,7 +2346,6 @@
 
       ]);
 
-
     const investorCount =
       profilesResult.count ||
       0;
@@ -2077,7 +2374,6 @@
           ),
         0
       );
-
 
     container.innerHTML = `
 
@@ -2126,7 +2422,6 @@
         "adminInvestments"
       );
 
-
     const {
       data,
       error
@@ -2141,7 +2436,6 @@
           }
         );
 
-
     if (error) {
 
       container.innerHTML = `
@@ -2154,7 +2448,6 @@
 
       return;
     }
-
 
     if (
       !data ||
@@ -2170,7 +2463,6 @@
       return;
     }
 
-
     container.innerHTML =
       data.map(
         investment => {
@@ -2182,10 +2474,8 @@
                 investment.project_id
             );
 
-
           let statusText =
             "⏳ En attente";
-
 
           if (
             investment.status ===
@@ -2203,7 +2493,6 @@
             statusText =
               "❌ Refusée";
           }
-
 
           return `
 
@@ -2244,29 +2533,36 @@
 
               <div class="admin-actions">
 
-                <button
-                  class="approve"
-                  onclick="
-                    updateInvestmentStatus(
-                      '${investment.id}',
-                      'approved'
-                    )
-                  "
-                >
-                  ✅ Approuver
-                </button>
+                ${
+                  investment.status ===
+                  "pending"
+                    ? `
+                      <button
+                        class="approve"
+                        onclick="
+                          updateInvestmentStatus(
+                            '${investment.id}',
+                            'approved'
+                          )
+                        "
+                      >
+                        ✅ Approuver
+                      </button>
 
-                <button
-                  class="danger"
-                  onclick="
-                    updateInvestmentStatus(
-                      '${investment.id}',
-                      'rejected'
-                    )
-                  "
-                >
-                  ❌ Refuser
-                </button>
+                      <button
+                        class="danger"
+                        onclick="
+                          updateInvestmentStatus(
+                            '${investment.id}',
+                            'rejected'
+                          )
+                        "
+                      >
+                        ❌ Refuser
+                      </button>
+                    `
+                    : ""
+                }
 
               </div>
 
@@ -2290,7 +2586,6 @@
         "adminPayments"
       );
 
-
     const {
       data,
       error
@@ -2305,12 +2600,10 @@
           }
         );
 
-
     if (error) {
 
       container.innerHTML = `
         <div class="error-box">
-
           ❌ Impossible de charger
           les paiements.
 
@@ -2319,13 +2612,11 @@
           ${escapeHtml(
             error.message
           )}
-
         </div>
       `;
 
       return;
     }
-
 
     if (
       !data ||
@@ -2341,14 +2632,12 @@
       return;
     }
 
-
     container.innerHTML =
       data.map(
         payment => {
 
           let status =
             "⏳ En attente";
-
 
           if (
             payment.status ===
@@ -2366,7 +2655,6 @@
             status =
               "❌ Paiement rejeté";
           }
-
 
           return `
 
@@ -2386,9 +2674,7 @@
                 ${
                   payment.method ===
                   "orange_money"
-
                     ? "🟠 Orange Money"
-
                     : escapeHtml(
                         payment.method ||
                         ""
@@ -2492,7 +2778,6 @@
       return;
     }
 
-
     const {
       error
     } =
@@ -2515,7 +2800,6 @@
           paymentId
         );
 
-
     if (error) {
 
       alert(
@@ -2526,25 +2810,13 @@
       return;
     }
 
-
     alert(
       status === "verified"
         ? "✅ Paiement confirmé."
         : "❌ Paiement rejeté."
     );
 
-
     await loadAdminPayments();
-
-    /* Actualiser également côté investisseur */
-
-    if (
-      currentUser &&
-      currentProfile &&
-      currentProfile.role !== "admin"
-    ) {
-      await loadMyInvestments();
-    }
   }
 
 
@@ -2570,7 +2842,6 @@
       return;
     }
 
-
     const {
       error
     } =
@@ -2585,7 +2856,6 @@
           investmentId
         );
 
-
     if (error) {
 
       alert(
@@ -2596,21 +2866,18 @@
       return;
     }
 
-
     alert(
-      status === "approved"
+      status ===
+      "approved"
 
         ? "✅ Investissement approuvé."
 
         : "❌ Investissement refusé."
     );
 
-
     await loadAdminInvestments();
 
     await loadAdminStats();
-
-    await loadMyInvestments();
   }
 
 
@@ -2628,7 +2895,6 @@
         .value
         .toLowerCase()
         .trim();
-
 
     const filtered =
       projects.filter(
@@ -2649,13 +2915,11 @@
               )
             ).toLowerCase();
 
-
           return text.includes(
             value
           );
         }
       );
-
 
     renderProjects(
       filtered
@@ -2674,7 +2938,6 @@
     } =
       await sb.auth.getUser();
 
-
     if (data.user) {
 
       currentUser =
@@ -2687,7 +2950,6 @@
       currentUser =
         null;
     }
-
 
     await loadProjects();
   }
