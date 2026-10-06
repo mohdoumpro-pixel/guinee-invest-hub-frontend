@@ -2,16 +2,19 @@
 <html>
 <body>
 
-<h2>Test</h2>
+<h2>Test Supabase</h2>
 
-<button onclick="test()">Tester</button>
+<p id="result">⏳ Vérification...</p>
 
-<p id="result"></p>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-function test() {
+if (window.supabase) {
   document.getElementById("result").innerText =
-    "✅ JavaScript fonctionne";
+    "✅ SUPABASE EST CHARGÉ";
+} else {
+  document.getElementById("result").innerText =
+    "❌ SUPABASE N'EST PAS CHARGÉ";
 }
 </script>
 
