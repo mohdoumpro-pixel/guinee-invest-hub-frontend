@@ -439,7 +439,41 @@ async function registerInterest(projectId) {
 
   loadInterestCount();
 }
+async function loadMyInterests() {
+  const container = document.getElementById("myInterests");
 
+  const { data, error } = await sb
+    .from("interests")
+    .select("project_id, created_at")
+    .eq("user_id", currentUser.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    container.innerHTML = "<p>Impossible de charger vos intérêts.</p>";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "<p>Vous n’avez encore manifesté aucun intérêt.</p>";
+    return;
+  }
+
+  container.innerHTML = data.map(item => {
+    const project = projects.find(p => p.id === item.project_id);
+
+    if (!project) return "";
+
+    return `
+      <div class="project">
+        <span class="sector">${project.sector}</span>
+        <h3>${project.title}</h3>
+        <p>${project.description}</p>
+        <div class="amount">💰 ${formatMoney(project.amount)}</div>
+        <p>✅ Intérêt enregistré</p>
+      </div>
+    `;
+  }).join("");
+}
 async function loadInterestCount() {
 
   if (!currentUser) return;
