@@ -438,7 +438,7 @@ async function registerInterest(projectId) {
   );
 
   loadInterestCount();
-}
+await loadMyInterests();
 async function loadMyInterests() {
   const container = document.getElementById("myInterests");
 
