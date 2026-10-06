@@ -3,9 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>🇬🇳 Guinée Invest Hub</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 20px;
@@ -15,10 +20,11 @@
 
     .box {
       max-width: 450px;
-      margin: 50px auto;
+      margin: 40px auto;
       padding: 25px;
       background: white;
-      border-radius: 15px;
+      border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.08);
     }
 
     h1 {
@@ -26,9 +32,13 @@
       color: #16803c;
     }
 
-    input, button {
+    h2 {
+      text-align: center;
+    }
+
+    input,
+    button {
       width: 100%;
-      box-sizing: border-box;
       padding: 14px;
       margin-top: 12px;
       border-radius: 8px;
@@ -47,10 +57,30 @@
       cursor: pointer;
     }
 
+    button:hover {
+      opacity: .9;
+    }
+
+    .secondary {
+      background: #222;
+    }
+
+    #profilBox {
+      display: none;
+      margin-top: 25px;
+    }
+
     #message {
       margin-top: 20px;
       text-align: center;
       font-weight: bold;
+      min-height: 24px;
+    }
+
+    #dashboard {
+      display: none;
+      text-align: center;
+      margin-top: 25px;
     }
   </style>
 </head>
@@ -61,94 +91,263 @@
 
   <h1>🇬🇳 Guinée Invest Hub</h1>
 
-  <input id="email" type="email" placeholder="Votre email">
+  <div id="authBox">
 
-  <input id="password" type="password" placeholder="Votre mot de passe">
+    <h2>Créer un compte</h2>
 
-  <button type="button" onclick="creerCompte()">
-    Créer mon compte
-  </button>
+    <input
+      id="email"
+      type="email"
+      placeholder="Votre email"
+      autocomplete="email"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Votre mot de passe"
+      autocomplete="new-password"
+    >
+
+    <button id="signupBtn" type="button">
+      Créer mon compte
+    </button>
+
+  </div>
 
   <div id="message"></div>
-<div id="profils" style="display:none; margin-top:20px;">
-  <h3>Choisis ton profil</h3>
 
-  <button type="button" id="investisseur">
-  💰 Investisseur
-</button>
+  <div id="profilBox">
 
-  <button type="button" onclick="choisirProfil('projet')">
-    🚀 Porteur de projet
-  </button>
+    <h2>Choisissez votre profil</h2>
+
+    <button id="investisseurBtn" type="button">
+      💰 Investisseur
+    </button>
+
+    <button id="projetBtn" type="button" class="secondary">
+      🚀 Porteur de projet
+    </button>
+
+  </div>
+
+  <div id="dashboard">
+
+    <h2>🎉 Bienvenue</h2>
+
+    <p id="roleText"></p>
+
+  </div>
+
 </div>
-</div>
-document.getElementById("investisseur").addEventListener("click", function () {
-  document.getElementById("message").textContent = "✅ INVESTISSEUR FONCTIONNE";
-});
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const supabaseUrl = "https://phwnkvglvebbajixwjau.supabase.co";
-const supabaseKey = "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
 
-const sb = window.supabase.createClient(
-  supabaseUrl,
-  supabaseKey
-);
+  const SUPABASE_URL =
+    "https://phwnkvglvebbajixwjau.supabase.co";
 
-async function creerCompte() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const message = document.getElementById("message");
+  /*
+    ⚠️ REMPLACE UNIQUEMENT LA VALEUR CI-DESSOUS
+    par ta clé Publishable sb_publishable_...
+  */
 
-  if (!email || !password) {
-    message.textContent = "❌ Remplis les deux champs.";
-    return;
-  }
+  const SUPABASE_KEY =
+    "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
 
-  message.textContent = "✅ COMPTE CRÉÉ !";
-document.getElementById("profils").style.display = "block";
+  const sb = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-  const { error } = await sb.auth.signUp({
-    email: email,
-    password: password
+
+  const message =
+    document.getElementById("message");
+
+  const signupBtn =
+    document.getElementById("signupBtn");
+
+  const profilBox =
+    document.getElementById("profilBox");
+
+  const authBox =
+    document.getElementById("authBox");
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+  const roleText =
+    document.getElementById("roleText");
+
+
+  /*
+    CRÉATION DU COMPTE
+  */
+
+  signupBtn.addEventListener("click", async function () {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+
+    if (!email || !password) {
+
+      message.textContent =
+        "❌ Remplis les deux champs.";
+
+      return;
+    }
+
+
+    if (password.length < 6) {
+
+      message.textContent =
+        "❌ Le mot de passe doit avoir au moins 6 caractères.";
+
+      return;
+    }
+
+
+    message.textContent =
+      "⏳ Création du compte...";
+
+
+    const { data, error } =
+      await sb.auth.signUp({
+
+        email: email,
+        password: password
+
+      });
+
+
+    if (error) {
+
+      message.textContent =
+        "❌ " + error.message;
+
+      return;
+    }
+
+
+    if (!data.user) {
+
+      message.textContent =
+        "❌ Le compte n'a pas été créé.";
+
+      return;
+    }
+
+
+    message.textContent =
+      "✅ Compte créé !";
+
+
+    authBox.style.display =
+      "none";
+
+    profilBox.style.display =
+      "block";
+
   });
 
-  if (error) {
-    message.textContent = "❌ " + error.message;
-    return;
+
+  /*
+    CHOIX DU PROFIL
+  */
+
+  async function enregistrerProfil(role) {
+
+    message.textContent =
+      "⏳ Enregistrement du profil...";
+
+
+    const { data, error } =
+      await sb.auth.getUser();
+
+
+    if (error || !data.user) {
+
+      message.textContent =
+        "❌ Utilisateur non connecté.";
+
+      return;
+    }
+
+
+    const userId =
+      data.user.id;
+
+
+    const { error: profileError } =
+      await sb
+        .from("profiles")
+        .upsert({
+
+          id: userId,
+          role: role
+
+        });
+
+
+    if (profileError) {
+
+      message.textContent =
+        "❌ " + profileError.message;
+
+      return;
+    }
+
+
+    profilBox.style.display =
+      "none";
+
+    dashboard.style.display =
+      "block";
+
+
+    roleText.textContent =
+      role === "investisseur"
+        ? "💰 Vous êtes connecté comme Investisseur."
+        : "🚀 Vous êtes connecté comme Porteur de projet.";
+
+
+    message.textContent = "";
+
   }
 
-  message.textContent = "✅ COMPTE CRÉÉ !";
-}
-</script>
-async function choisirProfil(profil) {
-  document.getElementById("message").textContent =
-    "⏳ Enregistrement du profil...";
 
-  const { data, error } = await sb.auth.getUser();
+  /*
+    BOUTON INVESTISSEUR
+  */
 
-  if (error || !data.user) {
-    document.getElementById("message").textContent =
-      "❌ Utilisateur non connecté.";
-    return;
-  }
+  document
+    .getElementById("investisseurBtn")
+    .addEventListener("click", function () {
 
-  const { error: profileError } = await sb
-    .from("profiles")
-    .upsert({
-      id: data.user.id,
-      role: profil
+      enregistrerProfil("investisseur");
+
     });
 
-  if (profileError) {
-    document.getElementById("message").textContent =
-      "❌ " + profileError.message;
-    return;
-  }
 
-  document.getElementById("message").textContent =
-    "✅ Profil enregistré : " + profil;
-}
+  /*
+    BOUTON PORTEUR DE PROJET
+  */
+
+  document
+    .getElementById("projetBtn")
+    .addEventListener("click", function () {
+
+      enregistrerProfil("projet");
+
+    });
+
+
+</script>
+
 </body>
 </html>
