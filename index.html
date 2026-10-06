@@ -156,11 +156,11 @@ alert("SUPABASE CHARGÉ");
       const SUPABASE_KEY =
         sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
 
-      const supabaseClient =
-        window.supabase.createClient(
-          SUPABASE_URL,
-          SUPABASE_KEY
-        );
+      const client = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
 alert("CLIENT SUPABASE CRÉÉ");
 
       const authBox =
