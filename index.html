@@ -8,146 +8,86 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * { box-sizing: border-box; }
-
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f7f6;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
       color: #222;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 600px;
       margin: auto;
-      padding: 25px 18px;
-    }
-
-    .card {
-      background: white;
-      padding: 24px;
-      border-radius: 18px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.08);
-      margin-bottom: 20px;
-    }
-
-    .logo {
-      text-align: center;
-      font-size: 45px;
     }
 
     h1 {
       text-align: center;
-      color: #087f5b;
+      color: #0b6b3a;
     }
 
-    h2 {
-      text-align: center;
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
     }
 
-    .description {
-      text-align: center;
-      color: #666;
-      line-height: 1.5;
-    }
-
-    input, textarea {
+    input, textarea, select {
       width: 100%;
-      padding: 14px;
-      margin: 7px 0;
-      border: 1px solid #ddd;
-      border-radius: 10px;
+      box-sizing: border-box;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       font-size: 16px;
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
     }
 
     button {
       width: 100%;
-      padding: 14px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 10px;
-      background: #087f5b;
+      padding: 13px;
+      margin: 7px 0;
+      border: 0;
+      border-radius: 8px;
+      background: #0b6b3a;
       color: white;
       font-size: 16px;
-      font-weight: bold;
       cursor: pointer;
     }
 
-    #login {
-      background: #1864ab;
+    button:hover {
+      opacity: .9;
     }
 
-    #logout {
-      background: #c92a2a;
-    }
-
-    .role-button {
-      background: #f1f3f5;
-      color: #222;
-      border: 2px solid #ddd;
-    }
-
-    .welcome {
-      background: #e6fcf5;
-      padding: 18px;
-      border-radius: 12px;
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .role {
-      font-size: 20px;
-      font-weight: bold;
-      margin: 12px 0;
-    }
-
-    #dashboard,
-    #roleChoice,
-    #projectsSection,
-    #addProjectSection {
-      display: none;
+    .danger {
+      background: #c62828;
     }
 
     .project {
       border: 1px solid #ddd;
-      border-radius: 14px;
-      padding: 16px;
-      margin: 12px 0;
-      background: #fafafa;
-    }
-
-    .project h3 {
-      margin-top: 0;
-      color: #087f5b;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
     }
 
     .sector {
       display: inline-block;
-      background: #e6fcf5;
-      color: #087f5b;
-      padding: 6px 10px;
+      background: #e8f5e9;
+      color: #0b6b3a;
+      padding: 5px 9px;
       border-radius: 20px;
       font-size: 13px;
-      font-weight: bold;
     }
 
-    .small {
-      color: #777;
-      font-size: 14px;
+    .hidden {
+      display: none;
     }
 
-    #message,
-    #roleMessage,
-    #projectMessage {
+    #message {
       text-align: center;
       font-weight: bold;
-      margin-top: 12px;
-      min-height: 22px;
+      margin: 15px 0;
     }
   </style>
 </head>
@@ -156,537 +96,394 @@
 
 <div class="container">
 
-  <!-- CONNEXION -->
-  <div id="auth" class="card">
+  <h1>🇬🇳 Guinée Invest Hub</h1>
 
-    <div class="logo">🇬🇳</div>
+  <div id="message"></div>
 
-    <h1>Guinée Invest Hub</h1>
-
-    <p class="description">
-      Connectons les investisseurs aux projets guinéens.
-    </p>
+  <!-- AUTH -->
+  <div id="authSection" class="card">
 
     <h2>Créer un compte</h2>
 
-    <input id="email" type="email" placeholder="Votre adresse e-mail">
+    <input
+      id="email"
+      type="email"
+      placeholder="Votre email"
+    >
 
-    <input id="password" type="password" placeholder="Votre mot de passe">
+    <input
+      id="password"
+      type="password"
+      placeholder="Votre mot de passe"
+    >
 
-    <button id="signup" type="button">
+    <button id="signupBtn">
       Créer mon compte
     </button>
 
-    <button id="login" type="button">
+    <button id="loginBtn">
       Se connecter
     </button>
 
-    <p id="message"></p>
-
   </div>
 
+  <!-- ROLE -->
+  <div id="roleSection" class="card hidden">
 
-  <!-- CHOIX DU PROFIL -->
-  <div id="roleChoice" class="card">
+    <h2>Bienvenue 👋</h2>
 
-    <div class="logo">👤</div>
+    <p>Choisissez votre profil :</p>
 
-    <h1>Votre profil</h1>
-
-    <p class="description">
-      Choisissez votre type de compte.
-    </p>
-
-    <button id="investisseur" class="role-button" type="button">
+    <button id="investorBtn">
       💰 Investisseur
     </button>
 
-    <button id="porteur" class="role-button" type="button">
-      🚀 Porteur de projet
+    <button id="ownerBtn">
+      🏗️ Porteur de projet
     </button>
-
-    <p id="roleMessage"></p>
 
   </div>
 
+  <!-- DASHBOARD -->
+  <div id="dashboardSection" class="card hidden">
 
-  <!-- TABLEAU DE BORD -->
-  <div id="dashboard" class="card">
+    <h2>Tableau de bord</h2>
 
-    <div class="logo">🇬🇳</div>
+    <p id="welcomeText"></p>
 
-    <h1>Guinée Invest Hub</h1>
-
-    <div class="welcome">
-
-      <h2>✅ Bienvenue !</h2>
-
-      <p id="userEmail"></p>
-
-      <div class="role" id="userRole"></div>
-
-    </div>
-
-    <button id="showProjects" type="button">
+    <button id="projectsBtn">
       📊 Voir les projets
     </button>
 
-    <button id="showAddProject" type="button">
+    <button id="addProjectBtn">
       ➕ Ajouter un projet
     </button>
 
-    <button id="logout" type="button">
-      Se déconnecter
+    <button id="logoutBtn" class="danger">
+      🚪 Déconnexion
     </button>
 
   </div>
 
+  <!-- PROJECTS -->
+  <div id="projectsSection" class="card hidden">
 
-  <!-- PROJETS -->
-  <div id="projectsSection" class="card">
-
-    <h2>📊 Projets d'investissement</h2>
+    <h2>📊 Projets disponibles</h2>
 
     <div id="projectsList">
-      Chargement des projets...
+      Chargement...
     </div>
+
+    <button id="backBtn">
+      ← Retour
+    </button>
 
   </div>
 
-
-  <!-- AJOUTER UN PROJET -->
-  <div id="addProjectSection" class="card">
+  <!-- ADD PROJECT -->
+  <div id="addProjectSection" class="card hidden">
 
     <h2>➕ Ajouter un projet</h2>
 
     <input
       id="projectTitle"
       type="text"
-      placeholder="Nom du projet"
+      placeholder="Titre du projet"
     >
 
     <textarea
       id="projectDescription"
       placeholder="Description du projet"
+      rows="5"
     ></textarea>
 
     <input
       id="projectSector"
       type="text"
-      placeholder="Secteur : agriculture, immobilier..."
+      placeholder="Secteur (agriculture, immobilier...)"
     >
 
-    <button id="addProject" type="button">
+    <button id="saveProjectBtn">
       Publier le projet
     </button>
 
-    <p id="projectMessage"></p>
+    <button id="backAddBtn">
+      ← Retour
+    </button>
 
   </div>
 
 </div>
 
-
 <script>
 
-const SUPABASE_URL =
-  "https://phwnkvglvebbajixwjau.supabase.co";
+  /* =========================
+     SUPABASE
+  ========================= */
 
-const SUPABASE_KEY =
-  sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+  const SUPABASE_URL =
+    "https://phwnkvglvebbajixwjau.supabase.co";
 
-const client =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  const SUPABASE_KEY =
+    sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
 
-
-const email =
-  document.getElementById("email");
-
-const password =
-  document.getElementById("password");
-
-const message =
-  document.getElementById("message");
-
-const auth =
-  document.getElementById("auth");
-
-const roleChoice =
-  document.getElementById("roleChoice");
-
-const dashboard =
-  document.getElementById("dashboard");
-
-const projectsSection =
-  document.getElementById("projectsSection");
-
-const addProjectSection =
-  document.getElementById("addProjectSection");
-
-const userEmail =
-  document.getElementById("userEmail");
-
-const userRole =
-  document.getElementById("userRole");
-
-const roleMessage =
-  document.getElementById("roleMessage");
-
-const projectMessage =
-  document.getElementById("projectMessage");
-
-let currentUser = null;
-
-
-/* =========================
-   CREATION DU COMPTE
-========================= */
-
-document.getElementById("signup").onclick =
-async function() {
-
-  message.textContent =
-    "⏳ Création du compte...";
-
-  const e =
-    email.value.trim();
-
-  const p =
-    password.value;
-
-  if (!e || !p) {
-
-    message.textContent =
-      "❌ Remplis les deux champs.";
-
-    return;
-  }
-
-  if (p.length < 6) {
-
-    message.textContent =
-      "❌ Mot de passe : 6 caractères minimum.";
-
-    return;
-  }
-
-  try {
-
-    const result =
-      await client.auth.signUp({
-        email: e,
-        password: p
-      });
-
-    if (result.error) {
-
-      message.textContent =
-        "❌ " + result.error.message;
-
-      return;
-    }
-
-    if (result.data.user) {
-
-      currentUser =
-        result.data.user;
-
-      message.textContent =
-        "✅ Compte créé !";
-
-      setTimeout(
-        afficherChoixRole,
-        500
-      );
-    }
-
-  } catch(error) {
-
-    message.textContent =
-      "❌ " + error.message;
-  }
-};
-
-
-/* =========================
-   CONNEXION
-========================= */
-
-document.getElementById("login").onclick =
-async function() {
-
-  message.textContent =
-    "⏳ Connexion...";
-
-  try {
-
-    const result =
-      await client.auth.signInWithPassword({
-
-        email:
-          email.value.trim(),
-
-        password:
-          password.value
-      });
-
-    if (result.error) {
-
-      message.textContent =
-        "❌ " + result.error.message;
-
-      return;
-    }
-
-    currentUser =
-      result.data.user;
-
-    await chargerProfil(
-      currentUser
+  const client =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
     );
 
-  } catch(error) {
 
-    message.textContent =
-      "❌ " + error.message;
-  }
-};
+  /* =========================
+     ELEMENTS
+  ========================= */
 
+  const message =
+    document.getElementById("message");
 
-/* =========================
-   CHOIX PROFIL
-========================= */
+  const authSection =
+    document.getElementById("authSection");
 
-function afficherChoixRole() {
+  const roleSection =
+    document.getElementById("roleSection");
 
-  auth.style.display =
-    "none";
+  const dashboardSection =
+    document.getElementById("dashboardSection");
 
-  dashboard.style.display =
-    "none";
+  const projectsSection =
+    document.getElementById("projectsSection");
 
-  projectsSection.style.display =
-    "none";
-
-  addProjectSection.style.display =
-    "none";
-
-  roleChoice.style.display =
-    "block";
-}
+  const addProjectSection =
+    document.getElementById("addProjectSection");
 
 
-document.getElementById("investisseur").onclick =
-async function() {
+  /* =========================
+     MESSAGE
+  ========================= */
 
-  await enregistrerRole(
-    "investisseur"
-  );
-};
-
-
-document.getElementById("porteur").onclick =
-async function() {
-
-  await enregistrerRole(
-    "porteur_projet"
-  );
-};
-
-
-/* =========================
-   ENREGISTRER LE ROLE
-========================= */
-
-async function enregistrerRole(role) {
-
-  roleMessage.textContent =
-    "⏳ Enregistrement...";
-
-  if (!currentUser) {
-
-    roleMessage.textContent =
-      "❌ Utilisateur introuvable.";
-
-    return;
+  function showMessage(text) {
+    message.textContent = text;
   }
 
-  try {
 
-    const result =
-      await client
-        .from("profiles")
-        .upsert({
-          id:
-            currentUser.id,
+  /* =========================
+     AUTH
+  ========================= */
 
-          role:
-            role
+  document
+    .getElementById("signupBtn")
+    .addEventListener("click", async function() {
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      if (!email || !password) {
+        showMessage("❌ Remplis tous les champs.");
+        return;
+      }
+
+      showMessage("⏳ Création du compte...");
+
+      const { data, error } =
+        await client.auth.signUp({
+          email: email,
+          password: password
         });
 
-    if (result.error) {
+      if (error) {
+        showMessage("❌ " + error.message);
+        return;
+      }
 
-      roleMessage.textContent =
-        "❌ " +
-        result.error.message;
+      if (data.user) {
+        showMessage("✅ Compte créé avec succès !");
+        authSection.classList.add("hidden");
+        roleSection.classList.remove("hidden");
+      }
 
+    });
+
+
+  document
+    .getElementById("loginBtn")
+    .addEventListener("click", async function() {
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      if (!email || !password) {
+        showMessage("❌ Remplis tous les champs.");
+        return;
+      }
+
+      showMessage("⏳ Connexion...");
+
+      const { data, error } =
+        await client.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+      if (error) {
+        showMessage("❌ " + error.message);
+        return;
+      }
+
+      showMessage("✅ Connexion réussie.");
+
+      await loadUser();
+
+    });
+
+
+  /* =========================
+     LOAD USER
+  ========================= */
+
+  async function loadUser() {
+
+    const {
+      data: { user }
+    } = await client.auth.getUser();
+
+    if (!user) {
       return;
     }
 
-    afficherDashboardAvecRole(
-      currentUser,
-      role
-    );
+    authSection.classList.add("hidden");
 
-  } catch(error) {
-
-    roleMessage.textContent =
-      "❌ " +
-      error.message;
-  }
-}
-
-
-/* =========================
-   CHARGER LE PROFIL
-========================= */
-
-async function chargerProfil(user) {
-
-  try {
-
-    const result =
+    const { data: profile } =
       await client
         .from("profiles")
         .select("role")
         .eq("id", user.id)
         .maybeSingle();
 
-    if (
-      result.data &&
-      result.data.role
-    ) {
+    if (!profile) {
 
-      afficherDashboardAvecRole(
-        user,
-        result.data.role
-      );
+      roleSection.classList.remove("hidden");
 
-    } else {
-
-      afficherChoixRole();
-    }
-
-  } catch(error) {
-
-    afficherChoixRole();
-  }
-}
-
-
-/* =========================
-   TABLEAU DE BORD
-========================= */
-
-function afficherDashboardAvecRole(
-  user,
-  role
-) {
-
-  auth.style.display =
-    "none";
-
-  roleChoice.style.display =
-    "none";
-
-  projectsSection.style.display =
-    "none";
-
-  addProjectSection.style.display =
-    "none";
-
-  dashboard.style.display =
-    "block";
-
-  userEmail.textContent =
-    "Connecté : " +
-    user.email;
-
-  if (
-    role === "investisseur"
-  ) {
-
-    userRole.textContent =
-      "💰 Investisseur";
-
-  } else {
-
-    userRole.textContent =
-      "🚀 Porteur de projet";
-  }
-}
-
-
-/* =========================
-   AFFICHER LES PROJETS
-========================= */
-
-document.getElementById("showProjects").onclick =
-async function() {
-
-  addProjectSection.style.display =
-    "none";
-
-  projectsSection.style.display =
-    "block";
-
-  await chargerProjets();
-};
-
-
-/* =========================
-   CHARGER LES PROJETS
-========================= */
-
-async function chargerProjets() {
-
-  const list =
-    document.getElementById(
-      "projectsList"
-    );
-
-  list.innerHTML =
-    "⏳ Chargement...";
-
-  try {
-
-    const result =
-      await client
-        .from("projects")
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
-
-    if (result.error) {
-
-      list.innerHTML =
-        "❌ " +
-        result.error.message;
+      dashboardSection.classList.add("hidden");
 
       return;
     }
 
-    if (
-      !result.data ||
-      result.data.length === 0
-    ) {
+    roleSection.classList.add("hidden");
+
+    dashboardSection.classList.remove("hidden");
+
+    document.getElementById("welcomeText").textContent =
+      "Bienvenue 👋 Votre profil : " +
+      profile.role;
+
+  }
+
+
+  /* =========================
+     SAVE ROLE
+  ========================= */
+
+  async function saveRole(role) {
+
+    const {
+      data: { user }
+    } = await client.auth.getUser();
+
+    if (!user) {
+      showMessage("❌ Utilisateur non connecté.");
+      return;
+    }
+
+    showMessage("⏳ Enregistrement...");
+
+    const { error } =
+      await client
+        .from("profiles")
+        .upsert({
+          id: user.id,
+          role: role
+        });
+
+    if (error) {
+      showMessage("❌ " + error.message);
+      return;
+    }
+
+    showMessage("✅ Bienvenue !");
+
+    roleSection.classList.add("hidden");
+
+    dashboardSection.classList.remove("hidden");
+
+    document.getElementById("welcomeText").textContent =
+      "Bienvenue 👋 Votre profil : " + role;
+
+  }
+
+
+  document
+    .getElementById("investorBtn")
+    .addEventListener("click", function() {
+      saveRole("investisseur");
+    });
+
+
+  document
+    .getElementById("ownerBtn")
+    .addEventListener("click", function() {
+      saveRole("porteur_de_projet");
+    });
+
+
+  /* =========================
+     SHOW PROJECTS
+  ========================= */
+
+  document
+    .getElementById("projectsBtn")
+    .addEventListener("click", async function() {
+
+      dashboardSection.classList.add("hidden");
+
+      projectsSection.classList.remove("hidden");
+
+      await chargerProjets();
+
+    });
+
+
+  /* =========================
+     LOAD PROJECTS
+  ========================= */
+
+  async function chargerProjets() {
+
+    const list =
+      document.getElementById("projectsList");
+
+    list.innerHTML =
+      "⏳ Chargement des projets...";
+
+    const { data, error } =
+      await client
+        .from("projects")
+        .select("*");
+
+    if (error) {
+
+      list.innerHTML =
+        "❌ " + error.message;
+
+      return;
+    }
+
+    if (!data || data.length === 0) {
 
       list.innerHTML =
         "<p>Aucun projet pour le moment.</p>";
@@ -696,210 +493,192 @@ async function chargerProjets() {
 
     list.innerHTML = "";
 
-    result.data.forEach(
-      function(project) {
+    data.forEach(function(project) {
 
-        const div =
-          document.createElement(
-            "div"
-          );
+      const div =
+        document.createElement("div");
 
-        div.className =
-          "project";
+      div.className = "project";
 
-        div.innerHTML = `
+      div.innerHTML = `
+        <h3>
+          ${project.title || "Projet sans nom"}
+        </h3>
 
-          <h3>
-            ${project.title || "Projet sans nom"}
-          </h3>
+        <span class="sector">
+          ${project.sector || "Secteur non précisé"}
+        </span>
 
-          <span class="sector">
-            ${project.sector || "Secteur non précisé"}
-          </span>
+        <p>
+          ${project.description || "Aucune description."}
+        </p>
+      `;
 
-          <p>
-            ${project.description || "Aucune description."}
-          </p>
+      list.appendChild(div);
 
-        `;
+    });
 
-        list.appendChild(div);
+  }
+
+
+  /* =========================
+     ADD PROJECT
+  ========================= */
+
+  document
+    .getElementById("addProjectBtn")
+    .addEventListener("click", function() {
+
+      dashboardSection.classList.add("hidden");
+
+      addProjectSection.classList.remove("hidden");
+
+    });
+
+
+  document
+    .getElementById("saveProjectBtn")
+    .addEventListener("click", async function() {
+
+      const title =
+        document
+          .getElementById("projectTitle")
+          .value
+          .trim();
+
+      const description =
+        document
+          .getElementById("projectDescription")
+          .value
+          .trim();
+
+      const sector =
+        document
+          .getElementById("projectSector")
+          .value
+          .trim();
+
+      if (!title) {
+        showMessage("❌ Ajoute un titre.");
+        return;
       }
-    );
 
-  } catch(error) {
+      showMessage("⏳ Publication du projet...");
 
-    list.innerHTML =
-      "❌ " +
-      error.message;
-  }
-}
+      const { error } =
+        await client
+          .from("projects")
+          .insert({
+            id: crypto.randomUUID(),
+            title: title,
+            description: description,
+            sector: sector
+          });
+
+      if (error) {
+
+        showMessage("❌ " + error.message);
+
+        return;
+      }
+
+      showMessage("✅ Projet publié !");
+
+      document
+        .getElementById("projectTitle")
+        .value = "";
+
+      document
+        .getElementById("projectDescription")
+        .value = "";
+
+      document
+        .getElementById("projectSector")
+        .value = "";
+
+      addProjectSection.classList.add("hidden");
+
+      projectsSection.classList.remove("hidden");
+
+      await chargerProjets();
+
+    });
 
 
-/* =========================
-   AJOUTER UN PROJET
-========================= */
+  /* =========================
+     BACK BUTTONS
+  ========================= */
 
-document.getElementById("showAddProject").onclick =
-function() {
+  document
+    .getElementById("backBtn")
+    .addEventListener("click", function() {
 
-  projectsSection.style.display =
-    "none";
+      projectsSection.classList.add("hidden");
 
-  addProjectSection.style.display =
-    "block";
-};
+      dashboardSection.classList.remove("hidden");
+
+    });
 
 
-document.getElementById("addProject").onclick =
-async function() {
+  document
+    .getElementById("backAddBtn")
+    .addEventListener("click", function() {
 
-  projectMessage.textContent =
-    "⏳ Publication...";
+      addProjectSection.classList.add("hidden");
 
-  const title =
-    document
-      .getElementById("projectTitle")
-      .value
-      .trim();
+      dashboardSection.classList.remove("hidden");
 
-  const description =
-    document
-      .getElementById("projectDescription")
-      .value
-      .trim();
+    });
 
-  const sector =
-    document
-      .getElementById("projectSector")
-      .value
-      .trim();
 
-  if (!title) {
+  /* =========================
+     LOGOUT
+  ========================= */
 
-    projectMessage.textContent =
-      "❌ Ajoute un nom au projet.";
+  document
+    .getElementById("logoutBtn")
+    .addEventListener("click", async function() {
 
-    return;
-  }
+      await client.auth.signOut();
 
-  try {
+      authSection.classList.remove("hidden");
 
-    const result =
-      await client
-        .from("projects")
-        .insert({
+      roleSection.classList.add("hidden");
 
-          id:
-            crypto.randomUUID(),
+      dashboardSection.classList.add("hidden");
 
-          title:
-            title,
+      projectsSection.classList.add("hidden");
 
-          description:
-            description,
+      addProjectSection.classList.add("hidden");
 
-          sector:
-            sector
+      showMessage("✅ Déconnecté.");
 
-        });
+    });
 
-    if (result.error) {
 
-      projectMessage.textContent =
-        "❌ " +
-        result.error.message;
+  /* =========================
+     START
+  ========================= */
 
-      return;
+  (async function() {
+
+    try {
+
+      const {
+        data: { session }
+      } = await client.auth.getSession();
+
+      if (session) {
+        await loadUser();
+      }
+
+    } catch (error) {
+
+      showMessage("❌ " + error.message);
+
     }
 
-    projectMessage.textContent =
-      "✅ Projet publié !";
-
-    document
-      .getElementById("projectTitle")
-      .value = "";
-
-    document
-      .getElementById("projectDescription")
-      .value = "";
-
-    document
-      .getElementById("projectSector")
-      .value = "";
-
-  } catch(error) {
-
-    projectMessage.textContent =
-      "❌ " +
-      error.message;
-  }
-};
-
-
-/* =========================
-   DECONNEXION
-========================= */
-
-document.getElementById("logout").onclick =
-async function() {
-
-  await client.auth.signOut();
-
-  currentUser = null;
-
-  dashboard.style.display =
-    "none";
-
-  roleChoice.style.display =
-    "none";
-
-  projectsSection.style.display =
-    "none";
-
-  addProjectSection.style.display =
-    "none";
-
-  auth.style.display =
-    "block";
-
-  email.value = "";
-
-  password.value = "";
-};
-
-
-/* =========================
-   VERIFIER LA CONNEXION
-========================= */
-
-async function verifierConnexion() {
-
-  try {
-
-    const result =
-      await client.auth.getSession();
-
-    if (
-      result.data.session
-    ) {
-
-      currentUser =
-        result.data.session.user;
-
-      await chargerProfil(
-        currentUser
-      );
-    }
-
-  } catch(error) {
-
-    console.log(error);
-  }
-}
-
-
-verifierConnexion();
+  })();
 
 </script>
 
