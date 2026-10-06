@@ -1,572 +1,497 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🇬🇳 Guinée Invest Hub</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇬🇳 Guinée Invest Hub</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f7f5;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .box {
-      max-width: 500px;
-      margin: 40px auto;
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.08);
-    }
-
-    h1, h2 {
-      text-align: center;
-    }
-
-    input, select, textarea, button {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 13px;
-      margin: 7px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    button {
-      background: #16803c;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      opacity: .9;
-    }
-
-    .secondary {
-      background: #333;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    #message {
-      text-align: center;
-      margin: 15px 0;
-      font-weight: bold;
-    }
-
-    .project {
-      border: 1px solid #ddd;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 10px;
-    }
-  </style>
+<style>
+body{font-family:Arial;background:#f4f7f5;margin:0;padding:20px}
+.box{max-width:500px;margin:30px auto;background:white;padding:25px;border-radius:15px}
+h1,h2{text-align:center}
+input,textarea,button{width:100%;box-sizing:border-box;padding:13px;margin:7px 0;border-radius:8px;border:1px solid #ccc;font-size:16px}
+button{background:#16803c;color:white;border:0;font-weight:bold;cursor:pointer}
+.dark{background:#333}
+.hidden{display:none}
+#message{text-align:center;font-weight:bold;margin:15px}
+.project{border:1px solid #ddd;padding:15px;margin:10px 0;border-radius:10px}
+</style>
 </head>
 
 <body>
 
 <div class="box">
 
-  <h1>🇬🇳 Guinée Invest Hub</h1>
+<h1>🇬🇳 Guinée Invest Hub</h1>
 
-  <div id="message"></div>
+<div id="message"></div>
 
-  <!-- INSCRIPTION -->
-  <div id="signupBox">
-    <h2>Créer un compte</h2>
+<div id="signupBox">
+<h2>Créer un compte</h2>
 
-    <input
-      id="signupEmail"
-      type="email"
-      placeholder="Votre email"
-    >
+<input id="signupEmail" type="email" placeholder="Votre email">
+<input id="signupPassword" type="password" placeholder="Mot de passe">
 
-    <input
-      id="signupPassword"
-      type="password"
-      placeholder="Votre mot de passe"
-    >
+<button onclick="signup()">Créer mon compte</button>
+<button class="dark" onclick="showLogin()">J'ai déjà un compte</button>
+</div>
 
-    <button onclick="signup()">
-      Créer mon compte
-    </button>
+<div id="loginBox" class="hidden">
+<h2>Connexion</h2>
 
-    <button class="secondary" onclick="showLogin()">
-      J'ai déjà un compte
-    </button>
-  </div>
+<input id="loginEmail" type="email" placeholder="Votre email">
+<input id="loginPassword" type="password" placeholder="Mot de passe">
 
-  <!-- CONNEXION -->
-  <div id="loginBox" class="hidden">
-    <h2>Connexion</h2>
+<button onclick="login()">Se connecter</button>
+<button class="dark" onclick="showSignup()">Créer un compte</button>
+</div>
 
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="Votre email"
-    >
+<div id="roleBox" class="hidden">
+<h2>Choisissez votre profil</h2>
 
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="Votre mot de passe"
-    >
+<button onclick="saveRole('investisseur')">💰 Investisseur</button>
+<button onclick="saveRole('porteur de projet')">🚀 Porteur de projet</button>
+</div>
 
-    <button onclick="login()">
-      Se connecter
-    </button>
+<div id="dashboard" class="hidden">
+<h2>Bienvenue 🇬🇳</h2>
 
-    <button class="secondary" onclick="showSignup()">
-      Créer un compte
-    </button>
-  </div>
+<button onclick="showProjects()">📊 Voir les projets</button>
+<button onclick="showAddProject()">➕ Ajouter un projet</button>
+<button class="dark" onclick="logout()">Déconnexion</button>
+</div>
 
-  <!-- CHOIX DU PROFIL -->
-  <div id="roleBox" class="hidden">
-    <h2>Choisissez votre profil</h2>
+<div id="projectsBox" class="hidden">
+<h2>Projets</h2>
+<div id="projectsList">Chargement...</div>
+<button class="dark" onclick="backDashboard()">Retour</button>
+</div>
 
-    <button onclick="saveRole('investisseur')">
-      💰 Investisseur
-    </button>
+<div id="addProjectBox" class="hidden">
+<h2>Ajouter un projet</h2>
 
-    <button onclick="saveRole('porteur de projet')">
-      🚀 Porteur de projet
-    </button>
-  </div>
+<input id="projectTitle" placeholder="Titre du projet">
 
-  <!-- TABLEAU DE BORD -->
-  <div id="dashboard" class="hidden">
-    <h2>Bienvenue 🇬🇳</h2>
+<textarea id="projectDescription" placeholder="Description"></textarea>
 
-    <button onclick="showProjects()">
-      📊 Voir les projets
-    </button>
+<input id="projectSector" placeholder="Secteur">
 
-    <button onclick="showAddProject()">
-      ➕ Ajouter un projet
-    </button>
-
-    <button class="secondary" onclick="logout()">
-      Déconnexion
-    </button>
-  </div>
-
-  <!-- PROJETS -->
-  <div id="projectsBox" class="hidden">
-    <h2>Projets</h2>
-
-    <div id="projectsList">
-      Chargement...
-    </div>
-
-    <button class="secondary" onclick="backDashboard()">
-      Retour
-    </button>
-  </div>
-
-  <!-- AJOUT PROJET -->
-  <div id="addProjectBox" class="hidden">
-    <h2>Ajouter un projet</h2>
-
-    <input
-      id="projectTitle"
-      type="text"
-      placeholder="Titre du projet"
-    >
-
-    <textarea
-      id="projectDescription"
-      placeholder="Description du projet"
-    ></textarea>
-
-    <input
-      id="projectSector"
-      type="text"
-      placeholder="Secteur"
-    >
-
-    <button onclick="addProject()">
-      Publier le projet
-    </button>
-
-    <button class="secondary" onclick="backDashboard()">
-      Retour
-    </button>
-  </div>
+<button onclick="addProject()">Publier le projet</button>
+<button class="dark" onclick="backDashboard()">Retour</button>
+</div>
 
 </div>
 
 <script>
 
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
 "https://phwnkvglvebbajixwjau.supabase.co";
 
-/*
-  ⚠️ REMPLACE SEULEMENT CETTE VALEUR
-  par ta vraie clé sb_publishable_...
-*/
 const SUPABASE_KEY =
 sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
 
-const supabaseClient =
+const client =
 window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
-function message(text) {
-  document.getElementById("message").textContent = text;
+/* =========================
+   AFFICHAGE
+========================= */
+
+function message(text){
+document.getElementById("message").textContent=text;
+}
+
+function hideAll(){
+document.getElementById("signupBox").classList.add("hidden");
+document.getElementById("loginBox").classList.add("hidden");
+document.getElementById("roleBox").classList.add("hidden");
+document.getElementById("dashboard").classList.add("hidden");
+document.getElementById("projectsBox").classList.add("hidden");
+document.getElementById("addProjectBox").classList.add("hidden");
+}
+
+function showSignup(){
+hideAll();
+document.getElementById("signupBox").classList.remove("hidden");
+}
+
+function showLogin(){
+hideAll();
+document.getElementById("loginBox").classList.remove("hidden");
 }
 
 
-function hideAll() {
-  document.getElementById("signupBox").classList.add("hidden");
-  document.getElementById("loginBox").classList.add("hidden");
-  document.getElementById("roleBox").classList.add("hidden");
-  document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("projectsBox").classList.add("hidden");
-  document.getElementById("addProjectBox").classList.add("hidden");
+/* =========================
+   INSCRIPTION
+========================= */
+
+async function signup(){
+
+const email =
+document.getElementById("signupEmail").value.trim();
+
+const password =
+document.getElementById("signupPassword").value;
+
+if(!email || !password){
+message("❌ Remplis tous les champs.");
+return;
+}
+
+if(password.length < 6){
+message("❌ Minimum 6 caractères.");
+return;
+}
+
+message("⏳ Création du compte...");
+
+try{
+
+const result =
+await client.auth.signUp({
+email:email,
+password:password
+});
+
+if(result.error){
+message("❌ "+result.error.message);
+return;
+}
+
+message("✅ Compte créé !");
+
+hideAll();
+
+document
+.getElementById("roleBox")
+.classList.remove("hidden");
+
+}catch(error){
+
+message("❌ "+error.message);
+
+}
+
 }
 
 
-function showSignup() {
-  hideAll();
-  document.getElementById("signupBox").classList.remove("hidden");
+/* =========================
+   CONNEXION
+========================= */
+
+async function login(){
+
+const email =
+document.getElementById("loginEmail").value.trim();
+
+const password =
+document.getElementById("loginPassword").value;
+
+if(!email || !password){
+message("❌ Remplis tous les champs.");
+return;
+}
+
+message("⏳ Connexion...");
+
+try{
+
+const result =
+await client.auth.signInWithPassword({
+email:email,
+password:password
+});
+
+if(result.error){
+message("❌ "+result.error.message);
+return;
+}
+
+message("✅ Connexion réussie !");
+
+await checkProfile();
+
+}catch(error){
+
+message("❌ "+error.message);
+
+}
+
 }
 
 
-function showLogin() {
-  hideAll();
-  document.getElementById("loginBox").classList.remove("hidden");
+/* =========================
+   PROFIL
+========================= */
+
+async function saveRole(role){
+
+const result =
+await client.auth.getUser();
+
+if(result.error || !result.data.user){
+message("❌ Utilisateur non connecté.");
+return;
+}
+
+message("⏳ Enregistrement...");
+
+const user =
+result.data.user;
+
+const profile =
+await client
+.from("profiles")
+.upsert({
+id:user.id,
+role:role
+});
+
+if(profile.error){
+message("❌ "+profile.error.message);
+return;
+}
+
+message("✅ Profil enregistré !");
+
+hideAll();
+
+document
+.getElementById("dashboard")
+.classList.remove("hidden");
+
 }
 
 
-/* INSCRIPTION */
-async function signup() {
+/* =========================
+   VÉRIFICATION PROFIL
+========================= */
 
-  const email =
-    document.getElementById("signupEmail").value.trim();
+async function checkProfile(){
 
-  const password =
-    document.getElementById("signupPassword").value;
+const result =
+await client.auth.getUser();
 
-  if (!email || !password) {
-    message("❌ Remplis tous les champs.");
-    return;
-  }
+if(result.error || !result.data.user){
+showLogin();
+return;
+}
 
-  if (password.length < 6) {
-    message("❌ Mot de passe : minimum 6 caractères.");
-    return;
-  }
+const user =
+result.data.user;
 
-  message("⏳ Création du compte...");
+const profile =
+await client
+.from("profiles")
+.select("*")
+.eq("id",user.id)
+.maybeSingle();
 
-  try {
+if(profile.error){
+message("❌ "+profile.error.message);
+return;
+}
 
-    const { data, error } =
-      await supabaseClient.auth.signUp({
-        email: email,
-        password: password
-      });
+hideAll();
 
-    if (error) {
-      message("❌ " + error.message);
-      return;
-    }
+if(profile.data){
 
-    message("✅ Compte créé avec succès !");
+document
+.getElementById("dashboard")
+.classList.remove("hidden");
 
-    if (data.user) {
-      hideAll();
-      document
-        .getElementById("roleBox")
-        .classList.remove("hidden");
-    }
+}else{
 
-  } catch (error) {
+document
+.getElementById("roleBox")
+.classList.remove("hidden");
 
-    message("❌ Erreur : " + error.message);
+}
 
-  }
 }
 
 
-/* CONNEXION */
-async function login() {
+/* =========================
+   PROJETS
+========================= */
 
-  const email =
-    document.getElementById("loginEmail").value.trim();
+async function showProjects(){
 
-  const password =
-    document.getElementById("loginPassword").value;
+hideAll();
 
-  if (!email || !password) {
-    message("❌ Remplis tous les champs.");
-    return;
-  }
+document
+.getElementById("projectsBox")
+.classList.remove("hidden");
 
-  message("⏳ Connexion...");
+const list =
+document.getElementById("projectsList");
 
-  try {
+list.innerHTML="⏳ Chargement...";
 
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+const result =
+await client
+.from("projects")
+.select("*");
 
-    if (error) {
-      message("❌ " + error.message);
-      return;
-    }
+if(result.error){
 
-    message("✅ Connexion réussie !");
+list.innerHTML=
+"❌ "+result.error.message;
 
-    await checkProfile();
+return;
 
-  } catch (error) {
+}
 
-    message("❌ Erreur : " + error.message);
+if(!result.data || result.data.length===0){
 
-  }
+list.innerHTML=
+"Aucun projet pour le moment.";
+
+return;
+
+}
+
+list.innerHTML="";
+
+result.data.forEach(project=>{
+
+list.innerHTML+=`
+<div class="project">
+<h3>${project.title || ""}</h3>
+<p>${project.description || ""}</p>
+<strong>${project.sector || ""}</strong>
+</div>
+`;
+
+});
+
 }
 
 
-/* PROFIL */
-async function saveRole(role) {
+/* =========================
+   AJOUT PROJET
+========================= */
 
-  const {
-    data: { user },
-    error: userError
-  } = await supabaseClient.auth.getUser();
+async function addProject(){
 
-  if (userError || !user) {
-    message("❌ Utilisateur non connecté.");
-    return;
-  }
+const title =
+document.getElementById("projectTitle").value.trim();
 
-  message("⏳ Enregistrement du profil...");
+const description =
+document.getElementById("projectDescription").value.trim();
 
-  const { error } =
-    await supabaseClient
-      .from("profiles")
-      .upsert({
-        id: user.id,
-        role: role
-      });
+const sector =
+document.getElementById("projectSector").value.trim();
 
-  if (error) {
-    message("❌ " + error.message);
-    return;
-  }
+if(!title){
+message("❌ Ajoute un titre.");
+return;
+}
 
-  message("✅ Profil enregistré !");
+message("⏳ Publication...");
 
-  hideAll();
-  document
-    .getElementById("dashboard")
-    .classList.remove("hidden");
+const user =
+await client.auth.getUser();
+
+if(user.error || !user.data.user){
+
+message("❌ Connecte-toi d'abord.");
+return;
+
+}
+
+const result =
+await client
+.from("projects")
+.insert({
+id:crypto.randomUUID(),
+title:title,
+description:description,
+sector:sector
+});
+
+if(result.error){
+
+message("❌ "+result.error.message);
+return;
+
+}
+
+message("✅ Projet publié !");
+
+document.getElementById("projectTitle").value="";
+document.getElementById("projectDescription").value="";
+document.getElementById("projectSector").value="";
+
+showProjects();
+
 }
 
 
-/* VÉRIFIER PROFIL */
-async function checkProfile() {
+/* =========================
+   NAVIGATION
+========================= */
 
-  const {
-    data: { user }
-  } = await supabaseClient.auth.getUser();
+function showAddProject(){
 
-  if (!user) {
-    showLogin();
-    return;
-  }
+hideAll();
 
-  const { data, error } =
-    await supabaseClient
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .maybeSingle();
+document
+.getElementById("addProjectBox")
+.classList.remove("hidden");
 
-  if (error) {
-    message("❌ " + error.message);
-    return;
-  }
+}
 
-  hideAll();
+function backDashboard(){
 
-  if (!data) {
-    document
-      .getElementById("roleBox")
-      .classList.remove("hidden");
-  } else {
-    document
-      .getElementById("dashboard")
-      .classList.remove("hidden");
-  }
+hideAll();
+
+document
+.getElementById("dashboard")
+.classList.remove("hidden");
+
+}
+
+async function logout(){
+
+await client.auth.signOut();
+
+message("✅ Déconnecté.");
+
+showLogin();
+
 }
 
 
-/* AFFICHER LES PROJETS */
-async function showProjects() {
+/* =========================
+   DÉMARRAGE
+========================= */
 
-  hideAll();
+async function startApp(){
 
-  document
-    .getElementById("projectsBox")
-    .classList.remove("hidden");
+const result =
+await client.auth.getSession();
 
-  const list =
-    document.getElementById("projectsList");
+if(result.data.session){
 
-  list.innerHTML = "⏳ Chargement...";
+await checkProfile();
 
-  const { data, error } =
-    await supabaseClient
-      .from("projects")
-      .select("*");
+}else{
 
-  if (error) {
-    list.innerHTML =
-      "❌ " + error.message;
-    return;
-  }
+showSignup();
 
-  if (!data || data.length === 0) {
-    list.innerHTML =
-      "Aucun projet pour le moment.";
-    return;
-  }
-
-  list.innerHTML = "";
-
-  data.forEach(project => {
-
-    list.innerHTML += `
-      <div class="project">
-        <h3>${project.title || ""}</h3>
-        <p>${project.description || ""}</p>
-        <strong>${project.sector || ""}</strong>
-      </div>
-    `;
-
-  });
 }
 
-
-/* AJOUTER UN PROJET */
-async function addProject() {
-
-  const title =
-    document.getElementById("projectTitle")
-      .value.trim();
-
-  const description =
-    document.getElementById("projectDescription")
-      .value.trim();
-
-  const sector =
-    document.getElementById("projectSector")
-      .value.trim();
-
-  if (!title) {
-    message("❌ Ajoute un titre.");
-    return;
-  }
-
-  message("⏳ Publication...");
-
-  const {
-    data: { user }
-  } = await supabaseClient.auth.getUser();
-
-  if (!user) {
-    message("❌ Connecte-toi d'abord.");
-    return;
-  }
-
-  const { error } =
-    await supabaseClient
-      .from("projects")
-      .insert({
-        id: crypto.randomUUID(),
-        title: title,
-        description: description,
-        sector: sector
-      });
-
-  if (error) {
-    message("❌ " + error.message);
-    return;
-  }
-
-  message("✅ Projet publié !");
-
-  document.getElementById("projectTitle").value = "";
-  document.getElementById("projectDescription").value = "";
-  document.getElementById("projectSector").value = "";
-
-  showProjects();
-}
-
-
-/* AJOUT PROJET */
-function showAddProject() {
-
-  hideAll();
-
-  document
-    .getElementById("addProjectBox")
-    .classList.remove("hidden");
-}
-
-
-/* RETOUR */
-function backDashboard() {
-
-  hideAll();
-
-  document
-    .getElementById("dashboard")
-    .classList.remove("hidden");
-}
-
-
-/* DÉCONNEXION */
-async function logout() {
-
-  await supabaseClient.auth.signOut();
-
-  message("✅ Déconnecté.");
-
-  showLogin();
-}
-
-
-/* SESSION AU CHARGEMENT */
-async function startApp() {
-
-  const {
-    data: { session }
-  } = await supabaseClient.auth.getSession();
-
-  if (session) {
-    await checkProfile();
-  } else {
-    showSignup();
-  }
 }
 
 startApp();
