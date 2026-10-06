@@ -295,10 +295,15 @@ async function signup() {
   message("⏳ Connexion à Supabase...");
 
 const test = await fetch(
-  "https://phwnkvglvebbajixwjau.supabase.co/auth/v1/settings"
+  "https://phwnkvglvebbajixwjau.supabase.co/auth/v1/settings",
+  {
+    headers: {
+      "apikey": SUPABASE_KEY
+    }
+  }
 );
 
-message("✅ Supabase répond : " + test.status);
+message("Supabase : " + test.status);
 
   if (error) {
     message("❌ " + error.message);
