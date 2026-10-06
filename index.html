@@ -9,51 +9,43 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       padding: 20px;
       font-family: Arial, sans-serif;
       background: #f4f7f5;
-      color: #222;
     }
 
-    .container {
-      max-width: 650px;
+    .app {
+      max-width: 600px;
       margin: auto;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
     }
 
     h1 {
       text-align: center;
       color: #08783f;
-      margin-bottom: 25px;
     }
 
-    .card {
-      background: white;
-      padding: 22px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 3px 15px rgba(0,0,0,.08);
-    }
-
-    input,
-    textarea,
-    select {
+    input, textarea {
       width: 100%;
+      box-sizing: border-box;
       padding: 13px;
-      margin: 7px 0 12px;
+      margin: 7px 0;
       border: 1px solid #ccc;
-      border-radius: 9px;
+      border-radius: 8px;
       font-size: 16px;
     }
 
     textarea {
-      min-height: 120px;
-      resize: vertical;
+      min-height: 100px;
     }
 
     button {
@@ -61,90 +53,67 @@
       padding: 14px;
       margin: 7px 0;
       border: 0;
-      border-radius: 9px;
+      border-radius: 8px;
       background: #08783f;
       color: white;
       font-size: 16px;
       font-weight: bold;
-      cursor: pointer;
     }
 
-    button.secondary {
+    .blue {
       background: #1565c0;
     }
 
-    button.danger {
+    .red {
       background: #c62828;
     }
 
-    button.gray {
+    .gray {
       background: #555;
     }
 
-    button:hover {
-      opacity: .9;
-    }
-
     .hidden {
-      display: none !important;
+      display: none;
     }
 
     #message {
       text-align: center;
       font-weight: bold;
-      margin-bottom: 15px;
     }
 
     .project {
+      padding: 15px;
+      margin: 10px 0;
       border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 16px;
-      margin: 12px 0;
-      background: #fafafa;
-    }
-
-    .project h3 {
-      margin-top: 0;
-      color: #08783f;
+      border-radius: 10px;
     }
 
     .sector {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 20px;
-      background: #e8f5e9;
       color: #08783f;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-
-    .status {
-      padding: 10px;
-      border-radius: 8px;
-      background: #f1f1f1;
-      margin-bottom: 15px;
-      font-size: 14px;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
   <h1>🇬🇳 Guinée Invest Hub</h1>
 
-  <div id="message"></div>
+  <p id="message"></p>
+
 
   <!-- CONNEXION -->
-  <div id="authSection" class="card">
 
-    <h2>Connexion</h2>
+  <div id="login" class="card">
+
+    <h2>Créer un compte / Connexion</h2>
 
     <input
       id="email"
       type="email"
-      placeholder="Votre email"
+      placeholder="Email"
     >
 
     <input
@@ -153,59 +122,52 @@
       placeholder="Mot de passe"
     >
 
-    <button onclick="creerCompte()">
+    <button onclick="signup()">
       Créer mon compte
     </button>
 
-    <button
-      class="secondary"
-      onclick="connexion()">
+    <button class="blue" onclick="login()">
       Se connecter
     </button>
 
   </div>
 
 
-  <!-- CHOIX PROFIL -->
-  <div id="roleSection" class="card hidden">
+  <!-- PROFIL -->
 
-    <h2>Bienvenue 👋</h2>
+  <div id="role" class="card hidden">
 
-    <p>Choisissez votre profil :</p>
+    <h2>Choisissez votre profil</h2>
 
-    <button onclick="choisirRole('investisseur')">
+    <button onclick="saveRole('investisseur')">
       💰 Investisseur
     </button>
 
-    <button
-      class="secondary"
-      onclick="choisirRole('porteur_de_projet')">
+    <button class="blue"
+      onclick="saveRole('porteur_de_projet')">
       🏗️ Porteur de projet
     </button>
 
   </div>
 
 
-  <!-- TABLEAU DE BORD -->
-  <div id="dashboardSection" class="card hidden">
+  <!-- DASHBOARD -->
+
+  <div id="dashboard" class="card hidden">
 
     <h2>📊 Tableau de bord</h2>
 
-    <div id="welcomeText"></div>
+    <p id="welcome"></p>
 
-    <button onclick="voirProjets()">
+    <button onclick="showProjects()">
       📊 Voir les projets
     </button>
 
-    <button
-      class="secondary"
-      onclick="afficherAjoutProjet()">
+    <button class="blue" onclick="showAdd()">
       ➕ Ajouter un projet
     </button>
 
-    <button
-      class="danger"
-      onclick="deconnexion()">
+    <button class="red" onclick="logout()">
       🚪 Déconnexion
     </button>
 
@@ -213,52 +175,48 @@
 
 
   <!-- PROJETS -->
-  <div id="projectsSection" class="card hidden">
+
+  <div id="projects" class="card hidden">
 
     <h2>📊 Projets guinéens</h2>
 
-    <div id="projectsList">
+    <div id="projectList">
       Chargement...
     </div>
 
-    <button
-      class="gray"
-      onclick="retourDashboard()">
+    <button class="gray" onclick="back()">
       ← Retour
     </button>
 
   </div>
 
 
-  <!-- AJOUT PROJET -->
-  <div id="addProjectSection" class="card hidden">
+  <!-- AJOUT -->
+
+  <div id="add" class="card hidden">
 
     <h2>➕ Ajouter un projet</h2>
 
     <input
-      id="projectTitle"
-      type="text"
-      placeholder="Nom du projet"
+      id="title"
+      placeholder="Titre du projet"
     >
 
     <textarea
-      id="projectDescription"
+      id="description"
       placeholder="Description du projet">
     </textarea>
 
     <input
-      id="projectSector"
-      type="text"
-      placeholder="Secteur : agriculture, immobilier..."
+      id="sector"
+      placeholder="Secteur"
     >
 
-    <button onclick="ajouterProjet()">
-      🚀 Publier le projet
+    <button onclick="addProject()">
+      🚀 Publier
     </button>
 
-    <button
-      class="gray"
-      onclick="retourDashboard()">
+    <button class="gray" onclick="back()">
       ← Retour
     </button>
 
@@ -269,649 +227,447 @@
 
 <script>
 
-  /* =====================================
-     CONFIGURATION SUPABASE
-  ===================================== */
+/* =====================================
+   SUPABASE
+===================================== */
 
-  const SUPABASE_URL =
-    "https://phwnkvglvebbajixwjau.supabase.co";
-
-  /*
-    ⚠️ COLLE ICI TA CLÉ PUBLISHABLE
-
-    Elle doit commencer par :
-    sb_publishable_
-  */
-
-  const SUPABASE_KEY =
-    "COLLE_TA_CLE_SB_PUBLISHABLE_ICI";
+const SUPABASE_URL =
+"https://phwnkvglvebbajixwjau.supabase.co";
 
 
-  /* =====================================
-     INITIALISATION
-  ===================================== */
+/*
+   COLLE TA CLÉ ICI
 
-  let client = null;
+   Exemple :
+
+   const SUPABASE_KEY =
+   "sb_publishable_xxxxxxxxx";
+*/
+
+const SUPABASE_KEY =
+sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
 
 
-  function afficherMessage(message) {
-    document.getElementById("message").textContent = message;
+const supabase =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* =====================================
+   OUTILS
+===================================== */
+
+function msg(text) {
+
+  document.getElementById("message")
+    .textContent = text;
+
+}
+
+
+function hideAll() {
+
+  document.getElementById("login")
+    .classList.add("hidden");
+
+  document.getElementById("role")
+    .classList.add("hidden");
+
+  document.getElementById("dashboard")
+    .classList.add("hidden");
+
+  document.getElementById("projects")
+    .classList.add("hidden");
+
+  document.getElementById("add")
+    .classList.add("hidden");
+
+}
+
+
+/* =====================================
+   CREER COMPTE
+===================================== */
+
+async function signup() {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  if (!email || !password) {
+
+    msg("❌ Remplis tous les champs.");
+
+    return;
   }
 
+  msg("⏳ Création du compte...");
 
-  function initialiserSupabase() {
+  const result =
+    await supabase.auth.signUp({
+      email: email,
+      password: password
+    });
 
-    if (!window.supabase) {
+  if (result.error) {
 
-      afficherMessage(
-        "❌ Supabase ne se charge pas."
-      );
+    msg("❌ " + result.error.message);
 
-      return false;
-    }
-
-    if (
-      !SUPABASE_KEY ||
-      SUPABASE_KEY ===
-      sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
-    ) {
-
-      afficherMessage(
-        "❌ Ajoute ta clé Supabase dans le code."
-      );
-
-      return false;
-    }
-
-    try {
-
-      client =
-        window.supabase.createClient(
-          SUPABASE_URL,
-          SUPABASE_KEY
-        );
-
-      return true;
-
-    } catch (error) {
-
-      afficherMessage(
-        "❌ " + error.message
-      );
-
-      return false;
-    }
+    return;
   }
 
+  msg("✅ Compte créé !");
 
-  /* =====================================
-     AFFICHAGE
-  ===================================== */
+  hideAll();
 
-  function cacherTout() {
+  document.getElementById("role")
+    .classList.remove("hidden");
 
-    document
-      .getElementById("authSection")
-      .classList.add("hidden");
+}
 
-    document
-      .getElementById("roleSection")
-      .classList.add("hidden");
 
-    document
-      .getElementById("dashboardSection")
-      .classList.add("hidden");
+/* =====================================
+   CONNEXION
+===================================== */
 
-    document
-      .getElementById("projectsSection")
-      .classList.add("hidden");
+async function login() {
 
-    document
-      .getElementById("addProjectSection")
-      .classList.add("hidden");
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  msg("⏳ Connexion...");
+
+  const result =
+    await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+  if (result.error) {
+
+    msg("❌ " + result.error.message);
+
+    return;
   }
 
+  await loadUser();
 
-  function afficherConnexion() {
+}
 
-    cacherTout();
 
-    document
-      .getElementById("authSection")
-      .classList.remove("hidden");
+/* =====================================
+   UTILISATEUR
+===================================== */
+
+async function loadUser() {
+
+  const result =
+    await supabase.auth.getUser();
+
+  if (!result.data.user) {
+
+    return;
   }
 
+  const user =
+    result.data.user;
 
-  /* =====================================
-     CRÉATION COMPTE
-  ===================================== */
 
-  async function creerCompte() {
+  const profile =
+    await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .maybeSingle();
 
-    if (!client) {
 
-      afficherMessage(
-        "❌ Supabase n'est pas configuré."
-      );
+  if (!profile.data) {
 
-      return;
-    }
+    hideAll();
 
-    const email =
-      document
-        .getElementById("email")
-        .value
-        .trim();
-
-    const password =
-      document
-        .getElementById("password")
-        .value;
-
-    if (!email || !password) {
-
-      afficherMessage(
-        "❌ Remplis l'email et le mot de passe."
-      );
-
-      return;
-    }
-
-    if (password.length < 6) {
-
-      afficherMessage(
-        "❌ Le mot de passe doit avoir au moins 6 caractères."
-      );
-
-      return;
-    }
-
-    afficherMessage(
-      "⏳ Création du compte..."
-    );
-
-    try {
-
-      const result =
-        await client.auth.signUp({
-          email: email,
-          password: password
-        });
-
-      if (result.error) {
-
-        afficherMessage(
-          "❌ " + result.error.message
-        );
-
-        return;
-      }
-
-      afficherMessage(
-        "✅ Compte créé avec succès !"
-      );
-
-      document
-        .getElementById("authSection")
-        .classList.add("hidden");
-
-      document
-        .getElementById("roleSection")
-        .classList.remove("hidden");
-
-    } catch (error) {
-
-      afficherMessage(
-        "❌ " + error.message
-      );
-    }
-  }
-
-
-  /* =====================================
-     CONNEXION
-  ===================================== */
-
-  async function connexion() {
-
-    if (!client) {
-
-      afficherMessage(
-        "❌ Supabase n'est pas configuré."
-      );
-
-      return;
-    }
-
-    const email =
-      document
-        .getElementById("email")
-        .value
-        .trim();
-
-    const password =
-      document
-        .getElementById("password")
-        .value;
-
-    if (!email || !password) {
-
-      afficherMessage(
-        "❌ Remplis l'email et le mot de passe."
-      );
-
-      return;
-    }
-
-    afficherMessage(
-      "⏳ Connexion..."
-    );
-
-    try {
-
-      const result =
-        await client.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
-
-      if (result.error) {
-
-        afficherMessage(
-          "❌ " + result.error.message
-        );
-
-        return;
-      }
-
-      afficherMessage(
-        "✅ Connexion réussie."
-      );
-
-      await chargerUtilisateur();
-
-    } catch (error) {
-
-      afficherMessage(
-        "❌ " + error.message
-      );
-    }
-  }
-
-
-  /* =====================================
-     UTILISATEUR
-  ===================================== */
-
-  async function chargerUtilisateur() {
-
-    const result =
-      await client.auth.getUser();
-
-    if (result.error || !result.data.user) {
-
-      afficherConnexion();
-
-      return;
-    }
-
-    const user =
-      result.data.user;
-
-
-    const profileResult =
-      await client
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .maybeSingle();
-
-
-    if (
-      profileResult.error ||
-      !profileResult.data
-    ) {
-
-      cacherTout();
-
-      document
-        .getElementById("roleSection")
-        .classList.remove("hidden");
-
-      return;
-    }
-
-
-    afficherDashboard(
-      profileResult.data.role
-    );
-  }
-
-
-  /* =====================================
-     CHOIX PROFIL
-  ===================================== */
-
-  async function choisirRole(role) {
-
-    const result =
-      await client.auth.getUser();
-
-    if (
-      result.error ||
-      !result.data.user
-    ) {
-
-      afficherMessage(
-        "❌ Vous devez être connecté."
-      );
-
-      return;
-    }
-
-    const user =
-      result.data.user;
-
-    afficherMessage(
-      "⏳ Enregistrement..."
-    );
-
-
-    const profile =
-      await client
-        .from("profiles")
-        .upsert({
-          id: user.id,
-          role: role
-        });
-
-
-    if (profile.error) {
-
-      afficherMessage(
-        "❌ " + profile.error.message
-      );
-
-      return;
-    }
-
-
-    afficherMessage(
-      "✅ Bienvenue !"
-    );
-
-    afficherDashboard(role);
-  }
-
-
-  /* =====================================
-     DASHBOARD
-  ===================================== */
-
-  function afficherDashboard(role) {
-
-    cacherTout();
-
-    document
-      .getElementById("dashboardSection")
+    document.getElementById("role")
       .classList.remove("hidden");
 
-    document
-      .getElementById("welcomeText")
-      .textContent =
-      "Votre profil : " + role;
+    return;
   }
 
 
-  /* =====================================
-     VOIR PROJETS
-  ===================================== */
+  showDashboard(profile.data.role);
 
-  async function voirProjets() {
+}
 
-    cacherTout();
 
-    document
-      .getElementById("projectsSection")
-      .classList.remove("hidden");
+/* =====================================
+   ROLE
+===================================== */
 
-    await chargerProjets();
+async function saveRole(role) {
+
+  const result =
+    await supabase.auth.getUser();
+
+  if (!result.data.user) {
+
+    msg("❌ Connecte-toi.");
+
+    return;
+  }
+
+  const user =
+    result.data.user;
+
+
+  const save =
+    await supabase
+      .from("profiles")
+      .upsert({
+        id: user.id,
+        role: role
+      });
+
+
+  if (save.error) {
+
+    msg("❌ " + save.error.message);
+
+    return;
   }
 
 
-  async function chargerProjets() {
+  msg("✅ Profil enregistré.");
 
-    const list =
-      document.getElementById("projectsList");
+  showDashboard(role);
+
+}
+
+
+/* =====================================
+   DASHBOARD
+===================================== */
+
+function showDashboard(role) {
+
+  hideAll();
+
+  document.getElementById("dashboard")
+    .classList.remove("hidden");
+
+  document.getElementById("welcome")
+    .textContent =
+    "Bienvenue 👋 Profil : " + role;
+
+}
+
+
+/* =====================================
+   PROJETS
+===================================== */
+
+async function showProjects() {
+
+  hideAll();
+
+  document.getElementById("projects")
+    .classList.remove("hidden");
+
+  const list =
+    document.getElementById("projectList");
+
+  list.innerHTML =
+    "⏳ Chargement...";
+
+
+  const result =
+    await supabase
+      .from("projects")
+      .select("*");
+
+
+  if (result.error) {
 
     list.innerHTML =
-      "⏳ Chargement...";
+      "❌ " + result.error.message;
 
-
-    const result =
-      await client
-        .from("projects")
-        .select("*");
-
-
-    if (result.error) {
-
-      list.innerHTML =
-        "❌ " + result.error.message;
-
-      return;
-    }
-
-
-    if (
-      !result.data ||
-      result.data.length === 0
-    ) {
-
-      list.innerHTML =
-        "<p>Aucun projet pour le moment.</p>";
-
-      return;
-    }
-
-
-    list.innerHTML = "";
-
-
-    result.data.forEach(function(project) {
-
-      const div =
-        document.createElement("div");
-
-      div.className = "project";
-
-
-      const title =
-        document.createElement("h3");
-
-      title.textContent =
-        project.title ||
-        "Projet sans nom";
-
-
-      const sector =
-        document.createElement("span");
-
-      sector.className = "sector";
-
-      sector.textContent =
-        project.sector ||
-        "Secteur non précisé";
-
-
-      const description =
-        document.createElement("p");
-
-      description.textContent =
-        project.description ||
-        "Aucune description.";
-
-
-      div.appendChild(title);
-      div.appendChild(sector);
-      div.appendChild(description);
-
-      list.appendChild(div);
-
-    });
+    return;
   }
 
 
-  /* =====================================
-     AJOUT PROJET
-  ===================================== */
+  if (!result.data.length) {
 
-  function afficherAjoutProjet() {
+    list.innerHTML =
+      "<p>Aucun projet pour le moment.</p>";
 
-    cacherTout();
-
-    document
-      .getElementById("addProjectSection")
-      .classList.remove("hidden");
+    return;
   }
 
 
-  async function ajouterProjet() {
+  list.innerHTML = "";
 
-    const title =
-      document
-        .getElementById("projectTitle")
-        .value
-        .trim();
 
-    const description =
-      document
-        .getElementById("projectDescription")
-        .value
-        .trim();
+  result.data.forEach(function(project) {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "project";
+
+
+    const h3 =
+      document.createElement("h3");
+
+    h3.textContent =
+      project.title || "Projet sans nom";
+
 
     const sector =
-      document
-        .getElementById("projectSector")
-        .value
-        .trim();
+      document.createElement("p");
+
+    sector.className = "sector";
+
+    sector.textContent =
+      project.sector || "Secteur non précisé";
 
 
-    if (!title) {
+    const description =
+      document.createElement("p");
 
-      afficherMessage(
-        "❌ Ajoute le nom du projet."
-      );
-
-      return;
-    }
+    description.textContent =
+      project.description || "";
 
 
-    afficherMessage(
-      "⏳ Publication..."
-    );
+    div.appendChild(h3);
+    div.appendChild(sector);
+    div.appendChild(description);
+
+    list.appendChild(div);
+
+  });
+
+}
 
 
-    const result =
-      await client
-        .from("projects")
-        .insert({
-          id: crypto.randomUUID(),
-          title: title,
-          description: description,
-          sector: sector
-        });
+/* =====================================
+   AJOUT PROJET
+===================================== */
+
+function showAdd() {
+
+  hideAll();
+
+  document.getElementById("add")
+    .classList.remove("hidden");
+
+}
 
 
-    if (result.error) {
+async function addProject() {
 
-      afficherMessage(
-        "❌ " + result.error.message
-      );
+  const title =
+    document.getElementById("title")
+      .value.trim();
 
-      return;
-    }
+  const description =
+    document.getElementById("description")
+      .value.trim();
 
-
-    afficherMessage(
-      "✅ Projet publié !"
-    );
-
-
-    document
-      .getElementById("projectTitle")
-      .value = "";
-
-    document
-      .getElementById("projectDescription")
-      .value = "";
-
-    document
-      .getElementById("projectSector")
-      .value = "";
+  const sector =
+    document.getElementById("sector")
+      .value.trim();
 
 
-    await voirProjets();
+  if (!title) {
+
+    msg("❌ Ajoute un titre.");
+
+    return;
   }
 
 
-  /* =====================================
-     RETOUR
-  ===================================== */
-
-  function retourDashboard() {
-
-    cacherTout();
-
-    document
-      .getElementById("dashboardSection")
-      .classList.remove("hidden");
-  }
+  msg("⏳ Publication...");
 
 
-  /* =====================================
-     DÉCONNEXION
-  ===================================== */
-
-  async function deconnexion() {
-
-    await client.auth.signOut();
-
-    afficherMessage(
-      "✅ Déconnecté."
-    );
-
-    afficherConnexion();
-  }
-
-
-  /* =====================================
-     DÉMARRAGE
-  ===================================== */
-
-  if (initialiserSupabase()) {
-
-    client.auth.getSession()
-      .then(function(result) {
-
-        if (
-          result.data &&
-          result.data.session
-        ) {
-
-          chargerUtilisateur();
-
-        }
-
-      })
-      .catch(function(error) {
-
-        afficherMessage(
-          "❌ " + error.message
-        );
-
+  const result =
+    await supabase
+      .from("projects")
+      .insert({
+        id: crypto.randomUUID(),
+        title: title,
+        description: description,
+        sector: sector
       });
+
+
+  if (result.error) {
+
+    msg("❌ " + result.error.message);
+
+    return;
   }
+
+
+  msg("✅ Projet publié !");
+
+  await showProjects();
+
+}
+
+
+/* =====================================
+   RETOUR
+===================================== */
+
+function back() {
+
+  showDashboard("utilisateur");
+
+}
+
+
+/* =====================================
+   DECONNEXION
+===================================== */
+
+async function logout() {
+
+  await supabase.auth.signOut();
+
+  hideAll();
+
+  document.getElementById("login")
+    .classList.remove("hidden");
+
+  msg("✅ Déconnecté.");
+
+}
+
+
+/* =====================================
+   SESSION
+===================================== */
+
+(async function() {
+
+  const result =
+    await supabase.auth.getSession();
+
+  if (
+    result.data &&
+    result.data.session
+  ) {
+
+    await loadUser();
+
+  }
+
+})();
 
 </script>
 
