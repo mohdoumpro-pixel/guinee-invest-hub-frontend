@@ -2,45 +2,17 @@
 <html>
 <body>
 
-<h2>Test Supabase</h2>
+<h2>Test</h2>
 
-<button id="test">Tester Supabase</button>
+<button onclick="test()">Tester</button>
 
 <p id="result"></p>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-const SUPABASE_URL =
-"https://phwnkvglvebbajixwjau.supabase.co";
-
-const SUPABASE_KEY =
-sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
-
-const client =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-document.getElementById("test").onclick =
-async function () {
-
-  document.getElementById("result").textContent =
-    "⏳ Test en cours...";
-
-  const { data, error } =
-    await client.auth.getSession();
-
-  if (error) {
-    document.getElementById("result").textContent =
-      "❌ " + error.message;
-    return;
-  }
-
-  document.getElementById("result").textContent =
-    "✅ SUPABASE FONCTIONNE";
-};
+function test() {
+  document.getElementById("result").innerText =
+    "✅ JavaScript fonctionne";
+}
 </script>
 
 </body>
