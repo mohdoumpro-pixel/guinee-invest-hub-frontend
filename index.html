@@ -70,7 +70,17 @@
   </button>
 
   <div id="message"></div>
+<div id="profils" style="display:none; margin-top:20px;">
+  <h3>Choisis ton profil</h3>
 
+  <button type="button" onclick="choisirProfil('investisseur')">
+    💰 Investisseur
+  </button>
+
+  <button type="button" onclick="choisirProfil('projet')">
+    🚀 Porteur de projet
+  </button>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -94,7 +104,8 @@ async function creerCompte() {
     return;
   }
 
-  message.textContent = "⏳ Création du compte...";
+  message.textContent = "✅ COMPTE CRÉÉ !";
+document.getElementById("profils").style.display = "block";
 
   const { error } = await sb.auth.signUp({
     email: email,
