@@ -44,6 +44,7 @@
       background: #16803c;
       color: white;
       font-weight: bold;
+      cursor: pointer;
     }
 
     #message {
@@ -65,54 +66,18 @@
   <input id="password" type="password" placeholder="Votre mot de passe">
 
   <button type="button" onclick="creerCompte()">
-  Créer mon compte
-</button>
+    Créer mon compte
+  </button>
 
   <div id="message"></div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-(function () {
-
-  const url = "https://phwnkvglvebbajixwjau.supabase.co";
-
-  const key = sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
-
-  const sb = window.supabase.createClient(url, key);
-
-  const button = document.getElementById("signup");
-  const message = document.getElementById("message");
-
-  button.addEventListener("click", async function () {
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    if (!email || !password) {
-      message.textContent = "❌ Remplis les deux champs.";
-      return;
-    }
-
-    message.textContent = "⏳ Création du compte...";
-
-    const result = await sb.auth.signUp({
-      email: email,
-      password: password
-    });
-
-    if (result.error) {
-      message.textContent = "❌ " + result.error.message;
-      return;
-    }
-
-    message.textContent = "✅ COMPTE CRÉÉ !";
-
-  });
-
-})();
+function creerCompte() {
+  document.getElementById("message").textContent =
+    "✅ LE BOUTON FONCTIONNE";
+}
 </script>
 
 </body>
