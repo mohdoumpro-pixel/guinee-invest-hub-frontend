@@ -3,149 +3,180 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🇬🇳 Guinée Invest Hub</title>
+
+  <title>Guinée Invest Hub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f7f6;
-      color: #17221d;
+      background: #f4f7fb;
+      color: #172033;
     }
 
     header {
-      background: #087f3e;
+      background: #0b6b43;
       color: white;
-      padding: 22px;
+      padding: 18px;
       text-align: center;
     }
 
     header h1 {
-      margin: 0;
       font-size: 24px;
     }
 
+    header p {
+      margin-top: 6px;
+      opacity: .9;
+    }
+
     .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
+      width: 94%;
+      max-width: 1100px;
+      margin: 25px auto;
     }
 
     .card {
       background: white;
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 5px 18px rgba(0,0,0,.08);
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.07);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 9px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    button {
+      border: none;
+      border-radius: 9px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 15px;
+      background: #0b6b43;
+      color: white;
+      margin: 4px;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .danger {
+      background: #c62828;
+    }
+
+    .secondary {
+      background: #555;
     }
 
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 15px;
       margin-bottom: 20px;
     }
 
     .stat {
       background: white;
+      padding: 20px;
       border-radius: 14px;
-      padding: 15px;
       text-align: center;
       box-shadow: 0 4px 15px rgba(0,0,0,.06);
     }
 
     .stat strong {
       display: block;
-      font-size: 22px;
-      color: #087f3e;
+      font-size: 28px;
+      color: #0b6b43;
+      margin-top: 8px;
     }
 
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
-      margin-bottom: 20px;
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
     }
 
     .project {
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 15px;
+      border: 1px solid #e4e8ed;
+      border-radius: 12px;
+      padding: 17px;
+      background: #fff;
     }
 
     .project h3 {
-      margin-top: 0;
+      margin: 8px 0;
     }
 
     .sector {
       display: inline-block;
-      background: #e8f7ef;
-      color: #087f3e;
-      padding: 6px 10px;
+      background: #e8f5ee;
+      color: #0b6b43;
+      padding: 5px 9px;
       border-radius: 20px;
-      font-size: 13px;
-      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: bold;
     }
 
     .amount {
       font-weight: bold;
-      font-size: 18px;
       margin: 12px 0;
     }
 
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 12px 16px;
-      cursor: pointer;
-      font-size: 15px;
-      margin-right: 8px;
-      margin-top: 8px;
-    }
-
-    .primary {
-      background: #087f3e;
-      color: white;
-    }
-
-    .secondary {
-      background: #eee;
-      color: #222;
-    }
-
-    .danger {
-      background: #b42318;
-      color: white;
-    }
-
     .message {
-      padding: 14px;
-      border-radius: 10px;
+      padding: 13px;
+      border-radius: 9px;
       margin-bottom: 15px;
       display: none;
     }
 
     .success {
-      background: #e8f7ef;
-      color: #087f3e;
+      display: block;
+      background: #e7f7ed;
+      color: #176b3b;
     }
 
     .error {
-      background: #fdecec;
-      color: #b42318;
+      display: block;
+      background: #fdeaea;
+      color: #a52222;
     }
 
-    @media (max-width: 600px) {
+    .hidden {
+      display: none !important;
+    }
+
+    .empty {
+      color: #777;
+      padding: 10px 0;
+    }
+
+    @media (max-width: 700px) {
       .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .projects {
         grid-template-columns: 1fr;
       }
     }
@@ -156,407 +187,956 @@
 
 <header>
   <h1>🇬🇳 Guinée Invest Hub</h1>
-  <p>Espace Investisseur</p>
+  <p>Investir dans les projets guinéens</p>
 </header>
 
 <div class="container">
 
   <div id="message" class="message"></div>
 
-  <div class="card">
-    <h2>💰 Espace Investisseur</h2>
-    <p id="userInfo">Connexion en cours...</p>
-    <button id="logoutBtn" class="danger">Déconnexion</button>
-  </div>
+  <!-- AUTHENTIFICATION -->
+  <div id="authCard" class="card">
+    <h2>🔐 Connexion</h2>
 
-  <div class="stats">
-    <div class="stat">
-      <strong id="projectCount">0</strong>
-      Projets
-    </div>
-
-    <div class="stat">
-      <strong>🇬🇳</strong>
-      Guinée
-    </div>
-
-    <div class="stat">
-      <strong id="interestCount">0</strong>
-      Mes intérêts
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>🔎 Rechercher un projet</h2>
     <input
-      type="text"
-      id="searchInput"
-      placeholder="Rechercher agriculture, immobilier..."
+      type="email"
+      id="email"
+      placeholder="Votre adresse email"
     >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Votre mot de passe"
+    >
+
+    <select id="role">
+      <option value="investisseur">Investisseur</option>
+      <option value="porteur">Porteur de projet</option>
+    </select>
+
+    <button id="loginBtn">
+      Se connecter
+    </button>
+
+    <button id="signupBtn">
+      Créer un compte
+    </button>
   </div>
-<div class="card">
-  <h2>❤️ Mes intérêts</h2>
-  <div id="myInterests">
-    Chargement...
-  </div>
-</div>
-  <div class="card">
-    <h2>🚀 Projets disponibles</h2>
-    <div id="projectsList"></div>
+
+  <!-- ESPACE INVESTISSEUR -->
+  <div id="investorSpace" class="hidden">
+
+    <div class="card">
+      <h2>💰 Espace Investisseur</h2>
+      <p id="userEmail"></p>
+
+      <button id="logoutBtn" class="danger">
+        🚪 Déconnexion
+      </button>
+    </div>
+
+    <!-- STATISTIQUES -->
+    <div class="stats">
+
+      <div class="stat">
+        <span>🚀 Projets</span>
+        <strong id="projectCount">0</strong>
+      </div>
+
+      <div class="stat">
+        <span>❤️ Mes intérêts</span>
+        <strong id="interestCount">0</strong>
+      </div>
+
+      <div class="stat">
+        <span>🇬🇳 Marché</span>
+        <strong>Guinée</strong>
+      </div>
+
+    </div>
+
+    <!-- RECHERCHE -->
+    <div class="card">
+      <h2>🔎 Rechercher un projet</h2>
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Rechercher par nom, secteur..."
+      >
+    </div>
+
+    <!-- MES INTÉRÊTS -->
+    <div class="card">
+      <h2>❤️ Mes intérêts</h2>
+
+      <div id="myInterests">
+        Chargement...
+      </div>
+    </div>
+
+    <!-- PROJETS -->
+    <div class="card">
+      <h2>🚀 Projets disponibles</h2>
+
+      <div id="projects" class="projects">
+        Chargement...
+      </div>
+    </div>
+
   </div>
 
 </div>
 
 <script>
-const SUPABASE_URL =
-  "https://phwnkvglvebbajixwjau.supabase.co";
 
-const SUPABASE_KEY =
-  "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
+  /* ==============================
+     SUPABASE
+  ============================== */
 
-const sb =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  const SUPABASE_URL =
+    "https://phwnkvglvebbajixwjau.supabase.co";
 
-let currentUser = null;
+  const SUPABASE_KEY =
+    "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
 
-const projects = [
-  {
-    id: "11111111-1111-4111-8111-111111111111",
-    title: "Ferme agricole moderne",
-    description: "Projet agricole moderne destiné à produire et commercialiser des produits agricoles.",
-    sector: "Agriculture",
-    amount: 500000000
-  },
-  {
-    id: "22222222-2222-4222-8222-222222222222",
-    title: "Unité de transformation alimentaire",
-    description: "Unité destinée à transformer et valoriser les produits agricoles locaux.",
-    sector: "Agroalimentaire",
-    amount: 800000000
-  },
-  {
-    id: "33333333-3333-4333-8333-333333333333",
-    title: "Production d'eau potable",
-    description: "Projet de production et distribution d'eau potable en Guinée.",
-    sector: "Industrie",
-    amount: 1000000000
-  },
-  {
-    id: "44444444-4444-4444-8444-444444444444",
-    title: "Résidence immobilière",
-    description: "Projet immobilier destiné à développer des logements modernes.",
-    sector: "Immobilier",
-    amount: 2500000000
-  },
-  {
-    id: "55555555-5555-4555-8555-555555555555",
-    title: "Énergie solaire",
-    description: "Projet de production et distribution d'énergie solaire.",
-    sector: "Énergie",
-    amount: 750000000
-  },
-  {
-    id: "66666666-6666-4666-8666-666666666666",
-    title: "Transport et logistique",
-    description: "Projet de transport et de logistique pour les entreprises.",
-    sector: "Transport",
-    amount: 600000000
+  const sb =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  /* ==============================
+     VARIABLES
+  ============================== */
+
+  let currentUser = null;
+
+
+  /* ==============================
+     PROJETS
+  ============================== */
+
+  const projects = [
+
+    {
+      id: "11111111-1111-4111-8111-111111111111",
+      title: "Ferme agricole moderne",
+      description: "Projet agricole moderne destiné à augmenter la production locale.",
+      sector: "Agriculture",
+      amount: 500000000
+    },
+
+    {
+      id: "22222222-2222-4222-8222-222222222222",
+      title: "Unité de transformation alimentaire",
+      description: "Unité de transformation et de valorisation des produits agricoles guinéens.",
+      sector: "Agroalimentaire",
+      amount: 800000000
+    },
+
+    {
+      id: "33333333-3333-4333-8333-333333333333",
+      title: "Production d'eau potable",
+      description: "Production et distribution d'eau potable en Guinée.",
+      sector: "Industrie",
+      amount: 1000000000
+    },
+
+    {
+      id: "44444444-4444-4444-8444-444444444444",
+      title: "Résidence immobilière",
+      description: "Projet immobilier destiné au développement de logements modernes.",
+      sector: "Immobilier",
+      amount: 2500000000
+    },
+
+    {
+      id: "55555555-5555-4555-8555-555555555555",
+      title: "Énergie solaire",
+      description: "Projet de production et de distribution d'énergie solaire.",
+      sector: "Énergie",
+      amount: 750000000
+    },
+
+    {
+      id: "66666666-6666-4666-8666-666666666666",
+      title: "Transport et logistique",
+      description: "Développement d'une activité moderne de transport et de logistique.",
+      sector: "Transport",
+      amount: 600000000
+    }
+
+  ];
+
+
+  /* ==============================
+     OUTILS
+  ============================== */
+
+  function formatMoney(amount) {
+
+    return new Intl.NumberFormat(
+      "fr-FR"
+    ).format(amount) + " GNF";
+
   }
-];
 
-function showMessage(text, type) {
-  const box = document.getElementById("message");
 
-  box.textContent = text;
-  box.className = "message " + type;
-  box.style.display = "block";
+  function showMessage(text, type = "success") {
 
-  setTimeout(() => {
-    box.style.display = "none";
-  }, 5000);
-}
+    const box =
+      document.getElementById("message");
 
-function formatMoney(amount) {
-  return new Intl.NumberFormat("fr-FR").format(amount) + " GNF";
-}
+    box.textContent = text;
 
-function displayProjects(list) {
-  const container = document.getElementById("projectsList");
+    box.className =
+      "message " + type;
 
-  container.innerHTML = "";
+    setTimeout(() => {
 
-  if (list.length === 0) {
+      box.className = "message";
+
+    }, 5000);
+
+  }
+
+
+  /* ==============================
+     AFFICHER LES PROJETS
+  ============================== */
+
+  function displayProjects(list) {
+
+    const container =
+      document.getElementById("projects");
+
+    if (!list.length) {
+
+      container.innerHTML =
+        "<p class='empty'>Aucun projet trouvé.</p>";
+
+      return;
+    }
+
     container.innerHTML =
-      "<p>Aucun projet trouvé.</p>";
-    return;
+      list.map(project => `
+
+        <div class="project">
+
+          <span class="sector">
+            ${project.sector}
+          </span>
+
+          <h3>
+            ${project.title}
+          </h3>
+
+          <p>
+            ${project.description}
+          </p>
+
+          <div class="amount">
+            💰 ${formatMoney(project.amount)}
+          </div>
+
+          <button
+            onclick="registerInterest('${project.id}')"
+          >
+            ❤️ Je suis intéressé
+          </button>
+
+        </div>
+
+      `).join("");
+
   }
 
-  list.forEach(project => {
 
-    const div = document.createElement("div");
+  /* ==============================
+     COMPTEUR PROJETS
+  ============================== */
 
-    div.className = "project";
+  function loadProjectCount() {
 
-    div.innerHTML = `
-      <span class="sector">${project.sector}</span>
+    document.getElementById(
+      "projectCount"
+    ).textContent = projects.length;
 
-      <h3>${project.title}</h3>
+  }
 
-      <p>${project.description}</p>
 
-      <div class="amount">
-        💰 ${formatMoney(project.amount)}
-      </div>
+  /* ==============================
+     ENREGISTRER UN INTÉRÊT
+  ============================== */
 
-      <button
-        class="primary interestBtn"
-        data-id="${project.id}"
-      >
-        💰 Je suis intéressé
-      </button>
+  async function registerInterest(projectId) {
 
-      <button
-        class="secondary detailsBtn"
-        data-id="${project.id}"
-      >
-        👁️ Voir détails
-      </button>
-    `;
+    if (!currentUser) {
 
-    container.appendChild(div);
-  });
-
-  document
-    .querySelectorAll(".interestBtn")
-    .forEach(button => {
-      button.addEventListener(
-        "click",
-        () => registerInterest(button.dataset.id)
+      showMessage(
+        "Vous devez être connecté.",
+        "error"
       );
-    });
 
-  document
-    .querySelectorAll(".detailsBtn")
-    .forEach(button => {
-      button.addEventListener(
-        "click",
-        () => showDetails(button.dataset.id)
+      return;
+    }
+
+    const project =
+      projects.find(
+        p => p.id === projectId
       );
-    });
-}
 
-function showDetails(projectId) {
+    if (!project) {
 
-  const project =
-    projects.find(p => p.id === projectId);
+      showMessage(
+        "Projet introuvable.",
+        "error"
+      );
 
-  if (!project) return;
+      return;
+    }
 
-  alert(
-    project.title +
-    "\n\n" +
-    project.description +
-    "\n\nSecteur : " +
-    project.sector +
-    "\nMontant : " +
-    formatMoney(project.amount)
-  );
-}
 
-async function registerInterest(projectId) {
+    /* Vérifier si déjà enregistré */
 
-  if (!currentUser) {
-    showMessage(
-      "Vous devez être connecté.",
-      "error"
-    );
-    return;
-  }
-
-  const project =
-    projects.find(p => p.id === projectId);
-
-  if (!project) {
-    showMessage(
-      "Projet introuvable.",
-      "error"
-    );
-    return;
-  }
-
-  const { data: existing, error: checkError } =
-    await sb
+    const {
+      data: existing,
+      error: checkError
+    } = await sb
       .from("interests")
       .select("id")
-      .eq("user_id", currentUser.id)
-      .eq("project_id", projectId)
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .eq(
+        "project_id",
+        projectId
+      )
       .maybeSingle();
 
-  if (checkError) {
-    showMessage(
-      "Erreur lors de la vérification.",
-      "error"
-    );
-    return;
-  }
 
-  if (existing) {
-    showMessage(
-      "Vous êtes déjà intéressé par ce projet.",
-      "success"
-    );
-    return;
-  }
+    if (checkError) {
 
-  const { error } =
-    await sb
-      .from("interests")
-      .insert({
-        user_id: currentUser.id,
-        project_id: projectId
-      });
-
-  if (error) {
-    console.error(error);
-
-    showMessage(
-      "Impossible d'enregistrer votre intérêt.",
-      "error"
-    );
-
-    return;
-  }
-
-  showMessage(
-    "✅ Votre intérêt pour " +
-    project.title +
-    " a été enregistré.",
-    "success"
-  );
-
-  loadInterestCount();
-await loadMyInterests();
-async function loadMyInterests() {
-  const container = document.getElementById("myInterests");
-
-  const { data, error } = await sb
-    .from("interests")
-    .select("project_id, created_at")
-    .eq("user_id", currentUser.id)
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    container.innerHTML = "<p>Impossible de charger vos intérêts.</p>";
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    container.innerHTML = "<p>Vous n’avez encore manifesté aucun intérêt.</p>";
-    return;
-  }
-
-  container.innerHTML = data.map(item => {
-    const project = projects.find(p => p.id === item.project_id);
-
-    if (!project) return "";
-
-    return `
-      <div class="project">
-        <span class="sector">${project.sector}</span>
-        <h3>${project.title}</h3>
-        <p>${project.description}</p>
-        <div class="amount">💰 ${formatMoney(project.amount)}</div>
-        <p>✅ Intérêt enregistré</p>
-      </div>
-    `;
-  }).join("");
-}
-async function loadInterestCount() {
-
-  if (!currentUser) return;
-
-  const { count, error } =
-    await sb
-      .from("interests")
-      .select("*", {
-        count: "exact",
-        head: true
-      })
-      .eq("user_id", currentUser.id);
-
-  if (!error) {
-    document.getElementById(
-      "interestCount"
-    ).textContent = count || 0;
-  }
-}
-
-async function logout() {
-
-  await sb.auth.signOut();
-
-  window.location.reload();
-}
-
-document
-  .getElementById("logoutBtn")
-  .addEventListener("click", logout);
-
-document
-  .getElementById("searchInput")
-  .addEventListener("input", function() {
-
-    const search =
-      this.value.toLowerCase().trim();
-
-    const filtered =
-      projects.filter(project =>
-        project.title.toLowerCase().includes(search) ||
-        project.description.toLowerCase().includes(search) ||
-        project.sector.toLowerCase().includes(search)
+      showMessage(
+        "Erreur lors de la vérification.",
+        "error"
       );
 
-    displayProjects(filtered);
-  });
-
-async function init() {
-
-  const {
-    data: {
-      session
+      return;
     }
-  } = await sb.auth.getSession();
 
-  if (!session) {
 
-    document.getElementById(
-      "userInfo"
-    ).textContent =
-      "Vous n'êtes pas connecté.";
+    if (existing) {
 
-    return;
+      showMessage(
+        "Vous êtes déjà intéressé par ce projet.",
+        "success"
+      );
+
+      return;
+    }
+
+
+    /* Insérer */
+
+    const {
+      error
+    } = await sb
+      .from("interests")
+      .insert({
+
+        user_id:
+          currentUser.id,
+
+        project_id:
+          projectId
+
+      });
+
+
+    if (error) {
+
+      console.error(error);
+
+      showMessage(
+        "Impossible d'enregistrer votre intérêt.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    showMessage(
+      "✅ Votre intérêt a été enregistré.",
+      "success"
+    );
+
+
+    await loadInterestCount();
+
+    await loadMyInterests();
+
   }
 
-  currentUser = session.user;
 
-  document.getElementById(
-    "userInfo"
-  ).textContent =
-    "Vous êtes connecté comme Investisseur";
+  /* ==============================
+     COMPTEUR INTÉRÊTS
+  ============================== */
 
-  document.getElementById(
-    "projectCount"
-  ).textContent = projects.length;
+  async function loadInterestCount() {
 
-  displayProjects(projects);
+    if (!currentUser) {
 
-  await loadInterestCount();
-}
+      document.getElementById(
+        "interestCount"
+      ).textContent = "0";
 
-init();
+      return;
+    }
+
+
+    const {
+      count,
+      error
+    } = await sb
+      .from("interests")
+      .select(
+        "*",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      );
+
+
+    if (error) {
+
+      console.error(error);
+
+      return;
+    }
+
+
+    document.getElementById(
+      "interestCount"
+    ).textContent =
+      count || 0;
+
+  }
+
+
+  /* ==============================
+     MES INTÉRÊTS
+  ============================== */
+
+  async function loadMyInterests() {
+
+    const container =
+      document.getElementById(
+        "myInterests"
+      );
+
+
+    if (!container) return;
+
+
+    if (!currentUser) {
+
+      container.innerHTML =
+        "<p class='empty'>Connexion en cours...</p>";
+
+      return;
+    }
+
+
+    container.innerHTML =
+      "<p class='empty'>Chargement...</p>";
+
+
+    const {
+      data,
+      error
+    } = await sb
+      .from("interests")
+      .select(
+        "project_id, created_at"
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+    if (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        "<p class='empty'>Impossible de charger vos intérêts.</p>";
+
+      return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+      container.innerHTML =
+        "<p class='empty'>Vous n’avez encore manifesté aucun intérêt.</p>";
+
+      return;
+    }
+
+
+    const html =
+      data.map(item => {
+
+        const project =
+          projects.find(
+            p =>
+              p.id === item.project_id
+          );
+
+
+        if (!project) {
+
+          return "";
+
+        }
+
+
+        return `
+
+          <div class="project">
+
+            <span class="sector">
+              ${project.sector}
+            </span>
+
+            <h3>
+              ${project.title}
+            </h3>
+
+            <p>
+              ${project.description}
+            </p>
+
+            <div class="amount">
+              💰 ${formatMoney(project.amount)}
+            </div>
+
+            <p>
+              ✅ Intérêt enregistré
+            </p>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+
+    container.innerHTML =
+      `<div class="projects">${html}</div>`;
+
+  }
+
+
+  /* ==============================
+     INSCRIPTION
+  ============================== */
+
+  async function signup() {
+
+    const email =
+      document.getElementById(
+        "email"
+      ).value.trim();
+
+    const password =
+      document.getElementById(
+        "password"
+      ).value;
+
+    const role =
+      document.getElementById(
+        "role"
+      ).value;
+
+
+    if (!email || !password) {
+
+      showMessage(
+        "Veuillez remplir tous les champs.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (password.length < 6) {
+
+      showMessage(
+        "Le mot de passe doit contenir au moins 6 caractères.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } = await sb.auth.signUp({
+
+      email,
+      password
+
+    });
+
+
+    if (error) {
+
+      showMessage(
+        error.message,
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (!data.user) {
+
+      showMessage(
+        "Compte créé. Vérifiez votre email si nécessaire.",
+        "success"
+      );
+
+      return;
+    }
+
+
+    /* Créer le profil */
+
+    const {
+      error: profileError
+    } = await sb
+      .from("profiles")
+      .upsert({
+
+        id:
+          data.user.id,
+
+        role:
+          role
+
+      });
+
+
+    if (profileError) {
+
+      console.error(
+        profileError
+      );
+
+    }
+
+
+    showMessage(
+      "✅ Compte créé avec succès.",
+      "success"
+    );
+
+
+    await loadUser();
+
+  }
+
+
+  /* ==============================
+     CONNEXION
+  ============================== */
+
+  async function login() {
+
+    const email =
+      document.getElementById(
+        "email"
+      ).value.trim();
+
+    const password =
+      document.getElementById(
+        "password"
+      ).value;
+
+
+    if (!email || !password) {
+
+      showMessage(
+        "Veuillez remplir tous les champs.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } = await sb.auth.signInWithPassword({
+
+      email,
+      password
+
+    });
+
+
+    if (error) {
+
+      showMessage(
+        error.message,
+        "error"
+      );
+
+      return;
+    }
+
+
+    currentUser =
+      data.user;
+
+
+    showMessage(
+      "✅ Connexion réussie.",
+      "success"
+    );
+
+
+    await loadUser();
+
+  }
+
+
+  /* ==============================
+     UTILISATEUR
+  ============================== */
+
+  async function loadUser() {
+
+    const {
+      data
+    } = await sb.auth.getUser();
+
+
+    currentUser =
+      data?.user || null;
+
+
+    const authCard =
+      document.getElementById(
+        "authCard"
+      );
+
+    const investorSpace =
+      document.getElementById(
+        "investorSpace"
+      );
+
+
+    if (!currentUser) {
+
+      authCard.classList.remove(
+        "hidden"
+      );
+
+      investorSpace.classList.add(
+        "hidden"
+      );
+
+      return;
+    }
+
+
+    authCard.classList.add(
+      "hidden"
+    );
+
+    investorSpace.classList.remove(
+      "hidden"
+    );
+
+
+    document.getElementById(
+      "userEmail"
+    ).textContent =
+      "Connecté : " +
+      currentUser.email;
+
+
+    loadProjectCount();
+
+    displayProjects(projects);
+
+    await loadInterestCount();
+
+    await loadMyInterests();
+
+  }
+
+
+  /* ==============================
+     DÉCONNEXION
+  ============================== */
+
+  async function logout() {
+
+    await sb.auth.signOut();
+
+    currentUser = null;
+
+    document.getElementById(
+      "investorSpace"
+    ).classList.add(
+      "hidden"
+    );
+
+    document.getElementById(
+      "authCard"
+    ).classList.remove(
+      "hidden"
+    );
+
+    showMessage(
+      "Vous êtes déconnecté.",
+      "success"
+    );
+
+  }
+
+
+  /* ==============================
+     RECHERCHE
+  ============================== */
+
+  document
+    .getElementById(
+      "searchInput"
+    )
+    .addEventListener(
+      "input",
+      function () {
+
+        const value =
+          this.value
+            .toLowerCase()
+            .trim();
+
+
+        const filtered =
+          projects.filter(
+            project =>
+
+              project.title
+                .toLowerCase()
+                .includes(value)
+
+              ||
+
+              project.sector
+                .toLowerCase()
+                .includes(value)
+
+              ||
+
+              project.description
+                .toLowerCase()
+                .includes(value)
+
+          );
+
+
+        displayProjects(
+          filtered
+        );
+
+      }
+    );
+
+
+  /* ==============================
+     BOUTONS
+  ============================== */
+
+  document
+    .getElementById(
+      "loginBtn"
+    )
+    .addEventListener(
+      "click",
+      login
+    );
+
+
+  document
+    .getElementById(
+      "signupBtn"
+    )
+    .addEventListener(
+      "click",
+      signup
+    );
+
+
+  document
+    .getElementById(
+      "logoutBtn"
+    )
+    .addEventListener(
+      "click",
+      logout
+    );
+
+
+  /* ==============================
+     AUTH LISTENER
+  ============================== */
+
+  sb.auth.onAuthStateChange(
+    async (event, session) => {
+
+      currentUser =
+        session?.user || null;
+
+      await loadUser();
+
+    }
+  );
+
+
+  /* ==============================
+     DÉMARRAGE
+  ============================== */
+
+  loadUser();
+
 </script>
 
 </body>
