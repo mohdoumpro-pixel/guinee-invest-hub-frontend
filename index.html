@@ -73,10 +73,40 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-function creerCompte() {
-  document.getElementById("message").textContent =
-    "✅ LE BOUTON FONCTIONNE";
+const supabaseUrl = "https://phwnkvglvebbajixwjau.supabase.co";
+const supabaseKey = sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+
+const sb = window.supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+async function creerCompte() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("message");
+
+  if (!email || !password) {
+    message.textContent = "❌ Remplis les deux champs.";
+    return;
+  }
+
+  message.textContent = "⏳ Création du compte...";
+
+  const { error } = await sb.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    message.textContent = "❌ " + error.message;
+    return;
+  }
+
+  message.textContent = "✅ COMPTE CRÉÉ !";
 }
 </script>
 
