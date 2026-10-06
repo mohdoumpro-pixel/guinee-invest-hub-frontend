@@ -13,35 +13,40 @@
 
     body {
       margin: 0;
-      padding: 20px;
       font-family: Arial, sans-serif;
-      background: #f2f5f3;
+      background: #f4f7f5;
+      color: #17201a;
     }
 
-    .box {
-      max-width: 450px;
-      margin: 40px auto;
-      padding: 25px;
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
       background: white;
-      border-radius: 16px;
-      box-shadow: 0 5px 25px rgba(0,0,0,.08);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.07);
     }
 
     h1 {
-      text-align: center;
       color: #16803c;
+      margin-top: 0;
     }
 
     h2 {
-      text-align: center;
+      margin-top: 0;
     }
 
     input,
     button {
       width: 100%;
       padding: 14px;
-      margin-top: 12px;
-      border-radius: 8px;
+      margin-top: 10px;
+      border-radius: 9px;
       font-size: 16px;
     }
 
@@ -50,215 +55,816 @@
     }
 
     button {
-      border: 0;
+      border: none;
       background: #16803c;
       color: white;
       font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      opacity: .9;
-    }
-
-    .secondary {
+    button.secondary {
       background: #222;
     }
 
-    #profilBox {
-      display: none;
-      margin-top: 25px;
+    button.light {
+      background: #eaf5ee;
+      color: #16803c;
     }
 
-    #message {
-      margin-top: 20px;
+    .hidden {
+      display: none !important;
+    }
+
+    .message {
+      margin: 15px 0;
       text-align: center;
       font-weight: bold;
-      min-height: 24px;
     }
 
-    #dashboard {
-      display: none;
-      text-align: center;
-      margin-top: 25px;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .header button {
+      width: auto;
+      padding: 10px 18px;
+      margin: 0;
+    }
+
+    .search {
+      margin: 20px 0;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .project {
+      border: 1px solid #e2e8e4;
+      border-radius: 14px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .project h3 {
+      margin-top: 0;
+      color: #16803c;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #eaf5ee;
+      color: #16803c;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .project-actions button {
+      flex: 1;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat {
+      background: #eaf5ee;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      color: #16803c;
+      margin-top: 5px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 10;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      max-height: 90vh;
+      overflow: auto;
+    }
+
+    .close {
+      background: #222;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 12px;
+      }
+
+      .header {
+        align-items: stretch;
+      }
+
+      .header button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-  <h1>🇬🇳 Guinée Invest Hub</h1>
+  <!-- AUTHENTIFICATION -->
 
-  <div id="authBox">
+  <section id="authScreen" class="card">
 
-    <h2>Créer un compte</h2>
+    <h1>🇬🇳 Guinée Invest Hub</h1>
+
+    <p>
+      La plateforme qui connecte les investisseurs
+      aux projets guinéens.
+    </p>
 
     <input
       id="email"
       type="email"
       placeholder="Votre email"
-      autocomplete="email"
     >
 
     <input
       id="password"
       type="password"
       placeholder="Votre mot de passe"
-      autocomplete="new-password"
     >
 
-    <button id="signupBtn" type="button">
+    <button id="signupBtn">
       Créer mon compte
     </button>
 
-  </div>
+    <div id="message" class="message"></div>
 
-  <div id="message"></div>
+  </section>
 
-  <div id="profilBox">
+
+  <!-- CHOIX PROFIL -->
+
+  <section id="profileScreen" class="card hidden">
 
     <h2>Choisissez votre profil</h2>
 
-    <button id="investisseurBtn" type="button">
+    <button id="investisseurBtn">
       💰 Investisseur
     </button>
 
-    <button id="projetBtn" type="button" class="secondary">
+    <button id="projetBtn" class="secondary">
       🚀 Porteur de projet
     </button>
 
-  </div>
+  </section>
 
-  <div id="dashboard">
 
-    <h2>🎉 Bienvenue</h2>
+  <!-- DASHBOARD INVESTISSEUR -->
 
-    <p id="roleText"></p>
+  <section id="investorScreen" class="hidden">
+
+    <div class="card">
+
+      <div class="header">
+
+        <div>
+          <h1>💰 Espace Investisseur</h1>
+          <p>
+            Découvrez des projets guinéens
+            et trouvez vos prochaines opportunités.
+          </p>
+        </div>
+
+        <button id="logoutBtn" class="secondary">
+          Déconnexion
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- STATISTIQUES -->
+
+    <div class="stats">
+
+      <div class="stat">
+        Projets disponibles
+        <strong id="projectCount">0</strong>
+      </div>
+
+      <div class="stat">
+        Mes favoris
+        <strong id="favoriteCount">0</strong>
+      </div>
+
+      <div class="stat">
+        Mes investissements
+        <strong>0 GNF</strong>
+      </div>
+
+    </div>
+
+
+    <!-- RECHERCHE -->
+
+    <div class="card">
+
+      <h2>🔎 Rechercher un projet</h2>
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Ex : agriculture, immobilier, énergie..."
+      >
+
+    </div>
+
+
+    <!-- PROJETS -->
+
+    <div class="card">
+
+      <h2>🚀 Projets disponibles</h2>
+
+      <div id="projectsList" class="projects"></div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- MODALE DETAILS -->
+
+<div id="projectModal" class="modal hidden">
+
+  <div class="modal-content">
+
+    <h2 id="modalTitle"></h2>
+
+    <p>
+      <strong>Secteur :</strong>
+      <span id="modalSector"></span>
+    </p>
+
+    <p id="modalDescription"></p>
+
+    <p>
+      <strong>Besoin :</strong>
+      <span id="modalAmount"></span>
+    </p>
+
+    <button id="investBtn">
+      💰 Je suis intéressé
+    </button>
+
+    <button id="closeModal" class="close">
+      Fermer
+    </button>
 
   </div>
 
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
+  /* =========================
+     SUPABASE
+  ========================= */
+
   const SUPABASE_URL =
     "https://phwnkvglvebbajixwjau.supabase.co";
-
-  /*
-    ⚠️ REMPLACE UNIQUEMENT LA VALEUR CI-DESSOUS
-    par ta clé Publishable sb_publishable_...
-  */
 
   const SUPABASE_KEY =
     "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
 
-  const sb = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  const sb =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
+
+  /* =========================
+     ELEMENTS
+  ========================= */
+
+  const authScreen =
+    document.getElementById("authScreen");
+
+  const profileScreen =
+    document.getElementById("profileScreen");
+
+  const investorScreen =
+    document.getElementById("investorScreen");
 
   const message =
     document.getElementById("message");
 
-  const signupBtn =
-    document.getElementById("signupBtn");
+  const projectsList =
+    document.getElementById("projectsList");
 
-  const profilBox =
-    document.getElementById("profilBox");
+  const projectCount =
+    document.getElementById("projectCount");
 
-  const authBox =
-    document.getElementById("authBox");
+  const favoriteCount =
+    document.getElementById("favoriteCount");
 
-  const dashboard =
-    document.getElementById("dashboard");
-
-  const roleText =
-    document.getElementById("roleText");
+  const searchInput =
+    document.getElementById("searchInput");
 
 
-  /*
-    CRÉATION DU COMPTE
-  */
+  /* =========================
+     PROJETS DE DEMONSTRATION
+  ========================= */
 
-  signupBtn.addEventListener("click", async function () {
+  const demoProjects = [
 
-    const email =
-      document.getElementById("email").value.trim();
+    {
+      id: "demo-1",
+      title: "Ferme agricole moderne",
+      sector: "Agriculture",
+      description:
+        "Projet agricole destiné à produire des légumes et développer une chaîne de distribution locale.",
+      amount: "500 000 000 GNF"
+    },
 
-    const password =
-      document.getElementById("password").value;
+    {
+      id: "demo-2",
+      title: "Unité de transformation alimentaire",
+      sector: "Agroalimentaire",
+      description:
+        "Unité de transformation de produits agricoles guinéens pour le marché local et régional.",
+      amount: "800 000 000 GNF"
+    },
+
+    {
+      id: "demo-3",
+      title: "Production d'eau potable",
+      sector: "Industrie",
+      description:
+        "Projet de production et distribution d'eau potable conditionnée en Guinée.",
+      amount: "1 000 000 000 GNF"
+    },
+
+    {
+      id: "demo-4",
+      title: "Résidence immobilière",
+      sector: "Immobilier",
+      description:
+        "Projet immobilier comprenant des logements modernes destinés à la location.",
+      amount: "2 500 000 000 GNF"
+    },
+
+    {
+      id: "demo-5",
+      title: "Énergie solaire",
+      sector: "Énergie",
+      description:
+        "Installation de solutions solaires destinées aux entreprises et aux particuliers.",
+      amount: "750 000 000 GNF"
+    },
+
+    {
+      id: "demo-6",
+      title: "Transport et logistique",
+      sector: "Transport",
+      description:
+        "Service moderne de transport et de livraison pour les entreprises guinéennes.",
+      amount: "600 000 000 GNF"
+    }
+
+  ];
 
 
-    if (!email || !password) {
+  let favorites = [];
 
-      message.textContent =
-        "❌ Remplis les deux champs.";
+  let selectedProject = null;
+
+
+  /* =========================
+     AFFICHER LES PROJETS
+  ========================= */
+
+  function afficherProjets(liste) {
+
+    projectsList.innerHTML = "";
+
+    projectCount.textContent =
+      liste.length;
+
+
+    if (liste.length === 0) {
+
+      projectsList.innerHTML =
+        "<p>Aucun projet trouvé.</p>";
 
       return;
     }
 
 
-    if (password.length < 6) {
+    liste.forEach(function(project) {
 
-      message.textContent =
-        "❌ Le mot de passe doit avoir au moins 6 caractères.";
-
-      return;
-    }
+      const isFavorite =
+        favorites.includes(project.id);
 
 
-    message.textContent =
-      "⏳ Création du compte...";
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "project";
 
 
-    const { data, error } =
-      await sb.auth.signUp({
+      div.innerHTML = `
 
-        email: email,
-        password: password
+        <span class="tag">
+          ${project.sector}
+        </span>
+
+        <h3>
+          ${project.title}
+        </h3>
+
+        <p>
+          ${project.description}
+        </p>
+
+        <p>
+          <strong>
+            Besoin :
+          </strong>
+          ${project.amount}
+        </p>
+
+        <div class="project-actions">
+
+          <button
+            class="detailsBtn"
+            data-id="${project.id}">
+            Voir
+          </button>
+
+          <button
+            class="light favoriteBtn"
+            data-id="${project.id}">
+            ${isFavorite ? "❤️" : "♡"}
+          </button>
+
+        </div>
+      `;
+
+
+      projectsList.appendChild(div);
+
+    });
+
+
+    document
+      .querySelectorAll(".detailsBtn")
+      .forEach(function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            ouvrirProjet(
+              button.dataset.id
+            );
+
+          }
+        );
 
       });
 
 
-    if (error) {
+    document
+      .querySelectorAll(".favoriteBtn")
+      .forEach(function(button) {
 
-      message.textContent =
-        "❌ " + error.message;
+        button.addEventListener(
+          "click",
+          function() {
 
+            toggleFavorite(
+              button.dataset.id
+            );
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =========================
+     DETAILS PROJET
+  ========================= */
+
+  function ouvrirProjet(id) {
+
+    selectedProject =
+      demoProjects.find(
+        function(project) {
+          return project.id === id;
+        }
+      );
+
+
+    if (!selectedProject) {
       return;
     }
 
 
-    if (!data.user) {
+    document.getElementById(
+      "modalTitle"
+    ).textContent =
+      selectedProject.title;
 
-      message.textContent =
-        "❌ Le compte n'a pas été créé.";
 
-      return;
+    document.getElementById(
+      "modalSector"
+    ).textContent =
+      selectedProject.sector;
+
+
+    document.getElementById(
+      "modalDescription"
+    ).textContent =
+      selectedProject.description;
+
+
+    document.getElementById(
+      "modalAmount"
+    ).textContent =
+      selectedProject.amount;
+
+
+    document
+      .getElementById("projectModal")
+      .classList.remove("hidden");
+
+  }
+
+
+  /* =========================
+     FAVORIS
+  ========================= */
+
+  function toggleFavorite(id) {
+
+    if (favorites.includes(id)) {
+
+      favorites =
+        favorites.filter(
+          function(item) {
+            return item !== id;
+          }
+        );
+
+    } else {
+
+      favorites.push(id);
+
     }
 
 
-    message.textContent =
-      "✅ Compte créé !";
+    favoriteCount.textContent =
+      favorites.length;
 
 
-    authBox.style.display =
-      "none";
+    afficherProjets(
+      filtrerProjets(
+        searchInput.value
+      )
+    );
 
-    profilBox.style.display =
-      "block";
-
-  });
+  }
 
 
-  /*
-    CHOIX DU PROFIL
-  */
+  /* =========================
+     RECHERCHE
+  ========================= */
+
+  function filtrerProjets(search) {
+
+    const value =
+      search.toLowerCase().trim();
+
+
+    if (!value) {
+      return demoProjects;
+    }
+
+
+    return demoProjects.filter(
+      function(project) {
+
+        return (
+
+          project.title
+            .toLowerCase()
+            .includes(value)
+
+          ||
+
+          project.sector
+            .toLowerCase()
+            .includes(value)
+
+          ||
+
+          project.description
+            .toLowerCase()
+            .includes(value)
+
+        );
+
+      }
+    );
+
+  }
+
+
+  searchInput.addEventListener(
+    "input",
+    function() {
+
+      afficherProjets(
+        filtrerProjets(
+          searchInput.value
+        )
+      );
+
+    }
+  );
+
+
+  /* =========================
+     CREATION COMPTE
+  ========================= */
+
+  document
+    .getElementById("signupBtn")
+    .addEventListener(
+      "click",
+      async function() {
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+        const password =
+          document
+            .getElementById("password")
+            .value;
+
+
+        if (!email || !password) {
+
+          message.textContent =
+            "❌ Remplis les deux champs.";
+
+          return;
+        }
+
+
+        if (password.length < 6) {
+
+          message.textContent =
+            "❌ Minimum 6 caractères.";
+
+          return;
+        }
+
+
+        message.textContent =
+          "⏳ Création du compte...";
+
+
+        const { data, error } =
+          await sb.auth.signUp({
+
+            email: email,
+            password: password
+
+          });
+
+
+        if (error) {
+
+          message.textContent =
+            "❌ " + error.message;
+
+          return;
+        }
+
+
+        if (!data.user) {
+
+          message.textContent =
+            "❌ Compte non créé.";
+
+          return;
+        }
+
+
+        message.textContent =
+          "✅ Compte créé !";
+
+
+        authScreen.classList.add(
+          "hidden"
+        );
+
+
+        profileScreen.classList.remove(
+          "hidden"
+        );
+
+      }
+    );
+
+
+  /* =========================
+     PROFIL INVESTISSEUR
+  ========================= */
+
+  document
+    .getElementById("investisseurBtn")
+    .addEventListener(
+      "click",
+      function() {
+
+        enregistrerProfil(
+          "investisseur"
+        );
+
+      }
+    );
+
+
+  /* =========================
+     PORTEUR DE PROJET
+  ========================= */
+
+  document
+    .getElementById("projetBtn")
+    .addEventListener(
+      "click",
+      function() {
+
+        enregistrerProfil(
+          "projet"
+        );
+
+      }
+    );
+
+
+  /* =========================
+     ENREGISTRER PROFIL
+  ========================= */
 
   async function enregistrerProfil(role) {
 
@@ -279,16 +885,12 @@
     }
 
 
-    const userId =
-      data.user.id;
-
-
     const { error: profileError } =
       await sb
         .from("profiles")
         .upsert({
 
-          id: userId,
+          id: data.user.id,
           role: role
 
         });
@@ -303,49 +905,138 @@
     }
 
 
-    profilBox.style.display =
-      "none";
-
-    dashboard.style.display =
-      "block";
+    profileScreen.classList.add(
+      "hidden"
+    );
 
 
-    roleText.textContent =
-      role === "investisseur"
-        ? "💰 Vous êtes connecté comme Investisseur."
-        : "🚀 Vous êtes connecté comme Porteur de projet.";
+    if (role === "investisseur") {
 
+      investorScreen.classList.remove(
+        "hidden"
+      );
 
-    message.textContent = "";
+      afficherProjets(
+        demoProjects
+      );
+
+    } else {
+
+      message.textContent =
+        "🚀 Espace Porteur de projet bientôt disponible.";
+
+    }
 
   }
 
 
-  /*
-    BOUTON INVESTISSEUR
-  */
+  /* =========================
+     FERMER DETAILS
+  ========================= */
 
   document
-    .getElementById("investisseurBtn")
-    .addEventListener("click", function () {
+    .getElementById("closeModal")
+    .addEventListener(
+      "click",
+      function() {
 
-      enregistrerProfil("investisseur");
+        document
+          .getElementById("projectModal")
+          .classList.add("hidden");
 
-    });
+      }
+    );
 
 
-  /*
-    BOUTON PORTEUR DE PROJET
-  */
+  /* =========================
+     INTERESSE PAR LE PROJET
+  ========================= */
 
   document
-    .getElementById("projetBtn")
-    .addEventListener("click", function () {
+    .getElementById("investBtn")
+    .addEventListener(
+      "click",
+      function() {
 
-      enregistrerProfil("projet");
+        if (!selectedProject) {
+          return;
+        }
 
-    });
 
+        alert(
+          "Votre intérêt pour « " +
+          selectedProject.title +
+          " » a été enregistré."
+        );
+
+      }
+    );
+
+
+  /* =========================
+     DECONNEXION
+  ========================= */
+
+  document
+    .getElementById("logoutBtn")
+    .addEventListener(
+      "click",
+      async function() {
+
+        await sb.auth.signOut();
+
+        investorScreen.classList.add(
+          "hidden"
+        );
+
+        profileScreen.classList.add(
+          "hidden"
+        );
+
+        authScreen.classList.remove(
+          "hidden"
+        );
+
+        message.textContent = "";
+
+      }
+    );
+
+
+  /* =========================
+     VERIFIER SESSION
+  ========================= */
+
+  async function verifierSession() {
+
+    const { data } =
+      await sb.auth.getSession();
+
+
+    if (
+      data &&
+      data.session &&
+      data.session.user
+    ) {
+
+      authScreen.classList.add(
+        "hidden"
+      );
+
+      investorScreen.classList.remove(
+        "hidden"
+      );
+
+      afficherProjets(
+        demoProjects
+      );
+
+    }
+
+  }
+
+
+  verifierSession();
 
 </script>
 
