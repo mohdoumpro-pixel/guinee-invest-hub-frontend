@@ -297,8 +297,10 @@ async function signup() {
 const test = await fetch(
   "https://phwnkvglvebbajixwjau.supabase.co/auth/v1/settings",
   {
+    method: "GET",
     headers: {
-      "apikey": SUPABASE_KEY
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY
     }
   }
 );
