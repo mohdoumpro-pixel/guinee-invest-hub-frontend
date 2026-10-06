@@ -21,6 +21,32 @@ const SUPABASE_KEY =
 function testSupabase() {
 
   document.getElementById("result").innerText =
+    "⏳ Connexion...";
+
+  client.auth.getSession()
+    .then(function(result) {
+
+      if (result.error) {
+        document.getElementById("result").innerText =
+          "❌ " + result.error.message;
+      } else {
+        document.getElementById("result").innerText =
+          "✅ CONNEXION SUPABASE OK";
+      }
+
+    })
+    .catch(function(error) {
+
+      document.getElementById("result").innerText =
+        "❌ " + error.message;
+const client = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+    });
+}
+
+  document.getElementById("result").innerText =
     "✅ LE BOUTON SUPABASE FONCTIONNE";
 
 }
