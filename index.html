@@ -256,6 +256,25 @@
       padding: 20px;
     }
 
+    .confirmed-box {
+      margin-top: 15px;
+      padding: 15px;
+      background: #e8f7ef;
+      color: #146c43;
+      border: 1px solid #a7e3c2;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .pending-box {
+      margin-top: 15px;
+      padding: 15px;
+      background: #fff8e6;
+      color: #8a5a00;
+      border: 1px solid #f4d58b;
+      border-radius: 10px;
+    }
+
     @media (max-width: 600px) {
       header h1 {
         font-size: 21px;
@@ -326,10 +345,7 @@
 
   <!-- ACCUEIL -->
 
-  <section
-    id="home"
-    class="section"
-  >
+  <section id="home" class="section">
 
     <h2>
       Bienvenue sur Guinée Invest Hub 🇬🇳
@@ -340,10 +356,7 @@
       vos demandes d'investissement.
     </p>
 
-    <div
-      id="userInfo"
-      class="user-info"
-    >
+    <div id="userInfo" class="user-info">
       Vous n'êtes pas connecté.
     </div>
 
@@ -533,8 +546,8 @@
 
   /*
     IMPORTANT :
-    Remplace TON_PUBLISHABLE_KEY par ta clé
-    publishable actuelle.
+    Garde ici ta vraie clé publishable
+    déjà utilisée dans ton projet.
   */
 
   const SUPABASE_KEY =
@@ -620,22 +633,19 @@
     }
 
     if (
-      id ===
-      "projectsSection"
+      id === "projectsSection"
     ) {
       loadProjects();
     }
 
     if (
-      id ===
-      "myInvestmentsSection"
+      id === "myInvestmentsSection"
     ) {
       loadMyInvestments();
     }
 
     if (
-      id ===
-      "adminSection"
+      id === "adminSection"
     ) {
 
       if (
@@ -889,9 +899,7 @@
     }
 
     document
-      .getElementById(
-        "userInfo"
-      )
+      .getElementById("userInfo")
       .innerHTML = `
         Connecté avec :
         <strong>
@@ -901,54 +909,34 @@
         </strong>
 
         ${
-          currentProfile?.role ===
-          "admin"
-
+          currentProfile?.role === "admin"
             ? " — 🛡️ Administrateur"
-
             : " — 👤 Investisseur"
         }
       `;
 
     document
-      .getElementById(
-        "logoutBtn"
-      )
-      .classList.remove(
-        "hidden"
-      );
+      .getElementById("logoutBtn")
+      .classList.remove("hidden");
 
     document
-      .getElementById(
-        "loginHomeBtn"
-      )
-      .classList.add(
-        "hidden"
-      );
+      .getElementById("loginHomeBtn")
+      .classList.add("hidden");
 
     if (
       currentProfile &&
-      currentProfile.role ===
-      "admin"
+      currentProfile.role === "admin"
     ) {
 
       document
-        .getElementById(
-          "adminNav"
-        )
-        .classList.remove(
-          "hidden"
-        );
+        .getElementById("adminNav")
+        .classList.remove("hidden");
 
     } else {
 
       document
-        .getElementById(
-          "adminNav"
-        )
-        .classList.add(
-          "hidden"
-        );
+        .getElementById("adminNav")
+        .classList.add("hidden");
     }
   }
 
@@ -965,33 +953,19 @@
     currentProfile = null;
 
     document
-      .getElementById(
-        "logoutBtn"
-      )
-      .classList.add(
-        "hidden"
-      );
+      .getElementById("logoutBtn")
+      .classList.add("hidden");
 
     document
-      .getElementById(
-        "adminNav"
-      )
-      .classList.add(
-        "hidden"
-      );
+      .getElementById("adminNav")
+      .classList.add("hidden");
 
     document
-      .getElementById(
-        "loginHomeBtn"
-      )
-      .classList.remove(
-        "hidden"
-      );
+      .getElementById("loginHomeBtn")
+      .classList.remove("hidden");
 
     document
-      .getElementById(
-        "userInfo"
-      )
+      .getElementById("userInfo")
       .innerHTML =
       "Vous n'êtes pas connecté.";
 
@@ -1056,9 +1030,7 @@
   }
 
 
-  function renderProjects(
-    list
-  ) {
+  function renderProjects(list) {
 
     const container =
       document.getElementById(
@@ -1134,9 +1106,7 @@
                   id="investmentAmount-${project.id}"
                   type="number"
                   min="1"
-                  placeholder="
-                    Montant à investir en GNF
-                  "
+                  placeholder="Montant à investir en GNF"
                 >
 
                 <label>
@@ -1196,23 +1166,19 @@
                   <input
                     id="payerPhone-${project.id}"
                     type="tel"
-                    placeholder="
-                      📱 Numéro Orange utilisé
-                    "
+                    placeholder="📱 Numéro Orange utilisé"
                   >
 
                   <input
                     id="transactionReference-${project.id}"
                     type="text"
-                    placeholder="
-                      🧾 Référence de transaction
-                    "
+                    placeholder="🧾 Référence de transaction"
                   >
 
                 </div>
 
 
-                <!-- MTN TEMPORAIRE -->
+                <!-- MTN -->
 
                 <div
                   id="mtnPayment-${project.id}"
@@ -1263,9 +1229,7 @@
      MOYEN DE PAIEMENT
   ================================= */
 
-  function updatePaymentMethod(
-    projectId
-  ) {
+  function updatePaymentMethod(projectId) {
 
     const select =
       document.getElementById(
@@ -1290,15 +1254,11 @@
     }
 
     if (orange) {
-      orange.classList.add(
-        "hidden"
-      );
+      orange.classList.add("hidden");
     }
 
     if (mtn) {
-      mtn.classList.add(
-        "hidden"
-      );
+      mtn.classList.add("hidden");
     }
 
     if (
@@ -1326,9 +1286,7 @@
      AFFICHER FORMULAIRE
   ================================= */
 
-  function showInvestmentBox(
-    projectId
-  ) {
+  function showInvestmentBox(projectId) {
 
     if (!currentUser) {
 
@@ -1362,9 +1320,7 @@
      INVESTISSEMENT
   ================================= */
 
-  async function submitInvestment(
-    projectId
-  ) {
+  async function submitInvestment(projectId) {
 
     if (!currentUser) {
 
@@ -1487,7 +1443,7 @@
     }
 
 
-    /* MTN TEMPORAIRE */
+    /* MTN */
 
     if (
       method ===
@@ -1521,6 +1477,7 @@
       await sb
         .from("investments")
         .insert({
+
           user_id:
             currentUser.id,
 
@@ -1532,6 +1489,7 @@
 
           status:
             "pending"
+
         })
         .select()
         .single();
@@ -1680,7 +1638,6 @@
       transactionReference.value = "";
     }
 
-
     updatePaymentMethod(
       projectId
     );
@@ -1691,6 +1648,7 @@
 
   /* ================================
      MES INVESTISSEMENTS
+     NOUVEAU SYSTEME DE STATUT
   ================================= */
 
   async function loadMyInvestments() {
@@ -1712,9 +1670,12 @@
       return;
     }
 
+
+    /* INVESTISSEMENTS */
+
     const {
-      data,
-      error
+      data: investments,
+      error: investmentError
     } =
       await sb
         .from("investments")
@@ -1731,12 +1692,12 @@
         );
 
 
-    if (error) {
+    if (investmentError) {
 
       container.innerHTML = `
         <div class="error-box">
           ❌ ${escapeHtml(
-            error.message
+            investmentError.message
           )}
         </div>
       `;
@@ -1746,8 +1707,8 @@
 
 
     if (
-      !data ||
-      !data.length
+      !investments ||
+      !investments.length
     ) {
 
       container.innerHTML = `
@@ -1761,8 +1722,43 @@
     }
 
 
+    /* PAIEMENTS */
+
+    const {
+      data: payments,
+      error: paymentError
+    } =
+      await sb
+        .from("payments")
+        .select("*")
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+
+    if (paymentError) {
+
+      console.error(
+        paymentError
+      );
+    }
+
+
+    const paymentList =
+      payments || [];
+
+
+    /* AFFICHAGE */
+
     container.innerHTML =
-      data.map(
+      investments.map(
         investment => {
 
           const project =
@@ -1773,8 +1769,46 @@
             );
 
 
-          let status =
-            "⏳ En attente";
+          /* PAIEMENT CORRESPONDANT */
+
+          const payment =
+            paymentList.find(
+              p =>
+                p.investment_id ===
+                investment.id
+            );
+
+
+          /* STATUT PAIEMENT */
+
+          let paymentStatus =
+            "⏳ Paiement en attente";
+
+
+          if (
+            payment &&
+            payment.status ===
+            "verified"
+          ) {
+
+            paymentStatus =
+              "✅ Paiement confirmé";
+
+          } else if (
+            payment &&
+            payment.status ===
+            "rejected"
+          ) {
+
+            paymentStatus =
+              "❌ Paiement rejeté";
+          }
+
+
+          /* STATUT INVESTISSEMENT */
+
+          let investmentStatus =
+            "⏳ Investissement en attente";
 
 
           if (
@@ -1782,20 +1816,111 @@
             "approved"
           ) {
 
-            status =
-              "✅ Approuvé";
+            investmentStatus =
+              "✅ Investissement approuvé";
 
           } else if (
             investment.status ===
             "rejected"
           ) {
 
-            status =
-              "❌ Refusé";
+            investmentStatus =
+              "❌ Investissement refusé";
+          }
+
+
+          /* MESSAGE FINAL */
+
+          let finalMessage = "";
+
+
+          if (
+            payment &&
+            payment.status ===
+            "verified" &&
+            investment.status ===
+            "approved"
+          ) {
+
+            finalMessage = `
+
+              <div class="confirmed-box">
+
+                🎉
+                <strong>
+                  Investissement confirmé !
+                </strong>
+
+                <br><br>
+
+                Votre paiement a été vérifié
+                et votre investissement est
+                officiellement approuvé.
+
+              </div>
+
+            `;
+
+          } else if (
+            payment &&
+            payment.status ===
+            "verified"
+          ) {
+
+            finalMessage = `
+
+              <div class="message">
+
+                🟢
+                <strong>
+                  Paiement confirmé
+                </strong>
+
+                <br><br>
+
+                Votre paiement Orange Money
+                a été vérifié par
+                l'administrateur.
+
+                <br><br>
+
+                ⏳ Votre investissement est
+                encore en attente
+                d'approbation.
+
+              </div>
+
+            `;
+
+          } else if (
+            payment &&
+            payment.status ===
+            "rejected"
+          ) {
+
+            finalMessage = `
+
+              <div class="error-box">
+
+                ❌
+                <strong>
+                  Paiement rejeté
+                </strong>
+
+                <br><br>
+
+                Votre paiement n'a pas été
+                validé par l'administrateur.
+
+              </div>
+
+            `;
+
           }
 
 
           return `
+
             <div class="investment-item">
 
               <strong>
@@ -1817,13 +1942,52 @@
 
               <br><br>
 
-              Statut :
+              💳 Paiement :
               <span class="status">
-                ${status}
+                ${paymentStatus}
               </span>
 
+              <br>
+
+              📊 Investissement :
+              <span class="status">
+                ${investmentStatus}
+              </span>
+
+
+              ${
+                payment &&
+                payment.method ===
+                "orange_money"
+
+                  ? `
+
+                    <br><br>
+
+                    🟠 Orange Money
+
+                    <br>
+
+                    🧾 Référence :
+                    <strong>
+                      ${escapeHtml(
+                        payment.transaction_reference ||
+                        "Non renseignée"
+                      )}
+                    </strong>
+
+                  `
+
+                  : ""
+              }
+
+
+              ${finalMessage}
+
             </div>
+
           `;
+
         }
       ).join("");
   }
@@ -2146,6 +2310,7 @@
 
       container.innerHTML = `
         <div class="error-box">
+
           ❌ Impossible de charger
           les paiements.
 
@@ -2154,6 +2319,7 @@
           ${escapeHtml(
             error.message
           )}
+
         </div>
       `;
 
@@ -2220,7 +2386,9 @@
                 ${
                   payment.method ===
                   "orange_money"
+
                     ? "🟠 Orange Money"
+
                     : escapeHtml(
                         payment.method ||
                         ""
@@ -2367,6 +2535,16 @@
 
 
     await loadAdminPayments();
+
+    /* Actualiser également côté investisseur */
+
+    if (
+      currentUser &&
+      currentProfile &&
+      currentProfile.role !== "admin"
+    ) {
+      await loadMyInvestments();
+    }
   }
 
 
@@ -2420,8 +2598,7 @@
 
 
     alert(
-      status ===
-      "approved"
+      status === "approved"
 
         ? "✅ Investissement approuvé."
 
@@ -2432,6 +2609,8 @@
     await loadAdminInvestments();
 
     await loadAdminStats();
+
+    await loadMyInvestments();
   }
 
 
