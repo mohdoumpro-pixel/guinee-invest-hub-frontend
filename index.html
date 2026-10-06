@@ -1110,7 +1110,15 @@
                 >
                   💰 Je veux investir
                 </button>
+<label for="paymentMethod">💳 Moyen de paiement</label>
 
+<select id="paymentMethod" required>
+  <option value="">Choisir un moyen de paiement</option>
+  <option value="orange_money">🟠 Orange Money</option>
+  <option value="mtn_mobile_money">🟡 MTN Mobile Money</option>
+  <option value="visa_mastercard">💳 Visa / Mastercard</option>
+  <option value="bank_transfer">🏦 Virement bancaire</option>
+</select>
                 <button
                   class="interest"
                   onclick="registerInterest('${project.id}')"
