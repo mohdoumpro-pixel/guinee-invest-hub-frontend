@@ -11,79 +11,116 @@
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
     }
 
     body {
-      background: #f4f7f5;
-      color: #17221b;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
     }
 
     header {
-      background: #0b6b3a;
+      background: #0b5d3b;
       color: white;
-      padding: 24px 18px;
+      padding: 18px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 28px;
-      margin-bottom: 8px;
+      margin: 0;
+      font-size: 25px;
     }
 
-    main {
-      width: 94%;
-      max-width: 1150px;
+    header p {
+      margin: 6px 0 0;
+      opacity: .9;
+    }
+
+    nav {
+      background: white;
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    button,
+    select,
+    input {
+      font-family: inherit;
+    }
+
+    button {
+      border: none;
+      border-radius: 9px;
+      padding: 11px 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .nav-btn {
+      background: #eef2f7;
+      color: #172033;
+    }
+
+    .nav-btn:hover {
+      background: #dfe8f2;
+    }
+
+    .container {
+      width: min(1100px, 94%);
       margin: 25px auto;
     }
 
-    .card {
+    .section {
       background: white;
-      border-radius: 16px;
-      padding: 24px;
+      border-radius: 15px;
+      padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.07);
+      box-shadow: 0 4px 18px rgba(0,0,0,.07);
+    }
+
+    .section h2 {
+      margin-top: 0;
     }
 
     .hidden {
       display: none !important;
     }
 
+    .auth-box {
+      max-width: 480px;
+      margin: 30px auto;
+    }
+
     input,
     select {
       width: 100%;
-      padding: 14px;
-      margin: 8px 0;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
+      padding: 13px;
+      margin: 7px 0;
+      border: 1px solid #d5dbe4;
+      border-radius: 9px;
       background: white;
-    }
-
-    button {
-      border: none;
-      border-radius: 10px;
-      padding: 13px 18px;
-      cursor: pointer;
       font-size: 15px;
-      font-weight: bold;
-      margin: 5px 4px 5px 0;
     }
 
     .primary {
-      background: #0b6b3a;
+      width: 100%;
+      background: #0b5d3b;
       color: white;
+      margin-top: 8px;
     }
 
     .secondary {
-      background: #e8f2ec;
-      color: #0b6b3a;
+      background: #e9eef5;
+      color: #172033;
     }
 
     .danger {
-      background: #c62828;
+      background: #dc3545;
       color: white;
     }
 
@@ -92,209 +129,128 @@
       color: white;
     }
 
-    .projects-header,
-    .user-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
+    .logout {
+      background: #dc3545;
+      color: white;
     }
 
-    .projects-header {
-      margin-bottom: 20px;
-    }
-
-    .projects-grid {
+    .project-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 18px;
     }
 
-    .project {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      border: 1px solid #e8eee9;
-      box-shadow: 0 5px 18px rgba(0,0,0,.08);
+    .project-card {
+      border: 1px solid #e0e5ec;
+      border-radius: 14px;
+      padding: 18px;
+      background: #fff;
     }
 
-    .project h3 {
-      margin: 12px 0;
-      font-size: 21px;
+    .project-card h3 {
+      margin-top: 0;
+      color: #0b5d3b;
     }
 
-    .project p {
-      color: #5c665f;
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-
-    .sector {
-      display: inline-block;
-      background: #e8f2ec;
-      color: #0b6b3a;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: bold;
+    .project-meta {
+      color: #667085;
+      font-size: 14px;
+      margin: 8px 0;
     }
 
     .amount {
       font-size: 20px;
       font-weight: bold;
-      color: #0b6b3a;
-      margin: 15px 0;
-    }
-
-    .interest,
-    .investment-button {
-      background: #0b6b3a;
-      color: white;
-      width: 100%;
-    }
-
-    .details {
-      background: #f7faf8;
-      border-radius: 12px;
-      padding: 18px;
-      margin-top: 15px;
-      display: none;
-    }
-
-    .details.open {
-      display: block;
-    }
-
-    .details-row {
-      padding: 10px 0;
-      border-bottom: 1px solid #e1e7e3;
-    }
-
-    .details-label {
-      font-size: 13px;
-      color: #6c756f;
-      margin-bottom: 4px;
-    }
-
-    .details-value {
-      font-weight: bold;
+      margin: 12px 0;
     }
 
     .investment-box {
-      background: #f0f7f3;
-      border: 1px solid #cfe1d6;
-      border-radius: 14px;
-      padding: 18px;
       margin-top: 15px;
-    }
-
-    .payment-label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
+      padding-top: 15px;
+      border-top: 1px solid #e5e7eb;
     }
 
     .message {
-      padding: 14px;
-      border-radius: 10px;
-      margin: 15px 0;
-      background: #e8f2ec;
-      color: #0b6b3a;
+      margin-top: 10px;
+      padding: 12px;
+      background: #e8f7ef;
+      color: #146c43;
+      border-radius: 8px;
     }
 
     .error-box {
-      background: #ffebee;
-      color: #b71c1c;
-      padding: 18px;
-      border-radius: 12px;
-      margin-top: 12px;
+      margin-top: 10px;
+      padding: 12px;
+      background: #fdeaea;
+      color: #b42318;
+      border-radius: 8px;
     }
 
-    .empty {
-      padding: 25px;
-      text-align: center;
-      color: #69736c;
-    }
-
-    .counter {
-      background: #0b6b3a;
-      color: white;
-      padding: 8px 13px;
-      border-radius: 20px;
-      font-weight: bold;
-      display: inline-block;
-    }
-
-    .interest-item,
-    .investment-item,
-    .admin-item {
-      background: #f7faf8;
-      border-radius: 12px;
-      padding: 16px;
-      margin: 10px 0;
-    }
-
+    .admin-item,
     .investment-item {
-      border-left: 4px solid #0b6b3a;
+      border: 1px solid #e0e5ec;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+      background: #fafbfc;
     }
 
-    .admin-item {
-      border-left: 4px solid #0b6b3a;
+    .admin-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
     }
 
     .status {
       display: inline-block;
-      padding: 5px 9px;
-      border-radius: 15px;
-      background: #fff3cd;
-      color: #856404;
-      font-size: 12px;
-      font-weight: bold;
       margin-top: 8px;
+      font-weight: bold;
     }
 
-    .admin-title {
-      color: #0b6b3a;
-      margin-bottom: 8px;
-    }
-
-    .admin-stat-grid {
+    .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-top: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
     }
 
     .stat {
-      background: #f7faf8;
-      border-radius: 14px;
-      padding: 20px;
+      padding: 18px;
+      background: #f2f7f4;
+      border-radius: 12px;
       text-align: center;
     }
 
-    .stat-number {
-      font-size: 28px;
-      font-weight: bold;
-      color: #0b6b3a;
-      margin-top: 8px;
+    .stat strong {
+      display: block;
+      font-size: 25px;
+      color: #0b5d3b;
+      margin-bottom: 5px;
     }
 
-    .admin-actions {
-      margin-top: 12px;
+    .user-info {
+      text-align: center;
+      padding: 10px;
+      color: #667085;
+    }
+
+    .empty {
+      color: #667085;
+      text-align: center;
+      padding: 20px;
     }
 
     @media (max-width: 600px) {
       header h1 {
-        font-size: 23px;
+        font-size: 21px;
       }
 
-      main {
-        width: 92%;
+      .container {
+        width: 96%;
       }
 
-      .card {
-        padding: 18px;
+      .section {
+        padding: 15px;
       }
     }
   </style>
@@ -304,22 +260,72 @@
 
 <header>
   <h1>🇬🇳 Guinée Invest Hub</h1>
-  <p>Investissez dans les projets guinéens</p>
+  <p>Connecter les investisseurs aux projets guinéens</p>
 </header>
 
-<main>
+<nav>
+  <button class="nav-btn" onclick="showSection('home')">
+    🏠 Accueil
+  </button>
 
-  <!-- =========================
-       CONNEXION
-  ========================== -->
+  <button class="nav-btn" onclick="showSection('projectsSection')">
+    📊 Projets
+  </button>
 
-  <section id="authCard" class="card">
+  <button class="nav-btn" onclick="showSection('myInvestmentsSection')">
+    💰 Mes investissements
+  </button>
+
+  <button
+    id="adminNav"
+    class="nav-btn hidden"
+    onclick="showSection('adminSection')"
+  >
+    🛡️ Administration
+  </button>
+
+  <button
+    id="logoutBtn"
+    class="logout hidden"
+    onclick="logout()"
+  >
+    Déconnexion
+  </button>
+</nav>
+
+<div class="container">
+
+  <!-- ACCUEIL -->
+
+  <section id="home" class="section">
+
+    <h2>Bienvenue sur Guinée Invest Hub 🇬🇳</h2>
+
+    <p>
+      Découvrez des projets guinéens et envoyez vos demandes
+      d'investissement directement depuis la plateforme.
+    </p>
+
+    <div id="userInfo" class="user-info">
+      Vous n'êtes pas connecté.
+    </div>
+
+    <button
+      id="loginHomeBtn"
+      class="primary"
+      onclick="showSection('authSection')"
+    >
+      🔐 Se connecter / créer un compte
+    </button>
+
+  </section>
+
+
+  <!-- AUTHENTIFICATION -->
+
+  <section id="authSection" class="section auth-box hidden">
 
     <h2>🔐 Connexion</h2>
-
-    <p style="margin:10px 0 15px;">
-      Connectez-vous ou créez votre compte.
-    </p>
 
     <input
       id="email"
@@ -342,6 +348,7 @@
 
     <button
       class="secondary"
+      style="width:100%; margin-top:8px;"
       onclick="signup()"
     >
       Créer un compte
@@ -352,227 +359,116 @@
   </section>
 
 
-  <!-- =========================
-       ESPACE INVESTISSEUR
-  ========================== -->
+  <!-- PROJETS -->
 
-  <section id="investorSpace" class="hidden">
+  <section id="projectsSection" class="section hidden">
 
-    <div class="card">
+    <h2>📊 Projets disponibles</h2>
 
-      <div class="user-bar">
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="🔎 Rechercher un projet..."
+      oninput="filterProjects()"
+    >
 
-        <div>
-          <h2>💰 Espace Investisseur</h2>
-          <p id="userEmail"></p>
-        </div>
-
-        <div>
-
-          <span class="counter">
-            ❤️ Intérêts :
-            <span id="interestCount">0</span>
-          </span>
-
-          <button
-            class="danger"
-            onclick="logout()"
-          >
-            Déconnexion
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- PROJETS -->
-
-    <section class="card">
-
-      <div class="projects-header">
-
-        <div>
-          <h2>🚀 Projets disponibles</h2>
-
-          <p>
-            <span id="projectCount">0</span>
-            projet(s)
-          </p>
-        </div>
-
-        <input
-          id="search"
-          type="text"
-          placeholder="🔎 Rechercher..."
-          style="max-width:300px;"
-          oninput="searchProjects()"
-        >
-
-      </div>
-
-      <div id="projects" class="projects-grid">
-        <p class="empty">
-          Chargement...
-        </p>
-      </div>
-
-    </section>
-
-
-    <!-- MES INTÉRÊTS -->
-
-    <section class="card">
-
-      <h2>❤️ Mes intérêts</h2>
-
-      <div id="myInterests">
-        <p class="empty">
-          Chargement...
-        </p>
-      </div>
-
-    </section>
-
-
-    <!-- MES INVESTISSEMENTS -->
-
-    <section class="card">
-
-      <h2>💼 Mes demandes d'investissement</h2>
-
-      <div id="myInvestments">
-        <p class="empty">
-          Chargement...
-        </p>
-      </div>
-
-    </section>
-
-  </section>
-
-
-  <!-- =========================
-       ESPACE ADMIN
-  ========================== -->
-
-  <section id="adminSpace" class="hidden">
-
-    <div class="card">
-
-      <h2 class="admin-title">
-        🛡️ Administration
-      </h2>
-
-      <p>
-        Gestion de Guinée Invest Hub
+    <div
+      id="projectsContainer"
+      class="project-grid"
+    >
+      <p class="empty">
+        Chargement des projets...
       </p>
-
-      <p id="adminEmail" style="margin-top:8px;"></p>
-
-      <div class="admin-stat-grid">
-
-        <div class="stat">
-          <div>👥 Investisseurs</div>
-
-          <div
-            id="adminUserCount"
-            class="stat-number"
-          >
-            0
-          </div>
-        </div>
-
-        <div class="stat">
-          <div>🌾 Projets</div>
-
-          <div
-            id="adminProjectCount"
-            class="stat-number"
-          >
-            0
-          </div>
-        </div>
-
-        <div class="stat">
-          <div>💰 Demandes</div>
-
-          <div
-            id="adminInvestmentCount"
-            class="stat-number"
-          >
-            0
-          </div>
-        </div>
-
-        <div class="stat">
-          <div>💵 Montant demandé</div>
-
-          <div
-            id="adminInvestmentAmount"
-            class="stat-number"
-          >
-            0 GNF
-          </div>
-        </div>
-
-      </div>
-
     </div>
-
-
-    <!-- DEMANDES -->
-
-    <section class="card">
-
-      <h2>
-        💰 Demandes d'investissement
-      </h2>
-
-      <div id="adminInvestments">
-
-        <p class="empty">
-          Chargement...
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- PROJETS ADMIN -->
-
-    <section class="card">
-
-      <h2>
-        🌾 Projets
-      </h2>
-
-      <div id="adminProjects">
-
-        <p class="empty">
-          Chargement...
-        </p>
-
-      </div>
-
-    </section>
 
   </section>
 
-</main>
+
+  <!-- MES INVESTISSEMENTS -->
+
+  <section
+    id="myInvestmentsSection"
+    class="section hidden"
+  >
+
+    <h2>💰 Mes investissements</h2>
+
+    <div id="myInvestments">
+      <p class="empty">
+        Connectez-vous pour voir vos investissements.
+      </p>
+    </div>
+
+  </section>
+
+
+  <!-- ADMINISTRATION -->
+
+  <section
+    id="adminSection"
+    class="section hidden"
+  >
+
+    <h2>🛡️ Administration</h2>
+
+    <h3>📈 Statistiques</h3>
+
+    <div
+      id="adminStats"
+      class="stats"
+    >
+      <div class="stat">
+        <strong>...</strong>
+        Investisseurs
+      </div>
+
+      <div class="stat">
+        <strong>...</strong>
+        Projets
+      </div>
+
+      <div class="stat">
+        <strong>...</strong>
+        Investissements
+      </div>
+
+      <div class="stat">
+        <strong>...</strong>
+        Montant demandé
+      </div>
+    </div>
+
+    <br>
+
+    <h3>💰 Demandes d'investissement</h3>
+
+    <div id="adminInvestments">
+      <p class="empty">
+        Chargement...
+      </p>
+    </div>
+
+  </section>
+
+</div>
 
 
 <script>
 
-  /* =========================
+  /* ================================
      SUPABASE
-  ========================== */
+  ================================= */
 
   const SUPABASE_URL =
     "https://phwnkvglvebbajixwjau.supabase.co";
+
+  /*
+    IMPORTANT :
+    Garde ici TA clé publishable déjà présente
+    dans ton fichier actuel.
+
+    Ne mets JAMAIS la Secret Key.
+  */
 
   const SUPABASE_KEY =
     "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
@@ -584,77 +480,145 @@
     );
 
 
-  /* =========================
+  /* ================================
      VARIABLES
-  ========================== */
+  ================================= */
 
   let currentUser = null;
-  let currentRole = null;
+  let currentProfile = null;
   let projects = [];
 
 
-  /* =========================
-     OUTILS
-  ========================== */
+  /* ================================
+     UTILITAIRES
+  ================================= */
 
   function escapeHtml(value) {
 
-    return String(value ?? "")
+    if (value === null || value === undefined) {
+      return "";
+    }
+
+    return String(value)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
-
   }
 
 
-  function formatMoney(value) {
+  function formatMoney(amount) {
 
-    const number =
-      Number(value) || 0;
+    const number = Number(amount) || 0;
 
-    return number.toLocaleString(
+    return new Intl.NumberFormat(
       "fr-FR"
-    ) + " GNF";
-
+    ).format(number) + " GNF";
   }
 
 
-  function showMessage(message) {
+  /* ================================
+     NAVIGATION
+  ================================= */
 
-    document.getElementById(
-      "authMessage"
-    ).innerHTML =
-      `<div class="message">${escapeHtml(message)}</div>`;
+  function showSection(id) {
 
+    const sections =
+      document.querySelectorAll(
+        ".container > section"
+      );
+
+    sections.forEach(section => {
+      section.classList.add("hidden");
+    });
+
+    const target =
+      document.getElementById(id);
+
+    if (target) {
+      target.classList.remove("hidden");
+    }
+
+    if (id === "projectsSection") {
+      loadProjects();
+    }
+
+    if (id === "myInvestmentsSection") {
+      loadMyInvestments();
+    }
+
+    if (id === "adminSection") {
+
+      if (
+        currentProfile &&
+        currentProfile.role === "admin"
+      ) {
+
+        loadAdminStats();
+        loadAdminInvestments();
+
+      } else {
+
+        alert(
+          "Accès réservé aux administrateurs."
+        );
+
+        showSection("home");
+      }
+    }
   }
 
 
-  /* =========================
-     INSCRIPTION
-  ========================== */
+  /* ================================
+     SIGNUP
+  ================================= */
 
   async function signup() {
 
     const email =
-      document.getElementById(
-        "email"
-      ).value.trim();
+      document
+        .getElementById("email")
+        .value
+        .trim();
 
     const password =
+      document
+        .getElementById("password")
+        .value;
+
+    const message =
       document.getElementById(
-        "password"
-      ).value;
+        "authMessage"
+      );
 
     if (!email || !password) {
 
-      showMessage(
-        "Veuillez remplir tous les champs."
-      );
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Entrez votre email et votre mot de passe.
+        </div>
+      `;
 
       return;
     }
+
+    if (password.length < 6) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Le mot de passe doit contenir au moins 6 caractères.
+        </div>
+      `;
+
+      return;
+    }
+
+    message.innerHTML = `
+      <div class="message">
+        ⏳ Création du compte...
+      </div>
+    `;
 
     const {
       data,
@@ -667,19 +631,16 @@
 
     if (error) {
 
-      showMessage(
-        error.message
-      );
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ ${escapeHtml(error.message)}
+        </div>
+      `;
 
       return;
     }
 
     if (data.user) {
-
-      /*
-        Un nouveau compte devient
-        investisseur par défaut.
-      */
 
       const {
         error: profileError
@@ -694,45 +655,71 @@
       if (profileError) {
 
         console.error(
-          "Erreur profil:",
           profileError
         );
 
+        message.innerHTML = `
+          <div class="error-box">
+            ❌ Compte créé mais profil impossible à créer.
+            <br><br>
+            ${escapeHtml(
+              profileError.message
+            )}
+          </div>
+        `;
+
+        return;
       }
-
-      showMessage(
-        "✅ Compte créé avec succès."
-      );
-
     }
 
+    message.innerHTML = `
+      <div class="message">
+        ✅ Compte créé avec succès.
+        <br><br>
+        Vous pouvez maintenant vous connecter.
+      </div>
+    `;
   }
 
 
-  /* =========================
-     CONNEXION
-  ========================== */
+  /* ================================
+     LOGIN
+  ================================= */
 
   async function login() {
 
     const email =
-      document.getElementById(
-        "email"
-      ).value.trim();
+      document
+        .getElementById("email")
+        .value
+        .trim();
 
     const password =
+      document
+        .getElementById("password")
+        .value;
+
+    const message =
       document.getElementById(
-        "password"
-      ).value;
+        "authMessage"
+      );
 
     if (!email || !password) {
 
-      showMessage(
-        "Veuillez remplir tous les champs."
-      );
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Entrez votre email et votre mot de passe.
+        </div>
+      `;
 
       return;
     }
+
+    message.innerHTML = `
+      <div class="message">
+        ⏳ Connexion...
+      </div>
+    `;
 
     const {
       data,
@@ -745,37 +732,36 @@
 
     if (error) {
 
-      showMessage(
-        error.message
-      );
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ ${escapeHtml(error.message)}
+        </div>
+      `;
 
       return;
     }
 
-    currentUser =
-      data.user;
-
-    /*
-      IMPORTANT :
-      On ne recrée PAS le profil ici.
-      Cela évite d'écraser le rôle admin.
-    */
+    currentUser = data.user;
 
     await loadUser();
 
+    message.innerHTML = `
+      <div class="message">
+        ✅ Connexion réussie.
+      </div>
+    `;
+
+    showSection("home");
   }
 
 
-  /* =========================
-     CHARGER LE RÔLE
-  ========================== */
+  /* ================================
+     CHARGER UTILISATEUR
+  ================================= */
 
-  async function loadRole() {
+  async function loadUser() {
 
     if (!currentUser) {
-
-      currentRole = null;
-
       return;
     }
 
@@ -785,144 +771,117 @@
     } =
       await sb
         .from("profiles")
-        .select("role")
+        .select("*")
         .eq(
           "id",
           currentUser.id
         )
-        .maybeSingle();
+        .single();
 
     if (error) {
 
       console.error(
-        "Erreur rôle:",
+        "Erreur profil:",
         error
       );
 
-      currentRole = null;
-
-      return;
-    }
-
-    currentRole =
-      data?.role || "investor";
-
-  }
-
-
-  /* =========================
-     UTILISATEUR
-  ========================== */
-
-  async function loadUser() {
-
-    const {
-      data,
-      error
-    } =
-      await sb.auth.getUser();
-
-    if (error) {
-
-      console.error(error);
-
-      return;
-    }
-
-    currentUser =
-      data?.user || null;
-
-    const authCard =
-      document.getElementById(
-        "authCard"
-      );
-
-    const investorSpace =
-      document.getElementById(
-        "investorSpace"
-      );
-
-    const adminSpace =
-      document.getElementById(
-        "adminSpace"
-      );
-
-    if (!currentUser) {
-
-      authCard.classList.remove(
-        "hidden"
-      );
-
-      investorSpace.classList.add(
-        "hidden"
-      );
-
-      adminSpace.classList.add(
-        "hidden"
-      );
-
-      return;
-    }
-
-    authCard.classList.add(
-      "hidden"
-    );
-
-    investorSpace.classList.remove(
-      "hidden"
-    );
-
-    document.getElementById(
-      "userEmail"
-    ).textContent =
-      "Connecté : " +
-      currentUser.email;
-
-    await loadRole();
-
-    await loadProjects();
-    await loadInterestCount();
-    await loadMyInterests();
-    await loadMyInvestments();
-
-    if (currentRole === "admin") {
-
-      adminSpace.classList.remove(
-        "hidden"
-      );
-
-      document.getElementById(
-        "adminEmail"
-      ).textContent =
-        "Administrateur : " +
-        currentUser.email;
-
-      await loadAdminDashboard();
+      currentProfile = null;
 
     } else {
 
-      adminSpace.classList.add(
-        "hidden"
-      );
-
+      currentProfile = data;
     }
 
+    document
+      .getElementById("userInfo")
+      .innerHTML = `
+        Connecté avec :
+        <strong>
+          ${escapeHtml(
+            currentUser.email
+          )}
+        </strong>
+        ${
+          currentProfile?.role === "admin"
+            ? " — 🛡️ Administrateur"
+            : " — 👤 Investisseur"
+        }
+      `;
+
+    document
+      .getElementById("logoutBtn")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("loginHomeBtn")
+      .classList.add("hidden");
+
+    if (
+      currentProfile &&
+      currentProfile.role === "admin"
+    ) {
+
+      document
+        .getElementById("adminNav")
+        .classList.remove("hidden");
+
+    } else {
+
+      document
+        .getElementById("adminNav")
+        .classList.add("hidden");
+    }
   }
 
 
-  /* =========================
-     PROJETS
-  ========================== */
+  /* ================================
+     LOGOUT
+  ================================= */
+
+  async function logout() {
+
+    await sb.auth.signOut();
+
+    currentUser = null;
+    currentProfile = null;
+
+    document
+      .getElementById("logoutBtn")
+      .classList.add("hidden");
+
+    document
+      .getElementById("adminNav")
+      .classList.add("hidden");
+
+    document
+      .getElementById("loginHomeBtn")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("userInfo")
+      .innerHTML =
+        "Vous n'êtes pas connecté.";
+
+    showSection("home");
+  }
+
+
+  /* ================================
+     CHARGER PROJETS
+  ================================= */
 
   async function loadProjects() {
 
     const container =
       document.getElementById(
-        "projects"
+        "projectsContainer"
       );
 
-    container.innerHTML =
-      "<p class='empty'>Chargement des projets...</p>";
+    container.innerHTML = `
+      <p class="empty">
+        ⏳ Chargement des projets...
+      </p>
+    `;
 
     const {
       data,
@@ -931,10 +890,14 @@
       await sb
         .from("projects")
         .select("*")
+        .eq(
+          "status",
+          "approved"
+        )
         .order(
-          "title",
+          "created_at",
           {
-            ascending: true
+            ascending: false
           }
         );
 
@@ -944,7 +907,7 @@
 
       container.innerHTML = `
         <div class="error-box">
-          <strong>❌ Erreur Supabase</strong>
+          ❌ Impossible de charger les projets.
           <br><br>
           ${escapeHtml(error.message)}
         </div>
@@ -953,271 +916,177 @@
       return;
     }
 
-    projects =
-      data || [];
+    projects = data || [];
 
-    document.getElementById(
-      "projectCount"
-    ).textContent =
-      projects.length;
-
-    displayProjects(
-      projects
-    );
-
+    renderProjects(projects);
   }
 
 
-  /* =========================
+  /* ================================
      AFFICHER PROJETS
-  ========================== */
+  ================================= */
 
-  function displayProjects(list) {
+  function renderProjects(list) {
 
     const container =
       document.getElementById(
-        "projects"
+        "projectsContainer"
       );
 
-    if (!list || !list.length) {
+    if (!list.length) {
 
-      container.innerHTML =
-        "<p class='empty'>Aucun projet disponible pour le moment.</p>";
+      container.innerHTML = `
+        <p class="empty">
+          Aucun projet disponible.
+        </p>
+      `;
 
       return;
     }
 
     container.innerHTML =
-      list.map(
-        project => {
+      list.map(project => {
 
-          const amount =
-            project.amount_required ??
-            project.amount ??
-            0;
+        return `
+          <div class="project-card">
 
-          return `
+            <h3>
+              ${escapeHtml(
+                project.title
+              )}
+            </h3>
 
-            <article class="project">
-
-              <span class="sector">
+            <div class="project-meta">
+              Secteur :
+              <strong>
                 ${escapeHtml(
                   project.sector ||
-                  "Projet"
+                  "Non précisé"
                 )}
-              </span>
+              </strong>
+            </div>
 
-              <h3>
-                ${escapeHtml(
-                  project.title ||
-                  "Projet sans titre"
-                )}
-              </h3>
+            <p>
+              ${escapeHtml(
+                project.description ||
+                "Aucune description."
+              )}
+            </p>
 
-              <p>
-                ${escapeHtml(
-                  project.description ||
-                  "Aucune description disponible."
-                )}
-              </p>
+            <div class="amount">
+              💰
+              ${formatMoney(
+                project.amount_required
+              )}
+            </div>
 
-              <div class="amount">
-                ${formatMoney(amount)}
-              </div>
+            <button
+              class="secondary"
+              style="width:100%;"
+              onclick="showInvestmentBox('${project.id}')"
+            >
+              💰 Je veux investir
+            </button>
+
+            <div
+              id="investmentBox-${project.id}"
+              class="investment-box hidden"
+            >
+
+              <input
+                id="investmentAmount-${project.id}"
+                type="number"
+                min="1"
+                placeholder="Montant à investir en GNF"
+              >
+
+              <label>
+                💳 Moyen de paiement
+              </label>
+
+              <select
+                id="paymentMethod-${project.id}"
+              >
+
+                <option value="">
+                  Choisir un moyen de paiement
+                </option>
+
+                <option value="orange_money">
+                  🟠 Orange Money
+                </option>
+
+                <option value="mtn_mobile_money">
+                  🟡 MTN Mobile Money
+                </option>
+
+                <option value="visa_mastercard">
+                  💳 Visa / Mastercard
+                </option>
+
+                <option value="bank_transfer">
+                  🏦 Virement bancaire
+                </option>
+
+              </select>
 
               <button
-                class="secondary"
-                onclick="toggleDetails('${project.id}')"
+                class="primary"
+                onclick="submitInvestment('${project.id}')"
               >
-                📋 Voir les détails
+                ✅ Envoyer ma demande
               </button>
 
               <div
-                id="details-${project.id}"
-                class="details"
-              >
+                id="investmentMessage-${project.id}"
+              ></div>
 
-                <div class="details-row">
+            </div>
 
-                  <div class="details-label">
-                    Projet
-                  </div>
-
-                  <div class="details-value">
-                    ${escapeHtml(
-                      project.title ||
-                      "Projet"
-                    )}
-                  </div>
-
-                </div>
-
-                <div class="details-row">
-
-                  <div class="details-label">
-                    Secteur
-                  </div>
-
-                  <div class="details-value">
-                    ${escapeHtml(
-                      project.sector ||
-                      "Non précisé"
-                    )}
-                  </div>
-
-                </div>
-
-                <div class="details-row">
-
-                  <div class="details-label">
-                    Montant recherché
-                  </div>
-
-                  <div class="details-value">
-                    ${formatMoney(amount)}
-                  </div>
-
-                </div>
-
-                <button
-                  class="investment-button"
-                  onclick="openInvestment('${project.id}')"
-                >
-                  💰 Je veux investir
-                </button>
-
-                <button
-                  class="interest"
-                  onclick="registerInterest('${project.id}')"
-                >
-                  ❤️ Je suis intéressé
-                </button>
-
-                <div
-                  id="investment-${project.id}"
-                  class="investment-box hidden"
-                >
-
-                  <h4>
-                    💰 Demande d'investissement
-                  </h4>
-
-                  <input
-                    id="investmentAmount-${project.id}"
-                    type="number"
-                    min="1"
-                    placeholder="Montant à investir en GNF"
-                  >
-
-                  <label
-                    class="payment-label"
-                    for="paymentMethod-${project.id}"
-                  >
-                    💳 Moyen de paiement
-                  </label>
-
-                  <select
-                    id="paymentMethod-${project.id}"
-                  >
-
-                    <option value="">
-                      Choisir un moyen de paiement
-                    </option>
-
-                    <option value="orange_money">
-                      🟠 Orange Money
-                    </option>
-
-                    <option value="mtn_mobile_money">
-                      🟡 MTN Mobile Money
-                    </option>
-
-                    <option value="visa_mastercard">
-                      💳 Visa / Mastercard
-                    </option>
-
-                    <option value="bank_transfer">
-                      🏦 Virement bancaire
-                    </option>
-
-                  </select>
-
-                  <button
-                    class="investment-button"
-                    onclick="submitInvestment('${project.id}')"
-                  >
-                    ✅ Envoyer ma demande
-                  </button>
-
-                  <div
-                    id="investmentMessage-${project.id}"
-                  ></div>
-
-                </div>
-
-              </div>
-
-            </article>
-
-          `;
-
-        }
-      ).join("");
-
+          </div>
+        `;
+      }).join("");
   }
 
 
-  /* =========================
-     DÉTAILS
-  ========================== */
+  /* ================================
+     AFFICHER INVESTISSEMENT
+  ================================= */
 
-  function toggleDetails(projectId) {
+  function showInvestmentBox(
+    projectId
+  ) {
 
-    const details =
-      document.getElementById(
-        "details-" +
-        projectId
+    if (!currentUser) {
+
+      alert(
+        "Vous devez être connecté pour investir."
       );
 
-    if (details) {
+      showSection("authSection");
 
-      details.classList.toggle(
-        "open"
-      );
-
+      return;
     }
-
-  }
-
-
-  /* =========================
-     OUVRIR INVESTISSEMENT
-  ========================== */
-
-  function openInvestment(projectId) {
 
     const box =
       document.getElementById(
-        "investment-" +
+        "investmentBox-" +
         projectId
       );
 
     if (box) {
-
-      box.classList.remove(
-        "hidden"
-      );
-
+      box.classList.toggle("hidden");
     }
-
   }
 
 
-  /* =========================
-     INVESTISSEMENT + PAIEMENT
-  ========================== */
+  /* ================================
+     INVESTISSEMENT
+  ================================= */
 
-  async function submitInvestment(projectId) {
+  async function submitInvestment(
+    projectId
+  ) {
 
     if (!currentUser) {
 
@@ -1246,8 +1115,11 @@
         projectId
       );
 
-    if (!input || !paymentSelect || !message) {
-
+    if (
+      !input ||
+      !paymentSelect ||
+      !message
+    ) {
       return;
     }
 
@@ -1257,9 +1129,10 @@
     const method =
       paymentSelect.value;
 
-    /* Vérification montant */
-
-    if (!amount || amount <= 0) {
+    if (
+      !amount ||
+      amount <= 0
+    ) {
 
       message.innerHTML = `
         <div class="error-box">
@@ -1269,8 +1142,6 @@
 
       return;
     }
-
-    /* Vérification paiement */
 
     if (!method) {
 
@@ -1283,16 +1154,14 @@
       return;
     }
 
-
-    /* =========================
-       CRÉER LA DEMANDE
-    ========================== */
-
     message.innerHTML = `
       <div class="message">
         ⏳ Enregistrement de votre demande...
       </div>
     `;
+
+
+    /* INVESTISSEMENT */
 
     const {
       data: investment,
@@ -1301,19 +1170,10 @@
       await sb
         .from("investments")
         .insert({
-
-          user_id:
-            currentUser.id,
-
-          project_id:
-            projectId,
-
-          amount:
-            Math.round(amount),
-
-          status:
-            "pending"
-
+          user_id: currentUser.id,
+          project_id: projectId,
+          amount: Math.round(amount),
+          status: "pending"
         })
         .select()
         .single();
@@ -1337,9 +1197,7 @@
     }
 
 
-    /* =========================
-       ENREGISTRER LE PAIEMENT
-    ========================== */
+    /* PAIEMENT */
 
     const {
       error: paymentError
@@ -1347,22 +1205,11 @@
       await sb
         .from("payments")
         .insert({
-
-          user_id:
-            currentUser.id,
-
-          investment_id:
-            investment.id,
-
-          amount:
-            Math.round(amount),
-
-          method:
-            method,
-
-          status:
-            "pending"
-
+          user_id: currentUser.id,
+          investment_id: investment.id,
+          amount: Math.round(amount),
+          method: method,
+          status: "pending"
         });
 
 
@@ -1390,10 +1237,6 @@
       return;
     }
 
-
-    /* =========================
-       SUCCÈS
-    ========================== */
 
     let paymentName =
       method;
@@ -1429,7 +1272,6 @@
 
       paymentName =
         "🏦 Virement bancaire";
-
     }
 
 
@@ -1465,32 +1307,41 @@
       </div>
     `;
 
-
     input.value = "";
 
     paymentSelect.value = "";
 
-
     await loadMyInvestments();
-
   }
 
 
-  /* =========================
+  /* ================================
      MES INVESTISSEMENTS
-  ========================== */
+  ================================= */
 
   async function loadMyInvestments() {
-
-    if (!currentUser) {
-
-      return;
-    }
 
     const container =
       document.getElementById(
         "myInvestments"
       );
+
+    if (!currentUser) {
+
+      container.innerHTML = `
+        <p class="empty">
+          Connectez-vous pour voir vos investissements.
+        </p>
+      `;
+
+      return;
+    }
+
+    container.innerHTML = `
+      <p class="empty">
+        ⏳ Chargement...
+      </p>
+    `;
 
     const {
       data,
@@ -1498,9 +1349,7 @@
     } =
       await sb
         .from("investments")
-        .select(
-          "id, project_id, amount, status, created_at"
-        )
+        .select("*")
         .eq(
           "user_id",
           currentUser.id
@@ -1514,21 +1363,285 @@
 
     if (error) {
 
-      console.error(error);
-
-      container.innerHTML =
-        "<p class='empty'>Impossible de charger vos demandes.</p>";
+      container.innerHTML = `
+        <div class="error-box">
+          ❌ ${escapeHtml(
+            error.message
+          )}
+        </div>
+      `;
 
       return;
     }
 
     if (!data || !data.length) {
 
-      container.innerHTML =
-        "<p class='empty'>Aucune demande d'investissement.</p>";
+      container.innerHTML = `
+        <p class="empty">
+          Vous n'avez encore aucun investissement.
+        </p>
+      `;
 
       return;
     }
+
+    container.innerHTML =
+      data.map(investment => {
+
+        const project =
+          projects.find(
+            p =>
+              p.id ===
+              investment.project_id
+          );
+
+        let status =
+          "⏳ En attente";
+
+        if (
+          investment.status ===
+          "approved"
+        ) {
+
+          status =
+            "✅ Approuvé";
+
+        } else if (
+          investment.status ===
+          "rejected"
+        ) {
+
+          status =
+            "❌ Refusé";
+        }
+
+        return `
+          <div class="investment-item">
+
+            <strong>
+              💰
+              ${formatMoney(
+                investment.amount
+              )}
+            </strong>
+
+            <br><br>
+
+            Projet :
+            <strong>
+              ${escapeHtml(
+                project?.title ||
+                "Projet"
+              )}
+            </strong>
+
+            <br><br>
+
+            Statut :
+            <span class="status">
+              ${status}
+            </span>
+
+          </div>
+        `;
+
+      }).join("");
+  }
+
+
+  /* ================================
+     ADMIN STATISTIQUES
+  ================================= */
+
+  async function loadAdminStats() {
+
+    const container =
+      document.getElementById(
+        "adminStats"
+      );
+
+    if (
+      !currentProfile ||
+      currentProfile.role !== "admin"
+    ) {
+      return;
+    }
+
+    const [
+      profilesResult,
+      projectsResult,
+      investmentsResult
+    ] =
+      await Promise.all([
+
+        sb
+          .from("profiles")
+          .select(
+            "id",
+            {
+              count: "exact",
+              head: true
+            }
+          ),
+
+        sb
+          .from("projects")
+          .select(
+            "id",
+            {
+              count: "exact",
+              head: true
+            }
+          ),
+
+        sb
+          .from("investments")
+          .select(
+            "amount"
+          )
+
+      ]);
+
+
+    const investorCount =
+      profilesResult.count ||
+      0;
+
+    const projectCount =
+      projectsResult.count ||
+      0;
+
+    const investmentData =
+      investmentsResult.data ||
+      [];
+
+    const investmentCount =
+      investmentData.length;
+
+    const totalAmount =
+      investmentData.reduce(
+        (total, item) =>
+          total +
+          Number(item.amount || 0),
+        0
+      );
+
+
+    container.innerHTML = `
+
+      <div class="stat">
+        <strong>
+          ${investorCount}
+        </strong>
+        Utilisateurs
+      </div>
+
+      <div class="stat">
+        <strong>
+          ${projectCount}
+        </strong>
+        Projets
+      </div>
+
+      <div class="stat">
+        <strong>
+          ${investmentCount}
+        </strong>
+        Investissements
+      </div>
+
+      <div class="stat">
+        <strong>
+          ${formatMoney(totalAmount)}
+        </strong>
+        Montant demandé
+      </div>
+
+    `;
+  }
+
+
+  /* ================================
+     ADMIN INVESTISSEMENTS
+  ================================= */
+
+  async function loadAdminInvestments() {
+
+    const container =
+      document.getElementById(
+        "adminInvestments"
+      );
+
+    if (
+      !currentProfile ||
+      currentProfile.role !== "admin"
+    ) {
+
+      container.innerHTML = `
+        <div class="error-box">
+          ❌ Accès administrateur requis.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await sb
+        .from("investments")
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+
+    if (error) {
+
+      console.error(
+        "Erreur investissements admin:",
+        error
+      );
+
+      container.innerHTML = `
+        <div class="error-box">
+
+          ❌ Impossible de charger
+          les demandes d'investissement.
+
+          <br><br>
+
+          ${escapeHtml(
+            error.message
+          )}
+
+        </div>
+      `;
+
+      return;
+    }
+
+
+    if (
+      !data ||
+      !data.length
+    ) {
+
+      container.innerHTML = `
+        <p class="empty">
+          Aucune demande pour le moment.
+        </p>
+      `;
+
+      return;
+    }
+
 
     container.innerHTML =
       data.map(
@@ -1541,10 +1654,43 @@
                 investment.project_id
             );
 
+
+          let statusText =
+            "⏳ En attente";
+
+
+          if (
+            investment.status ===
+            "approved"
+          ) {
+
+            statusText =
+              "✅ Approuvée";
+
+          } else if (
+            investment.status ===
+            "rejected"
+          ) {
+
+            statusText =
+              "❌ Refusée";
+          }
+
+
           return `
 
-            <div class="investment-item">
+            <div class="admin-item">
 
+              <strong>
+                💰
+                ${formatMoney(
+                  investment.amount
+                )}
+              </strong>
+
+              <br><br>
+
+              Projet :
               <strong>
                 ${escapeHtml(
                   project?.title ||
@@ -1554,239 +1700,191 @@
 
               <br><br>
 
-              💰
-              ${formatMoney(
-                investment.amount
-              )}
+              Investisseur :
+
+              <small>
+                ${escapeHtml(
+                  investment.user_id
+                )}
+              </small>
 
               <br>
 
-              ⏳ Statut :
-
+              Statut :
               <span class="status">
-                ${escapeHtml(
-                  investment.status ||
-                  "pending"
-                )}
+                ${statusText}
               </span>
 
+              <div class="admin-actions">
+
+                <button
+                  class="approve"
+                  onclick="
+                    updateInvestmentStatus(
+                      '${investment.id}',
+                      'approved'
+                    )
+                  "
+                >
+                  ✅ Approuver
+                </button>
+
+                <button
+                  class="danger"
+                  onclick="
+                    updateInvestmentStatus(
+                      '${investment.id}',
+                      'rejected'
+                    )
+                  "
+                >
+                  ❌ Refuser
+                </button>
+
+              </div>
+
             </div>
 
           `;
 
         }
       ).join("");
-
   }
 
 
-  /* =========================
-     INTÉRÊTS
-  ========================== */
+  /* ================================
+     MODIFIER STATUT
+  ================================= */
 
-  async function registerInterest(projectId) {
+  async function updateInvestmentStatus(
+    investmentId,
+    status
+  ) {
 
-    if (!currentUser) {
+    if (
+      !currentProfile ||
+      currentProfile.role !== "admin"
+    ) {
 
       alert(
-        "Vous devez être connecté."
+        "Accès administrateur requis."
       );
 
       return;
     }
 
-    const {
-      data: existing,
-      error: checkError
-    } =
-      await sb
-        .from("interests")
-        .select("id")
-        .eq(
-          "user_id",
-          currentUser.id
-        )
-        .eq(
-          "project_id",
-          projectId
-        )
-        .maybeSingle();
-
-    if (checkError) {
-
-      alert(
-        "Erreur lors de la vérification."
-      );
-
-      return;
-    }
-
-    if (existing) {
-
-      alert(
-        "Vous êtes déjà intéressé par ce projet."
-      );
-
-      return;
-    }
 
     const {
       error
     } =
       await sb
-        .from("interests")
-        .insert({
+        .from("investments")
+        .update({
+          status: status
+        })
+        .eq(
+          "id",
+          investmentId
+        );
 
-          user_id:
-            currentUser.id,
-
-          project_id:
-            projectId
-
-        });
 
     if (error) {
 
       alert(
-        "Impossible d'enregistrer votre intérêt."
+        "Erreur : " +
+        error.message
       );
 
       return;
     }
+
 
     alert(
-      "✅ Votre intérêt a été enregistré."
+      status === "approved"
+        ? "✅ Investissement approuvé."
+        : "❌ Investissement refusé."
     );
 
-    await loadInterestCount();
-    await loadMyInterests();
 
+    await loadAdminInvestments();
+
+    await loadAdminStats();
   }
 
 
-  async function loadInterestCount() {
+  /* ================================
+     RECHERCHE
+  ================================= */
 
-    if (!currentUser) {
+  function filterProjects() {
 
-      return;
-    }
+    const value =
+      document
+        .getElementById(
+          "searchInput"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+      projects.filter(project => {
+
+        const text =
+          (
+            project.title +
+            " " +
+            (
+              project.description ||
+              ""
+            ) +
+            " " +
+            (
+              project.sector ||
+              ""
+            )
+          ).toLowerCase();
+
+        return text.includes(value);
+      });
+
+
+    renderProjects(filtered);
+  }
+
+
+  /* ================================
+     INITIALISATION
+  ================================= */
+
+  async function init() {
 
     const {
-      count,
-      error
+      data
     } =
-      await sb
-        .from("interests")
-        .select(
-          "*",
-          {
-            count: "exact",
-            head: true
-          }
-        )
-        .eq(
-          "user_id",
-          currentUser.id
-        );
+      await sb.auth.getUser();
 
-    if (!error) {
+    if (data.user) {
 
-      document.getElementById(
-        "interestCount"
-      ).textContent =
-        count || 0;
+      currentUser =
+        data.user;
 
+      await loadUser();
+
+    } else {
+
+      currentUser = null;
     }
 
+
+    await loadProjects();
   }
 
 
-  async function loadMyInterests() {
+  init();
 
-    const container =
-      document.getElementById(
-        "myInterests"
-      );
+</script>
 
-    const {
-      data,
-      error
-    } =
-      await sb
-        .from("interests")
-        .select(
-          "id, project_id, created_at"
-        )
-        .eq(
-          "user_id",
-          currentUser.id
-        )
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
-
-    if (error) {
-
-      container.innerHTML =
-        "<p class='empty'>Impossible de charger vos intérêts.</p>";
-
-      return;
-    }
-
-    if (!data || !data.length) {
-
-      container.innerHTML =
-        "<p class='empty'>Aucun intérêt enregistré.</p>";
-
-      return;
-    }
-
-    container.innerHTML =
-      data.map(
-        interest => {
-
-          const project =
-            projects.find(
-              p =>
-                p.id ===
-                interest.project_id
-            );
-
-          return `
-
-            <div class="interest-item">
-
-              ❤️
-
-              <strong>
-                ${escapeHtml(
-                  project?.title ||
-                  "Projet"
-                )}
-              </strong>
-
-            </div>
-
-          `;
-
-        }
-      ).join("");
-
-  }
-
-
-  /* =========================
-     ADMIN DASHBOARD
-  ========================== */
-
-  async function loadAdminDashboard() {
-
-    if (currentRole !== "admin") {
-
-      return;
-    }
-
-    await loadAdmin
+</body>
+</html>
