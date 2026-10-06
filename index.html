@@ -6,11 +6,15 @@
   <title>🇬🇳 Guinée Invest Hub</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      padding: 20px;
       font-family: Arial, sans-serif;
       background: #f2f5f3;
+      color: #222;
     }
 
     .box {
@@ -23,13 +27,13 @@
 
     h1 {
       text-align: center;
+      color: #16803c;
     }
 
     input, button {
       width: 100%;
-      box-sizing: border-box;
       padding: 14px;
-      margin-top: 10px;
+      margin-top: 12px;
       border-radius: 8px;
       font-size: 16px;
     }
@@ -39,10 +43,15 @@
     }
 
     button {
-      border: 0;
+      border: none;
       background: #16803c;
       color: white;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0f642e;
     }
 
     #message {
@@ -50,14 +59,27 @@
       text-align: center;
       font-weight: bold;
     }
+
+    .hidden {
+      display: none;
+    }
+
+    .role-button {
+      background: #222;
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="box">
+  <!-- CONNEXION / INSCRIPTION -->
+  <div class="box" id="authBox">
 
     <h1>🇬🇳 Guinée Invest Hub</h1>
+
+    <p style="text-align:center;">
+      Connectez investisseurs et projets guinéens.
+    </p>
 
     <input
       id="email"
@@ -71,23 +93,309 @@
       placeholder="Votre mot de passe"
     >
 
-    <button id="testButton">
+    <button id="signupButton">
       Créer mon compte
+    </button>
+
+    <button id="loginButton" class="role-button">
+      Se connecter
     </button>
 
     <div id="message"></div>
 
   </div>
 
+
+  <!-- CHOIX DU PROFIL -->
+  <div class="box hidden" id="profileBox">
+
+    <h1>Bienvenue 🇬🇳</h1>
+
+    <p style="text-align:center;">
+      Choisissez votre profil
+    </p>
+
+    <button id="investorButton">
+      💰 Je suis investisseur
+    </button>
+
+    <button id="projectButton" class="role-button">
+      🚀 Je porte un projet
+    </button>
+
+    <div id="profileMessage"></div>
+
+  </div>
+
+
+  <!-- TABLEAU DE BORD -->
+  <div class="box hidden" id="dashboardBox">
+
+    <h1>🇬🇳 Guinée Invest Hub</h1>
+
+    <p id="welcome"></p>
+
+    <button id="logoutButton" class="role-button">
+      Se déconnecter
+    </button>
+
+  </div>
+
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
-    document
-      .getElementById("testButton")
-      .addEventListener("click", function () {
+    (function () {
 
-        document.getElementById("message").textContent =
-          "✅ LE BOUTON FONCTIONNE !";
+      const SUPABASE_URL =
+        "https://phwnkvglvebbajixwjau.supabase.co";
 
-      });
+      const SUPABASE_KEY =
+        sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
+
+      const supabaseClient =
+        window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_KEY
+        );
+
+
+      const authBox =
+        document.getElementById("authBox");
+
+      const profileBox =
+        document.getElementById("profileBox");
+
+      const dashboardBox =
+        document.getElementById("dashboardBox");
+
+      const message =
+        document.getElementById("message");
+
+      const profileMessage =
+        document.getElementById("profileMessage");
+
+      const welcome =
+        document.getElementById("welcome");
+
+
+      function showAuth() {
+        authBox.classList.remove("hidden");
+        profileBox.classList.add("hidden");
+        dashboardBox.classList.add("hidden");
+      }
+
+
+      function showProfile() {
+        authBox.classList.add("hidden");
+        profileBox.classList.remove("hidden");
+        dashboardBox.classList.add("hidden");
+      }
+
+
+      function showDashboard(role) {
+        authBox.classList.add("hidden");
+        profileBox.classList.add("hidden");
+        dashboardBox.classList.remove("hidden");
+
+        welcome.textContent =
+          "Bienvenue ! Votre profil : " + role;
+      }
+
+
+      // CRÉER UN COMPTE
+      document
+        .getElementById("signupButton")
+        .addEventListener("click", async function () {
+
+          const email =
+            document.getElementById("email").value.trim();
+
+          const password =
+            document.getElementById("password").value;
+
+          if (!email || !password) {
+            message.textContent =
+              "❌ Remplissez l'email et le mot de passe.";
+            return;
+          }
+
+          message.textContent =
+            "⏳ Création du compte...";
+
+          const { data, error } =
+            await supabaseClient.auth.signUp({
+              email: email,
+              password: password
+            });
+
+          if (error) {
+            message.textContent =
+              "❌ " + error.message;
+            return;
+          }
+
+          message.textContent =
+            "✅ Compte créé !";
+
+          setTimeout(function () {
+            showProfile();
+          }, 800);
+
+        });
+
+
+      // CONNEXION
+      document
+        .getElementById("loginButton")
+        .addEventListener("click", async function () {
+
+          const email =
+            document.getElementById("email").value.trim();
+
+          const password =
+            document.getElementById("password").value;
+
+          if (!email || !password) {
+            message.textContent =
+              "❌ Remplissez l'email et le mot de passe.";
+            return;
+          }
+
+          message.textContent =
+            "⏳ Connexion...";
+
+          const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+              email: email,
+              password: password
+            });
+
+          if (error) {
+            message.textContent =
+              "❌ " + error.message;
+            return;
+          }
+
+          message.textContent =
+            "✅ Connexion réussie !";
+
+          showProfile();
+
+        });
+
+
+      // INVESTISSEUR
+      document
+        .getElementById("investorButton")
+        .addEventListener("click", async function () {
+
+          profileMessage.textContent =
+            "⏳ Enregistrement...";
+
+          const {
+            data: { user },
+            error: userError
+          } = await supabaseClient.auth.getUser();
+
+          if (userError || !user) {
+            profileMessage.textContent =
+              "❌ Utilisateur non connecté.";
+            return;
+          }
+
+          const { error } =
+            await supabaseClient
+              .from("profiles")
+              .upsert({
+                id: user.id,
+                role: "investisseur"
+              });
+
+          if (error) {
+            profileMessage.textContent =
+              "❌ " + error.message;
+            return;
+          }
+
+          showDashboard("investisseur");
+
+        });
+
+
+      // PORTEUR DE PROJET
+      document
+        .getElementById("projectButton")
+        .addEventListener("click", async function () {
+
+          profileMessage.textContent =
+            "⏳ Enregistrement...";
+
+          const {
+            data: { user },
+            error: userError
+          } = await supabaseClient.auth.getUser();
+
+          if (userError || !user) {
+            profileMessage.textContent =
+              "❌ Utilisateur non connecté.";
+            return;
+          }
+
+          const { error } =
+            await supabaseClient
+              .from("profiles")
+              .upsert({
+                id: user.id,
+                role: "porteur_projet"
+              });
+
+          if (error) {
+            profileMessage.textContent =
+              "❌ " + error.message;
+            return;
+          }
+
+          showDashboard("porteur_projet");
+
+        });
+
+
+      // DÉCONNEXION
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", async function () {
+
+          await supabaseClient.auth.signOut();
+
+          showAuth();
+
+          message.textContent =
+            "Vous êtes déconnecté.";
+
+        });
+
+
+      // VÉRIFIER LA SESSION
+      async function checkSession() {
+
+        const {
+          data: { session }
+        } = await supabaseClient.auth.getSession();
+
+        if (session) {
+          showProfile();
+        } else {
+          showAuth();
+        }
+
+      }
+
+
+      checkSession();
+
+    })();
   </script>
 
 </body>
