@@ -120,6 +120,33 @@ document.getElementById("profils").style.display = "block";
   message.textContent = "✅ COMPTE CRÉÉ !";
 }
 </script>
+async function choisirProfil(profil) {
+  document.getElementById("message").textContent =
+    "⏳ Enregistrement du profil...";
 
+  const { data, error } = await sb.auth.getUser();
+
+  if (error || !data.user) {
+    document.getElementById("message").textContent =
+      "❌ Utilisateur non connecté.";
+    return;
+  }
+
+  const { error: profileError } = await sb
+    .from("profiles")
+    .upsert({
+      id: data.user.id,
+      role: profil
+    });
+
+  if (profileError) {
+    document.getElementById("message").textContent =
+      "❌ " + profileError.message;
+    return;
+  }
+
+  document.getElementById("message").textContent =
+    "✅ Profil enregistré : " + profil;
+}
 </body>
 </html>
