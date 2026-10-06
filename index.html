@@ -24,17 +24,13 @@
     header {
       background: #0b6b3a;
       color: white;
-      padding: 20px;
+      padding: 22px;
       text-align: center;
     }
 
     header h1 {
       font-size: 28px;
       margin-bottom: 8px;
-    }
-
-    header p {
-      opacity: .9;
     }
 
     main {
@@ -163,10 +159,6 @@
       border-bottom: 1px solid #e1e7e3;
     }
 
-    .details-row:last-child {
-      border-bottom: none;
-    }
-
     .details-label {
       font-size: 13px;
       color: #6c756f;
@@ -222,6 +214,49 @@
       margin: 10px 0;
     }
 
+    .investment-box {
+      background: #f0f7f3;
+      border: 1px solid #cfe1d6;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 15px;
+    }
+
+    .investment-box h4 {
+      margin-bottom: 10px;
+      color: #0b6b3a;
+    }
+
+    .investment-box small {
+      color: #68736c;
+    }
+
+    .investment-button {
+      width: 100%;
+      background: #0b6b3a;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .investment-item {
+      background: #f7faf8;
+      border-left: 4px solid #0b6b3a;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 15px;
+      background: #fff3cd;
+      color: #856404;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
     @media (max-width: 600px) {
       header h1 {
         font-size: 23px;
@@ -247,7 +282,7 @@
 
 <main>
 
-  <!-- AUTHENTIFICATION -->
+  <!-- CONNEXION -->
   <section id="authCard" class="card">
 
     <h2>🔐 Connexion</h2>
@@ -268,17 +303,11 @@
       placeholder="Votre mot de passe"
     >
 
-    <button
-      class="primary"
-      onclick="login()"
-    >
+    <button class="primary" onclick="login()">
       Se connecter
     </button>
 
-    <button
-      class="secondary"
-      onclick="signup()"
-    >
+    <button class="secondary" onclick="signup()">
       Créer un compte
     </button>
 
@@ -288,10 +317,7 @@
 
 
   <!-- ESPACE INVESTISSEUR -->
-  <section
-    id="investorSpace"
-    class="hidden"
-  >
+  <section id="investorSpace" class="hidden">
 
     <div class="card">
 
@@ -299,23 +325,17 @@
 
         <div>
           <h2>💰 Espace Investisseur</h2>
-
-          <p id="userEmail">
-            Connecté
-          </p>
+          <p id="userEmail">Connecté</p>
         </div>
 
         <div>
 
           <span class="counter">
-            ❤️ Mes intérêts :
+            ❤️ Intérêts :
             <span id="interestCount">0</span>
           </span>
 
-          <button
-            class="danger"
-            onclick="logout()"
-          >
+          <button class="danger" onclick="logout()">
             Déconnexion
           </button>
 
@@ -350,10 +370,7 @@
 
       </div>
 
-      <div
-        id="projects"
-        class="projects-grid"
-      >
+      <div id="projects" class="projects-grid">
         <p class="empty">
           Chargement des projets...
         </p>
@@ -368,6 +385,20 @@
       <h2>❤️ Mes intérêts</h2>
 
       <div id="myInterests">
+        <p class="empty">
+          Chargement...
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- MES INVESTISSEMENTS -->
+    <section class="card">
+
+      <h2>💼 Mes demandes d'investissement</h2>
+
+      <div id="myInvestments">
         <p class="empty">
           Chargement...
         </p>
@@ -435,17 +466,11 @@
   }
 
 
-  function showMessage(
-    message,
-    type = "success"
-  ) {
+  function showMessage(message) {
 
-    const box =
-      document.getElementById(
-        "authMessage"
-      );
-
-    box.innerHTML =
+    document.getElementById(
+      "authMessage"
+    ).innerHTML =
       `<div class="message">${escapeHtml(message)}</div>`;
 
   }
@@ -470,8 +495,7 @@
     if (!email || !password) {
 
       showMessage(
-        "Veuillez remplir tous les champs.",
-        "error"
+        "Veuillez remplir tous les champs."
       );
 
       return;
@@ -489,8 +513,7 @@
     if (error) {
 
       showMessage(
-        error.message,
-        "error"
+        error.message
       );
 
       return;
@@ -503,8 +526,7 @@
       );
 
       showMessage(
-        "✅ Compte créé avec succès.",
-        "success"
+        "✅ Compte créé avec succès."
       );
 
     }
@@ -531,8 +553,7 @@
     if (!email || !password) {
 
       showMessage(
-        "Veuillez remplir tous les champs.",
-        "error"
+        "Veuillez remplir tous les champs."
       );
 
       return;
@@ -550,8 +571,7 @@
     if (error) {
 
       showMessage(
-        error.message,
-        "error"
+        error.message
       );
 
       return;
@@ -659,10 +679,9 @@
       currentUser.email;
 
     await loadProjects();
-
     await loadInterestCount();
-
     await loadMyInterests();
+    await loadMyInvestments();
 
   }
 
@@ -795,13 +814,6 @@
                 📋 Voir les détails
               </button>
 
-              <button
-                class="interest"
-                onclick="registerInterest('${project.id}')"
-              >
-                ❤️ Je suis intéressé
-              </button>
-
               <div
                 id="details-${project.id}"
                 class="details"
@@ -880,11 +892,59 @@
                 </div>
 
                 <button
+                  class="investment-button"
+                  onclick="openInvestment('${project.id}')"
+                >
+                  💰 Je veux investir
+                </button>
+
+                <button
                   class="interest"
                   onclick="registerInterest('${project.id}')"
                 >
-                  💰 Je veux investir dans ce projet
+                  ❤️ Je suis intéressé
                 </button>
+
+                <div
+                  id="investment-${project.id}"
+                  class="investment-box hidden"
+                >
+
+                  <h4>
+                    💰 Faire une demande d'investissement
+                  </h4>
+
+                  <small>
+                    Montant recherché :
+                    ${formatMoney(amount)}
+                  </small>
+
+                  <input
+                    id="investmentAmount-${project.id}"
+                    type="number"
+                    min="1"
+                    placeholder="Montant à investir en GNF"
+                  >
+
+                  <button
+                    class="investment-button"
+                    onclick="submitInvestment('${project.id}')"
+                  >
+                    ✅ Envoyer ma demande
+                  </button>
+
+                  <button
+                    class="secondary"
+                    onclick="closeInvestment('${project.id}')"
+                  >
+                    Annuler
+                  </button>
+
+                  <div
+                    id="investmentMessage-${project.id}"
+                  ></div>
+
+                </div>
 
               </div>
 
@@ -922,57 +982,297 @@
 
 
   /* =========================
-     RECHERCHE
+     OUVRIR INVESTISSEMENT
   ========================= */
 
-  function searchProjects() {
+  function openInvestment(
+    projectId
+  ) {
 
-    const query =
-      document.getElementById(
-        "search"
-      ).value
-      .trim()
-      .toLowerCase();
+    if (!currentUser) {
 
-    if (!query) {
-
-      displayProjects(
-        projects
+      alert(
+        "Vous devez être connecté."
       );
 
       return;
     }
 
-    const filtered =
-      projects.filter(
-        project => {
-
-          const text = `
-
-            ${project.title || ""}
-
-            ${project.description || ""}
-
-            ${project.sector || ""}
-
-          `.toLowerCase();
-
-          return text.includes(
-            query
-          );
-
-        }
+    const box =
+      document.getElementById(
+        "investment-" +
+        projectId
       );
 
-    displayProjects(
-      filtered
+    if (!box) return;
+
+    box.classList.remove(
+      "hidden"
     );
 
   }
 
 
   /* =========================
-     INTÉRÊT
+     FERMER INVESTISSEMENT
+  ========================= */
+
+  function closeInvestment(
+    projectId
+  ) {
+
+    const box =
+      document.getElementById(
+        "investment-" +
+        projectId
+      );
+
+    if (!box) return;
+
+    box.classList.add(
+      "hidden"
+    );
+
+  }
+
+
+  /* =========================
+     ENVOYER INVESTISSEMENT
+  ========================= */
+
+  async function submitInvestment(
+    projectId
+  ) {
+
+    if (!currentUser) {
+
+      alert(
+        "Vous devez être connecté."
+      );
+
+      return;
+    }
+
+    const input =
+      document.getElementById(
+        "investmentAmount-" +
+        projectId
+      );
+
+    const message =
+      document.getElementById(
+        "investmentMessage-" +
+        projectId
+      );
+
+    const amount =
+      Number(input.value);
+
+    if (
+      !amount ||
+      amount <= 0
+    ) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          Veuillez entrer un montant valide.
+        </div>
+      `;
+
+      return;
+    }
+
+    const project =
+      projects.find(
+        p =>
+          p.id === projectId
+      );
+
+    if (!project) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          Projet introuvable.
+        </div>
+      `;
+
+      return;
+    }
+
+    const {
+      error
+    } =
+      await sb
+        .from("investments")
+        .insert({
+
+          user_id:
+            currentUser.id,
+
+          project_id:
+            projectId,
+
+          amount:
+            Math.round(amount),
+
+          status:
+            "pending"
+
+        });
+
+    if (error) {
+
+      console.error(
+        error
+      );
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ ${escapeHtml(error.message)}
+        </div>
+      `;
+
+      return;
+    }
+
+    message.innerHTML = `
+      <div class="message">
+        ✅ Votre demande d'investissement de
+        <strong>
+          ${formatMoney(amount)}
+        </strong>
+        a été enregistrée.
+      </div>
+    `;
+
+    input.value = "";
+
+    await loadMyInvestments();
+
+  }
+
+
+  /* =========================
+     MES INVESTISSEMENTS
+  ========================= */
+
+  async function loadMyInvestments() {
+
+    const container =
+      document.getElementById(
+        "myInvestments"
+      );
+
+    if (!currentUser) {
+
+      container.innerHTML =
+        "<p class='empty'>Connectez-vous pour voir vos demandes.</p>";
+
+      return;
+    }
+
+    const {
+      data,
+      error
+    } =
+      await sb
+        .from("investments")
+        .select(
+          "id, project_id, amount, status, created_at"
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+    if (error) {
+
+      console.error(
+        error
+      );
+
+      container.innerHTML =
+        "<p class='empty'>Impossible de charger vos demandes.</p>";
+
+      return;
+    }
+
+    if (!data || !data.length) {
+
+      container.innerHTML =
+        "<p class='empty'>Vous n'avez encore aucune demande d'investissement.</p>";
+
+      return;
+    }
+
+    container.innerHTML =
+      data.map(
+        investment => {
+
+          const project =
+            projects.find(
+              p =>
+                p.id ===
+                investment.project_id
+            );
+
+          return `
+
+            <div class="investment-item">
+
+              <strong>
+                ${escapeHtml(
+                  project?.title ||
+                  "Projet"
+                )}
+              </strong>
+
+              <br>
+
+              💰 Montant :
+              <strong>
+                ${formatMoney(
+                  investment.amount
+                )}
+              </strong>
+
+              <br>
+
+              <span class="status">
+                ${escapeHtml(
+                  investment.status ||
+                  "pending"
+                )}
+              </span>
+
+              <br>
+
+              <small>
+                ${new Date(
+                  investment.created_at
+                ).toLocaleDateString(
+                  "fr-FR"
+                )}
+              </small>
+
+            </div>
+
+          `;
+
+        }
+      ).join("");
+
+  }
+
+
+  /* =========================
+     INTÉRÊTS
   ========================= */
 
   async function registerInterest(
@@ -1026,10 +1326,6 @@
         "Erreur lors de la vérification."
       );
 
-      console.error(
-        checkError
-      );
-
       return;
     }
 
@@ -1077,7 +1373,6 @@
     );
 
     await loadInterestCount();
-
     await loadMyInterests();
 
   }
@@ -1133,14 +1428,6 @@
         "myInterests"
       );
 
-    if (!currentUser) {
-
-      container.innerHTML =
-        "<p class='empty'>Connectez-vous pour voir vos intérêts.</p>";
-
-      return;
-    }
-
     const {
       data,
       error
@@ -1165,10 +1452,6 @@
 
       container.innerHTML =
         "<p class='empty'>Impossible de charger vos intérêts.</p>";
-
-      console.error(
-        error
-      );
 
       return;
     }
@@ -1220,6 +1503,52 @@
 
         }
       ).join("");
+
+  }
+
+
+  /* =========================
+     RECHERCHE
+  ========================= */
+
+  function searchProjects() {
+
+    const query =
+      document.getElementById(
+        "search"
+      ).value
+      .trim()
+      .toLowerCase();
+
+    if (!query) {
+
+      displayProjects(
+        projects
+      );
+
+      return;
+    }
+
+    const filtered =
+      projects.filter(
+        project => {
+
+          const text = `
+            ${project.title || ""}
+            ${project.description || ""}
+            ${project.sector || ""}
+          `.toLowerCase();
+
+          return text.includes(
+            query
+          );
+
+        }
+      );
+
+    displayProjects(
+      filtered
+    );
 
   }
 
