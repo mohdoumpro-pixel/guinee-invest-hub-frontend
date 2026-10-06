@@ -292,13 +292,13 @@ async function signup() {
     return;
   }
 
-  message("⏳ Création du compte...");
+  message("⏳ Connexion à Supabase...");
 
-  const { data, error } =
-    await supabaseClient.auth.signUp({
-      email: email,
-      password: password
-    });
+const test = await fetch(
+  "https://phwnkvglvebbajixwjau.supabase.co/auth/v1/settings"
+);
+
+message("✅ Supabase répond : " + test.status);
 
   if (error) {
     message("❌ " + error.message);
