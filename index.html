@@ -1,127 +1,94 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🇬🇳 Guinée Invest Hub</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🇬🇳 Guinée Invest Hub</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f2f5f3;
+    }
 
-<style>
-body{font-family:Arial;background:#f4f7f5;padding:20px}
-.box{max-width:450px;margin:40px auto;background:white;padding:25px;border-radius:15px}
-input,button{width:100%;padding:14px;margin:8px 0;box-sizing:border-box}
-button{background:#16803c;color:white;border:0;border-radius:8px;font-weight:bold}
-#msg{text-align:center;margin:15px;font-weight:bold}
-</style>
+    .box {
+      max-width: 450px;
+      margin: 50px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 15px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input {
+      border: 1px solid #ccc;
+    }
+
+    button {
+      border: 0;
+      background: #16803c;
+      color: white;
+      font-weight: bold;
+    }
+
+    #message {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="box">
+  <div class="box">
 
-<h1>🇬🇳 Guinée Invest Hub</h1>
+    <h1>🇬🇳 Guinée Invest Hub</h1>
 
-<div id="msg"></div>
+    <input
+      id="email"
+      type="email"
+      placeholder="Votre email"
+    >
 
-<input id="email" type="email" placeholder="Email">
+    <input
+      id="password"
+      type="password"
+      placeholder="Votre mot de passe"
+    >
 
-<input id="password" type="password" placeholder="Mot de passe">
+    <button id="testButton">
+      Créer mon compte
+    </button>
 
-<button id="signupButton">Créer mon compte</button>
+    <div id="message"></div>
 
-<button id="loginButton">Se connecter</button>
+  </div>
 
-</div>
+  <script>
+    document
+      .getElementById("testButton")
+      .addEventListener("click", function () {
 
-<script>
+        document.getElementById("message").textContent =
+          "✅ LE BOUTON FONCTIONNE !";
 
-(function(){
-
-const SUPABASE_URL =
-"https://phwnkvglvebbajixwjau.supabase.co";
-
-const SUPABASE_KEY =
-sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK
-
-const supabaseApp =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-alert("SUPABASE EST CONNECTÉ");
-const msg =
-document.getElementById("msg");
-
-document
-.getElementById("signupButton")
-.addEventListener("click", async function(){
-
-const email =
-document.getElementById("email").value.trim();
-
-const password =
-document.getElementById("password").value;
-
-if(!email || !password){
-
-msg.textContent="❌ Remplis tous les champs.";
-
-return;
-}
-
-msg.textContent="⏳ Création du compte...";
-
-const result =
-await supabaseApp.auth.signUp({
-email:email,
-password:password
-});
-
-if(result.error){
-
-msg.textContent="❌ "+result.error.message;
-
-return;
-}
-
-msg.textContent="✅ Compte créé avec succès !";
-
-});
-
-
-document
-.getElementById("loginButton")
-.addEventListener("click", async function(){
-
-const email =
-document.getElementById("email").value.trim();
-
-const password =
-document.getElementById("password").value;
-
-msg.textContent="⏳ Connexion...";
-
-const result =
-await supabaseApp.auth.signInWithPassword({
-email:email,
-password:password
-});
-
-if(result.error){
-
-msg.textContent="❌ "+result.error.message;
-
-return;
-}
-
-msg.textContent="✅ Connexion réussie !";
-
-});
-
-})();
-
-</script>
+      });
+  </script>
 
 </body>
 </html>
