@@ -2,17 +2,29 @@
 <html>
 <body>
 
-<h2>Test bouton</h2>
+<h2>Test Supabase</h2>
 
-<button onclick="test()">Tester</button>
+<button onclick="testSupabase()">Tester Supabase</button>
 
 <p id="result"></p>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-function test() {
+
+const SUPABASE_URL =
+"https://phwnkvglvebbajixwjau.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
+
+function testSupabase() {
+
   document.getElementById("result").innerText =
-    "✅ JavaScript fonctionne";
+    "✅ LE BOUTON SUPABASE FONCTIONNE";
+
 }
+
 </script>
 
 </body>
