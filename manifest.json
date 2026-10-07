@@ -1,0 +1,10 @@
+{
+  "name": "Guinée Invest Hub",
+  "short_name": "Invest Hub",
+  "description": "Plateforme d'investissement et de projets en Guinée",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "orientation": "portrait"
+}
