@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Configuration application Android / PWA -->
+  <!-- Configuration PWA / Android -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f172a">
   <meta name="mobile-web-app-capable" content="yes">
@@ -24,6 +24,7 @@
     :root {
       --green: #0b7a4b;
       --green-dark: #075b38;
+      --green-light: #e8f7f0;
       --gold: #d9a441;
       --bg: #f5f7f9;
       --card: #ffffff;
@@ -31,7 +32,6 @@
       --muted: #667085;
       --border: #e5e7eb;
       --danger: #c62828;
-      --warning: #b7791f;
       --success: #15803d;
       --shadow: 0 8px 30px rgba(0,0,0,.07);
     }
@@ -120,6 +120,12 @@
     .hero h1 {
       margin-top: 0;
       font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .hero h2 {
+      font-size: 28px;
+      margin-top: 0;
     }
 
     .hero p {
@@ -190,6 +196,20 @@
     .project-card p {
       color: var(--muted);
       line-height: 1.6;
+    }
+
+    .sector-card {
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .sector-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0,0,0,.10);
+    }
+
+    .sector-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
     }
 
     .badge {
@@ -379,6 +399,26 @@
       display: block;
     }
 
+    .home-label {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .home-feature {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .home-feature-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
     footer {
       text-align: center;
       padding: 30px 15px;
@@ -403,6 +443,10 @@
       .hero h1 {
         font-size: 27px;
       }
+
+      .hero h2 {
+        font-size: 23px;
+      }
     }
   </style>
 </head>
@@ -411,101 +455,510 @@
 
 <header>
   <div class="header-inner">
+
     <div class="brand">
       🇬🇳 Guinée Invest Hub
       <small>Investir • Entreprendre • Développer</small>
     </div>
 
     <nav>
-      <button onclick="showSection('homeSection')">Accueil</button>
-      <button onclick="showSection('accountSection')">Compte</button>
-      <button onclick="showSection('projectsSection')">Projets</button>
-      <button onclick="showSection('portfolioSection')">Portefeuille</button>
 
-      <button id="adminNav"
-              onclick="showSection('adminSection')"
-              style="display:none;">
+      <button onclick="showSection('homeSection')">
+        Accueil
+      </button>
+
+      <button onclick="showSection('accountSection')">
+        Compte
+      </button>
+
+      <button onclick="showSection('projectsSection')">
+        Projets
+      </button>
+
+      <button onclick="showSection('portfolioSection')">
+        Portefeuille
+      </button>
+
+      <button
+        id="adminNav"
+        onclick="showSection('adminSection')"
+        style="display:none;">
         Administration
       </button>
+
     </nav>
+
   </div>
 </header>
 
+
 <main>
 
-  <!-- ACCUEIL -->
+  <!-- =====================================================
+       ACCUEIL
+       ===================================================== -->
+
   <section id="homeSection" class="section active">
 
     <div class="hero">
-      <h1>Investissez dans les projets guinéens.</h1>
+
+      <div class="home-label">
+        🇬🇳 PLATEFORME D'INVESTISSEMENT
+      </div>
+
+      <h1>
+        Investissez dans les opportunités de demain.
+      </h1>
 
       <p>
-        Guinée Invest Hub met en relation les investisseurs avec
-        des projets et opportunités d'investissement en Guinée.
+        Guinée Invest Hub connecte les investisseurs
+        aux projets et opportunités à fort potentiel
+        en Guinée.
       </p>
 
-      <button class="primary"
-              onclick="showSection('projectsSection')">
-        Voir les projets
-      </button>
+      <div class="actions">
+
+        <button
+          class="primary"
+          onclick="showSection('projectsSection')">
+          🔎 Découvrir les projets
+        </button>
+
+        <button
+          class="secondary"
+          onclick="showSection('accountSection')">
+          👤 Mon compte
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="grid">
 
-      <div class="card">
-        <h3>🇬🇳 Projets guinéens</h3>
-        <p>
-          Découvrez des projets dans différents secteurs
-          et participez au développement économique.
-        </p>
+    <!-- STATISTIQUES -->
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-label">
+          🌍 Marché
+        </div>
+
+        <div class="stat-value">
+          Guinée
+        </div>
       </div>
 
-      <div class="card">
-        <h3>🔐 Sécurité</h3>
-        <p>
-          Les opérations sensibles sont protégées par
-          les règles de sécurité de la base de données.
-        </p>
+
+      <div class="stat">
+        <div class="stat-label">
+          💼 Opportunités
+        </div>
+
+        <div class="stat-value">
+          Projets
+        </div>
       </div>
 
-      <div class="card">
-        <h3>📊 Suivi</h3>
-        <p>
-          Retrouvez vos investissements et leur statut
-          depuis votre portefeuille.
-        </p>
+
+      <div class="stat">
+        <div class="stat-label">
+          🤝 Connexion
+        </div>
+
+        <div class="stat-value">
+          Investisseurs
+        </div>
       </div>
+
+    </div>
+
+
+    <!-- EXPLORER LES SECTEURS -->
+
+    <div class="card">
+
+      <div class="admin-title">
+
+        <div>
+
+          <h2>
+            Explorer les secteurs
+          </h2>
+
+          <p style="color:var(--muted);">
+            Découvrez les principaux domaines
+            d'investissement en Guinée.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid">
+
+        <div class="project-card sector-card">
+
+          <div class="sector-icon">
+            🌾
+          </div>
+
+          <h3>
+            Agriculture
+          </h3>
+
+          <p>
+            Projets agricoles, élevage,
+            transformation et agro-industrie.
+          </p>
+
+          <button
+            class="secondary"
+            onclick="showSection('projectsSection')">
+            Voir les projets
+          </button>
+
+        </div>
+
+
+        <div class="project-card sector-card">
+
+          <div class="sector-icon">
+            🏗️
+          </div>
+
+          <h3>
+            Immobilier
+          </h3>
+
+          <p>
+            Opportunités dans l'immobilier,
+            la construction et les infrastructures.
+          </p>
+
+          <button
+            class="secondary"
+            onclick="showSection('projectsSection')">
+            Voir les projets
+          </button>
+
+        </div>
+
+
+        <div class="project-card sector-card">
+
+          <div class="sector-icon">
+            🏭
+          </div>
+
+          <h3>
+            Industrie
+          </h3>
+
+          <p>
+            Production, transformation
+            et développement industriel.
+          </p>
+
+          <button
+            class="secondary"
+            onclick="showSection('projectsSection')">
+            Voir les projets
+          </button>
+
+        </div>
+
+
+        <div class="project-card sector-card">
+
+          <div class="sector-icon">
+            ⚡
+          </div>
+
+          <h3>
+            Énergie
+          </h3>
+
+          <p>
+            Solutions énergétiques,
+            infrastructures et développement durable.
+          </p>
+
+          <button
+            class="secondary"
+            onclick="showSection('projectsSection')">
+            Voir les projets
+          </button>
+
+        </div>
+
+
+        <div class="project-card sector-card">
+
+          <div class="sector-icon">
+            💻
+          </div>
+
+          <h3>
+            Technologie
+          </h3>
+
+          <p>
+            Startups, numérique et
+            innovations technologiques.
+          </p>
+
+          <button
+            class="secondary"
+            onclick="showSection('projectsSection')">
+            Voir les projets
+          </button>
+
+        </div>
+
+
+        <div class="project-card sector-card">
+
+          <div class="sector-icon">
+            🏥
+          </div>
+
+          <h3>
+            Santé
+          </h3>
+
+          <p>
+            Projets et services innovants
+            dans le secteur de la santé.
+          </p>
+
+          <button
+            class="secondary"
+            onclick="showSection('projectsSection')">
+            Voir les projets
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- POURQUOI GUINÉE INVEST HUB -->
+
+    <div class="card">
+
+      <h2>
+        Pourquoi Guinée Invest Hub ?
+      </h2>
+
+      <div class="grid">
+
+        <div class="home-feature">
+
+          <div class="home-feature-icon">
+            🔎
+          </div>
+
+          <h3>
+            Trouver des opportunités
+          </h3>
+
+          <p style="color:var(--muted);line-height:1.6;">
+            Accédez à des projets guinéens
+            présentés sur une plateforme dédiée.
+          </p>
+
+        </div>
+
+
+        <div class="home-feature">
+
+          <div class="home-feature-icon">
+            🤝
+          </div>
+
+          <h3>
+            Créer des connexions
+          </h3>
+
+          <p style="color:var(--muted);line-height:1.6;">
+            Facilitez la rencontre entre
+            porteurs de projets et investisseurs.
+          </p>
+
+        </div>
+
+
+        <div class="home-feature">
+
+          <div class="home-feature-icon">
+            📊
+          </div>
+
+          <h3>
+            Suivre vos investissements
+          </h3>
+
+          <p style="color:var(--muted);line-height:1.6;">
+            Consultez votre portefeuille et
+            suivez le statut de vos investissements.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- COMMENT ÇA MARCHE -->
+
+    <div class="card">
+
+      <h2>
+        Comment ça marche ?
+      </h2>
+
+      <div class="grid">
+
+        <div class="home-feature">
+
+          <div class="home-feature-icon">
+            1️⃣
+          </div>
+
+          <h3>
+            Créez votre compte
+          </h3>
+
+          <p style="color:var(--muted);line-height:1.6;">
+            Inscrivez-vous gratuitement
+            sur Guinée Invest Hub.
+          </p>
+
+        </div>
+
+
+        <div class="home-feature">
+
+          <div class="home-feature-icon">
+            2️⃣
+          </div>
+
+          <h3>
+            Découvrez les projets
+          </h3>
+
+          <p style="color:var(--muted);line-height:1.6;">
+            Explorez les opportunités
+            disponibles sur la plateforme.
+          </p>
+
+        </div>
+
+
+        <div class="home-feature">
+
+          <div class="home-feature-icon">
+            3️⃣
+          </div>
+
+          <h3>
+            Suivez votre investissement
+          </h3>
+
+          <p style="color:var(--muted);line-height:1.6;">
+            Retrouvez vos opérations et leur
+            statut dans votre portefeuille.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- APPEL À L'ACTION -->
+
+    <div
+      class="hero"
+      style="
+        background:linear-gradient(
+          135deg,
+          #075b38,
+          #0b7a4b,
+          #d9a441
+        );
+        text-align:center;
+      ">
+
+      <h2>
+        Prêt à découvrir votre prochaine opportunité ?
+      </h2>
+
+      <p style="margin-left:auto;margin-right:auto;">
+        Explorez les projets disponibles sur
+        Guinée Invest Hub.
+      </p>
+
+      <button
+        class="primary"
+        onclick="showSection('projectsSection')"
+        style="
+          background:white;
+          color:#075b38;
+        ">
+        🚀 Voir les projets
+      </button>
 
     </div>
 
   </section>
 
 
-  <!-- COMPTE -->
+  <!-- =====================================================
+       COMPTE
+       ===================================================== -->
+
   <section id="accountSection" class="section">
 
     <div id="accountMessage" class="message"></div>
 
     <div id="loggedOutBox" class="card">
 
-      <h2>Créer un compte</h2>
+      <h2>
+        Créer un compte
+      </h2>
 
       <form onsubmit="signup(event)">
 
-        <label>Email</label>
-        <input id="signupEmail"
-               type="email"
-               required>
+        <label>
+          Email
+        </label>
 
-        <label>Mot de passe</label>
-        <input id="signupPassword"
-               type="password"
-               minlength="6"
-               required>
+        <input
+          id="signupEmail"
+          type="email"
+          required>
 
-        <button id="signupButton"
-                class="primary"
-                type="submit">
+        <label>
+          Mot de passe
+        </label>
+
+        <input
+          id="signupPassword"
+          type="password"
+          minlength="6"
+          required>
+
+        <button
+          id="signupButton"
+          class="primary"
+          type="submit">
           Créer mon compte
         </button>
 
@@ -513,23 +966,34 @@
 
       <hr>
 
-      <h2>Se connecter</h2>
+      <h2>
+        Se connecter
+      </h2>
 
       <form onsubmit="login(event)">
 
-        <label>Email</label>
-        <input id="loginEmail"
-               type="email"
-               required>
+        <label>
+          Email
+        </label>
 
-        <label>Mot de passe</label>
-        <input id="loginPassword"
-               type="password"
-               required>
+        <input
+          id="loginEmail"
+          type="email"
+          required>
 
-        <button id="loginButton"
-                class="primary"
-                type="submit">
+        <label>
+          Mot de passe
+        </label>
+
+        <input
+          id="loginPassword"
+          type="password"
+          required>
+
+        <button
+          id="loginButton"
+          class="primary"
+          type="submit">
           Se connecter
         </button>
 
@@ -537,26 +1001,32 @@
 
       <hr>
 
-      <button class="secondary"
-              onclick="resetPassword()">
+      <button
+        class="secondary"
+        onclick="resetPassword()">
         Mot de passe oublié ?
       </button>
 
     </div>
 
 
-    <div id="loggedInBox"
-         class="card"
-         style="display:none;">
+    <div
+      id="loggedInBox"
+      class="card"
+      style="display:none;">
 
-      <h2>Mon compte</h2>
+      <h2>
+        Mon compte
+      </h2>
 
-      <div id="profileInfo"
-           class="profile-box">
+      <div
+        id="profileInfo"
+        class="profile-box">
       </div>
 
-      <button class="danger"
-              onclick="logout()">
+      <button
+        class="danger"
+        onclick="logout()">
         Se déconnecter
       </button>
 
@@ -565,51 +1035,69 @@
   </section>
 
 
-  <!-- PROJETS -->
-  <section id="projectsSection"
-           class="section">
+  <!-- =====================================================
+       PROJETS
+       ===================================================== -->
 
-    <div id="projectsMessage"
-         class="message">
+  <section
+    id="projectsSection"
+    class="section">
+
+    <div
+      id="projectsMessage"
+      class="message">
     </div>
 
     <div class="admin-title">
 
-      <h2>Projets disponibles</h2>
+      <h2>
+        Projets disponibles
+      </h2>
 
-      <button class="secondary"
-              onclick="loadProjects()">
+      <button
+        class="secondary"
+        onclick="loadProjects()">
         Actualiser
       </button>
 
     </div>
 
-    <div id="projectsLoader"
-         class="loader">
+    <div
+      id="projectsLoader"
+      class="loader">
       Chargement des projets...
     </div>
 
-    <div id="projectsList"
-         class="grid">
+    <div
+      id="projectsList"
+      class="grid">
     </div>
 
   </section>
 
 
-  <!-- PORTEFEUILLE -->
-  <section id="portfolioSection"
-           class="section">
+  <!-- =====================================================
+       PORTEFEUILLE
+       ===================================================== -->
 
-    <div id="portfolioMessage"
-         class="message">
+  <section
+    id="portfolioSection"
+    class="section">
+
+    <div
+      id="portfolioMessage"
+      class="message">
     </div>
 
     <div class="admin-title">
 
-      <h2>Mon portefeuille</h2>
+      <h2>
+        Mon portefeuille
+      </h2>
 
-      <button class="secondary"
-              onclick="loadPortfolio()">
+      <button
+        class="secondary"
+        onclick="loadPortfolio()">
         Actualiser
       </button>
 
@@ -620,19 +1108,27 @@
   </section>
 
 
-  <!-- ADMINISTRATION -->
-  <section id="adminSection"
-           class="section">
+  <!-- =====================================================
+       ADMINISTRATION
+       ===================================================== -->
 
-    <div id="adminMessage"
-         class="message">
+  <section
+    id="adminSection"
+    class="section">
+
+    <div
+      id="adminMessage"
+      class="message">
     </div>
 
-    <div id="adminAccessDenied"
-         class="card"
-         style="display:none;">
+    <div
+      id="adminAccessDenied"
+      class="card"
+      style="display:none;">
 
-      <h2>Accès refusé</h2>
+      <h2>
+        Accès refusé
+      </h2>
 
       <p>
         Cette section est réservée aux administrateurs.
@@ -640,153 +1136,200 @@
 
     </div>
 
-    <div id="adminContent"
-         style="display:none;">
+
+    <div
+      id="adminContent"
+      style="display:none;">
 
       <div class="admin-title">
 
         <div>
-          <h2>Tableau de bord</h2>
+
+          <h2>
+            Tableau de bord
+          </h2>
 
           <p style="color:var(--muted);">
             Gestion de Guinée Invest Hub
           </p>
+
         </div>
 
-        <button class="secondary"
-                onclick="loadAdmin()">
+        <button
+          class="secondary"
+          onclick="loadAdmin()">
           Actualiser
         </button>
 
       </div>
 
 
-      <!-- STATISTIQUES -->
+      <!-- STATISTIQUES ADMIN -->
+
       <div class="stats">
 
         <div class="stat">
+
           <div class="stat-label">
             Utilisateurs
           </div>
 
-          <div id="statUsers"
-               class="stat-value">
+          <div
+            id="statUsers"
+            class="stat-value">
             0
           </div>
+
         </div>
 
+
         <div class="stat">
+
           <div class="stat-label">
             Projets
           </div>
 
-          <div id="statProjects"
-               class="stat-value">
+          <div
+            id="statProjects"
+            class="stat-value">
             0
           </div>
+
         </div>
 
+
         <div class="stat">
+
           <div class="stat-label">
             Investissements
           </div>
 
-          <div id="statInvestments"
-               class="stat-value">
+          <div
+            id="statInvestments"
+            class="stat-value">
             0
           </div>
+
         </div>
 
+
         <div class="stat">
+
           <div class="stat-label">
             Investissements en attente
           </div>
 
-          <div id="statPendingInvestments"
-               class="stat-value">
+          <div
+            id="statPendingInvestments"
+            class="stat-value">
             0
           </div>
+
         </div>
 
+
         <div class="stat">
+
           <div class="stat-label">
             Paiements en attente
           </div>
 
-          <div id="statPendingPayments"
-               class="stat-value">
+          <div
+            id="statPendingPayments"
+            class="stat-value">
             0
           </div>
+
         </div>
 
+
         <div class="stat">
+
           <div class="stat-label">
             Montant investi
           </div>
 
-          <div id="statAmount"
-               class="stat-value">
+          <div
+            id="statAmount"
+            class="stat-value">
             0 GNF
           </div>
+
         </div>
 
       </div>
 
 
-      <!-- CREER PROJET -->
+      <!-- CRÉER PROJET -->
+
       <div class="card">
 
-        <h3>➕ Ajouter un projet</h3>
+        <h3>
+          ➕ Ajouter un projet
+        </h3>
 
         <form onsubmit="createProject(event)">
 
-          <label>Titre du projet</label>
-          <input id="projectTitle"
-                 required>
+          <label>
+            Titre du projet
+          </label>
 
-          <label>Secteur</label>
+          <input
+            id="projectTitle"
+            required>
 
-          <input id="projectSector"
-                 placeholder="Agriculture, immobilier, énergie..."
-                 required>
+          <label>
+            Secteur
+          </label>
 
-          <label>Description</label>
+          <input
+            id="projectSector"
+            placeholder="Agriculture, immobilier, énergie..."
+            required>
 
-          <textarea id="projectDescription"
-                    required>
-          </textarea>
+          <label>
+            Description
+          </label>
+
+          <textarea
+            id="projectDescription"
+            required></textarea>
 
           <label>
             Montant recherché (GNF)
           </label>
 
-          <input id="projectAmount"
-                 type="number"
-                 min="1"
-                 required>
+          <input
+            id="projectAmount"
+            type="number"
+            min="1"
+            required>
 
           <label>
             Rendement prévu (%)
           </label>
 
-          <input id="projectReturn"
-                 type="number"
-                 min="0"
-                 step="0.01"
-                 required>
+          <input
+            id="projectReturn"
+            type="number"
+            min="0"
+            step="0.01"
+            required>
 
           <label>
             Durée (mois)
           </label>
 
-          <input id="projectDuration"
-                 type="number"
-                 min="1"
-                 required>
+          <input
+            id="projectDuration"
+            type="number"
+            min="1"
+            required>
 
-          <button id="createProjectButton"
-                  class="primary"
-                  type="submit">
+          <button
+            id="createProjectButton"
+            class="primary"
+            type="submit">
             Créer le projet
           </button>
 
@@ -796,29 +1339,38 @@
 
 
       <!-- PROJETS ADMIN -->
+
       <div class="card">
 
-        <h3>📁 Gestion des projets</h3>
+        <h3>
+          📁 Gestion des projets
+        </h3>
 
         <div id="adminProjects"></div>
 
       </div>
 
 
-      <!-- INVESTISSEMENTS -->
+      <!-- INVESTISSEMENTS ADMIN -->
+
       <div class="card">
 
-        <h3>💰 Investissements</h3>
+        <h3>
+          💰 Investissements
+        </h3>
 
         <div id="adminInvestments"></div>
 
       </div>
 
 
-      <!-- PAIEMENTS -->
+      <!-- PAIEMENTS ADMIN -->
+
       <div class="card">
 
-        <h3>💳 Paiements</h3>
+        <h3>
+          💳 Paiements
+        </h3>
 
         <div id="adminPayments"></div>
 
@@ -829,6 +1381,7 @@
   </section>
 
 </main>
+
 
 <footer>
   © 2026 Guinée Invest Hub — Plateforme d'investissement en Guinée
@@ -868,8 +1421,10 @@
 
   function escapeHtml(value) {
 
-    if (value === null ||
-        value === undefined) {
+    if (
+      value === null ||
+      value === undefined
+    ) {
       return "";
     }
 
@@ -920,14 +1475,16 @@
     element.className =
       "message " + type;
 
-    element.textContent = text;
+    element.textContent =
+      text;
 
     setTimeout(() => {
 
       element.className =
         "message";
 
-      element.textContent = "";
+      element.textContent =
+        "";
 
     }, 5000);
   }
@@ -951,7 +1508,8 @@
       button.textContent =
         loadingText;
 
-      button.disabled = true;
+      button.disabled =
+        true;
 
     } else {
 
@@ -959,7 +1517,8 @@
         button.dataset.originalText ||
         button.textContent;
 
-      button.disabled = false;
+      button.disabled =
+        false;
     }
   }
 
@@ -967,9 +1526,12 @@
   function statusBadge(status) {
 
     const safe =
-      escapeHtml(status || "unknown");
+      escapeHtml(
+        status || "unknown"
+      );
 
-    let cls = "pending";
+    let cls =
+      "pending";
 
     if (status === "approved")
       cls = "approved";
@@ -997,7 +1559,8 @@
 
   function showSection(sectionId) {
 
-    document.querySelectorAll(".section")
+    document
+      .querySelectorAll(".section")
       .forEach(section => {
 
         section.classList.remove(
@@ -1007,28 +1570,43 @@
       });
 
     const section =
-      document.getElementById(sectionId);
+      document.getElementById(
+        sectionId
+      );
 
     if (section) {
-      section.classList.add("active");
+
+      section.classList.add(
+        "active"
+      );
+
     }
 
-    if (sectionId ===
-        "projectsSection") {
+    if (
+      sectionId ===
+      "projectsSection"
+    ) {
 
       loadProjects();
+
     }
 
-    if (sectionId ===
-        "portfolioSection") {
+    if (
+      sectionId ===
+      "portfolioSection"
+    ) {
 
       loadPortfolio();
+
     }
 
-    if (sectionId ===
-        "adminSection") {
+    if (
+      sectionId ===
+      "adminSection"
+    ) {
 
       loadAdmin();
+
     }
 
     window.scrollTo({
@@ -1061,8 +1639,10 @@
         "signupPassword"
       ).value;
 
-    if (!email ||
-        password.length < 6) {
+    if (
+      !email ||
+      password.length < 6
+    ) {
 
       showMessage(
         "accountMessage",
@@ -1243,8 +1823,10 @@
       error
     } = await sb.auth.getUser();
 
-    if (error ||
-        !data.user) {
+    if (
+      error ||
+      !data.user
+    ) {
 
       currentUser = null;
       currentProfile = null;
@@ -1263,7 +1845,10 @@
     } = await sb
       .from("profiles")
       .select("id,role")
-      .eq("id", currentUser.id)
+      .eq(
+        "id",
+        currentUser.id
+      )
       .maybeSingle();
 
     if (profileError) {
@@ -1272,7 +1857,8 @@
         profileError
       );
 
-      currentProfile = null;
+      currentProfile =
+        null;
 
     } else {
 
@@ -1338,6 +1924,7 @@
       ${escapeHtml(
         currentUser.email
       )}
+
       <br><br>
 
       <strong>Rôle :</strong>
@@ -1380,7 +1967,8 @@
       "show"
     );
 
-    container.innerHTML = "";
+    container.innerHTML =
+      "";
 
     const {
       data,
@@ -1398,7 +1986,10 @@
         status,
         created_at
       `)
-      .eq("status", "approved")
+      .eq(
+        "status",
+        "approved"
+      )
       .order(
         "created_at",
         {
@@ -1423,15 +2014,16 @@
       return;
     }
 
-    if (!data ||
-        data.length === 0) {
+    if (
+      !data ||
+      data.length === 0
+    ) {
 
-      container.innerHTML =
-        `
+      container.innerHTML = `
         <div class="card empty">
           Aucun projet approuvé pour le moment.
         </div>
-        `;
+      `;
 
       return;
     }
@@ -1470,6 +2062,7 @@
             <strong>
               Montant recherché :
             </strong><br>
+
             ${formatMoney(
               project.amount_required
             )}
@@ -1479,6 +2072,7 @@
             <strong>
               Rendement prévu :
             </strong>
+
             ${escapeHtml(
               project.return_rate
             )} %
@@ -1488,6 +2082,7 @@
             <strong>
               Durée :
             </strong>
+
             ${escapeHtml(
               project.duration_months
             )} mois
@@ -1543,12 +2138,20 @@
         duration_months,
         status
       `)
-      .eq("id", projectId)
-      .eq("status", "approved")
+      .eq(
+        "id",
+        projectId
+      )
+      .eq(
+        "status",
+        "approved"
+      )
       .maybeSingle();
 
-    if (error ||
-        !project) {
+    if (
+      error ||
+      !project
+    ) {
 
       alert(
         "Projet introuvable ou indisponible."
@@ -1562,7 +2165,10 @@
         `Projet : ${project.title}\n\nMontant à investir en GNF :`
       );
 
-    if (amountText === null) {
+    if (
+      amountText ===
+      null
+    ) {
       return;
     }
 
@@ -1574,8 +2180,10 @@
         )
       );
 
-    if (!Number.isFinite(amount) ||
-        amount <= 0) {
+    if (
+      !Number.isFinite(amount) ||
+      amount <= 0
+    ) {
 
       alert(
         "Montant invalide."
@@ -1665,21 +2273,19 @@
         "portfolioList"
       );
 
-    container.innerHTML =
-      `
+    container.innerHTML = `
       <div class="card">
         Chargement...
       </div>
-      `;
+    `;
 
     if (!currentUser) {
 
-      container.innerHTML =
-        `
+      container.innerHTML = `
         <div class="card empty">
           Connecte-toi pour consulter ton portefeuille.
         </div>
-        `;
+      `;
 
       return;
     }
@@ -1718,7 +2324,8 @@
 
       console.error(error);
 
-      container.innerHTML = "";
+      container.innerHTML =
+        "";
 
       showMessage(
         "portfolioMessage",
@@ -1729,20 +2336,22 @@
       return;
     }
 
-    if (!data ||
-        data.length === 0) {
+    if (
+      !data ||
+      data.length === 0
+    ) {
 
-      container.innerHTML =
-        `
+      container.innerHTML = `
         <div class="card empty">
           Aucun investissement pour le moment.
         </div>
-        `;
+      `;
 
       return;
     }
 
-    container.innerHTML = "";
+    container.innerHTML =
+      "";
 
     data.forEach(
       item => {
@@ -1799,6 +2408,7 @@
             <strong>
               Bénéfice prévu :
             </strong>
+
             ${formatMoney(
               item.expected_profit
             )}
@@ -1808,6 +2418,7 @@
             <strong>
               Total prévu :
             </strong>
+
             ${formatMoney(
               item.expected_total
             )}
@@ -1817,6 +2428,7 @@
             <strong>
               Statut :
             </strong>
+
             ${statusBadge(
               item.status
             )}
@@ -1826,6 +2438,7 @@
             <strong>
               Date :
             </strong>
+
             ${formatDate(
               item.created_at
             )}
@@ -1945,6 +2558,7 @@
               ascending: false
             }
           )
+
       ]);
 
       if (profilesResult.error)
@@ -1958,7 +2572,6 @@
 
       if (paymentsResult.error)
         throw paymentsResult.error;
-
 
       const profiles =
         profilesResult.data ||
@@ -1976,24 +2589,20 @@
         paymentsResult.data ||
         [];
 
-
       document.getElementById(
         "statUsers"
       ).textContent =
         profiles.length;
-
 
       document.getElementById(
         "statProjects"
       ).textContent =
         projects.length;
 
-
       document.getElementById(
         "statInvestments"
       ).textContent =
         investments.length;
-
 
       document.getElementById(
         "statPendingInvestments"
@@ -2004,7 +2613,6 @@
             "pending"
         ).length;
 
-
       document.getElementById(
         "statPendingPayments"
       ).textContent =
@@ -2013,7 +2621,6 @@
             x.status ===
             "pending"
         ).length;
-
 
       const totalAmount =
         investments.reduce(
@@ -2025,14 +2632,12 @@
           0
         );
 
-
       document.getElementById(
         "statAmount"
       ).textContent =
         formatMoney(
           totalAmount
         );
-
 
       renderAdminProjects(
         projects
@@ -2074,12 +2679,11 @@
 
     if (!projects.length) {
 
-      container.innerHTML =
-        `
+      container.innerHTML = `
         <div class="empty">
           Aucun projet.
         </div>
-        `;
+      `;
 
       return;
     }
@@ -2251,7 +2855,6 @@
         ).value
       );
 
-
     if (
       !title ||
       !sector ||
@@ -2273,13 +2876,11 @@
       return;
     }
 
-
     setLoading(
       button,
       true,
       "Création..."
     );
-
 
     const {
       error
@@ -2303,12 +2904,10 @@
           currentUser.id
       });
 
-
     setLoading(
       button,
       false
     );
-
 
     if (error) {
 
@@ -2320,7 +2919,6 @@
 
       return;
     }
-
 
     document.getElementById(
       "projectTitle"
@@ -2346,13 +2944,11 @@
       "projectDuration"
     ).value = "";
 
-
     showMessage(
       "adminMessage",
       "Projet créé avec succès.",
       "success"
     );
-
 
     await loadAdmin();
   }
@@ -2376,7 +2972,6 @@
       return;
     }
 
-
     const {
       error
     } = await sb
@@ -2389,7 +2984,6 @@
         projectId
       );
 
-
     if (error) {
 
       showMessage(
@@ -2401,13 +2995,11 @@
       return;
     }
 
-
     showMessage(
       "adminMessage",
       "Statut du projet mis à jour.",
       "success"
     );
-
 
     await loadAdmin();
     await loadProjects();
@@ -2431,7 +3023,6 @@
       return;
     }
 
-
     const {
       error
     } = await sb
@@ -2441,7 +3032,6 @@
         "id",
         projectId
       );
-
 
     if (error) {
 
@@ -2454,13 +3044,11 @@
       return;
     }
 
-
     showMessage(
       "adminMessage",
       "Projet supprimé.",
       "success"
     );
-
 
     await loadAdmin();
     await loadProjects();
@@ -2480,19 +3068,16 @@
         "adminInvestments"
       );
 
-
     if (!investments.length) {
 
-      container.innerHTML =
-        `
+      container.innerHTML = `
         <div class="empty">
           Aucun investissement.
         </div>
-        `;
+      `;
 
       return;
     }
-
 
     container.innerHTML = `
       <div class="table-wrap">
@@ -2600,7 +3185,6 @@
       return;
     }
 
-
     const confirmed =
       confirm(
         `Confirmer : ${status} ?`
@@ -2609,7 +3193,6 @@
     if (!confirmed) {
       return;
     }
-
 
     const {
       error
@@ -2624,7 +3207,6 @@
       }
     );
 
-
     if (error) {
 
       showMessage(
@@ -2636,13 +3218,11 @@
       return;
     }
 
-
     showMessage(
       "adminMessage",
       "Statut de l'investissement mis à jour.",
       "success"
     );
-
 
     await loadAdmin();
   }
@@ -2661,19 +3241,16 @@
         "adminPayments"
       );
 
-
     if (!payments.length) {
 
-      container.innerHTML =
-        `
+      container.innerHTML = `
         <div class="empty">
           Aucun paiement.
         </div>
-        `;
+      `;
 
       return;
     }
-
 
     container.innerHTML = `
       <div class="table-wrap">
@@ -2787,7 +3364,6 @@
       return;
     }
 
-
     const confirmed =
       confirm(
         `Confirmer le statut "${status}" pour ce paiement ?`
@@ -2796,7 +3372,6 @@
     if (!confirmed) {
       return;
     }
-
 
     const {
       error
@@ -2811,7 +3386,6 @@
       }
     );
 
-
     if (error) {
 
       showMessage(
@@ -2823,13 +3397,11 @@
       return;
     }
 
-
     showMessage(
       "adminMessage",
       "Statut du paiement mis à jour.",
       "success"
     );
-
 
     await loadAdmin();
   }
@@ -2866,4 +3438,4 @@
 </script>
 
 </body>
-  </html>
+      </html>
