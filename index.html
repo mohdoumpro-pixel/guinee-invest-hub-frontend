@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Guinée Invest Hub - Investir en Guinée">
+
   <title>Guinée Invest Hub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -15,43 +18,42 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
       color: #172033;
     }
 
     header {
-      background: #0b5d3b;
+      background: #07111f;
       color: white;
-      padding: 18px;
-      text-align: center;
+      padding: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,.15);
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 25px;
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
     }
 
-    header p {
-      margin: 6px 0 0;
-      opacity: .9;
+    .logo {
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .user-status {
+      margin-top: 6px;
+      color: #b9c8dc;
+      font-size: 13px;
     }
 
     nav {
-      background: white;
-      padding: 12px;
+      margin-top: 15px;
       display: flex;
-      justify-content: center;
       gap: 8px;
       flex-wrap: wrap;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    button,
-    select,
-    input,
-    textarea {
-      font-family: inherit;
     }
 
     button {
@@ -59,24 +61,30 @@
       border-radius: 9px;
       padding: 11px 15px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 700;
+    }
+
+    button:active {
+      transform: scale(.98);
     }
 
     .nav-btn {
-      background: #eef2f7;
-      color: #172033;
+      background: #172840;
+      color: white;
+    }
+
+    .nav-btn.active {
+      background: #0d6efd;
     }
 
     .primary {
-      width: 100%;
-      background: #0b5d3b;
+      background: #0d6efd;
       color: white;
-      margin-top: 8px;
     }
 
-    .secondary {
-      background: #e9eef5;
-      color: #172033;
+    .success {
+      background: #198754;
+      color: white;
     }
 
     .danger {
@@ -84,378 +92,215 @@
       color: white;
     }
 
-    .approve {
-      background: #198754;
-      color: white;
+    .secondary {
+      background: #e8edf4;
+      color: #172033;
     }
 
-    .warning-btn {
-      background: #f0ad4e;
-      color: white;
-    }
-
-    .logout {
-      background: #dc3545;
-      color: white;
-    }
-
-    .container {
-      width: min(1100px, 94%);
+    main {
+      max-width: 1200px;
       margin: 25px auto;
+      padding: 0 15px;
     }
 
-    .section {
+    section {
+      display: none;
+    }
+
+    section.visible {
+      display: block;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #07111f, #123f70);
+      color: white;
+      border-radius: 18px;
+      padding: 35px 25px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      margin-top: 0;
+    }
+
+    .card {
       background: white;
       border-radius: 15px;
       padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 18px rgba(0,0,0,.07);
+      margin-bottom: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
     }
 
-    .hidden {
-      display: none !important;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
     }
 
-    .auth-box {
-      max-width: 480px;
-      margin: 30px auto;
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      background: white;
+      border-radius: 13px;
+      padding: 17px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.05);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 23px;
+      margin-top: 7px;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      padding: 13px;
-      margin: 7px 0;
-      border: 1px solid #d5dbe4;
+      padding: 12px;
+      border: 1px solid #ccd5e1;
       border-radius: 9px;
-      background: white;
+      margin: 6px 0 13px;
       font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #0d6efd;
     }
 
     textarea {
-      min-height: 100px;
+      min-height: 110px;
       resize: vertical;
     }
 
     label {
-      display: block;
-      margin-top: 8px;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 14px;
     }
 
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(280px, 1fr)
-      );
-      gap: 18px;
-    }
-
-    .project-card {
-      border: 1px solid #e0e5ec;
-      border-radius: 14px;
-      padding: 18px;
-      background: #fff;
-    }
-
-    .project-card h3 {
-      margin-top: 0;
-      color: #0b5d3b;
-    }
-
-    .project-meta {
-      color: #667085;
-      font-size: 14px;
-      margin: 8px 0;
-    }
-
-    .amount {
-      font-size: 20px;
-      font-weight: bold;
-      margin: 12px 0;
-    }
-
-    .investment-box {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    .orange-payment {
-      margin-top: 12px;
-      padding: 15px;
-      border-radius: 12px;
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-    }
-
-    .orange-number {
-      font-size: 21px;
-      font-weight: bold;
-      text-align: center;
-      padding: 10px;
-      background: white;
-      border-radius: 9px;
-      margin: 10px 0;
-    }
-
-    .message {
-      margin-top: 10px;
-      padding: 12px;
-      background: #e8f7ef;
-      color: #146c43;
-      border-radius: 8px;
-    }
-
-    .error-box {
-      margin-top: 10px;
-      padding: 12px;
-      background: #fdeaea;
-      color: #b42318;
-      border-radius: 8px;
-    }
-
-    .admin-item,
-    .investment-item {
-      border: 1px solid #e0e5ec;
-      border-radius: 12px;
-      padding: 15px;
-      margin: 10px 0;
-      background: #fafbfc;
-    }
-
-    .admin-actions {
+    .row {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .status {
-      display: inline-block;
-      margin-top: 8px;
-      font-weight: bold;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(170px, 1fr)
-      );
-      gap: 12px;
-    }
-
-    .stat {
-      padding: 18px;
-      background: #f2f7f4;
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 25px;
-      color: #0b5d3b;
-      margin-bottom: 5px;
-    }
-
-    .portfolio-stats {
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(180px, 1fr)
-      );
-      gap: 14px;
-      margin: 15px 0 22px;
-    }
-
-    .portfolio-card {
-      padding: 18px;
-      border-radius: 14px;
-      background: #f2f7f4;
-      border: 1px solid #dcebe3;
-    }
-
-    .portfolio-card .icon {
-      font-size: 25px;
-      margin-bottom: 8px;
-    }
-
-    .portfolio-card .label {
-      color: #667085;
-      font-size: 14px;
-    }
-
-    .portfolio-card .value {
-      margin-top: 6px;
-      font-size: 22px;
-      font-weight: bold;
-      color: #0b5d3b;
-    }
-
-    .return-box {
-      margin-top: 12px;
-      padding: 14px;
-      border-radius: 10px;
-      background: #eef8f2;
-      border: 1px solid #cce8d7;
-    }
-
-    .return-value {
-      color: #0b5d3b;
-      font-weight: bold;
-    }
-
-    .warning-box {
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 9px;
-      background: #fff8e6;
-      color: #8a5a00;
-      border: 1px solid #f4d58b;
-      font-size: 13px;
-    }
-
-    .confirmed-box {
-      margin-top: 15px;
-      padding: 15px;
-      background: #e8f7ef;
-      color: #146c43;
-      border: 1px solid #a7e3c2;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    .pending-box {
-      margin-top: 15px;
-      padding: 15px;
-      background: #fff8e6;
-      color: #8a5a00;
-      border: 1px solid #f4d58b;
-      border-radius: 10px;
-    }
-
-    .payment-history {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #e5e7eb;
-      font-size: 14px;
-    }
-
-    .payment-badge {
-      display: inline-block;
-      padding: 6px 9px;
-      border-radius: 8px;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    .badge-pending {
-      background: #fff3cd;
-      color: #856404;
-    }
-
-    .badge-verified {
-      background: #d1e7dd;
-      color: #0f5132;
-    }
-
-    .badge-rejected {
-      background: #f8d7da;
-      color: #842029;
-    }
-
-    .user-info {
-      text-align: center;
-      padding: 10px;
-      color: #667085;
-    }
-
-    .empty {
-      color: #667085;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .admin-project {
-      border: 1px solid #dce3ea;
-      border-radius: 12px;
-      padding: 16px;
-      margin: 12px 0;
-      background: #fff;
-    }
-
-    .admin-project h4 {
-      margin: 0 0 8px;
-      color: #0b5d3b;
-      font-size: 18px;
-    }
-
-    .admin-form-grid {
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(180px, 1fr)
-      );
       gap: 10px;
-      margin-top: 12px;
-    }
-
-    .small-btn {
-      margin-top: 5px;
-    }
-
-    .success-text {
-      color: #146c43;
-      font-weight: bold;
-    }
-
-    .admin-create {
-      margin-bottom: 20px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #f7faf8;
-      border: 1px solid #dcebe3;
-    }
-
-    .admin-project-actions {
-      display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
     }
 
-    .admin-project-actions button {
+    .row > * {
       flex: 1;
       min-width: 150px;
     }
 
-    .status-approved {
-      color: #198754;
+    .project {
+      background: white;
+      border: 1px solid #e3e8ef;
+      border-radius: 14px;
+      padding: 18px;
     }
 
-    .status-pending {
-      color: #b7791f;
+    .project h3 {
+      margin-bottom: 7px;
     }
 
-    @media (max-width: 600px) {
+    .project-amount {
+      font-size: 21px;
+      font-weight: 800;
+    }
 
-      header h1 {
-        font-size: 21px;
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      background: #e9eef5;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge-approved {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-rejected {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .message-error {
+      background: #fee2e2;
+      color: #991b1b;
+      border-radius: 9px;
+      padding: 11px;
+      margin: 10px 0;
+    }
+
+    .message-success {
+      background: #d1fae5;
+      color: #065f46;
+      border-radius: 9px;
+      padding: 11px;
+      margin: 10px 0;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .admin {
+      border-left: 4px solid #0d6efd;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th,
+    td {
+      padding: 11px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      padding: 30px 15px;
+    }
+
+    @media(max-width:600px) {
+      .hero h1 {
+        font-size: 27px;
       }
 
-      .container {
-        width: 96%;
+      .row {
+        flex-direction: column;
       }
 
-      .section {
-        padding: 15px;
+      .row > * {
+        width: 100%;
       }
-
     }
   </style>
 </head>
@@ -463,845 +308,789 @@
 <body>
 
 <header>
-  <h1>🇬🇳 Guinée Invest Hub</h1>
-  <p>
-    Connecter les investisseurs aux projets guinéens
-  </p>
-</header>
+  <div class="header-inner">
 
-<nav>
-
-  <button
-    class="nav-btn"
-    onclick="showSection('home')"
-  >
-    🏠 Accueil
-  </button>
-
-  <button
-    class="nav-btn"
-    onclick="showSection('projectsSection')"
-  >
-    📊 Projets
-  </button>
-
-  <button
-    class="nav-btn"
-    onclick="showSection('myInvestmentsSection')"
-  >
-    💰 Mon portefeuille
-  </button>
-
-  <button
-    id="adminNav"
-    class="nav-btn hidden"
-    onclick="showSection('adminSection')"
-  >
-    🛡️ Administration
-  </button>
-
-  <button
-    id="logoutBtn"
-    class="logout hidden"
-    onclick="logout()"
-  >
-    Déconnexion
-  </button>
-
-</nav>
-
-<div class="container">
-
-  <!-- ACCUEIL -->
-
-  <section id="home" class="section">
-
-    <h2>
-      Bienvenue sur Guinée Invest Hub 🇬🇳
-    </h2>
-
-    <p>
-      Découvrez des projets guinéens et envoyez
-      vos demandes d'investissement.
-    </p>
-
-    <div
-      id="userInfo"
-      class="user-info"
-    >
-      Vous n'êtes pas connecté.
+    <div class="logo">
+      🇬🇳 Guinée Invest Hub
     </div>
 
-    <button
-      id="loginHomeBtn"
-      class="primary"
-      onclick="showSection('authSection')"
-    >
-      🔐 Se connecter / créer un compte
+    <div id="userStatus" class="user-status">
+      Visiteur
+    </div>
+
+    <nav>
+
+      <button class="nav-btn active"
+        onclick="showSection('home', this)">
+        Accueil
+      </button>
+
+      <button class="nav-btn"
+        onclick="showSection('projectsSection', this)">
+        Projets
+      </button>
+
+      <button class="nav-btn"
+        onclick="showSection('authSection', this)">
+        Compte
+      </button>
+
+      <button id="portfolioBtn"
+        class="nav-btn hidden"
+        onclick="showSection('portfolioSection', this)">
+        Mon portefeuille
+      </button>
+
+      <button id="adminBtn"
+        class="nav-btn hidden"
+        onclick="showSection('adminSection', this); loadAdmin()">
+        Administration
+      </button>
+
+    </nav>
+  </div>
+</header>
+
+
+<main>
+
+<!-- =====================================================
+     ACCUEIL
+===================================================== -->
+
+<section id="home" class="visible">
+
+  <div class="hero">
+
+    <h1>
+      Investir en Guinée.<br>
+      Construire l'avenir.
+    </h1>
+
+    <p>
+      Guinée Invest Hub met en relation les investisseurs
+      avec des projets guinéens.
+    </p>
+
+    <button class="primary"
+      onclick="showSection('projectsSection')">
+      Découvrir les projets
     </button>
 
-  </section>
+  </div>
 
+  <div class="grid">
 
-  <!-- AUTHENTIFICATION -->
-
-  <section
-    id="authSection"
-    class="section auth-box hidden"
-  >
-
-    <h2>🔐 Connexion</h2>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="Votre adresse email"
-    >
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Votre mot de passe"
-    >
-
-    <button
-      class="primary"
-      onclick="login()"
-    >
-      Se connecter
-    </button>
-
-    <button
-      class="secondary"
-      style="width:100%; margin-top:8px;"
-      onclick="signup()"
-    >
-      Créer un compte
-    </button>
-
-    <div id="authMessage"></div>
-
-  </section>
-
-
-  <!-- PROJETS -->
-
-  <section
-    id="projectsSection"
-    class="section hidden"
-  >
-
-    <h2>📊 Projets disponibles</h2>
-
-    <input
-      id="searchInput"
-      type="text"
-      placeholder="🔎 Rechercher un projet..."
-      oninput="filterProjects()"
-    >
-
-    <div
-      id="projectsContainer"
-      class="project-grid"
-    >
-      <p class="empty">
-        Chargement des projets...
+    <div class="card">
+      <h3>🇬🇳 Projets guinéens</h3>
+      <p>
+        Découvrez des projets sélectionnés et publiés
+        sur notre plateforme.
       </p>
     </div>
 
-  </section>
+    <div class="card">
+      <h3>🔐 Sécurité</h3>
+      <p>
+        Les accès sensibles sont protégés par
+        Supabase Row Level Security.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>📊 Suivi</h3>
+      <p>
+        Suivez vos investissements, paiements
+        et rendements.
+      </p>
+    </div>
+
+  </div>
+
+</section>
 
 
-  <!-- PORTEFEUILLE -->
+<!-- =====================================================
+     COMPTE
+===================================================== -->
 
-  <section
-    id="myInvestmentsSection"
-    class="section hidden"
-  >
+<section id="authSection">
 
-    <h2>💰 Mon portefeuille</h2>
+  <div class="grid">
+
+    <div class="card">
+
+      <h2>Créer un compte</h2>
+
+      <div id="signupMessage"></div>
+
+      <label>Email</label>
+
+      <input
+        id="signupEmail"
+        type="email"
+        autocomplete="email"
+        placeholder="exemple@email.com"
+      >
+
+      <label>Mot de passe</label>
+
+      <input
+        id="signupPassword"
+        type="password"
+        autocomplete="new-password"
+        placeholder="Minimum 6 caractères"
+      >
+
+      <button class="primary"
+        onclick="signup()">
+        Créer mon compte
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>Connexion</h2>
+
+      <div id="loginMessage"></div>
+
+      <label>Email</label>
+
+      <input
+        id="loginEmail"
+        type="email"
+        autocomplete="email"
+      >
+
+      <label>Mot de passe</label>
+
+      <input
+        id="loginPassword"
+        type="password"
+        autocomplete="current-password"
+      >
+
+      <button class="primary"
+        onclick="login()">
+        Se connecter
+      </button>
+
+      <button class="secondary"
+        onclick="logout()">
+        Se déconnecter
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROJETS
+===================================================== -->
+
+<section id="projectsSection">
+
+  <div class="card">
+
+    <h2>Projets disponibles</h2>
+
+    <div class="row">
+
+      <input
+        id="searchInput"
+        placeholder="Rechercher un projet..."
+        oninput="renderProjects()"
+      >
+
+      <select
+        id="sectorFilter"
+        onchange="renderProjects()">
+
+        <option value="">
+          Tous les secteurs
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <div id="projectsList"
+       class="grid">
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     PORTEFEUILLE
+===================================================== -->
+
+<section id="portfolioSection">
+
+  <div class="card">
+
+    <h2>📊 Mon portefeuille</h2>
 
     <div
       id="portfolioStats"
-      class="portfolio-stats"
-    >
-
-      <div class="portfolio-card">
-        <div class="icon">💰</div>
-        <div class="label">Total investi</div>
-        <div id="portfolioTotal" class="value">
-          0 GNF
-        </div>
-      </div>
-
-      <div class="portfolio-card">
-        <div class="icon">✅</div>
-        <div class="label">Investi approuvé</div>
-        <div id="portfolioApproved" class="value">
-          0 GNF
-        </div>
-      </div>
-
-      <div class="portfolio-card">
-        <div class="icon">⏳</div>
-        <div class="label">En attente</div>
-        <div id="portfolioPending" class="value">
-          0 GNF
-        </div>
-      </div>
-
-      <div class="portfolio-card">
-        <div class="icon">📈</div>
-        <div class="label">Profit prévu</div>
-        <div id="portfolioProfit" class="value">
-          0 GNF
-        </div>
-      </div>
-
-      <div class="portfolio-card">
-        <div class="icon">💵</div>
-        <div class="label">Valeur totale prévue</div>
-        <div id="portfolioExpectedTotal" class="value">
-          0 GNF
-        </div>
-      </div>
-
-      <div class="portfolio-card">
-        <div class="icon">📊</div>
-        <div class="label">Nombre de projets</div>
-        <div id="portfolioProjects" class="value">
-          0
-        </div>
-      </div>
-
-      <div class="portfolio-card">
-        <div class="icon">💳</div>
-        <div class="label">Paiements confirmés</div>
-        <div id="portfolioPayments" class="value">
-          0
-        </div>
-      </div>
-
+      class="stats">
     </div>
 
-    <div class="warning-box">
-      ⚠️ Les rendements affichés sont des
-      <strong>rendements prévus</strong>.
-      Ils ne constituent pas une garantie de bénéfice.
+  </div>
+
+
+  <div class="card">
+
+    <h3>Mes investissements</h3>
+
+    <div id="investmentsList">
+      Chargement...
     </div>
 
-    <h3>📋 Historique de mes investissements</h3>
+  </div>
 
-    <div id="myInvestments">
-      <p class="empty">
-        Connectez-vous pour voir vos investissements.
-      </p>
-    </div>
-
-  </section>
+</section>
 
 
-  <!-- ADMINISTRATION -->
+<!-- =====================================================
+     ADMINISTRATION
+===================================================== -->
 
-  <section
-    id="adminSection"
-    class="section hidden"
-  >
+<section id="adminSection">
 
-    <h2>🛡️ Administration</h2>
+  <div class="card admin">
 
-    <h3>📈 Statistiques</h3>
+    <h2>👑 Administration</h2>
+
+    <div id="adminMessage"></div>
 
     <div
       id="adminStats"
-      class="stats"
-    >
-
-      <div class="stat">
-        <strong>...</strong>
-        Utilisateurs
-      </div>
-
-      <div class="stat">
-        <strong>...</strong>
-        Projets
-      </div>
-
-      <div class="stat">
-        <strong>...</strong>
-        Investissements
-      </div>
-
-      <div class="stat">
-        <strong>...</strong>
-        Montant demandé
-      </div>
-
+      class="stats">
     </div>
 
-    <br>
+  </div>
 
-    <!-- CREATION PROJET -->
+
+  <!-- CRÉATION PROJET -->
+
+  <div class="card admin">
 
     <h3>➕ Créer un projet</h3>
 
-    <div class="admin-create">
+    <label>Titre</label>
 
-      <label>Nom du projet</label>
+    <input
+      id="projectTitle"
+      placeholder="Ex : Ferme agricole"
+    >
 
-      <input
-        id="newProjectTitle"
-        type="text"
-        placeholder="Ex : Ferme agricole de Kindia"
-      >
+    <label>Secteur</label>
 
-      <label>Description</label>
+    <input
+      id="projectSector"
+      placeholder="Agriculture"
+    >
 
-      <textarea
-        id="newProjectDescription"
-        placeholder="Description du projet..."
-      ></textarea>
+    <label>Description</label>
 
-      <label>Secteur</label>
+    <textarea
+      id="projectDescription"
+      placeholder="Description du projet..."
+    ></textarea>
 
-      <input
-        id="newProjectSector"
-        type="text"
-        placeholder="Ex : Agriculture"
-      >
+    <div class="row">
 
-      <div class="admin-form-grid">
+      <div>
 
-        <div>
-          <label>💰 Montant recherché</label>
+        <label>Montant requis</label>
 
-          <input
-            id="newProjectAmount"
-            type="number"
-            min="1"
-            placeholder="Montant en GNF"
-          >
-        </div>
-
-        <div>
-          <label>📈 Rendement prévu (%)</label>
-
-          <input
-            id="newProjectRate"
-            type="number"
-            min="0"
-            max="1000"
-            step="0.1"
-            value="10"
-          >
-        </div>
-
-        <div>
-          <label>📅 Durée (mois)</label>
-
-          <input
-            id="newProjectDuration"
-            type="number"
-            min="1"
-            max="240"
-            value="12"
-          >
-        </div>
-
-        <div>
-          <label>📂 Statut</label>
-
-          <select id="newProjectStatus">
-            <option value="pending">
-              ⏳ En attente
-            </option>
-
-            <option value="approved">
-              ✅ Approuvé
-            </option>
-          </select>
-        </div>
+        <input
+          id="projectAmount"
+          type="number"
+          min="1"
+          placeholder="100000000"
+        >
 
       </div>
 
-      <button
-        class="approve"
-        style="width:100%; margin-top:12px;"
-        onclick="createProject()"
-      >
-        ➕ Créer le projet
-      </button>
+      <div>
 
-      <div id="createProjectMessage"></div>
+        <label>Rendement (%)</label>
+
+        <input
+          id="projectReturn"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="15"
+        >
+
+      </div>
+
+      <div>
+
+        <label>Durée (mois)</label>
+
+        <input
+          id="projectDuration"
+          type="number"
+          min="1"
+          placeholder="12"
+        >
+
+      </div>
 
     </div>
 
+    <button
+      class="primary"
+      onclick="createProject()">
+      Créer le projet
+    </button>
 
-    <!-- GESTION PROJETS -->
+  </div>
+
+
+  <!-- PROJETS ADMIN -->
+
+  <div class="card admin">
 
     <h3>📁 Gestion des projets</h3>
 
-    <p class="project-meta">
-      L'administrateur peut modifier toutes les informations
-      d'un projet, son rendement prévu, sa durée et son statut.
-    </p>
-
     <div id="adminProjects">
-      <p class="empty">
-        Chargement des projets...
-      </p>
+      Chargement...
     </div>
 
-    <br>
+  </div>
 
-    <!-- INVESTISSEMENTS -->
 
-    <h3>💰 Demandes d'investissement</h3>
+  <!-- INVESTISSEMENTS -->
 
-    <div id="adminInvestments">
-      <p class="empty">
-        Chargement...
-      </p>
+  <div class="card admin">
+
+    <h3>💰 Investissements</h3>
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Utilisateur</th>
+            <th>Projet</th>
+            <th>Montant</th>
+            <th>Statut</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="adminInvestments"></tbody>
+
+      </table>
+
     </div>
 
-    <br>
+  </div>
 
-    <!-- PAIEMENTS -->
 
-    <h3>💳 Paiements Orange Money</h3>
+  <!-- PAIEMENTS -->
 
-    <div id="adminPayments">
-      <p class="empty">
-        Chargement...
-      </p>
+  <div class="card admin">
+
+    <h3>💳 Paiements</h3>
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Montant</th>
+            <th>Méthode</th>
+            <th>Référence</th>
+            <th>Statut</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="adminPayments"></tbody>
+
+      </table>
+
     </div>
 
-  </section>
+  </div>
 
-</div>
+</section>
+
+</main>
+
+
+<footer>
+  Guinée Invest Hub © 2026
+</footer>
 
 
 <script>
 
-  /* =================================
-     SUPABASE
-  ================================= */
+/* =====================================================
+   CONFIGURATION SUPABASE
+===================================================== */
 
-  const SUPABASE_URL =
-    "https://phwnkvglvebbajixwjau.supabase.co";
+const SUPABASE_URL =
+  "https://phwnkvglvebbajixwjau.supabase.co";
 
-  /*
-    IMPORTANT :
-    Remplace uniquement cette valeur
-    par ton vrai Publishable Key.
-  */
+/*
+ IMPORTANT :
 
-  const SUPABASE_KEY =
-    "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
+ Remplace uniquement TON_PUBLISHABLE_KEY
+ par ta clé Publishable/anon Supabase.
 
-  const sb =
-    supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
+ NE METS JAMAIS service_role ici.
+*/
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
+
+
+const sb =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let currentUser = null;
+let currentProfile = null;
+let projects = [];
+
+
+/*
+ Numéro de paiement public
+*/
+
+const ORANGE_MONEY_NUMBER =
+  "+224 612 78 22 19";
+
+
+/* =====================================================
+   UTILITAIRES
+===================================================== */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replace(/[&<>"']/g, function(char) {
+
+      const map = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      };
+
+      return map[char];
+
+    });
+
+}
+
+
+function formatMoney(value) {
+
+  return new Intl.NumberFormat("fr-FR")
+    .format(Number(value || 0))
+    + " GNF";
+
+}
+
+
+function formatDate(value) {
+
+  if (!value) return "—";
+
+  return new Date(value)
+    .toLocaleString("fr-FR");
+
+}
+
+
+function isAdmin() {
+
+  return !!currentProfile &&
+         currentProfile.role === "admin";
+
+}
+
+
+function showMessage(
+  elementId,
+  message,
+  success = false
+) {
+
+  const element =
+    document.getElementById(elementId);
+
+  if (!element) return;
+
+  if (!message) {
+    element.innerHTML = "";
+    return;
+  }
+
+  element.innerHTML = `
+    <div class="${
+      success
+      ? "message-success"
+      : "message-error"
+    }">
+      ${escapeHtml(message)}
+    </div>
+  `;
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showSection(sectionId, button) {
+
+  document
+    .querySelectorAll("main section")
+    .forEach(section => {
+      section.classList.remove("visible");
+    });
+
+
+  const section =
+    document.getElementById(sectionId);
+
+  if (section) {
+    section.classList.add("visible");
+  }
+
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+
+  if (button) {
+    button.classList.add("active");
+  }
+
+
+  if (sectionId === "projectsSection") {
+    loadProjects();
+  }
+
+
+  if (sectionId === "portfolioSection") {
+    loadPortfolio();
+  }
+
+
+  if (sectionId === "adminSection") {
+    loadAdmin();
+  }
+
+}
+
+
+/* =====================================================
+   INSCRIPTION
+===================================================== */
+
+async function signup() {
+
+  const email =
+    document
+      .getElementById("signupEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("signupPassword")
+      .value;
+
+
+  showMessage("signupMessage", "");
+
+
+  if (!email) {
+
+    showMessage(
+      "signupMessage",
+      "Entre ton adresse email."
     );
 
-
-  /* =================================
-     VARIABLES
-  ================================= */
-
-  let currentUser = null;
-  let currentProfile = null;
-  let projects = [];
-
-
-  const ORANGE_MONEY_NUMBER =
-    "+224 612 78 22 19";
-
-
-  /* =================================
-     UTILITAIRES
-  ================================= */
-
-  function escapeHtml(value) {
-
-    if (
-      value === null ||
-      value === undefined
-    ) {
-      return "";
-    }
-
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+    return;
   }
 
 
-  function formatMoney(amount) {
+  if (password.length < 6) {
 
-    const number =
-      Number(amount) || 0;
-
-    return new Intl.NumberFormat(
-      "fr-FR"
-    ).format(number) + " GNF";
-  }
-
-
-  function formatDate(date) {
-
-    if (!date) {
-      return "Date inconnue";
-    }
-
-    return new Intl.DateTimeFormat(
-      "fr-FR",
-      {
-        dateStyle: "medium",
-        timeStyle: "short"
-      }
-    ).format(
-      new Date(date)
-    );
-  }
-
-
-  function getProjectReturn(project) {
-
-    const rate =
-      Number(project?.return_rate);
-
-    if (
-      Number.isFinite(rate) &&
-      rate >= 0
-    ) {
-      return rate;
-    }
-
-    return 10;
-  }
-
-
-  function getProjectDuration(project) {
-
-    const duration =
-      Number(project?.duration_months);
-
-    if (
-      Number.isFinite(duration) &&
-      duration > 0
-    ) {
-      return duration;
-    }
-
-    return 12;
-  }
-
-
-  function calculateExpectedProfit(
-    amount,
-    rate
-  ) {
-
-    const value =
-      Number(amount) || 0;
-
-    const percentage =
-      Number(rate) || 0;
-
-    return Math.round(
-      value *
-      percentage /
-      100
-    );
-  }
-
-
-  function calculateExpectedTotal(
-    amount,
-    rate
-  ) {
-
-    return (
-      Number(amount) || 0
-    ) +
-    calculateExpectedProfit(
-      amount,
-      rate
-    );
-  }
-
-
-  /* =================================
-     NAVIGATION
-  ================================= */
-
-  function showSection(id) {
-
-    const sections =
-      document.querySelectorAll(
-        ".container > section"
-      );
-
-    sections.forEach(
-      section => {
-        section.classList.add("hidden");
-      }
+    showMessage(
+      "signupMessage",
+      "Le mot de passe doit contenir au moins 6 caractères."
     );
 
-    const target =
-      document.getElementById(id);
-
-    if (target) {
-      target.classList.remove("hidden");
-    }
-
-    if (
-      id === "projectsSection"
-    ) {
-      loadProjects();
-    }
-
-    if (
-      id === "myInvestmentsSection"
-    ) {
-      loadMyInvestments();
-    }
-
-    if (
-      id === "adminSection"
-    ) {
-
-      if (
-        currentProfile &&
-        currentProfile.role === "admin"
-      ) {
-
-        loadAdminStats();
-        loadAdminProjects();
-        loadAdminInvestments();
-        loadAdminPayments();
-
-      } else {
-
-        alert(
-          "Accès réservé aux administrateurs."
-        );
-
-        showSection("home");
-      }
-    }
+    return;
   }
 
 
-  /* =================================
-     SIGNUP
-  ================================= */
+  const {
+    data,
+    error
+  } =
+    await sb.auth.signUp({
+      email,
+      password
+    });
 
-  async function signup() {
 
-    const email =
-      document
-        .getElementById("email")
-        .value
-        .trim();
+  if (error) {
 
-    const password =
-      document
-        .getElementById("password")
-        .value;
+    showMessage(
+      "signupMessage",
+      error.message
+    );
 
-    const message =
-      document.getElementById(
-        "authMessage"
-      );
-
-    if (
-      !email ||
-      !password
-    ) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Entrez votre email et votre mot de passe.
-        </div>
-      `;
-
-      return;
-    }
-
-    if (
-      password.length < 6
-    ) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Le mot de passe doit contenir
-          au moins 6 caractères.
-        </div>
-      `;
-
-      return;
-    }
-
-    message.innerHTML = `
-      <div class="message">
-        ⏳ Création du compte...
-      </div>
-    `;
-
-    const {
-      data,
-      error
-    } =
-      await sb.auth.signUp({
-        email,
-        password
-      });
-
-    if (error) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            error.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    if (data.user) {
-
-      const {
-        error: profileError
-      } =
-        await sb
-          .from("profiles")
-          .upsert({
-            id: data.user.id,
-            role: "investor"
-          });
-
-      if (profileError) {
-
-        message.innerHTML = `
-          <div class="error-box">
-            ❌ Profil impossible à créer.
-            <br><br>
-            ${escapeHtml(
-              profileError.message
-            )}
-          </div>
-        `;
-
-        return;
-      }
-    }
-
-    message.innerHTML = `
-      <div class="message">
-        ✅ Compte créé avec succès.
-        <br><br>
-        Vous pouvez maintenant vous connecter.
-      </div>
-    `;
+    return;
   }
 
 
-  /* =================================
-     LOGIN
-  ================================= */
+  showMessage(
+    "signupMessage",
+    data.user
+      ? "Compte créé. Vérifie ton email si la confirmation est activée."
+      : "Compte créé.",
+    true
+  );
 
-  async function login() {
+}
 
-    const email =
-      document
-        .getElementById("email")
-        .value
-        .trim();
 
-    const password =
-      document
-        .getElementById("password")
-        .value;
+/* =====================================================
+   CONNEXION
+===================================================== */
 
-    const message =
-      document.getElementById(
-        "authMessage"
-      );
+async function login() {
 
-    if (
-      !email ||
-      !password
-    ) {
+  const email =
+    document
+      .getElementById("loginEmail")
+      .value
+      .trim();
 
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Entrez votre email et votre mot de passe.
-        </div>
-      `;
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
 
-      return;
-    }
 
-    message.innerHTML = `
-      <div class="message">
-        ⏳ Connexion...
-      </div>
-    `;
+  showMessage("loginMessage", "");
 
-    const {
-      data,
-      error
-    } =
-      await sb.auth.signInWithPassword({
-        email,
-        password
-      });
 
-    if (error) {
+  const {
+    error
+  } =
+    await sb.auth.signInWithPassword({
+      email,
+      password
+    });
 
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            error.message
-          )}
-        </div>
-      `;
 
-      return;
-    }
+  if (error) {
 
-    currentUser =
-      data.user;
+    showMessage(
+      "loginMessage",
+      error.message
+    );
 
-    await loadUser();
-
-    message.innerHTML = `
-      <div class="message">
-        ✅ Connexion réussie.
-      </div>
-    `;
-
-    showSection("home");
+    return;
   }
 
 
-  /* =================================
-     UTILISATEUR
-  ================================= */
+  await loadUser();
 
-  async function loadUser() {
 
-    if (!currentUser) {
-      return;
+  showMessage(
+    "loginMessage",
+    "Connexion réussie.",
+    true
+  );
+
+
+  showSection("projectsSection");
+
+}
+
+
+/* =====================================================
+   DÉCONNEXION
+===================================================== */
+
+async function logout() {
+
+  await sb.auth.signOut();
+
+  currentUser = null;
+  currentProfile = null;
+
+  updateUI();
+
+  showSection("home");
+
+}
+
+
+/* =====================================================
+   CHARGER UTILISATEUR
+===================================================== */
+
+async function loadUser() {
+
+  const {
+    data: {
+      user
     }
+  } =
+    await sb.auth.getUser();
+
+
+  currentUser =
+    user || null;
+
+  currentProfile =
+    null;
+
+
+  if (currentUser) {
 
     const {
       data,
@@ -1310,1740 +1099,887 @@
       await sb
         .from("profiles")
         .select("*")
-        .eq(
-          "id",
-          currentUser.id
-        )
-        .single();
+        .eq("id", currentUser.id)
+        .maybeSingle();
 
-    if (error) {
 
-      console.error(error);
-      currentProfile = null;
-
-    } else {
-
+    if (!error) {
       currentProfile = data;
     }
 
-    document
-      .getElementById("userInfo")
-      .innerHTML = `
-        Connecté avec :
-        <strong>
-          ${escapeHtml(
-            currentUser.email
-          )}
-        </strong>
-
-        ${
-          currentProfile?.role === "admin"
-            ? " — 🛡️ Administrateur"
-            : " — 👤 Investisseur"
-        }
-      `;
-
-    document
-      .getElementById("logoutBtn")
-      .classList.remove("hidden");
-
-    document
-      .getElementById("loginHomeBtn")
-      .classList.add("hidden");
-
-    if (
-      currentProfile &&
-      currentProfile.role === "admin"
-    ) {
-
-      document
-        .getElementById("adminNav")
-        .classList.remove("hidden");
-
-    } else {
-
-      document
-        .getElementById("adminNav")
-        .classList.add("hidden");
-    }
   }
 
 
-  /* =================================
-     LOGOUT
-  ================================= */
+  updateUI();
 
-  async function logout() {
+}
 
-    await sb.auth.signOut();
 
-    currentUser = null;
-    currentProfile = null;
+/* =====================================================
+   INTERFACE UTILISATEUR
+===================================================== */
 
-    document
-      .getElementById("logoutBtn")
-      .classList.add("hidden");
+function updateUI() {
 
-    document
-      .getElementById("adminNav")
-      .classList.add("hidden");
+  const status =
+    document.getElementById("userStatus");
 
-    document
-      .getElementById("loginHomeBtn")
-      .classList.remove("hidden");
+  if (currentUser) {
 
-    document
-      .getElementById("userInfo")
-      .innerHTML =
-      "Vous n'êtes pas connecté.";
+    status.textContent =
+      currentUser.email || "Connecté";
 
-    showSection("home");
+  } else {
+
+    status.textContent =
+      "Visiteur";
+
   }
 
 
-  /* =================================
-     PROJETS PUBLICS
-  ================================= */
+  document
+    .getElementById("portfolioBtn")
+    .classList
+    .toggle(
+      "hidden",
+      !currentUser
+    );
 
-  async function loadProjects() {
 
-    const container =
-      document.getElementById(
-        "projectsContainer"
+  document
+    .getElementById("adminBtn")
+    .classList
+    .toggle(
+      "hidden",
+      !isAdmin()
+    );
+
+}
+
+
+/* =====================================================
+   PROJETS PUBLICS
+===================================================== */
+
+async function loadProjects() {
+
+  const {
+    data,
+    error
+  } =
+    await sb
+      .from("projects")
+      .select("*")
+      .eq("status", "approved")
+      .order("created_at", {
+        ascending: false
+      });
+
+
+  if (error) {
+
+    document.getElementById(
+      "projectsList"
+    ).innerHTML = `
+      <div class="message-error">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+
+  projects = data || [];
+
+
+  updateSectorFilter();
+
+  renderProjects();
+
+}
+
+
+/* =====================================================
+   FILTRE SECTEUR
+===================================================== */
+
+function updateSectorFilter() {
+
+  const filter =
+    document.getElementById(
+      "sectorFilter"
+    );
+
+
+  const current =
+    filter.value;
+
+
+  const sectors =
+    [
+      ...new Set(
+        projects
+          .map(project => project.sector)
+          .filter(Boolean)
+      )
+    ]
+    .sort();
+
+
+  filter.innerHTML = `
+    <option value="">
+      Tous les secteurs
+    </option>
+  `;
+
+
+  sectors.forEach(sector => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = sector;
+    option.textContent = sector;
+
+    filter.appendChild(option);
+
+  });
+
+
+  filter.value = current;
+
+}
+
+
+/* =====================================================
+   AFFICHER PROJETS
+===================================================== */
+
+function renderProjects() {
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const sector =
+    document
+      .getElementById("sectorFilter")
+      .value;
+
+
+  const filtered =
+    projects.filter(project => {
+
+      const text =
+        `
+        ${project.title || ""}
+        ${project.description || ""}
+        ${project.sector || ""}
+        `
+        .toLowerCase();
+
+
+      return (
+        (!search || text.includes(search)) &&
+        (!sector || project.sector === sector)
       );
+
+    });
+
+
+  const container =
+    document.getElementById(
+      "projectsList"
+    );
+
+
+  if (!filtered.length) {
 
     container.innerHTML = `
-      <p class="empty">
-        ⏳ Chargement des projets...
-      </p>
+      <div class="card">
+        Aucun projet trouvé.
+      </div>
     `;
 
-    const {
-      data,
-      error
-    } =
-      await sb
-        .from("projects")
-        .select("*")
-        .eq(
-          "status",
-          "approved"
-        )
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
-
-    if (error) {
-
-      container.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            error.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    projects =
-      data || [];
-
-    renderProjects(projects);
+    return;
   }
 
 
-  function renderProjects(list) {
+  container.innerHTML =
+    filtered
+      .map(projectCard)
+      .join("");
 
-    const container =
-      document.getElementById(
-        "projectsContainer"
-      );
+}
 
-    if (!list.length) {
 
-      container.innerHTML = `
-        <p class="empty">
-          Aucun projet disponible.
-        </p>
-      `;
+/* =====================================================
+   CARTE PROJET
+===================================================== */
 
-      return;
-    }
+function projectCard(project) {
+
+  const id =
+    escapeHtml(project.id);
+
+
+  return `
+    <div class="project">
+
+      <span class="badge badge-approved">
+        Approuvé
+      </span>
+
+      <h3>
+        ${escapeHtml(project.title)}
+      </h3>
+
+      <div class="small">
+        ${escapeHtml(project.sector || "Secteur non précisé")}
+      </div>
+
+      <p>
+        ${escapeHtml(project.description || "")}
+      </p>
+
+      <div class="project-amount">
+        ${formatMoney(
+          project.amount_required ??
+          project.amount
+        )}
+      </div>
+
+      <p>
+        Rendement :
+        <strong>
+          ${Number(project.return_rate || 0)}%
+        </strong>
+        <br>
+
+        Durée :
+        <strong>
+          ${Number(project.duration_months || 0)}
+          mois
+        </strong>
+      </p>
+
+      ${
+        currentUser
+        ? investmentForm(project)
+        : `
+          <p class="small">
+            Connecte-toi pour investir dans ce projet.
+          </p>
+        `
+      }
+
+    </div>
+  `;
+
+}
+
+
+/* =====================================================
+   FORMULAIRE INVESTISSEMENT
+===================================================== */
+
+function investmentForm(project) {
+
+  const id =
+    escapeHtml(project.id);
+
+
+  return `
+    <details>
+
+      <summary>
+        <strong>
+          💰 Investir dans ce projet
+        </strong>
+      </summary>
+
+      <div style="margin-top:15px">
+
+        <label>
+          Montant d'investissement
+        </label>
+
+        <input
+          id="amount_${id}"
+          type="number"
+          min="1"
+          placeholder="Ex : 1000000"
+        >
+
+
+        <label>
+          Méthode de paiement
+        </label>
+
+        <select
+          id="method_${id}"
+          onchange="updatePaymentFields('${id}')">
+
+          <option value="orange_money">
+            Orange Money
+          </option>
+
+          <option value="mtn_money">
+            MTN Money
+          </option>
+
+        </select>
+
+
+        <div id="paymentFields_${id}">
+
+          ${orangeFields(id)}
+
+        </div>
+
+
+        <button
+          class="primary"
+          onclick="submitInvestment('${id}')">
+
+          Envoyer la demande
+
+        </button>
+
+
+        <div id="investmentMessage_${id}"></div>
+
+      </div>
+
+    </details>
+  `;
+
+}
+
+
+/* =====================================================
+   CHAMPS PAIEMENT
+===================================================== */
+
+function orangeFields(id) {
+
+  return `
+
+    <p class="small">
+
+      Envoie le montant au numéro
+      Orange Money :
+
+      <strong>
+        ${ORANGE_MONEY_NUMBER}
+      </strong>
+
+    </p>
+
+
+    <label>
+      Ton numéro de téléphone
+    </label>
+
+    <input
+      id="phone_${id}"
+      placeholder="+224..."
+    >
+
+
+    <label>
+      Référence de transaction
+    </label>
+
+    <input
+      id="reference_${id}"
+      placeholder="Référence du transfert"
+    >
+
+  `;
+
+}
+
+
+function updatePaymentFields(id) {
+
+  const method =
+    document
+      .getElementById("method_" + id)
+      .value;
+
+
+  const container =
+    document.getElementById(
+      "paymentFields_" + id
+    );
+
+
+  if (method === "orange_money") {
 
     container.innerHTML =
-      list.map(
-        project => {
+      orangeFields(id);
 
-          const rate =
-            getProjectReturn(project);
+    return;
+  }
 
-          const duration =
-            getProjectDuration(project);
 
-          return `
-            <div class="project-card">
+  container.innerHTML = `
 
-              <h3>
-                ${escapeHtml(
-                  project.title
-                )}
-              </h3>
+    <p class="small">
 
-              <div class="project-meta">
-                Secteur :
-                <strong>
-                  ${escapeHtml(
-                    project.sector ||
-                    "Non précisé"
-                  )}
-                </strong>
-              </div>
+      MTN Money sera disponible
+      après intégration de son API.
 
-              <p>
-                ${escapeHtml(
-                  project.description ||
-                  "Aucune description."
-                )}
-              </p>
+    </p>
 
-              <div class="amount">
-                💰
-                ${formatMoney(
-                  project.amount_required
-                )}
-              </div>
+    <label>
+      Ton numéro
+    </label>
 
-              <div class="return-box">
+    <input
+      id="phone_${id}"
+      placeholder="+224..."
+    >
 
-                📈 Rendement prévu :
-                <strong class="return-value">
-                  ${rate}%
-                </strong>
+    <label>
+      Référence
+    </label>
 
-                <br><br>
+    <input
+      id="reference_${id}"
+      placeholder="Référence"
+    >
 
-                📅 Durée prévue :
-                <strong>
-                  ${duration} mois
-                </strong>
+  `;
 
-              </div>
+}
 
-              <div class="warning-box">
-                ⚠️ Rendement prévu, non garanti.
-              </div>
 
-              <button
-                class="secondary"
-                style="width:100%; margin-top:12px;"
-                onclick="showInvestmentBox('${project.id}')"
-              >
-                💰 Je veux investir
-              </button>
+/* =====================================================
+   INVESTISSEMENT SÉCURISÉ
+===================================================== */
 
-              <div
-                id="investmentBox-${project.id}"
-                class="investment-box hidden"
-              >
+async function submitInvestment(projectId) {
 
-                <input
-                  id="investmentAmount-${project.id}"
-                  type="number"
-                  min="1"
-                  placeholder="Montant à investir en GNF"
-                >
+  if (!currentUser) {
 
-                <div
-                  id="investmentPreview-${project.id}"
-                  class="return-box hidden"
-                ></div>
+    alert(
+      "Connecte-toi avant d'investir."
+    );
 
-                <label>
-                  💳 Moyen de paiement
-                </label>
+    return;
+  }
 
-                <select
-                  id="paymentMethod-${project.id}"
-                  onchange="updatePaymentMethod('${project.id}')"
-                >
 
-                  <option value="">
-                    Choisir un moyen de paiement
-                  </option>
+  const amount =
+    Number(
+      document.getElementById(
+        "amount_" + projectId
+      ).value
+    );
 
-                  <option value="orange_money">
-                    🟠 Orange Money
-                  </option>
 
-                  <option value="mtn_mobile_money">
-                    🟡 MTN Mobile Money
-                  </option>
+  const method =
+    document.getElementById(
+      "method_" + projectId
+    ).value;
 
-                </select>
 
-                <div
-                  id="orangePayment-${project.id}"
-                  class="orange-payment hidden"
-                >
+  const phoneElement =
+    document.getElementById(
+      "phone_" + projectId
+    );
 
-                  <strong>
-                    🟠 Paiement Orange Money
-                  </strong>
 
-                  <p>
-                    Envoyez le montant exact
-                    de votre investissement au :
-                  </p>
+  const referenceElement =
+    document.getElementById(
+      "reference_" + projectId
+    );
 
-                  <div class="orange-number">
-                    ${ORANGE_MONEY_NUMBER}
-                  </div>
 
-                  <input
-                    id="payerPhone-${project.id}"
-                    type="tel"
-                    placeholder="📱 Numéro Orange utilisé"
-                  >
+  const phone =
+    phoneElement
+      ? phoneElement.value.trim()
+      : "";
 
-                  <input
-                    id="transactionReference-${project.id}"
-                    type="text"
-                    placeholder="🧾 Référence de transaction"
-                  >
 
-                </div>
+  const reference =
+    referenceElement
+      ? referenceElement.value.trim()
+      : "";
 
-                <div
-                  id="mtnPayment-${project.id}"
-                  class="orange-payment hidden"
-                  style="background:#fffbea;border-color:#fde68a;"
-                >
 
-                  <strong>
-                    🟡 MTN Mobile Money
-                  </strong>
+  const messageId =
+    "investmentMessage_" +
+    projectId;
 
-                  <p>
-                    Le paiement MTN sera ajouté prochainement.
-                  </p>
 
-                </div>
+  showMessage(
+    messageId,
+    ""
+  );
 
-                <button
-                  class="primary"
-                  onclick="submitInvestment('${project.id}')"
-                >
-                  ✅ Envoyer ma demande
-                </button>
 
-                <div
-                  id="investmentMessage-${project.id}"
-                ></div>
+  if (!amount || amount <= 0) {
 
-              </div>
+    showMessage(
+      messageId,
+      "Entre un montant valide."
+    );
 
-            </div>
-          `;
+    return;
+  }
+
+
+  if (method === "mtn_money") {
+
+    showMessage(
+      messageId,
+      "MTN Money n'est pas encore activé."
+    );
+
+    return;
+  }
+
+
+  if (!phone || !reference) {
+
+    showMessage(
+      messageId,
+      "Le numéro et la référence de transaction sont obligatoires."
+    );
+
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await sb.rpc(
+      "create_investment",
+      {
+        p_project_id: projectId,
+        p_amount: amount,
+        p_payment_method: method,
+        p_payer_phone: phone,
+        p_transaction_reference: reference
+      }
+    );
+
+
+  if (error) {
+
+    showMessage(
+      messageId,
+      error.message
+    );
+
+    return;
+  }
+
+
+  showMessage(
+    messageId,
+    "Investissement enregistré. Le paiement sera vérifié par l'administration.",
+    true
+  );
+
+}
+
+
+/* =====================================================
+   PORTEFEUILLE
+===================================================== */
+
+async function loadPortfolio() {
+
+  if (!currentUser) return;
+
+
+  const {
+    data,
+    error
+  } =
+    await sb
+      .from("investments")
+      .select(`
+        *,
+        projects (
+          title,
+          sector
+        )
+      `)
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
         }
-      ).join("");
-
-    list.forEach(project => {
-
-      const input =
-        document.getElementById(
-          "investmentAmount-" +
-          project.id
-        );
-
-      if (input) {
-
-        input.addEventListener(
-          "input",
-          function() {
-            updateInvestmentPreview(
-              project.id
-            );
-          }
-        );
-      }
-    });
-  }
-
-
-  /* =================================
-     PREVIEW INVESTISSEMENT
-  ================================= */
-
-  function updateInvestmentPreview(projectId) {
-
-    const input =
-      document.getElementById(
-        "investmentAmount-" +
-        projectId
       );
 
-    const preview =
-      document.getElementById(
-        "investmentPreview-" +
-        projectId
-      );
 
-    const project =
-      projects.find(
-        p => p.id === projectId
-      );
+  if (error) {
 
-    if (
-      !input ||
-      !preview ||
-      !project
-    ) {
-      return;
-    }
-
-    const amount =
-      Number(input.value);
-
-    if (
-      !amount ||
-      amount <= 0
-    ) {
-
-      preview.classList.add("hidden");
-      return;
-    }
-
-    const rate =
-      getProjectReturn(project);
-
-    const duration =
-      getProjectDuration(project);
-
-    const profit =
-      calculateExpectedProfit(
-        amount,
-        rate
-      );
-
-    const total =
-      calculateExpectedTotal(
-        amount,
-        rate
-      );
-
-    preview.innerHTML = `
-
-      📈 Rendement prévu :
-      <strong>${rate}%</strong>
-
-      <br><br>
-
-      📅 Durée prévue :
-      <strong>${duration} mois</strong>
-
-      <br><br>
-
-      💰 Profit prévu :
-      <strong>${formatMoney(profit)}</strong>
-
-      <br><br>
-
-      💵 Valeur totale prévue :
-      <strong>${formatMoney(total)}</strong>
-
-      <div class="warning-box">
-        ⚠️ Estimation uniquement.
-        Le rendement n'est pas garanti.
+    document.getElementById(
+      "investmentsList"
+    ).innerHTML = `
+      <div class="message-error">
+        ${escapeHtml(error.message)}
       </div>
     `;
 
-    preview.classList.remove("hidden");
+    return;
   }
 
 
-  /* =================================
-     PAIEMENT
-  ================================= */
+  const investments =
+    data || [];
 
-  function updatePaymentMethod(projectId) {
 
-    const select =
-      document.getElementById(
-        "paymentMethod-" +
-        projectId
-      );
+  const total =
+    investments.reduce(
+      (sum, item) =>
+        sum + Number(item.amount || 0),
+      0
+    );
 
-    const orange =
-      document.getElementById(
-        "orangePayment-" +
-        projectId
-      );
 
-    const mtn =
-      document.getElementById(
-        "mtnPayment-" +
-        projectId
-      );
-
-    if (!select) {
-      return;
-    }
-
-    orange?.classList.add("hidden");
-    mtn?.classList.add("hidden");
-
-    if (
-      select.value ===
-      "orange_money"
-    ) {
-
-      orange?.classList.remove("hidden");
-
-    } else if (
-      select.value ===
-      "mtn_mobile_money"
-    ) {
-
-      mtn?.classList.remove("hidden");
-    }
-  }
-
-
-  function showInvestmentBox(projectId) {
-
-    if (!currentUser) {
-
-      alert(
-        "Vous devez être connecté pour investir."
-      );
-
-      showSection("authSection");
-
-      return;
-    }
-
-    const box =
-      document.getElementById(
-        "investmentBox-" +
-        projectId
-      );
-
-    if (box) {
-      box.classList.toggle("hidden");
-    }
-  }
-
-
-  /* =================================
-     CREATION INVESTISSEMENT
-  ================================= */
-
-  async function submitInvestment(projectId) {
-
-    if (!currentUser) {
-      alert("Vous devez être connecté.");
-      return;
-    }
-
-    const input =
-      document.getElementById(
-        "investmentAmount-" +
-        projectId
-      );
-
-    const paymentSelect =
-      document.getElementById(
-        "paymentMethod-" +
-        projectId
-      );
-
-    const payerPhone =
-      document.getElementById(
-        "payerPhone-" +
-        projectId
-      );
-
-    const transactionReference =
-      document.getElementById(
-        "transactionReference-" +
-        projectId
-      );
-
-    const message =
-      document.getElementById(
-        "investmentMessage-" +
-        projectId
-      );
-
-    const project =
-      projects.find(
-        p => p.id === projectId
-      );
-
-    if (
-      !input ||
-      !paymentSelect ||
-      !message ||
-      !project
-    ) {
-      return;
-    }
-
-    const amount =
-      Number(input.value);
-
-    const method =
-      paymentSelect.value;
-
-    const returnRate =
-      getProjectReturn(project);
-
-    const duration =
-      getProjectDuration(project);
-
-    const expectedProfit =
-      calculateExpectedProfit(
-        amount,
-        returnRate
-      );
-
-    const expectedTotal =
-      calculateExpectedTotal(
-        amount,
-        returnRate
-      );
-
-    if (
-      !amount ||
-      amount <= 0
-    ) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Entrez un montant valide.
-        </div>
-      `;
-
-      return;
-    }
-
-    if (!method) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Choisissez un moyen de paiement.
-        </div>
-      `;
-
-      return;
-    }
-
-    if (
-      method ===
-      "orange_money"
-    ) {
-
-      if (
-        !payerPhone ||
-        !payerPhone.value.trim()
-      ) {
-
-        message.innerHTML = `
-          <div class="error-box">
-            ❌ Entrez le numéro Orange utilisé.
-          </div>
-        `;
-
-        return;
-      }
-
-      if (
-        !transactionReference ||
-        !transactionReference.value.trim()
-      ) {
-
-        message.innerHTML = `
-          <div class="error-box">
-            ❌ Entrez la référence de transaction.
-          </div>
-        `;
-
-        return;
-      }
-    }
-
-    if (
-      method ===
-      "mtn_mobile_money"
-    ) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          🟡 Le paiement MTN sera disponible prochainement.
-        </div>
-      `;
-
-      return;
-    }
-
-    message.innerHTML = `
-      <div class="message">
-        ⏳ Enregistrement de votre demande...
-      </div>
-    `;
-
-    const {
-      data: investment,
-      error: investmentError
-    } =
-      await sb
-        .from("investments")
-        .insert({
-
-          user_id:
-            currentUser.id,
-
-          project_id:
-            projectId,
-
-          amount:
-            Math.round(amount),
-
-          status:
-            "pending",
-
-          return_rate:
-            returnRate,
-
-          duration_months:
-            duration,
-
-          expected_profit:
-            expectedProfit,
-
-          expected_total:
-            expectedTotal
-
-        })
-        .select()
-        .single();
-
-    if (investmentError) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            investmentError.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    const {
-      error: paymentError
-    } =
-      await sb
-        .from("payments")
-        .insert({
-
-          user_id:
-            currentUser.id,
-
-          investment_id:
-            investment.id,
-
-          amount:
-            Math.round(amount),
-
-          method:
-            method,
-
-          status:
-            "pending",
-
-          payer_phone:
-            payerPhone
-              ? payerPhone.value.trim()
-              : null,
-
-          transaction_reference:
-            transactionReference
-              ? transactionReference.value.trim()
-              : null
-
-        });
-
-    if (paymentError) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Votre investissement a été créé,
-          mais le paiement n'a pas pu être enregistré.
-          <br><br>
-          ${escapeHtml(
-            paymentError.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    message.innerHTML = `
-      <div class="message">
-
-        ✅ <strong>Demande enregistrée.</strong>
-
-        <br><br>
-
-        💰 Montant :
-        <strong>${formatMoney(amount)}</strong>
-
-        <br>
-
-        📈 Rendement prévu :
-        <strong>${returnRate}%</strong>
-
-        <br>
-
-        📅 Durée prévue :
-        <strong>${duration} mois</strong>
-
-        <br>
-
-        📊 Profit prévu :
-        <strong>${formatMoney(expectedProfit)}</strong>
-
-        <br>
-
-        💵 Valeur totale prévue :
-        <strong>${formatMoney(expectedTotal)}</strong>
-
-        <br>
-
-        🟠 Paiement :
-        <strong>Orange Money</strong>
-
-        <br>
-
-        🧾 Référence :
-        <strong>
-          ${escapeHtml(
-            transactionReference.value.trim()
-          )}
-        </strong>
-
-        <br>
-
-        ⏳ Statut :
-        <strong>En attente de vérification</strong>
-
-        <br><br>
-
-        Un administrateur vérifiera votre paiement.
-
-        <div class="warning-box">
-          ⚠️ Le rendement affiché est une estimation
-          et n'est pas garanti.
-        </div>
-
-      </div>
-    `;
-
-    input.value = "";
-    paymentSelect.value = "";
-
-    if (payerPhone) {
-      payerPhone.value = "";
-    }
-
-    if (transactionReference) {
-      transactionReference.value = "";
-    }
-
-    updatePaymentMethod(projectId);
-
-    await loadMyInvestments();
-  }
-
-
-  /* =================================
-     PORTEFEUILLE
-  ================================= */
-
-  async function loadMyInvestments() {
-
-    const container =
-      document.getElementById(
-        "myInvestments"
-      );
-
-    if (!currentUser) {
-
-      container.innerHTML = `
-        <p class="empty">
-          Connectez-vous pour voir vos investissements.
-        </p>
-      `;
-
-      return;
-    }
-
-    const {
-      data: investments,
-      error: investmentError
-    } =
-      await sb
-        .from("investments")
-        .select("*")
-        .eq(
-          "user_id",
-          currentUser.id
-        )
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
-
-    if (investmentError) {
-
-      container.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            investmentError.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    const {
-      data: payments,
-      error: paymentError
-    } =
-      await sb
-        .from("payments")
-        .select("*")
-        .eq(
-          "user_id",
-          currentUser.id
-        )
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
-
-    if (paymentError) {
-
-      container.innerHTML = `
-        <div class="error-box">
-          ❌ Impossible de charger l'historique.
-          <br><br>
-          ${escapeHtml(
-            paymentError.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    const investmentList =
-      investments || [];
-
-    const paymentList =
-      payments || [];
-
-    const totalInvested =
-      investmentList.reduce(
-        (total, item) =>
-          total +
-          Number(item.amount || 0),
-        0
-      );
-
-    const approvedInvestments =
-      investmentList.filter(
+  const approved =
+    investments
+      .filter(
         item =>
           item.status === "approved"
-      );
-
-    const approvedAmount =
-      approvedInvestments.reduce(
-        (total, item) =>
-          total +
-          Number(item.amount || 0),
+      )
+      .reduce(
+        (sum, item) =>
+          sum + Number(item.amount || 0),
         0
       );
 
-    const pendingAmount =
-      investmentList
-        .filter(
-          item =>
-            item.status === "pending"
-        )
-        .reduce(
-          (total, item) =>
-            total +
-            Number(item.amount || 0),
-          0
-        );
 
-    const expectedProfit =
-      investmentList.reduce(
-        (total, item) => {
-
-          const stored =
-            Number(
-              item.expected_profit
-            );
-
-          if (
-            Number.isFinite(stored)
-          ) {
-            return total + stored;
-          }
-
-          return total +
-            calculateExpectedProfit(
-              item.amount,
-              item.return_rate
-            );
-        },
+  const pending =
+    investments
+      .filter(
+        item =>
+          item.status === "pending"
+      )
+      .reduce(
+        (sum, item) =>
+          sum + Number(item.amount || 0),
         0
       );
 
-    const expectedTotal =
-      investmentList.reduce(
-        (total, item) => {
 
-          const stored =
-            Number(
-              item.expected_total
-            );
-
-          if (
-            Number.isFinite(stored) &&
-            stored > 0
-          ) {
-            return total + stored;
-          }
-
-          return total +
-            calculateExpectedTotal(
-              item.amount,
-              item.return_rate
-            );
-        },
+  const profit =
+    investments
+      .filter(
+        item =>
+          item.status === "approved"
+      )
+      .reduce(
+        (sum, item) =>
+          sum +
+          Number(
+            item.expected_profit || 0
+          ),
         0
       );
 
-    const confirmedPayments =
-      paymentList.filter(
-        payment =>
-          payment.status === "verified"
-      ).length;
 
-    const projectCount =
-      new Set(
-        investmentList.map(
-          item => item.project_id
-        )
-      ).size;
+  const expectedTotal =
+    investments
+      .filter(
+        item =>
+          item.status === "approved"
+      )
+      .reduce(
+        (sum, item) =>
+          sum +
+          Number(
+            item.expected_total || 0
+          ),
+        0
+      );
+
+
+  document.getElementById(
+    "portfolioStats"
+  ).innerHTML = `
+
+    <div class="stat">
+      Total investi
+      <strong>
+        ${formatMoney(total)}
+      </strong>
+    </div>
+
+    <div class="stat">
+      Approuvé
+      <strong>
+        ${formatMoney(approved)}
+      </strong>
+    </div>
+
+    <div class="stat">
+      En attente
+      <strong>
+        ${formatMoney(pending)}
+      </strong>
+    </div>
+
+    <div class="stat">
+      Profit attendu
+      <strong>
+        ${formatMoney(profit)}
+      </strong>
+    </div>
+
+    <div class="stat">
+      Total attendu
+      <strong>
+        ${formatMoney(expectedTotal)}
+      </strong>
+    </div>
+
+    <div class="stat">
+      Investissements
+      <strong>
+        ${investments.length}
+      </strong>
+    </div>
+
+  `;
+
+
+  if (!investments.length) {
 
     document.getElementById(
-      "portfolioTotal"
-    ).textContent =
-      formatMoney(totalInvested);
+      "investmentsList"
+    ).innerHTML =
+      "<p>Aucun investissement.</p>";
 
-    document.getElementById(
-      "portfolioApproved"
-    ).textContent =
-      formatMoney(approvedAmount);
+    return;
+  }
 
-    document.getElementById(
-      "portfolioPending"
-    ).textContent =
-      formatMoney(pendingAmount);
 
-    document.getElementById(
-      "portfolioProfit"
-    ).textContent =
-      formatMoney(expectedProfit);
+  document.getElementById(
+    "investmentsList"
+  ).innerHTML =
+    investments
+      .map(item => {
 
-    document.getElementById(
-      "portfolioExpectedTotal"
-    ).textContent =
-      formatMoney(expectedTotal);
+        let badge =
+          "badge-pending";
 
-    document.getElementById(
-      "portfolioProjects"
-    ).textContent =
-      projectCount;
-
-    document.getElementById(
-      "portfolioPayments"
-    ).textContent =
-      confirmedPayments;
-
-    if (!investmentList.length) {
-
-      container.innerHTML = `
-        <p class="empty">
-          Vous n'avez encore aucun investissement.
-        </p>
-      `;
-
-      return;
-    }
-
-    container.innerHTML =
-      investmentList.map(
-        investment => {
-
-          const project =
-            projects.find(
-              p =>
-                p.id ===
-                investment.project_id
-            );
-
-          const payment =
-            paymentList.find(
-              p =>
-                p.investment_id ===
-                investment.id
-            );
-
-          const rate =
-            Number(
-              investment.return_rate
-            ) ||
-            getProjectReturn(project);
-
-          const duration =
-            Number(
-              investment.duration_months
-            ) ||
-            getProjectDuration(project);
-
-          const profit =
-            Number(
-              investment.expected_profit
-            ) ||
-            calculateExpectedProfit(
-              investment.amount,
-              rate
-            );
-
-          const total =
-            Number(
-              investment.expected_total
-            ) ||
-            calculateExpectedTotal(
-              investment.amount,
-              rate
-            );
-
-          let investmentStatus =
-            "⏳ Investissement en attente";
-
-          if (
-            investment.status === "approved"
-          ) {
-
-            investmentStatus =
-              "✅ Investissement approuvé";
-
-          } else if (
-            investment.status === "rejected"
-          ) {
-
-            investmentStatus =
-              "❌ Investissement refusé";
-          }
-
-          let paymentStatus =
-            "⏳ Paiement en attente";
-
-          let paymentClass =
-            "badge-pending";
-
-          if (
-            payment?.status === "verified"
-          ) {
-
-            paymentStatus =
-              "✅ Paiement confirmé";
-
-            paymentClass =
-              "badge-verified";
-
-          } else if (
-            payment?.status === "rejected"
-          ) {
-
-            paymentStatus =
-              "❌ Paiement rejeté";
-
-            paymentClass =
-              "badge-rejected";
-          }
-
-          let finalMessage = "";
-
-          if (
-            investment.status === "approved" &&
-            payment?.status === "verified"
-          ) {
-
-            finalMessage = `
-              <div class="confirmed-box">
-                🎉
-                <strong>
-                  Investissement confirmé !
-                </strong>
-
-                <br><br>
-
-                Votre paiement a été vérifié
-                et votre investissement est
-                officiellement approuvé.
-              </div>
-            `;
-
-          } else if (
-            payment?.status === "verified" &&
-            investment.status === "pending"
-          ) {
-
-            finalMessage = `
-              <div class="pending-box">
-                🟢
-                <strong>
-                  Paiement confirmé
-                </strong>
-
-                <br><br>
-
-                Votre paiement Orange Money
-                a été vérifié par l'administrateur.
-
-                <br><br>
-
-                ⏳ Votre investissement est encore
-                en attente d'approbation.
-              </div>
-            `;
-
-          } else if (
-            payment?.status === "rejected"
-          ) {
-
-            finalMessage = `
-              <div class="error-box">
-                ❌
-                <strong>
-                  Paiement rejeté
-                </strong>
-
-                <br><br>
-
-                Le paiement associé à cet investissement
-                n'a pas été validé.
-              </div>
-            `;
-          }
-
-          return `
-            <div class="investment-item">
-
-              <h3 style="margin-top:0;color:#0b5d3b;">
-                ${escapeHtml(
-                  project?.title ||
-                  "Projet"
-                )}
-              </h3>
-
-              <strong>
-                💰 ${formatMoney(
-                  investment.amount
-                )}
-              </strong>
-
-              <br><br>
-
-              📈 Rendement prévu :
-              <strong class="success-text">
-                ${rate}%
-              </strong>
-
-              <br>
-
-              📅 Durée prévue :
-              <strong>
-                ${duration} mois
-              </strong>
-
-              <div class="return-box">
-
-                📊 Profit prévu :
-                <strong>
-                  ${formatMoney(profit)}
-                </strong>
-
-                <br><br>
-
-                💵 Valeur totale prévue :
-                <strong>
-                  ${formatMoney(total)}
-                </strong>
-
-              </div>
-
-              <br>
-
-              📅 ${formatDate(
-                investment.created_at
-              )}
-
-              <br>
-
-              📊
-              <strong>
-                ${investmentStatus}
-              </strong>
-
-              <br>
-
-              <span
-                class="payment-badge ${paymentClass}"
-              >
-                ${paymentStatus}
-              </span>
-
-              ${
-                payment
-                  ? `
-                    <div class="payment-history">
-
-                      <strong>
-                        💳 Informations du paiement
-                      </strong>
-
-                      <br><br>
-
-                      Moyen :
-                      ${
-                        payment.method === "orange_money"
-                          ? "🟠 Orange Money"
-                          : escapeHtml(
-                              payment.method ||
-                              "Non renseigné"
-                            )
-                      }
-
-                      <br>
-
-                      📱 Numéro :
-                      ${escapeHtml(
-                        payment.payer_phone ||
-                        "Non renseigné"
-                      )}
-
-                      <br>
-
-                      🧾 Référence :
-                      ${escapeHtml(
-                        payment.transaction_reference ||
-                        "Non renseignée"
-                      )}
-
-                      <br>
-
-                      💰 Montant payé :
-                      ${formatMoney(
-                        payment.amount
-                      )}
-
-                      ${
-                        payment.verified_at
-                          ? `
-                            <br>
-                            🕐 Vérifié le :
-                            ${formatDate(
-                              payment.verified_at
-                            )}
-                          `
-                          : ""
-                      }
-
-                    </div>
-                  `
-                  : ""
-              }
-
-              ${finalMessage}
-
-              <div class="warning-box">
-                ⚠️ Le rendement affiché est prévu
-                et non garanti.
-              </div>
-
-            </div>
-          `;
+        if (item.status === "approved") {
+          badge = "badge-approved";
         }
-      ).join("");
-  }
+
+        if (item.status === "rejected") {
+          badge = "badge-rejected";
+        }
 
 
-  /* =================================
-     ADMIN STATS
-  ================================= */
+        return `
 
-  async function loadAdminStats() {
+          <div class="card">
 
-    const container =
-      document.getElementById(
-        "adminStats"
-      );
+            <h3>
+              ${escapeHtml(
+                item.projects?.title ||
+                "Projet"
+              )}
+            </h3>
 
-    if (
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ) {
-      return;
-    }
+            <p>
+              Montant :
+              <strong>
+                ${formatMoney(item.amount)}
+              </strong>
+            </p>
 
-    const [
-      profilesResult,
-      projectsResult,
-      investmentsResult
-    ] =
-      await Promise.all([
+            <p>
+              Rendement :
+              ${Number(item.return_rate || 0)}%
+            </p>
 
-        sb
-          .from("profiles")
-          .select(
-            "id",
-            {
-              count: "exact",
-              head: true
-            }
-          ),
+            <p>
+              Durée :
+              ${Number(item.duration_months || 0)}
+              mois
+            </p>
 
-        sb
-          .from("projects")
-          .select(
-            "id",
-            {
-              count: "exact",
-              head: true
-            }
-          ),
+            <p>
+              Profit attendu :
+              <strong>
+                ${formatMoney(
+                  item.expected_profit
+                )}
+              </strong>
+            </p>
 
-        sb
-          .from("investments")
-          .select("amount")
+            <span class="badge ${badge}">
+              ${escapeHtml(item.status)}
+            </span>
 
-      ]);
+            <p class="small">
+              ${formatDate(item.created_at)}
+            </p>
 
-    const investorCount =
-      profilesResult.count || 0;
+          </div>
 
-    const projectCount =
-      projectsResult.count || 0;
+        `;
 
-    const investmentData =
-      investmentsResult.data || [];
+      })
+      .join("");
 
-    const investmentCount =
-      investmentData.length;
-
-    const totalAmount =
-      investmentData.reduce(
-        (total, item) =>
-          total +
-          Number(item.amount || 0),
-        0
-      );
-
-    container.innerHTML = `
-
-      <div class="stat">
-        <strong>${investorCount}</strong>
-        Utilisateurs
-      </div>
-
-      <div class="stat">
-        <strong>${projectCount}</strong>
-        Projets
-      </div>
-
-      <div class="stat">
-        <strong>${investmentCount}</strong>
-        Investissements
-      </div>
-
-      <div class="stat">
-        <strong>${formatMoney(totalAmount)}</strong>
-        Montant demandé
-      </div>
-    `;
-  }
+}
 
 
-  /* =================================
-     ADMIN CREER PROJET
-  ================================= */
+/* =====================================================
+   ADMIN
+===================================================== */
 
-  async function createProject() {
+async function loadAdmin() {
 
-    if (
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ) {
+  if (!isAdmin()) {
 
-      alert(
-        "Accès administrateur requis."
-      );
-
-      return;
-    }
-
-    const title =
-      document
-        .getElementById("newProjectTitle")
-        .value
-        .trim();
-
-    const description =
-      document
-        .getElementById("newProjectDescription")
-        .value
-        .trim();
-
-    const sector =
-      document
-        .getElementById("newProjectSector")
-        .value
-        .trim();
-
-    const amount =
-      Number(
-        document
-          .getElementById("newProjectAmount")
-          .value
-      );
-
-    const rate =
-      Number(
-        document
-          .getElementById("newProjectRate")
-          .value
-      );
-
-    const duration =
-      Number(
-        document
-          .getElementById("newProjectDuration")
-          .value
-      );
-
-    const status =
-      document
-        .getElementById("newProjectStatus")
-        .value;
-
-    const message =
-      document.getElementById(
-        "createProjectMessage"
-      );
-
-    if (!title) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Entrez le nom du projet.
-        </div>
-      `;
-
-      return;
-    }
-
-    if (
-      !amount ||
-      amount <= 0
-    ) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Entrez un montant valide.
-        </div>
-      `;
-
-      return;
-    }
-
-    if (
-      !Number.isFinite(rate) ||
-      rate < 0 ||
-      rate > 1000
-    ) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Rendement invalide.
-        </div>
-      `;
-
-      return;
-    }
-
-    if (
-      !Number.isFinite(duration) ||
-      duration < 1 ||
-      duration > 240
-    ) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Durée invalide.
-        </div>
-      `;
-
-      return;
-    }
-
-    message.innerHTML = `
-      <div class="message">
-        ⏳ Création du projet...
+    document.getElementById(
+      "adminMessage"
+    ).innerHTML = `
+      <div class="message-error">
+        Accès administrateur refusé.
       </div>
     `;
 
-    const {
-      error
-    } =
-      await sb
-        .from("projects")
-        .insert({
-
-          title:
-            title,
-
-          description:
-            description,
-
-          sector:
-            sector,
-
-          amount_required:
-            Math.round(amount),
-
-          amount:
-            Math.round(amount),
-
-          user_id:
-            currentUser.id,
-
-          status:
-            status,
-
-          return_rate:
-            rate,
-
-          duration_months:
-            Math.round(duration)
-
-        });
-
-    if (error) {
-
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            error.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    message.innerHTML = `
-      <div class="message">
-        ✅ Projet créé avec succès.
-      </div>
-    `;
-
-    document.getElementById(
-      "newProjectTitle"
-    ).value = "";
-
-    document.getElementById(
-      "newProjectDescription"
-    ).value = "";
-
-    document.getElementById(
-      "newProjectSector"
-    ).value = "";
-
-    document.getElementById(
-      "newProjectAmount"
-    ).value = "";
-
-    document.getElementById(
-      "newProjectRate"
-    ).value = "10";
-
-    document.getElementById(
-      "newProjectDuration"
-    ).value = "12";
-
-    document.getElementById(
-      "newProjectStatus"
-    ).value = "pending";
-
-    await loadAdminProjects();
-    await loadAdminStats();
-    await loadProjects();
+    return;
   }
 
 
-  /* =================================
-     ADMIN CHARGER PROJETS
-  ================================= */
+  const [
+    profilesResult,
+    projectsResult,
+    investmentsResult,
+    paymentsResult
+  ] =
+    await Promise.all([
 
-  async function loadAdminProjects() {
+      sb
+        .from("profiles")
+        .select("id, role"),
 
-    const container =
-      document.getElementById(
-        "adminProjects"
-      );
-
-    if (
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ) {
-      return;
-    }
-
-    const {
-      data,
-      error
-    } =
-      await sb
+      sb
         .from("projects")
         .select("*")
         .order(
@@ -3051,1207 +1987,786 @@
           {
             ascending: false
           }
-        );
+        ),
 
-    if (error) {
+      sb
+        .from("investments")
+        .select(`
+          *,
+          projects(title)
+        `)
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        ),
 
-      container.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            error.message
-          )}
-        </div>
-      `;
+      sb
+        .from("payments")
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        )
 
-      return;
-    }
+    ]);
 
-    if (
-      !data ||
-      !data.length
-    ) {
 
-      container.innerHTML = `
-        <p class="empty">
-          Aucun projet.
-        </p>
-      `;
+  if (
+    profilesResult.error ||
+    projectsResult.error ||
+    investmentsResult.error ||
+    paymentsResult.error
+  ) {
 
-      return;
-    }
+    const error =
+      profilesResult.error ||
+      projectsResult.error ||
+      investmentsResult.error ||
+      paymentsResult.error;
 
-    container.innerHTML =
-      data.map(
-        project => {
 
-          const rate =
-            getProjectReturn(project);
+    showMessage(
+      "adminMessage",
+      error.message
+    );
 
-          const duration =
-            getProjectDuration(project);
-
-          const status =
-            project.status || "pending";
-
-          return `
-
-            <div class="admin-project">
-
-              <h4>
-                📁
-                ${escapeHtml(
-                  project.title
-                )}
-              </h4>
-
-              <div class="project-meta">
-                ID :
-                ${escapeHtml(project.id)}
-
-                <br>
-
-                Créé le :
-                ${formatDate(
-                  project.created_at
-                )}
-              </div>
-
-              <label>
-                📝 Nom du projet
-              </label>
-
-              <input
-                id="adminTitle-${project.id}"
-                type="text"
-                value="${escapeHtml(
-                  project.title || ""
-                )}"
-              >
-
-              <label>
-                📝 Description
-              </label>
-
-              <textarea
-                id="adminDescription-${project.id}"
-              >${escapeHtml(
-                project.description || ""
-              )}</textarea>
-
-              <div class="admin-form-grid">
-
-                <div>
-
-                  <label>
-                    🏷️ Secteur
-                  </label>
-
-                  <input
-                    id="adminSector-${project.id}"
-                    type="text"
-                    value="${escapeHtml(
-                      project.sector || ""
-                    )}"
-                  >
-
-                </div>
-
-                <div>
-
-                  <label>
-                    💰 Montant recherché
-                  </label>
-
-                  <input
-                    id="adminAmount-${project.id}"
-                    type="number"
-                    min="1"
-                    value="${Number(
-                      project.amount_required || 0
-                    )}"
-                  >
-
-                </div>
-
-                <div>
-
-                  <label>
-                    📈 Rendement prévu (%)
-                  </label>
-
-                  <input
-                    id="adminRate-${project.id}"
-                    type="number"
-                    min="0"
-                    max="1000"
-                    step="0.1"
-                    value="${rate}"
-                  >
-
-                </div>
-
-                <div>
-
-                  <label>
-                    📅 Durée (mois)
-                  </label>
-
-                  <input
-                    id="adminDuration-${project.id}"
-                    type="number"
-                    min="1"
-                    max="240"
-                    value="${duration}"
-                  >
-
-                </div>
-
-              </div>
-
-              <label>
-                📂 Statut
-              </label>
-
-              <select
-                id="adminStatus-${project.id}"
-              >
-
-                <option
-                  value="pending"
-                  ${
-                    status === "pending"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  ⏳ En attente
-                </option>
-
-                <option
-                  value="approved"
-                  ${
-                    status === "approved"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  ✅ Approuvé
-                </option>
-
-              </select>
-
-              <div class="return-box">
-
-                📈 Rendement actuel :
-                <strong>
-                  ${rate}%
-                </strong>
-
-                <br>
-
-                📅 Durée actuelle :
-                <strong>
-                  ${duration} mois
-                </strong>
-
-                <br>
-
-                📂 Statut actuel :
-                <strong class="${
-                  status === "approved"
-                    ? "status-approved"
-                    : "status-pending"
-                }">
-                  ${
-                    status === "approved"
-                      ? "🟢 Approuvé"
-                      : "🟡 En attente"
-                  }
-                </strong>
-
-              </div>
-
-              <div class="admin-project-actions">
-
-                <button
-                  class="approve"
-                  onclick="
-                    saveProject(
-                      '${project.id}'
-                    )
-                  "
-                >
-                  💾 Enregistrer
-                </button>
-
-                ${
-                  status === "approved"
-                    ? `
-                      <button
-                        class="warning-btn"
-                        onclick="
-                          changeProjectStatus(
-                            '${project.id}',
-                            'pending'
-                          )
-                        "
-                      >
-                        ⏳ Mettre en attente
-                      </button>
-                    `
-                    : `
-                      <button
-                        class="approve"
-                        onclick="
-                          changeProjectStatus(
-                            '${project.id}',
-                            'approved'
-                          )
-                        "
-                      >
-                        🟢 Approuver
-                      </button>
-                    `
-                }
-
-                <button
-                  class="danger"
-                  onclick="
-                    deleteProject(
-                      '${project.id}'
-                    )
-                  "
-                >
-                  🗑️ Supprimer
-                </button>
-
-              </div>
-
-              <div
-                id="adminProjectMessage-${project.id}"
-              ></div>
-
-            </div>
-
-          `;
-        }
-      ).join("");
+    return;
   }
 
 
-  /* =================================
-     ADMIN SAUVEGARDER PROJET
-  ================================= */
+  const profiles =
+    profilesResult.data || [];
 
-  async function saveProject(projectId) {
+  const adminProjects =
+    projectsResult.data || [];
 
-    if (
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ) {
+  const investments =
+    investmentsResult.data || [];
 
-      alert(
-        "Accès administrateur requis."
-      );
+  const payments =
+    paymentsResult.data || [];
 
-      return;
-    }
 
-    const title =
+  const volume =
+    investments.reduce(
+      (sum, item) =>
+        sum + Number(item.amount || 0),
+      0
+    );
+
+
+  document.getElementById(
+    "adminStats"
+  ).innerHTML = `
+
+    <div class="stat">
+      Utilisateurs
+      <strong>
+        ${profiles.length}
+      </strong>
+    </div>
+
+    <div class="stat">
+      Projets
+      <strong>
+        ${adminProjects.length}
+      </strong>
+    </div>
+
+    <div class="stat">
+      Investissements
+      <strong>
+        ${investments.length}
+      </strong>
+    </div>
+
+    <div class="stat">
+      Volume
+      <strong>
+        ${formatMoney(volume)}
+      </strong>
+    </div>
+
+  `;
+
+
+  renderAdminProjects(
+    adminProjects
+  );
+
+
+  renderAdminInvestments(
+    investments
+  );
+
+
+  renderAdminPayments(
+    payments
+  );
+
+}
+
+
+/* =====================================================
+   ADMIN — PROJETS
+===================================================== */
+
+function renderAdminProjects(projectsList) {
+
+  const container =
+    document.getElementById(
+      "adminProjects"
+    );
+
+
+  if (!projectsList.length) {
+
+    container.innerHTML =
+      "<p>Aucun projet.</p>";
+
+    return;
+  }
+
+
+  container.innerHTML =
+    projectsList
+      .map(project => `
+
+        <div class="card">
+
+          <h3>
+            ${escapeHtml(
+              project.title
+            )}
+          </h3>
+
+          <p>
+            ${escapeHtml(
+              project.sector || ""
+            )}
+          </p>
+
+          <p>
+            ${formatMoney(
+              project.amount_required ??
+              project.amount
+            )}
+          </p>
+
+          <p>
+            Rendement :
+            ${Number(
+              project.return_rate || 0
+            )}%
+          </p>
+
+          <span class="badge">
+            ${escapeHtml(
+              project.status
+            )}
+          </span>
+
+          <div class="row"
+               style="margin-top:12px">
+
+            <button
+              class="success"
+              onclick="setProjectStatus(
+                '${project.id}',
+                'approved'
+              )">
+
+              Approuver
+
+            </button>
+
+            <button
+              class="secondary"
+              onclick="setProjectStatus(
+                '${project.id}',
+                'pending'
+              )">
+
+              En attente
+
+            </button>
+
+            <button
+              class="danger"
+              onclick="deleteProject(
+                '${project.id}'
+              )">
+
+              Supprimer
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+
+/* =====================================================
+   ADMIN — CRÉER PROJET
+===================================================== */
+
+async function createProject() {
+
+  if (!isAdmin()) {
+
+    alert(
+      "Accès administrateur requis."
+    );
+
+    return;
+  }
+
+
+  const title =
+    document
+      .getElementById(
+        "projectTitle"
+      )
+      .value
+      .trim();
+
+
+  const sector =
+    document
+      .getElementById(
+        "projectSector"
+      )
+      .value
+      .trim();
+
+
+  const description =
+    document
+      .getElementById(
+        "projectDescription"
+      )
+      .value
+      .trim();
+
+
+  const amount =
+    Number(
       document
         .getElementById(
-          "adminTitle-" +
-          projectId
+          "projectAmount"
         )
         .value
-        .trim();
+    );
 
-    const description =
+
+  const returnRate =
+    Number(
       document
         .getElementById(
-          "adminDescription-" +
-          projectId
+          "projectReturn"
         )
         .value
-        .trim();
+    );
 
-    const sector =
+
+  const duration =
+    Number(
       document
         .getElementById(
-          "adminSector-" +
-          projectId
+          "projectDuration"
         )
         .value
-        .trim();
+    );
 
-    const amount =
-      Number(
-        document
-          .getElementById(
-            "adminAmount-" +
-            projectId
-          )
-          .value
-      );
 
-    const rate =
-      Number(
-        document
-          .getElementById(
-            "adminRate-" +
-            projectId
-          )
-          .value
-      );
+  if (
+    !title ||
+    !amount ||
+    amount <= 0
+  ) {
 
-    const duration =
-      Number(
-        document
-          .getElementById(
-            "adminDuration-" +
-            projectId
-          )
-          .value
-      );
+    showMessage(
+      "adminMessage",
+      "Le titre et le montant sont obligatoires."
+    );
 
-    const status =
-      document
-        .getElementById(
-          "adminStatus-" +
-          projectId
-        )
-        .value;
+    return;
+  }
 
-    const message =
-      document.getElementById(
-        "adminProjectMessage-" +
+
+  const {
+    error
+  } =
+    await sb
+      .from("projects")
+      .insert({
+
+        title,
+
+        sector,
+
+        description,
+
+        amount_required:
+          amount,
+
+        amount:
+
+          amount,
+
+        return_rate:
+          returnRate,
+
+        duration_months:
+          duration,
+
+        status:
+          "pending",
+
+        user_id:
+          currentUser.id
+
+      });
+
+
+  if (error) {
+
+    showMessage(
+      "adminMessage",
+      error.message
+    );
+
+    return;
+  }
+
+
+  showMessage(
+    "adminMessage",
+    "Projet créé avec succès. Il est actuellement en attente.",
+    true
+  );
+
+
+  document.getElementById(
+    "projectTitle"
+  ).value = "";
+
+
+  document.getElementById(
+    "projectSector"
+  ).value = "";
+
+
+  document.getElementById(
+    "projectDescription"
+  ).value = "";
+
+
+  document.getElementById(
+    "projectAmount"
+  ).value = "";
+
+
+  document.getElementById(
+    "projectReturn"
+  ).value = "";
+
+
+  document.getElementById(
+    "projectDuration"
+  ).value = "";
+
+
+  await loadAdmin();
+
+}
+
+
+/* =====================================================
+   ADMIN — STATUT PROJET
+===================================================== */
+
+async function setProjectStatus(
+  projectId,
+  status
+) {
+
+  if (!isAdmin()) return;
+
+
+  const {
+    error
+  } =
+    await sb
+      .from("projects")
+      .update({
+        status
+      })
+      .eq(
+        "id",
         projectId
       );
 
-    if (!title) {
 
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Le titre est obligatoire.
-        </div>
-      `;
+  if (error) {
 
-      return;
-    }
+    alert(error.message);
 
-    if (
-      !amount ||
-      amount <= 0
-    ) {
+    return;
+  }
 
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Montant invalide.
-        </div>
-      `;
 
-      return;
-    }
+  await loadAdmin();
 
-    if (
-      !Number.isFinite(rate) ||
-      rate < 0 ||
-      rate > 1000
-    ) {
+}
 
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Rendement invalide.
-        </div>
-      `;
 
-      return;
-    }
+/* =====================================================
+   ADMIN — SUPPRIMER PROJET
+===================================================== */
 
-    if (
-      !Number.isFinite(duration) ||
-      duration < 1 ||
-      duration > 240
-    ) {
+async function deleteProject(
+  projectId
+) {
 
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ Durée invalide.
-        </div>
-      `;
+  if (!isAdmin()) return;
 
-      return;
-    }
 
-    message.innerHTML = `
-      <div class="message">
-        ⏳ Enregistrement...
-      </div>
+  const confirmed =
+    confirm(
+      "Veux-tu vraiment supprimer ce projet ?"
+    );
+
+
+  if (!confirmed) return;
+
+
+  const {
+    error
+  } =
+    await sb
+      .from("projects")
+      .delete()
+      .eq(
+        "id",
+        projectId
+      );
+
+
+  if (error) {
+
+    alert(error.message);
+
+    return;
+  }
+
+
+  await loadAdmin();
+
+}
+
+
+/* =====================================================
+   ADMIN — INVESTISSEMENTS
+===================================================== */
+
+function renderAdminInvestments(
+  investments
+) {
+
+  const tbody =
+    document.getElementById(
+      "adminInvestments"
+    );
+
+
+  if (!investments.length) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5">
+          Aucun investissement.
+        </td>
+      </tr>
     `;
 
-    const {
-      error
-    } =
-      await sb
-        .from("projects")
-        .update({
+    return;
+  }
 
-          title:
-            title,
 
-          description:
-            description,
+  tbody.innerHTML =
+    investments
+      .map(item => `
 
-          sector:
-            sector,
+        <tr>
 
-          amount_required:
-            Math.round(amount),
+          <td>
+            ${escapeHtml(
+              item.user_id
+            )}
+          </td>
 
-          amount:
-            Math.round(amount),
+          <td>
+            ${escapeHtml(
+              item.projects?.title ||
+              item.project_id
+            )}
+          </td>
 
-          return_rate:
-            rate,
+          <td>
+            ${formatMoney(
+              item.amount
+            )}
+          </td>
 
-          duration_months:
-            Math.round(duration),
+          <td>
+            ${escapeHtml(
+              item.status
+            )}
+          </td>
 
-          status:
-            status
+          <td>
 
-        })
-        .eq(
-          "id",
-          projectId
-        );
+            <button
+              class="success"
+              onclick="setInvestmentStatus(
+                '${item.id}',
+                'approved'
+              )">
 
-    if (error) {
+              Approuver
 
-      message.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            error.message
-          )}
-        </div>
-      `;
+            </button>
 
-      return;
-    }
+            <button
+              class="danger"
+              onclick="setInvestmentStatus(
+                '${item.id}',
+                'rejected'
+              )">
 
-    message.innerHTML = `
-      <div class="message">
-        ✅ Projet mis à jour avec succès.
-      </div>
+              Rejeter
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      `)
+      .join("");
+
+}
+
+
+/* =====================================================
+   ADMIN — STATUT INVESTISSEMENT
+===================================================== */
+
+async function setInvestmentStatus(
+  investmentId,
+  status
+) {
+
+  if (!isAdmin()) return;
+
+
+  const {
+    error
+  } =
+    await sb.rpc(
+      "admin_set_investment_status",
+      {
+        p_investment_id:
+          investmentId,
+
+        p_status:
+          status
+      }
+    );
+
+
+  if (error) {
+
+    alert(error.message);
+
+    return;
+  }
+
+
+  await loadAdmin();
+
+}
+
+
+/* =====================================================
+   ADMIN — PAIEMENTS
+===================================================== */
+
+function renderAdminPayments(
+  payments
+) {
+
+  const tbody =
+    document.getElementById(
+      "adminPayments"
+    );
+
+
+  if (!payments.length) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5">
+          Aucun paiement.
+        </td>
+      </tr>
     `;
 
-    await loadAdminProjects();
-    await loadAdminStats();
-    await loadProjects();
+    return;
   }
 
 
-  /* =================================
-     ADMIN STATUT PROJET
-  ================================= */
+  tbody.innerHTML =
+    payments
+      .map(payment => `
 
-  async function changeProjectStatus(
-    projectId,
-    status
-  ) {
+        <tr>
 
-    if (
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ) {
+          <td>
+            ${formatMoney(
+              payment.amount
+            )}
+          </td>
 
-      alert(
-        "Accès administrateur requis."
-      );
+          <td>
+            ${escapeHtml(
+              payment.method
+            )}
+          </td>
 
-      return;
-    }
+          <td>
+            ${escapeHtml(
+              payment.transaction_reference ||
+              "—"
+            )}
+          </td>
 
-    const {
-      error
-    } =
-      await sb
-        .from("projects")
-        .update({
-          status:
-            status
-        })
-        .eq(
-          "id",
-          projectId
-        );
+          <td>
+            ${escapeHtml(
+              payment.status
+            )}
+          </td>
 
-    if (error) {
+          <td>
 
-      alert(
-        "Erreur : " +
-        error.message
-      );
+            <button
+              class="success"
+              onclick="setPaymentStatus(
+                '${payment.id}',
+                'verified'
+              )">
 
-      return;
-    }
+              Vérifier
 
-    alert(
-      status === "approved"
-        ? "✅ Projet approuvé."
-        : "⏳ Projet remis en attente."
+            </button>
+
+            <button
+              class="danger"
+              onclick="setPaymentStatus(
+                '${payment.id}',
+                'rejected'
+              )">
+
+              Rejeter
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      `)
+      .join("");
+
+}
+
+
+/* =====================================================
+   ADMIN — STATUT PAIEMENT
+===================================================== */
+
+async function setPaymentStatus(
+  paymentId,
+  status
+) {
+
+  if (!isAdmin()) return;
+
+
+  const {
+    error
+  } =
+    await sb.rpc(
+      "admin_set_payment_status",
+      {
+        p_payment_id:
+          paymentId,
+
+        p_status:
+          status
+      }
     );
 
-    await loadAdminProjects();
-    await loadAdminStats();
-    await loadProjects();
+
+  if (error) {
+
+    alert(error.message);
+
+    return;
   }
 
 
-  /* =================================
-     ADMIN SUPPRIMER PROJET
-  ================================= */
+  await loadAdmin();
 
-  async function deleteProject(projectId) {
+}
 
-    if (
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ) {
 
-      alert(
-        "Accès administrateur requis."
-      );
+/* =====================================================
+   AUTH STATE
+===================================================== */
 
-      return;
-    }
+sb.auth.onAuthStateChange(
+  async function() {
 
-    const confirmed =
-      confirm(
-        "⚠️ Voulez-vous vraiment supprimer ce projet ?"
-      );
+    await loadUser();
 
-    if (!confirmed) {
-      return;
-    }
-
-    const {
-      error
-    } =
-      await sb
-        .from("projects")
-        .delete()
-        .eq(
-          "id",
-          projectId
-        );
-
-    if (error) {
-
-      alert(
-        "Impossible de supprimer le projet :\n\n" +
-        error.message
-      );
-
-      return;
-    }
-
-    alert(
-      "✅ Projet supprimé."
-    );
-
-    await loadAdminProjects();
-    await loadAdminStats();
-    await loadProjects();
   }
+);
 
 
-  /* =================================
-     ADMIN INVESTISSEMENTS
-  ================================= */
+/* =====================================================
+   INITIALISATION
+===================================================== */
 
-  async function loadAdminInvestments() {
+(async function() {
 
-    const container =
-      document.getElementById(
-        "adminInvestments"
-      );
+  await loadUser();
 
-    const {
-      data,
-      error
-    } =
-      await sb
-        .from("investments")
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
+  await loadProjects();
 
-    if (error) {
-
-      container.innerHTML = `
-        <div class="error-box">
-          ❌ ${escapeHtml(
-            error.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    if (
-      !data ||
-      !data.length
-    ) {
-
-      container.innerHTML = `
-        <p class="empty">
-          Aucune demande pour le moment.
-        </p>
-      `;
-
-      return;
-    }
-
-    container.innerHTML =
-      data.map(
-        investment => {
-
-          const project =
-            projects.find(
-              p =>
-                p.id ===
-                investment.project_id
-            );
-
-          const rate =
-            Number(
-              investment.return_rate
-            ) ||
-            getProjectReturn(project);
-
-          const duration =
-            Number(
-              investment.duration_months
-            ) ||
-            getProjectDuration(project);
-
-          const profit =
-            Number(
-              investment.expected_profit
-            ) ||
-            calculateExpectedProfit(
-              investment.amount,
-              rate
-            );
-
-          const total =
-            Number(
-              investment.expected_total
-            ) ||
-            calculateExpectedTotal(
-              investment.amount,
-              rate
-            );
-
-          let statusText =
-            "⏳ En attente";
-
-          if (
-            investment.status ===
-            "approved"
-          ) {
-
-            statusText =
-              "✅ Approuvée";
-
-          } else if (
-            investment.status ===
-            "rejected"
-          ) {
-
-            statusText =
-              "❌ Refusée";
-          }
-
-          return `
-
-            <div class="admin-item">
-
-              <strong>
-                💰
-                ${formatMoney(
-                  investment.amount
-                )}
-              </strong>
-
-              <br><br>
-
-              Projet :
-              <strong>
-                ${escapeHtml(
-                  project?.title ||
-                  "Projet"
-                )}
-              </strong>
-
-              <br><br>
-
-              📈 Rendement prévu :
-              <strong>
-                ${rate}%
-              </strong>
-
-              <br>
-
-              📅 Durée :
-              <strong>
-                ${duration} mois
-              </strong>
-
-              <br>
-
-              📊 Profit prévu :
-              <strong>
-                ${formatMoney(profit)}
-              </strong>
-
-              <br>
-
-              💵 Valeur totale prévue :
-              <strong>
-                ${formatMoney(total)}
-              </strong>
-
-              <br><br>
-
-              Investisseur :
-              <small>
-                ${escapeHtml(
-                  investment.user_id
-                )}
-              </small>
-
-              <br>
-
-              Statut :
-              <span class="status">
-                ${statusText}
-              </span>
-
-              <div class="admin-actions">
-
-                ${
-                  investment.status === "pending"
-                    ? `
-                      <button
-                        class="approve"
-                        onclick="
-                          updateInvestmentStatus(
-                            '${investment.id}',
-                            'approved'
-                          )
-                        "
-                      >
-                        ✅ Approuver
-                      </button>
-
-                      <button
-                        class="danger"
-                        onclick="
-                          updateInvestmentStatus(
-                            '${investment.id}',
-                            'rejected'
-                          )
-                        "
-                      >
-                        ❌ Refuser
-                      </button>
-                    `
-                    : ""
-                }
-
-              </div>
-
-            </div>
-
-          `;
-        }
-      ).join("");
-  }
-
-
-  /* =================================
-     ADMIN PAIEMENTS
-  ================================= */
-
-  async function loadAdminPayments() {
-
-    const container =
-      document.getElementById(
-        "adminPayments"
-      );
-
-    const {
-      data,
-      error
-    } =
-      await sb
-        .from("payments")
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
-
-    if (error) {
-
-      container.innerHTML = `
-        <div class="error-box">
-          ❌ Impossible de charger les paiements.
-          <br><br>
-          ${escapeHtml(
-            error.message
-          )}
-        </div>
-      `;
-
-      return;
-    }
-
-    if (
-      !data ||
-      !data.length
-    ) {
-
-      container.innerHTML = `
-        <p class="empty">
-          Aucun paiement pour le moment.
-        </p>
-      `;
-
-      return;
-    }
-
-    container.innerHTML =
-      data.map(
-        payment => {
-
-          let status =
-            "⏳ En attente";
-
-          if (
-            payment.status ===
-            "verified"
-          ) {
-
-            status =
-              "✅ Paiement confirmé";
-
-          } else if (
-            payment.status ===
-            "rejected"
-          ) {
-
-            status =
-              "❌ Paiement rejeté";
-          }
-
-          return `
-
-            <div class="admin-item">
-
-              <strong>
-                💰
-                ${formatMoney(
-                  payment.amount
-                )}
-              </strong>
-
-              <br><br>
-
-              Moyen :
-              <strong>
-                ${
-                  payment.method ===
-                  "orange_money"
-                    ? "🟠 Orange Money"
-                    : escapeHtml(
-                        payment.method ||
-                        ""
-                      )
-                }
-              </strong>
-
-              <br>
-
-              📱 Numéro :
-              <strong>
-                ${escapeHtml(
-                  payment.payer_phone ||
-                  "Non renseigné"
-                )}
-              </strong>
-
-              <br>
-
-              🧾 Référence :
-              <strong>
-                ${escapeHtml(
-                  payment.transaction_reference ||
-                  "Non renseignée"
-                )}
-              </strong>
-
-              <br>
-
-              Statut :
-              <span class="status">
-                ${status}
-              </span>
-
-              ${
-                payment.status === "pending"
-                  ? `
-                    <div class="admin-actions">
-
-                      <button
-                        class="approve"
-                        onclick="
-                          updatePaymentStatus(
-                            '${payment.id}',
-                            'verified'
-                          )
-                        "
-                      >
-                        ✅ Confirmer le paiement
-                      </button>
-
-                      <button
-                        class="danger"
-                        onclick="
-                          updatePaymentStatus(
-                            '${payment.id}',
-                            'rejected'
-                          )
-                        "
-                      >
-                        ❌ Rejeter
-                      </button>
-
-                    </div>
-                  `
-                  : ""
-              }
-
-            </div>
-          `;
-        }
-      ).join("");
-  }
-
-
-  /* =================================
-     VALIDATION PAIEMENT
-  ================================= */
-
-  async function updatePaymentStatus(
-    paymentId,
-    status
-  ) {
-
-    if (
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ) {
-
-      alert(
-        "Accès administrateur requis."
-      );
-
-      return;
-    }
-
-    const {
-      error
-    } =
-      await sb
-        .from("payments")
-        .update({
-
-          status:
-            status,
-
-          verified_at:
-            new Date().toISOString(),
-
-          verified_by:
-            currentUser.id
-
-        })
-        .eq(
-          "id",
-          paymentId
-        );
-
-    if (error) {
-
-      alert(
-        "Erreur : " +
-        error.message
-      );
-
-      return;
-    }
-
-    alert(
-      status === "verified"
-        ? "✅ Paiement confirmé."
-        : "❌ Paiement rejeté."
-    );
-
-    await loadAdminPayments();
-    await loadMyInvestments();
-  }
-
-
-  /* =================================
-     STATUT INVESTISSEMENT
-  ================================= */
-
-  async function updateInvestmentStatus(
-    investmentId,
-    status
-  ) {
-
-    if (
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ) {
-
-      alert(
-        "Accès administrateur requis."
-      );
-
-      return;
-    }
-
-    const {
-      error
-    } =
-      await sb
-        .from("investments")
-        .update({
-          status:
-            status
-        })
-        .eq(
-          "id",
-          investmentId
-        );
-
-    if (error) {
-
-      alert(
-        "Erreur : " +
-        error.message
-      );
-
-      return;
-    }
-
-    alert(
-      status === "approved"
-        ? "✅ Investissement approuvé."
-        : "❌ Investissement refusé."
-    );
-
-    await loadAdminInvestments();
-    await loadAdminStats();
-    await loadMyInvestments();
-  }
-
-
-  /* =================================
-     RECHERCHE
-  ================================= */
-
-  function filterProjects() {
-
-    const value =
-      document
-        .getElementById(
-          "searchInput"
-        )
-        .value
-        .toLowerCase()
-        .trim();
-
-    const filtered =
-      projects.filter(
-        project => {
-
-          const text =
-            (
-              project.title +
-              " " +
-              (
-                project.description ||
-                ""
-              ) +
-              " " +
-              (
-                project.sector ||
-                ""
-              )
-            ).toLowerCase();
-
-          return text.includes(value);
-        }
-      );
-
-    renderProjects(filtered);
-  }
-
-
-  /* =================================
-     INITIALISATION
-  ================================= */
-
-  async function init() {
-
-    const {
-      data
-    } =
-      await sb.auth.getUser();
-
-    if (data.user) {
-
-      currentUser =
-        data.user;
-
-      await loadUser();
-
-    } else {
-
-      currentUser =
-        null;
-    }
-
-    await loadProjects();
-  }
-
-
-  init();
+})();
 
 </script>
 
 </body>
-  </html>
+</html>
