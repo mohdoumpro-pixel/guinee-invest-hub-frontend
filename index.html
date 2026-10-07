@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Configuration application Android / PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Invest Hub">
+
   <title>Guinée Invest Hub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -413,7 +421,10 @@
       <button onclick="showSection('accountSection')">Compte</button>
       <button onclick="showSection('projectsSection')">Projets</button>
       <button onclick="showSection('portfolioSection')">Portefeuille</button>
-      <button id="adminNav" onclick="showSection('adminSection')" style="display:none;">
+
+      <button id="adminNav"
+              onclick="showSection('adminSection')"
+              style="display:none;">
         Administration
       </button>
     </nav>
@@ -427,12 +438,14 @@
 
     <div class="hero">
       <h1>Investissez dans les projets guinéens.</h1>
+
       <p>
         Guinée Invest Hub met en relation les investisseurs avec
         des projets et opportunités d'investissement en Guinée.
       </p>
 
-      <button class="primary" onclick="showSection('projectsSection')">
+      <button class="primary"
+              onclick="showSection('projectsSection')">
         Voir les projets
       </button>
     </div>
@@ -480,12 +493,19 @@
       <form onsubmit="signup(event)">
 
         <label>Email</label>
-        <input id="signupEmail" type="email" required>
+        <input id="signupEmail"
+               type="email"
+               required>
 
         <label>Mot de passe</label>
-        <input id="signupPassword" type="password" minlength="6" required>
+        <input id="signupPassword"
+               type="password"
+               minlength="6"
+               required>
 
-        <button id="signupButton" class="primary" type="submit">
+        <button id="signupButton"
+                class="primary"
+                type="submit">
           Créer mon compte
         </button>
 
@@ -498,12 +518,18 @@
       <form onsubmit="login(event)">
 
         <label>Email</label>
-        <input id="loginEmail" type="email" required>
+        <input id="loginEmail"
+               type="email"
+               required>
 
         <label>Mot de passe</label>
-        <input id="loginPassword" type="password" required>
+        <input id="loginPassword"
+               type="password"
+               required>
 
-        <button id="loginButton" class="primary" type="submit">
+        <button id="loginButton"
+                class="primary"
+                type="submit">
           Se connecter
         </button>
 
@@ -511,20 +537,26 @@
 
       <hr>
 
-      <button class="secondary" onclick="resetPassword()">
+      <button class="secondary"
+              onclick="resetPassword()">
         Mot de passe oublié ?
       </button>
 
     </div>
 
 
-    <div id="loggedInBox" class="card" style="display:none;">
+    <div id="loggedInBox"
+         class="card"
+         style="display:none;">
 
       <h2>Mon compte</h2>
 
-      <div id="profileInfo" class="profile-box"></div>
+      <div id="profileInfo"
+           class="profile-box">
+      </div>
 
-      <button class="danger" onclick="logout()">
+      <button class="danger"
+              onclick="logout()">
         Se déconnecter
       </button>
 
@@ -534,38 +566,53 @@
 
 
   <!-- PROJETS -->
-  <section id="projectsSection" class="section">
+  <section id="projectsSection"
+           class="section">
 
-    <div id="projectsMessage" class="message"></div>
-
-    <div class="admin-title">
-      <h2>Projets disponibles</h2>
-
-      <button class="secondary" onclick="loadProjects()">
-        Actualiser
-      </button>
+    <div id="projectsMessage"
+         class="message">
     </div>
 
-    <div id="projectsLoader" class="loader">
+    <div class="admin-title">
+
+      <h2>Projets disponibles</h2>
+
+      <button class="secondary"
+              onclick="loadProjects()">
+        Actualiser
+      </button>
+
+    </div>
+
+    <div id="projectsLoader"
+         class="loader">
       Chargement des projets...
     </div>
 
-    <div id="projectsList" class="grid"></div>
+    <div id="projectsList"
+         class="grid">
+    </div>
 
   </section>
 
 
   <!-- PORTEFEUILLE -->
-  <section id="portfolioSection" class="section">
+  <section id="portfolioSection"
+           class="section">
 
-    <div id="portfolioMessage" class="message"></div>
+    <div id="portfolioMessage"
+         class="message">
+    </div>
 
     <div class="admin-title">
+
       <h2>Mon portefeuille</h2>
 
-      <button class="secondary" onclick="loadPortfolio()">
+      <button class="secondary"
+              onclick="loadPortfolio()">
         Actualiser
       </button>
+
     </div>
 
     <div id="portfolioList"></div>
@@ -574,30 +621,43 @@
 
 
   <!-- ADMINISTRATION -->
-  <section id="adminSection" class="section">
+  <section id="adminSection"
+           class="section">
 
-    <div id="adminMessage" class="message"></div>
+    <div id="adminMessage"
+         class="message">
+    </div>
 
-    <div id="adminAccessDenied" class="card" style="display:none;">
+    <div id="adminAccessDenied"
+         class="card"
+         style="display:none;">
+
       <h2>Accès refusé</h2>
+
       <p>
         Cette section est réservée aux administrateurs.
       </p>
+
     </div>
 
-    <div id="adminContent" style="display:none;">
+    <div id="adminContent"
+         style="display:none;">
 
       <div class="admin-title">
+
         <div>
           <h2>Tableau de bord</h2>
+
           <p style="color:var(--muted);">
             Gestion de Guinée Invest Hub
           </p>
         </div>
 
-        <button class="secondary" onclick="loadAdmin()">
+        <button class="secondary"
+                onclick="loadAdmin()">
           Actualiser
         </button>
+
       </div>
 
 
@@ -605,33 +665,69 @@
       <div class="stats">
 
         <div class="stat">
-          <div class="stat-label">Utilisateurs</div>
-          <div id="statUsers" class="stat-value">0</div>
+          <div class="stat-label">
+            Utilisateurs
+          </div>
+
+          <div id="statUsers"
+               class="stat-value">
+            0
+          </div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">Projets</div>
-          <div id="statProjects" class="stat-value">0</div>
+          <div class="stat-label">
+            Projets
+          </div>
+
+          <div id="statProjects"
+               class="stat-value">
+            0
+          </div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">Investissements</div>
-          <div id="statInvestments" class="stat-value">0</div>
+          <div class="stat-label">
+            Investissements
+          </div>
+
+          <div id="statInvestments"
+               class="stat-value">
+            0
+          </div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">Investissements en attente</div>
-          <div id="statPendingInvestments" class="stat-value">0</div>
+          <div class="stat-label">
+            Investissements en attente
+          </div>
+
+          <div id="statPendingInvestments"
+               class="stat-value">
+            0
+          </div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">Paiements en attente</div>
-          <div id="statPendingPayments" class="stat-value">0</div>
+          <div class="stat-label">
+            Paiements en attente
+          </div>
+
+          <div id="statPendingPayments"
+               class="stat-value">
+            0
+          </div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">Montant investi</div>
-          <div id="statAmount" class="stat-value">0 GNF</div>
+          <div class="stat-label">
+            Montant investi
+          </div>
+
+          <div id="statAmount"
+               class="stat-value">
+            0 GNF
+          </div>
         </div>
 
       </div>
@@ -645,24 +741,52 @@
         <form onsubmit="createProject(event)">
 
           <label>Titre du projet</label>
-          <input id="projectTitle" required>
+          <input id="projectTitle"
+                 required>
 
           <label>Secteur</label>
-          <input id="projectSector" placeholder="Agriculture, immobilier, énergie..." required>
+
+          <input id="projectSector"
+                 placeholder="Agriculture, immobilier, énergie..."
+                 required>
 
           <label>Description</label>
-          <textarea id="projectDescription" required></textarea>
 
-          <label>Montant recherché (GNF)</label>
-          <input id="projectAmount" type="number" min="1" required>
+          <textarea id="projectDescription"
+                    required>
+          </textarea>
 
-          <label>Rendement prévu (%)</label>
-          <input id="projectReturn" type="number" min="0" step="0.01" required>
+          <label>
+            Montant recherché (GNF)
+          </label>
 
-          <label>Durée (mois)</label>
-          <input id="projectDuration" type="number" min="1" required>
+          <input id="projectAmount"
+                 type="number"
+                 min="1"
+                 required>
 
-          <button id="createProjectButton" class="primary" type="submit">
+          <label>
+            Rendement prévu (%)
+          </label>
+
+          <input id="projectReturn"
+                 type="number"
+                 min="0"
+                 step="0.01"
+                 required>
+
+          <label>
+            Durée (mois)
+          </label>
+
+          <input id="projectDuration"
+                 type="number"
+                 min="1"
+                 required>
+
+          <button id="createProjectButton"
+                  class="primary"
+                  type="submit">
             Créer le projet
           </button>
 
@@ -744,7 +868,8 @@
 
   function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
+    if (value === null ||
+        value === undefined) {
       return "";
     }
 
@@ -759,9 +884,12 @@
 
   function formatMoney(value) {
 
-    const number = Number(value || 0);
+    const number =
+      Number(value || 0);
 
-    return new Intl.NumberFormat("fr-FR").format(number) + " GNF";
+    return new Intl.NumberFormat(
+      "fr-FR"
+    ).format(number) + " GNF";
   }
 
 
@@ -771,29 +899,45 @@
       return "-";
     }
 
-    return new Date(value).toLocaleString("fr-FR");
+    return new Date(value)
+      .toLocaleString("fr-FR");
   }
 
 
-  function showMessage(id, text, type = "success") {
+  function showMessage(
+    id,
+    text,
+    type = "success"
+  ) {
 
-    const element = document.getElementById(id);
+    const element =
+      document.getElementById(id);
 
     if (!element) {
       return;
     }
 
-    element.className = "message " + type;
+    element.className =
+      "message " + type;
+
     element.textContent = text;
 
     setTimeout(() => {
-      element.className = "message";
+
+      element.className =
+        "message";
+
       element.textContent = "";
+
     }, 5000);
   }
 
 
-  function setLoading(button, loading, loadingText = "Chargement...") {
+  function setLoading(
+    button,
+    loading,
+    loadingText = "Chargement..."
+  ) {
 
     if (!button) {
       return;
@@ -801,14 +945,19 @@
 
     if (loading) {
 
-      button.dataset.originalText = button.textContent;
-      button.textContent = loadingText;
+      button.dataset.originalText =
+        button.textContent;
+
+      button.textContent =
+        loadingText;
+
       button.disabled = true;
 
     } else {
 
       button.textContent =
-        button.dataset.originalText || button.textContent;
+        button.dataset.originalText ||
+        button.textContent;
 
       button.disabled = false;
     }
@@ -817,16 +966,28 @@
 
   function statusBadge(status) {
 
-    const safe = escapeHtml(status || "unknown");
+    const safe =
+      escapeHtml(status || "unknown");
 
     let cls = "pending";
 
-    if (status === "approved") cls = "approved";
-    if (status === "rejected") cls = "rejected";
-    if (status === "paid") cls = "paid";
-    if (status === "verified") cls = "verified";
+    if (status === "approved")
+      cls = "approved";
 
-    return `<span class="badge ${cls}">${safe}</span>`;
+    if (status === "rejected")
+      cls = "rejected";
+
+    if (status === "paid")
+      cls = "paid";
+
+    if (status === "verified")
+      cls = "verified";
+
+    return `
+      <span class="badge ${cls}">
+        ${safe}
+      </span>
+    `;
   }
 
 
@@ -838,7 +999,11 @@
 
     document.querySelectorAll(".section")
       .forEach(section => {
-        section.classList.remove("active");
+
+        section.classList.remove(
+          "active"
+        );
+
       });
 
     const section =
@@ -848,15 +1013,21 @@
       section.classList.add("active");
     }
 
-    if (sectionId === "projectsSection") {
+    if (sectionId ===
+        "projectsSection") {
+
       loadProjects();
     }
 
-    if (sectionId === "portfolioSection") {
+    if (sectionId ===
+        "portfolioSection") {
+
       loadPortfolio();
     }
 
-    if (sectionId === "adminSection") {
+    if (sectionId ===
+        "adminSection") {
+
       loadAdmin();
     }
 
@@ -876,15 +1047,22 @@
     event.preventDefault();
 
     const button =
-      document.getElementById("signupButton");
+      document.getElementById(
+        "signupButton"
+      );
 
     const email =
-      document.getElementById("signupEmail").value.trim();
+      document.getElementById(
+        "signupEmail"
+      ).value.trim();
 
     const password =
-      document.getElementById("signupPassword").value;
+      document.getElementById(
+        "signupPassword"
+      ).value;
 
-    if (!email || password.length < 6) {
+    if (!email ||
+        password.length < 6) {
 
       showMessage(
         "accountMessage",
@@ -895,7 +1073,11 @@
       return;
     }
 
-    setLoading(button, true, "Création...");
+    setLoading(
+      button,
+      true,
+      "Création..."
+    );
 
     const { error } =
       await sb.auth.signUp({
@@ -903,7 +1085,10 @@
         password
       });
 
-    setLoading(button, false);
+    setLoading(
+      button,
+      false
+    );
 
     if (error) {
 
@@ -931,15 +1116,25 @@
     event.preventDefault();
 
     const button =
-      document.getElementById("loginButton");
+      document.getElementById(
+        "loginButton"
+      );
 
     const email =
-      document.getElementById("loginEmail").value.trim();
+      document.getElementById(
+        "loginEmail"
+      ).value.trim();
 
     const password =
-      document.getElementById("loginPassword").value;
+      document.getElementById(
+        "loginPassword"
+      ).value;
 
-    setLoading(button, true, "Connexion...");
+    setLoading(
+      button,
+      true,
+      "Connexion..."
+    );
 
     const { error } =
       await sb.auth.signInWithPassword({
@@ -947,7 +1142,10 @@
         password
       });
 
-    setLoading(button, false);
+    setLoading(
+      button,
+      false
+    );
 
     if (error) {
 
@@ -968,27 +1166,32 @@
       "success"
     );
 
-    showSection("projectsSection");
+    showSection(
+      "projectsSection"
+    );
   }
 
 
   async function resetPassword() {
 
     const email =
-      prompt("Entre ton adresse email :");
+      prompt(
+        "Entre ton adresse email :"
+      );
 
     if (!email) {
       return;
     }
 
     const { error } =
-      await sb.auth.resetPasswordForEmail(
-        email.trim(),
-        {
-          redirectTo:
-            window.location.origin
-        }
-      );
+      await sb.auth
+        .resetPasswordForEmail(
+          email.trim(),
+          {
+            redirectTo:
+              window.location.origin
+          }
+        );
 
     if (error) {
 
@@ -1012,7 +1215,9 @@
   async function logout() {
 
     const confirmed =
-      confirm("Voulez-vous vraiment vous déconnecter ?");
+      confirm(
+        "Voulez-vous vraiment vous déconnecter ?"
+      );
 
     if (!confirmed) {
       return;
@@ -1025,7 +1230,9 @@
 
     updateAccountUI();
 
-    showSection("homeSection");
+    showSection(
+      "homeSection"
+    );
   }
 
 
@@ -1036,7 +1243,8 @@
       error
     } = await sb.auth.getUser();
 
-    if (error || !data.user) {
+    if (error ||
+        !data.user) {
 
       currentUser = null;
       currentProfile = null;
@@ -1046,7 +1254,8 @@
       return;
     }
 
-    currentUser = data.user;
+    currentUser =
+      data.user;
 
     const {
       data: profile,
@@ -1059,13 +1268,16 @@
 
     if (profileError) {
 
-      console.error(profileError);
+      console.error(
+        profileError
+      );
 
       currentProfile = null;
 
     } else {
 
-      currentProfile = profile;
+      currentProfile =
+        profile;
     }
 
     updateAccountUI();
@@ -1075,40 +1287,64 @@
   function updateAccountUI() {
 
     const loggedOut =
-      document.getElementById("loggedOutBox");
+      document.getElementById(
+        "loggedOutBox"
+      );
 
     const loggedIn =
-      document.getElementById("loggedInBox");
+      document.getElementById(
+        "loggedInBox"
+      );
 
     const adminNav =
-      document.getElementById("adminNav");
+      document.getElementById(
+        "adminNav"
+      );
 
     if (!currentUser) {
 
-      loggedOut.style.display = "block";
-      loggedIn.style.display = "none";
-      adminNav.style.display = "none";
+      loggedOut.style.display =
+        "block";
+
+      loggedIn.style.display =
+        "none";
+
+      adminNav.style.display =
+        "none";
 
       return;
     }
 
-    loggedOut.style.display = "none";
-    loggedIn.style.display = "block";
+    loggedOut.style.display =
+      "none";
+
+    loggedIn.style.display =
+      "block";
 
     const isAdminUser =
       currentProfile &&
-      currentProfile.role === "admin";
+      currentProfile.role ===
+      "admin";
 
     adminNav.style.display =
-      isAdminUser ? "block" : "none";
+      isAdminUser
+        ? "block"
+        : "none";
 
-    document.getElementById("profileInfo").innerHTML = `
+    document.getElementById(
+      "profileInfo"
+    ).innerHTML = `
       <strong>Email :</strong>
-      ${escapeHtml(currentUser.email)}
+      ${escapeHtml(
+        currentUser.email
+      )}
       <br><br>
 
       <strong>Rôle :</strong>
-      ${escapeHtml(currentProfile?.role || "investor")}
+      ${escapeHtml(
+        currentProfile?.role ||
+        "investor"
+      )}
     `;
   }
 
@@ -1118,7 +1354,8 @@
     return Boolean(
       currentUser &&
       currentProfile &&
-      currentProfile.role === "admin"
+      currentProfile.role ===
+      "admin"
     );
   }
 
@@ -1130,12 +1367,18 @@
   async function loadProjects() {
 
     const loader =
-      document.getElementById("projectsLoader");
+      document.getElementById(
+        "projectsLoader"
+      );
 
     const container =
-      document.getElementById("projectsList");
+      document.getElementById(
+        "projectsList"
+      );
 
-    loader.classList.add("show");
+    loader.classList.add(
+      "show"
+    );
 
     container.innerHTML = "";
 
@@ -1156,11 +1399,16 @@
         created_at
       `)
       .eq("status", "approved")
-      .order("created_at", {
-        ascending: false
-      });
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
 
-    loader.classList.remove("show");
+    loader.classList.remove(
+      "show"
+    );
 
     if (error) {
 
@@ -1175,58 +1423,88 @@
       return;
     }
 
-    if (!data || data.length === 0) {
+    if (!data ||
+        data.length === 0) {
 
       container.innerHTML =
-        `<div class="card empty">
+        `
+        <div class="card empty">
           Aucun projet approuvé pour le moment.
-        </div>`;
+        </div>
+        `;
 
       return;
     }
 
-    data.forEach(project => {
+    data.forEach(
+      project => {
 
-      const card =
-        document.createElement("div");
+        const card =
+          document.createElement(
+            "div"
+          );
 
-      card.className = "project-card";
+        card.className =
+          "project-card";
 
-      card.innerHTML = `
-        <h3>${escapeHtml(project.title)}</h3>
+        card.innerHTML = `
+          <h3>
+            ${escapeHtml(
+              project.title
+            )}
+          </h3>
 
-        <span class="badge approved">
-          ${escapeHtml(project.sector)}
-        </span>
+          <span class="badge approved">
+            ${escapeHtml(
+              project.sector
+            )}
+          </span>
 
-        <p>
-          ${escapeHtml(project.description)}
-        </p>
+          <p>
+            ${escapeHtml(
+              project.description
+            )}
+          </p>
 
-        <p>
-          <strong>Montant recherché :</strong><br>
-          ${formatMoney(project.amount_required)}
-        </p>
+          <p>
+            <strong>
+              Montant recherché :
+            </strong><br>
+            ${formatMoney(
+              project.amount_required
+            )}
+          </p>
 
-        <p>
-          <strong>Rendement prévu :</strong>
-          ${escapeHtml(project.return_rate)} %
-        </p>
+          <p>
+            <strong>
+              Rendement prévu :
+            </strong>
+            ${escapeHtml(
+              project.return_rate
+            )} %
+          </p>
 
-        <p>
-          <strong>Durée :</strong>
-          ${escapeHtml(project.duration_months)} mois
-        </p>
+          <p>
+            <strong>
+              Durée :
+            </strong>
+            ${escapeHtml(
+              project.duration_months
+            )} mois
+          </p>
 
-        <button
-          class="primary"
-          onclick="openInvestment('${project.id}')">
-          Investir
-        </button>
-      `;
+          <button
+            class="primary"
+            onclick="openInvestment('${project.id}')">
+            Investir
+          </button>
+        `;
 
-      container.appendChild(card);
-    });
+        container.appendChild(
+          card
+        );
+      }
+    );
   }
 
 
@@ -1234,11 +1512,15 @@
      INVESTISSEMENT
      ========================================================= */
 
-  async function openInvestment(projectId) {
+  async function openInvestment(
+    projectId
+  ) {
 
     if (!currentUser) {
 
-      showSection("accountSection");
+      showSection(
+        "accountSection"
+      );
 
       showMessage(
         "accountMessage",
@@ -1265,7 +1547,8 @@
       .eq("status", "approved")
       .maybeSingle();
 
-    if (error || !project) {
+    if (error ||
+        !project) {
 
       alert(
         "Projet introuvable ou indisponible."
@@ -1285,12 +1568,18 @@
 
     const amount =
       Number(
-        amountText.replace(/\s/g, "")
+        amountText.replace(
+          /\s/g,
+          ""
+        )
       );
 
-    if (!Number.isFinite(amount) || amount <= 0) {
+    if (!Number.isFinite(amount) ||
+        amount <= 0) {
 
-      alert("Montant invalide.");
+      alert(
+        "Montant invalide."
+      );
 
       return;
     }
@@ -1305,7 +1594,9 @@
     }
 
     const phone =
-      prompt("Numéro de téléphone du payeur :");
+      prompt(
+        "Numéro de téléphone du payeur :"
+      );
 
     if (!phone) {
       return;
@@ -1325,17 +1616,28 @@
     } = await sb.rpc(
       "create_investment",
       {
-        p_project_id: projectId,
-        p_amount: amount,
-        p_payment_method: method,
-        p_payer_phone: phone,
-        p_transaction_reference: reference
+        p_project_id:
+          projectId,
+
+        p_amount:
+          amount,
+
+        p_payment_method:
+          method,
+
+        p_payer_phone:
+          phone,
+
+        p_transaction_reference:
+          reference
       }
     );
 
     if (investmentError) {
 
-      alert(investmentError.message);
+      alert(
+        investmentError.message
+      );
 
       return;
     }
@@ -1346,7 +1648,9 @@
 
     await loadPortfolio();
 
-    showSection("portfolioSection");
+    showSection(
+      "portfolioSection"
+    );
   }
 
 
@@ -1357,19 +1661,25 @@
   async function loadPortfolio() {
 
     const container =
-      document.getElementById("portfolioList");
+      document.getElementById(
+        "portfolioList"
+      );
 
     container.innerHTML =
-      `<div class="card">
+      `
+      <div class="card">
         Chargement...
-      </div>`;
+      </div>
+      `;
 
     if (!currentUser) {
 
       container.innerHTML =
-        `<div class="card empty">
+        `
+        <div class="card empty">
           Connecte-toi pour consulter ton portefeuille.
-        </div>`;
+        </div>
+        `;
 
       return;
     }
@@ -1393,10 +1703,16 @@
           sector
         )
       `)
-      .eq("user_id", currentUser.id)
-      .order("created_at", {
-        ascending: false
-      });
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
 
     if (error) {
 
@@ -1413,76 +1729,114 @@
       return;
     }
 
-    if (!data || data.length === 0) {
+    if (!data ||
+        data.length === 0) {
 
       container.innerHTML =
-        `<div class="card empty">
+        `
+        <div class="card empty">
           Aucun investissement pour le moment.
-        </div>`;
+        </div>
+        `;
 
       return;
     }
 
     container.innerHTML = "";
 
-    data.forEach(item => {
+    data.forEach(
+      item => {
 
-      const project =
-        item.projects || {};
+        const project =
+          item.projects || {};
 
-      const card =
-        document.createElement("div");
+        const card =
+          document.createElement(
+            "div"
+          );
 
-      card.className = "card";
+        card.className =
+          "card";
 
-      card.innerHTML = `
-        <h3>
-          ${escapeHtml(project.title || "Projet")}
-        </h3>
+        card.innerHTML = `
+          <h3>
+            ${escapeHtml(
+              project.title ||
+              "Projet"
+            )}
+          </h3>
 
-        <p>
-          <strong>Secteur :</strong>
-          ${escapeHtml(project.sector || "-")}
-        </p>
+          <p>
+            <strong>Secteur :</strong>
+            ${escapeHtml(
+              project.sector ||
+              "-"
+            )}
+          </p>
 
-        <p>
-          <strong>Montant :</strong>
-          ${formatMoney(item.amount)}
-        </p>
+          <p>
+            <strong>Montant :</strong>
+            ${formatMoney(
+              item.amount
+            )}
+          </p>
 
-        <p>
-          <strong>Rendement :</strong>
-          ${escapeHtml(item.return_rate)} %
-        </p>
+          <p>
+            <strong>Rendement :</strong>
+            ${escapeHtml(
+              item.return_rate
+            )} %
+          </p>
 
-        <p>
-          <strong>Durée :</strong>
-          ${escapeHtml(item.duration_months)} mois
-        </p>
+          <p>
+            <strong>Durée :</strong>
+            ${escapeHtml(
+              item.duration_months
+            )} mois
+          </p>
 
-        <p>
-          <strong>Bénéfice prévu :</strong>
-          ${formatMoney(item.expected_profit)}
-        </p>
+          <p>
+            <strong>
+              Bénéfice prévu :
+            </strong>
+            ${formatMoney(
+              item.expected_profit
+            )}
+          </p>
 
-        <p>
-          <strong>Total prévu :</strong>
-          ${formatMoney(item.expected_total)}
-        </p>
+          <p>
+            <strong>
+              Total prévu :
+            </strong>
+            ${formatMoney(
+              item.expected_total
+            )}
+          </p>
 
-        <p>
-          <strong>Statut :</strong>
-          ${statusBadge(item.status)}
-        </p>
+          <p>
+            <strong>
+              Statut :
+            </strong>
+            ${statusBadge(
+              item.status
+            )}
+          </p>
 
-        <p>
-          <strong>Date :</strong>
-          ${formatDate(item.created_at)}
-        </p>
-      `;
+          <p>
+            <strong>
+              Date :
+            </strong>
+            ${formatDate(
+              item.created_at
+            )}
+          </p>
+        `;
 
-      container.appendChild(card);
-    });
+        container.appendChild(
+          card
+        );
+      }
+    );
   }
 
 
@@ -1496,22 +1850,26 @@
 
       document.getElementById(
         "adminAccessDenied"
-      ).style.display = "block";
+      ).style.display =
+        "block";
 
       document.getElementById(
         "adminContent"
-      ).style.display = "none";
+      ).style.display =
+        "none";
 
       return;
     }
 
     document.getElementById(
       "adminAccessDenied"
-    ).style.display = "none";
+    ).style.display =
+      "none";
 
     document.getElementById(
       "adminContent"
-    ).style.display = "block";
+    ).style.display =
+      "block";
 
     try {
 
@@ -1538,9 +1896,12 @@
             status,
             created_at
           `)
-          .order("created_at", {
-            ascending: false
-          }),
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          ),
 
         sb
           .from("investments")
@@ -1557,9 +1918,12 @@
             created_at,
             projects(title)
           `)
-          .order("created_at", {
-            ascending: false
-          }),
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          ),
 
         sb
           .from("payments")
@@ -1575,9 +1939,12 @@
             verified_at,
             created_at
           `)
-          .order("created_at", {
-            ascending: false
-          })
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          )
       ]);
 
       if (profilesResult.error)
@@ -1594,40 +1961,47 @@
 
 
       const profiles =
-        profilesResult.data || [];
+        profilesResult.data ||
+        [];
 
       const projects =
-        projectsResult.data || [];
+        projectsResult.data ||
+        [];
 
       const investments =
-        investmentsResult.data || [];
+        investmentsResult.data ||
+        [];
 
       const payments =
-        paymentsResult.data || [];
+        paymentsResult.data ||
+        [];
 
-
-      /* STATISTIQUES */
 
       document.getElementById(
         "statUsers"
-      ).textContent = profiles.length;
+      ).textContent =
+        profiles.length;
 
 
       document.getElementById(
         "statProjects"
-      ).textContent = projects.length;
+      ).textContent =
+        projects.length;
 
 
       document.getElementById(
         "statInvestments"
-      ).textContent = investments.length;
+      ).textContent =
+        investments.length;
 
 
       document.getElementById(
         "statPendingInvestments"
       ).textContent =
         investments.filter(
-          x => x.status === "pending"
+          x =>
+            x.status ===
+            "pending"
         ).length;
 
 
@@ -1635,14 +2009,19 @@
         "statPendingPayments"
       ).textContent =
         payments.filter(
-          x => x.status === "pending"
+          x =>
+            x.status ===
+            "pending"
         ).length;
 
 
       const totalAmount =
         investments.reduce(
           (sum, item) =>
-            sum + Number(item.amount || 0),
+            sum +
+            Number(
+              item.amount || 0
+            ),
           0
         );
 
@@ -1650,14 +2029,22 @@
       document.getElementById(
         "statAmount"
       ).textContent =
-        formatMoney(totalAmount);
+        formatMoney(
+          totalAmount
+        );
 
 
-      renderAdminProjects(projects);
+      renderAdminProjects(
+        projects
+      );
 
-      renderAdminInvestments(investments);
+      renderAdminInvestments(
+        investments
+      );
 
-      renderAdminPayments(payments);
+      renderAdminPayments(
+        payments
+      );
 
     } catch (error) {
 
@@ -1676,25 +2063,34 @@
      ADMIN PROJETS
      ========================================================= */
 
-  function renderAdminProjects(projects) {
+  function renderAdminProjects(
+    projects
+  ) {
 
     const container =
-      document.getElementById("adminProjects");
+      document.getElementById(
+        "adminProjects"
+      );
 
     if (!projects.length) {
 
       container.innerHTML =
-        `<div class="empty">
+        `
+        <div class="empty">
           Aucun projet.
-        </div>`;
+        </div>
+        `;
 
       return;
     }
 
     container.innerHTML = `
       <div class="table-wrap">
+
         <table>
+
           <thead>
+
             <tr>
               <th>Projet</th>
               <th>Secteur</th>
@@ -1703,34 +2099,46 @@
               <th>Statut</th>
               <th>Actions</th>
             </tr>
+
           </thead>
 
           <tbody>
 
-            ${projects.map(project => `
+            ${projects.map(
+              project => `
 
               <tr>
 
                 <td>
                   <strong>
-                    ${escapeHtml(project.title)}
+                    ${escapeHtml(
+                      project.title
+                    )}
                   </strong>
                 </td>
 
                 <td>
-                  ${escapeHtml(project.sector)}
+                  ${escapeHtml(
+                    project.sector
+                  )}
                 </td>
 
                 <td>
-                  ${formatMoney(project.amount_required)}
+                  ${formatMoney(
+                    project.amount_required
+                  )}
                 </td>
 
                 <td>
-                  ${escapeHtml(project.return_rate)} %
+                  ${escapeHtml(
+                    project.return_rate
+                  )} %
                 </td>
 
                 <td>
-                  ${statusBadge(project.status)}
+                  ${statusBadge(
+                    project.status
+                  )}
                 </td>
 
                 <td>
@@ -1738,27 +2146,29 @@
                   <div class="actions">
 
                     ${
-                      project.status !== "approved"
-                      ? `
+                      project.status !==
+                      "approved"
+                        ? `
                         <button
                           class="primary"
                           onclick="setProjectStatus('${project.id}','approved')">
                           Approuver
                         </button>
-                      `
-                      : ""
+                        `
+                        : ""
                     }
 
                     ${
-                      project.status !== "rejected"
-                      ? `
+                      project.status !==
+                      "rejected"
+                        ? `
                         <button
                           class="danger"
                           onclick="setProjectStatus('${project.id}','rejected')">
                           Rejeter
                         </button>
-                      `
-                      : ""
+                        `
+                        : ""
                     }
 
                     <button
@@ -1773,22 +2183,29 @@
 
               </tr>
 
-            `).join("")}
+            `
+            ).join("")}
 
           </tbody>
+
         </table>
+
       </div>
     `;
   }
 
 
-  async function createProject(event) {
+  async function createProject(
+    event
+  ) {
 
     event.preventDefault();
 
     if (!isAdmin()) {
 
-      alert("Accès administrateur requis.");
+      alert(
+        "Accès administrateur requis."
+      );
 
       return;
     }
@@ -1872,16 +2289,25 @@
         title,
         sector,
         description,
-        amount_required: amount,
-        amount: amount,
-        return_rate: returnRate,
-        duration_months: duration,
-        status: "pending",
-        user_id: currentUser.id
+        amount_required:
+          amount,
+        amount:
+          amount,
+        return_rate:
+          returnRate,
+        duration_months:
+          duration,
+        status:
+          "pending",
+        user_id:
+          currentUser.id
       });
 
 
-    setLoading(button, false);
+    setLoading(
+      button,
+      false
+    );
 
 
     if (error) {
@@ -1958,7 +2384,10 @@
       .update({
         status
       })
-      .eq("id", projectId);
+      .eq(
+        "id",
+        projectId
+      );
 
 
     if (error) {
@@ -1985,7 +2414,9 @@
   }
 
 
-  async function deleteProject(projectId) {
+  async function deleteProject(
+    projectId
+  ) {
 
     if (!isAdmin()) {
       return;
@@ -2006,7 +2437,10 @@
     } = await sb
       .from("projects")
       .delete()
-      .eq("id", projectId);
+      .eq(
+        "id",
+        projectId
+      );
 
 
     if (error) {
@@ -2050,9 +2484,11 @@
     if (!investments.length) {
 
       container.innerHTML =
-        `<div class="empty">
+        `
+        <div class="empty">
           Aucun investissement.
-        </div>`;
+        </div>
+        `;
 
       return;
     }
@@ -2064,6 +2500,7 @@
         <table>
 
           <thead>
+
             <tr>
               <th>Projet</th>
               <th>Utilisateur</th>
@@ -2072,11 +2509,13 @@
               <th>Date</th>
               <th>Actions</th>
             </tr>
+
           </thead>
 
           <tbody>
 
-            ${investments.map(item => `
+            ${investments.map(
+              item => `
 
               <tr>
 
@@ -2088,26 +2527,35 @@
                 </td>
 
                 <td>
-                  ${escapeHtml(item.user_id)}
+                  ${escapeHtml(
+                    item.user_id
+                  )}
                 </td>
 
                 <td>
-                  ${formatMoney(item.amount)}
+                  ${formatMoney(
+                    item.amount
+                  )}
                 </td>
 
                 <td>
-                  ${statusBadge(item.status)}
+                  ${statusBadge(
+                    item.status
+                  )}
                 </td>
 
                 <td>
-                  ${formatDate(item.created_at)}
+                  ${formatDate(
+                    item.created_at
+                  )}
                 </td>
 
                 <td>
 
                   ${
-                    item.status === "pending"
-                    ? `
+                    item.status ===
+                    "pending"
+                      ? `
                       <div class="actions">
 
                         <button
@@ -2123,15 +2571,16 @@
                         </button>
 
                       </div>
-                    `
-                    : "-"
+                      `
+                      : "-"
                   }
 
                 </td>
 
               </tr>
 
-            `).join("")}
+            `
+            ).join("")}
 
           </tbody>
 
@@ -2167,8 +2616,11 @@
     } = await sb.rpc(
       "admin_set_investment_status",
       {
-        p_investment_id: investmentId,
-        p_status: status
+        p_investment_id:
+          investmentId,
+
+        p_status:
+          status
       }
     );
 
@@ -2213,9 +2665,11 @@
     if (!payments.length) {
 
       container.innerHTML =
-        `<div class="empty">
+        `
+        <div class="empty">
           Aucun paiement.
-        </div>`;
+        </div>
+        `;
 
       return;
     }
@@ -2227,6 +2681,7 @@
         <table>
 
           <thead>
+
             <tr>
               <th>Montant</th>
               <th>Méthode</th>
@@ -2236,24 +2691,32 @@
               <th>Date</th>
               <th>Actions</th>
             </tr>
+
           </thead>
 
           <tbody>
 
-            ${payments.map(item => `
+            ${payments.map(
+              item => `
 
               <tr>
 
                 <td>
-                  ${formatMoney(item.amount)}
+                  ${formatMoney(
+                    item.amount
+                  )}
                 </td>
 
                 <td>
-                  ${escapeHtml(item.method)}
+                  ${escapeHtml(
+                    item.method
+                  )}
                 </td>
 
                 <td>
-                  ${escapeHtml(item.payer_phone)}
+                  ${escapeHtml(
+                    item.payer_phone
+                  )}
                 </td>
 
                 <td>
@@ -2263,18 +2726,23 @@
                 </td>
 
                 <td>
-                  ${statusBadge(item.status)}
+                  ${statusBadge(
+                    item.status
+                  )}
                 </td>
 
                 <td>
-                  ${formatDate(item.created_at)}
+                  ${formatDate(
+                    item.created_at
+                  )}
                 </td>
 
                 <td>
 
                   ${
-                    item.status === "pending"
-                    ? `
+                    item.status ===
+                    "pending"
+                      ? `
                       <div class="actions">
 
                         <button
@@ -2290,15 +2758,16 @@
                         </button>
 
                       </div>
-                    `
-                    : "-"
+                      `
+                      : "-"
                   }
 
                 </td>
 
               </tr>
 
-            `).join("")}
+            `
+            ).join("")}
 
           </tbody>
 
@@ -2334,8 +2803,11 @@
     } = await sb.rpc(
       "admin_set_payment_status",
       {
-        p_payment_id: paymentId,
-        p_status: status
+        p_payment_id:
+          paymentId,
+
+        p_status:
+          status
       }
     );
 
