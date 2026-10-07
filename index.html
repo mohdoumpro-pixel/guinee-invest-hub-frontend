@@ -49,7 +49,8 @@
 
     button,
     select,
-    input {
+    input,
+    textarea {
       font-family: inherit;
     }
 
@@ -88,6 +89,11 @@
       color: white;
     }
 
+    .warning-btn {
+      background: #f0ad4e;
+      color: white;
+    }
+
     .logout {
       background: #dc3545;
       color: white;
@@ -116,7 +122,8 @@
     }
 
     input,
-    select {
+    select,
+    textarea {
       width: 100%;
       padding: 13px;
       margin: 7px 0;
@@ -124,6 +131,18 @@
       border-radius: 9px;
       background: white;
       font-size: 15px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    label {
+      display: block;
+      margin-top: 8px;
+      font-weight: bold;
+      font-size: 14px;
     }
 
     .project-grid {
@@ -395,6 +414,34 @@
       font-weight: bold;
     }
 
+    .admin-create {
+      margin-bottom: 20px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #f7faf8;
+      border: 1px solid #dcebe3;
+    }
+
+    .admin-project-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .admin-project-actions button {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .status-approved {
+      color: #198754;
+    }
+
+    .status-pending {
+      color: #b7791f;
+    }
+
     @media (max-width: 600px) {
 
       header h1 {
@@ -417,7 +464,6 @@
 
 <header>
   <h1>🇬🇳 Guinée Invest Hub</h1>
-
   <p>
     Connecter les investisseurs aux projets guinéens
   </p>
@@ -468,10 +514,7 @@
 
   <!-- ACCUEIL -->
 
-  <section
-    id="home"
-    class="section"
-  >
+  <section id="home" class="section">
 
     <h2>
       Bienvenue sur Guinée Invest Hub 🇬🇳
@@ -507,9 +550,7 @@
     class="section auth-box hidden"
   >
 
-    <h2>
-      🔐 Connexion
-    </h2>
+    <h2>🔐 Connexion</h2>
 
     <input
       id="email"
@@ -550,9 +591,7 @@
     class="section hidden"
   >
 
-    <h2>
-      📊 Projets disponibles
-    </h2>
+    <h2>📊 Projets disponibles</h2>
 
     <input
       id="searchInput"
@@ -580,9 +619,7 @@
     class="section hidden"
   >
 
-    <h2>
-      💰 Mon portefeuille
-    </h2>
+    <h2>💰 Mon portefeuille</h2>
 
     <div
       id="portfolioStats"
@@ -591,91 +628,56 @@
 
       <div class="portfolio-card">
         <div class="icon">💰</div>
-        <div class="label">
-          Total investi
-        </div>
-        <div
-          id="portfolioTotal"
-          class="value"
-        >
+        <div class="label">Total investi</div>
+        <div id="portfolioTotal" class="value">
           0 GNF
         </div>
       </div>
 
       <div class="portfolio-card">
         <div class="icon">✅</div>
-        <div class="label">
-          Investi approuvé
-        </div>
-        <div
-          id="portfolioApproved"
-          class="value"
-        >
+        <div class="label">Investi approuvé</div>
+        <div id="portfolioApproved" class="value">
           0 GNF
         </div>
       </div>
 
       <div class="portfolio-card">
         <div class="icon">⏳</div>
-        <div class="label">
-          En attente
-        </div>
-        <div
-          id="portfolioPending"
-          class="value"
-        >
+        <div class="label">En attente</div>
+        <div id="portfolioPending" class="value">
           0 GNF
         </div>
       </div>
 
       <div class="portfolio-card">
         <div class="icon">📈</div>
-        <div class="label">
-          Profit prévu
-        </div>
-        <div
-          id="portfolioProfit"
-          class="value"
-        >
+        <div class="label">Profit prévu</div>
+        <div id="portfolioProfit" class="value">
           0 GNF
         </div>
       </div>
 
       <div class="portfolio-card">
         <div class="icon">💵</div>
-        <div class="label">
-          Valeur totale prévue
-        </div>
-        <div
-          id="portfolioExpectedTotal"
-          class="value"
-        >
+        <div class="label">Valeur totale prévue</div>
+        <div id="portfolioExpectedTotal" class="value">
           0 GNF
         </div>
       </div>
 
       <div class="portfolio-card">
         <div class="icon">📊</div>
-        <div class="label">
-          Nombre de projets
-        </div>
-        <div
-          id="portfolioProjects"
-          class="value"
-        >
+        <div class="label">Nombre de projets</div>
+        <div id="portfolioProjects" class="value">
           0
         </div>
       </div>
 
       <div class="portfolio-card">
         <div class="icon">💳</div>
-        <div class="label">
-          Paiements confirmés
-        </div>
-        <div
-          id="portfolioPayments"
-          class="value"
-        >
+        <div class="label">Paiements confirmés</div>
+        <div id="portfolioPayments" class="value">
           0
         </div>
       </div>
@@ -688,9 +690,7 @@
       Ils ne constituent pas une garantie de bénéfice.
     </div>
 
-    <h3>
-      📋 Historique de mes investissements
-    </h3>
+    <h3>📋 Historique de mes investissements</h3>
 
     <div id="myInvestments">
       <p class="empty">
@@ -708,13 +708,9 @@
     class="section hidden"
   >
 
-    <h2>
-      🛡️ Administration
-    </h2>
+    <h2>🛡️ Administration</h2>
 
-    <h3>
-      📈 Statistiques
-    </h3>
+    <h3>📈 Statistiques</h3>
 
     <div
       id="adminStats"
@@ -745,15 +741,109 @@
 
     <br>
 
+    <!-- CREATION PROJET -->
+
+    <h3>➕ Créer un projet</h3>
+
+    <div class="admin-create">
+
+      <label>Nom du projet</label>
+
+      <input
+        id="newProjectTitle"
+        type="text"
+        placeholder="Ex : Ferme agricole de Kindia"
+      >
+
+      <label>Description</label>
+
+      <textarea
+        id="newProjectDescription"
+        placeholder="Description du projet..."
+      ></textarea>
+
+      <label>Secteur</label>
+
+      <input
+        id="newProjectSector"
+        type="text"
+        placeholder="Ex : Agriculture"
+      >
+
+      <div class="admin-form-grid">
+
+        <div>
+          <label>💰 Montant recherché</label>
+
+          <input
+            id="newProjectAmount"
+            type="number"
+            min="1"
+            placeholder="Montant en GNF"
+          >
+        </div>
+
+        <div>
+          <label>📈 Rendement prévu (%)</label>
+
+          <input
+            id="newProjectRate"
+            type="number"
+            min="0"
+            max="1000"
+            step="0.1"
+            value="10"
+          >
+        </div>
+
+        <div>
+          <label>📅 Durée (mois)</label>
+
+          <input
+            id="newProjectDuration"
+            type="number"
+            min="1"
+            max="240"
+            value="12"
+          >
+        </div>
+
+        <div>
+          <label>📂 Statut</label>
+
+          <select id="newProjectStatus">
+            <option value="pending">
+              ⏳ En attente
+            </option>
+
+            <option value="approved">
+              ✅ Approuvé
+            </option>
+          </select>
+        </div>
+
+      </div>
+
+      <button
+        class="approve"
+        style="width:100%; margin-top:12px;"
+        onclick="createProject()"
+      >
+        ➕ Créer le projet
+      </button>
+
+      <div id="createProjectMessage"></div>
+
+    </div>
+
+
     <!-- GESTION PROJETS -->
 
-    <h3>
-      📁 Gestion des projets
-    </h3>
+    <h3>📁 Gestion des projets</h3>
 
     <p class="project-meta">
-      Modifiez ici le rendement prévu et la durée
-      de chaque projet.
+      L'administrateur peut modifier toutes les informations
+      d'un projet, son rendement prévu, sa durée et son statut.
     </p>
 
     <div id="adminProjects">
@@ -766,9 +856,7 @@
 
     <!-- INVESTISSEMENTS -->
 
-    <h3>
-      💰 Demandes d'investissement
-    </h3>
+    <h3>💰 Demandes d'investissement</h3>
 
     <div id="adminInvestments">
       <p class="empty">
@@ -780,9 +868,7 @@
 
     <!-- PAIEMENTS -->
 
-    <h3>
-      💳 Paiements Orange Money
-    </h3>
+    <h3>💳 Paiements Orange Money</h3>
 
     <div id="adminPayments">
       <p class="empty">
@@ -797,12 +883,18 @@
 
 <script>
 
-  /* ================================
+  /* =================================
      SUPABASE
   ================================= */
 
   const SUPABASE_URL =
     "https://phwnkvglvebbajixwjau.supabase.co";
+
+  /*
+    IMPORTANT :
+    Remplace uniquement cette valeur
+    par ton vrai Publishable Key.
+  */
 
   const SUPABASE_KEY =
     "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
@@ -814,7 +906,7 @@
     );
 
 
-  /* ================================
+  /* =================================
      VARIABLES
   ================================= */
 
@@ -823,15 +915,11 @@
   let projects = [];
 
 
-  /* ================================
-     ORANGE MONEY
-  ================================= */
-
   const ORANGE_MONEY_NUMBER =
     "+224 612 78 22 19";
 
 
-  /* ================================
+  /* =================================
      UTILITAIRES
   ================================= */
 
@@ -948,7 +1036,7 @@
   }
 
 
-  /* ================================
+  /* =================================
      NAVIGATION
   ================================= */
 
@@ -961,9 +1049,7 @@
 
     sections.forEach(
       section => {
-        section.classList.add(
-          "hidden"
-        );
+        section.classList.add("hidden");
       }
     );
 
@@ -971,28 +1057,23 @@
       document.getElementById(id);
 
     if (target) {
-      target.classList.remove(
-        "hidden"
-      );
+      target.classList.remove("hidden");
     }
 
     if (
-      id ===
-      "projectsSection"
+      id === "projectsSection"
     ) {
       loadProjects();
     }
 
     if (
-      id ===
-      "myInvestmentsSection"
+      id === "myInvestmentsSection"
     ) {
       loadMyInvestments();
     }
 
     if (
-      id ===
-      "adminSection"
+      id === "adminSection"
     ) {
 
       if (
@@ -1017,7 +1098,7 @@
   }
 
 
-  /* ================================
+  /* =================================
      SIGNUP
   ================================= */
 
@@ -1133,7 +1214,7 @@
   }
 
 
-  /* ================================
+  /* =================================
      LOGIN
   ================================= */
 
@@ -1212,7 +1293,7 @@
   }
 
 
-  /* ================================
+  /* =================================
      UTILISATEUR
   ================================= */
 
@@ -1238,7 +1319,6 @@
     if (error) {
 
       console.error(error);
-
       currentProfile = null;
 
     } else {
@@ -1247,9 +1327,7 @@
     }
 
     document
-      .getElementById(
-        "userInfo"
-      )
+      .getElementById("userInfo")
       .innerHTML = `
         Connecté avec :
         <strong>
@@ -1259,59 +1337,39 @@
         </strong>
 
         ${
-          currentProfile?.role ===
-          "admin"
-
+          currentProfile?.role === "admin"
             ? " — 🛡️ Administrateur"
-
             : " — 👤 Investisseur"
         }
       `;
 
     document
-      .getElementById(
-        "logoutBtn"
-      )
-      .classList.remove(
-        "hidden"
-      );
+      .getElementById("logoutBtn")
+      .classList.remove("hidden");
 
     document
-      .getElementById(
-        "loginHomeBtn"
-      )
-      .classList.add(
-        "hidden"
-      );
+      .getElementById("loginHomeBtn")
+      .classList.add("hidden");
 
     if (
       currentProfile &&
-      currentProfile.role ===
-      "admin"
+      currentProfile.role === "admin"
     ) {
 
       document
-        .getElementById(
-          "adminNav"
-        )
-        .classList.remove(
-          "hidden"
-        );
+        .getElementById("adminNav")
+        .classList.remove("hidden");
 
     } else {
 
       document
-        .getElementById(
-          "adminNav"
-        )
-        .classList.add(
-          "hidden"
-        );
+        .getElementById("adminNav")
+        .classList.add("hidden");
     }
   }
 
 
-  /* ================================
+  /* =================================
      LOGOUT
   ================================= */
 
@@ -1323,33 +1381,19 @@
     currentProfile = null;
 
     document
-      .getElementById(
-        "logoutBtn"
-      )
-      .classList.add(
-        "hidden"
-      );
+      .getElementById("logoutBtn")
+      .classList.add("hidden");
 
     document
-      .getElementById(
-        "adminNav"
-      )
-      .classList.add(
-        "hidden"
-      );
+      .getElementById("adminNav")
+      .classList.add("hidden");
 
     document
-      .getElementById(
-        "loginHomeBtn"
-      )
-      .classList.remove(
-        "hidden"
-      );
+      .getElementById("loginHomeBtn")
+      .classList.remove("hidden");
 
     document
-      .getElementById(
-        "userInfo"
-      )
+      .getElementById("userInfo")
       .innerHTML =
       "Vous n'êtes pas connecté.";
 
@@ -1357,8 +1401,8 @@
   }
 
 
-  /* ================================
-     PROJETS
+  /* =================================
+     PROJETS PUBLICS
   ================================= */
 
   async function loadProjects() {
@@ -1408,15 +1452,11 @@
     projects =
       data || [];
 
-    renderProjects(
-      projects
-    );
+    renderProjects(projects);
   }
 
 
-  function renderProjects(
-    list
-  ) {
+  function renderProjects(list) {
 
     const container =
       document.getElementById(
@@ -1439,14 +1479,10 @@
         project => {
 
           const rate =
-            getProjectReturn(
-              project
-            );
+            getProjectReturn(project);
 
           const duration =
-            getProjectDuration(
-              project
-            );
+            getProjectDuration(project);
 
           return `
             <div class="project-card">
@@ -1504,11 +1540,7 @@
               <button
                 class="secondary"
                 style="width:100%; margin-top:12px;"
-                onclick="
-                  showInvestmentBox(
-                    '${project.id}'
-                  )
-                "
+                onclick="showInvestmentBox('${project.id}')"
               >
                 💰 Je veux investir
               </button>
@@ -1536,11 +1568,7 @@
 
                 <select
                   id="paymentMethod-${project.id}"
-                  onchange="
-                    updatePaymentMethod(
-                      '${project.id}'
-                    )
-                  "
+                  onchange="updatePaymentMethod('${project.id}')"
                 >
 
                   <option value="">
@@ -1575,12 +1603,6 @@
                     ${ORANGE_MONEY_NUMBER}
                   </div>
 
-                  <p>
-                    Après le paiement,
-                    indiquez les informations
-                    de votre transaction.
-                  </p>
-
                   <input
                     id="payerPhone-${project.id}"
                     type="tel"
@@ -1598,10 +1620,7 @@
                 <div
                   id="mtnPayment-${project.id}"
                   class="orange-payment hidden"
-                  style="
-                    background:#fffbea;
-                    border-color:#fde68a;
-                  "
+                  style="background:#fffbea;border-color:#fde68a;"
                 >
 
                   <strong>
@@ -1609,19 +1628,14 @@
                   </strong>
 
                   <p>
-                    Le paiement MTN sera ajouté
-                    prochainement.
+                    Le paiement MTN sera ajouté prochainement.
                   </p>
 
                 </div>
 
                 <button
                   class="primary"
-                  onclick="
-                    submitInvestment(
-                      '${project.id}'
-                    )
-                  "
+                  onclick="submitInvestment('${project.id}')"
                 >
                   ✅ Envoyer ma demande
                 </button>
@@ -1637,42 +1651,34 @@
         }
       ).join("");
 
-    list.forEach(
-      project => {
+    list.forEach(project => {
 
-        const input =
-          document.getElementById(
-            "investmentAmount-" +
-            project.id
-          );
+      const input =
+        document.getElementById(
+          "investmentAmount-" +
+          project.id
+        );
 
-        if (input) {
+      if (input) {
 
-          input.addEventListener(
-            "input",
-            function() {
-
-              updateInvestmentPreview(
-                project.id
-              );
-
-            }
-          );
-
-        }
-
+        input.addEventListener(
+          "input",
+          function() {
+            updateInvestmentPreview(
+              project.id
+            );
+          }
+        );
       }
-    );
+    });
   }
 
 
-  /* ================================
-     PREVIEW RENDEMENT
+  /* =================================
+     PREVIEW INVESTISSEMENT
   ================================= */
 
-  function updateInvestmentPreview(
-    projectId
-  ) {
+  function updateInvestmentPreview(projectId) {
 
     const input =
       document.getElementById(
@@ -1688,9 +1694,7 @@
 
     const project =
       projects.find(
-        p =>
-          p.id ===
-          projectId
+        p => p.id === projectId
       );
 
     if (
@@ -1709,22 +1713,15 @@
       amount <= 0
     ) {
 
-      preview.classList.add(
-        "hidden"
-      );
-
+      preview.classList.add("hidden");
       return;
     }
 
     const rate =
-      getProjectReturn(
-        project
-      );
+      getProjectReturn(project);
 
     const duration =
-      getProjectDuration(
-        project
-      );
+      getProjectDuration(project);
 
     const profit =
       calculateExpectedProfit(
@@ -1741,55 +1738,38 @@
     preview.innerHTML = `
 
       📈 Rendement prévu :
-      <strong>
-        ${rate}%
-      </strong>
+      <strong>${rate}%</strong>
 
       <br><br>
 
       📅 Durée prévue :
-      <strong>
-        ${duration} mois
-      </strong>
+      <strong>${duration} mois</strong>
 
       <br><br>
 
       💰 Profit prévu :
-      <strong>
-        ${formatMoney(
-          profit
-        )}
-      </strong>
+      <strong>${formatMoney(profit)}</strong>
 
       <br><br>
 
       💵 Valeur totale prévue :
-      <strong>
-        ${formatMoney(
-          total
-        )}
-      </strong>
+      <strong>${formatMoney(total)}</strong>
 
       <div class="warning-box">
         ⚠️ Estimation uniquement.
         Le rendement n'est pas garanti.
       </div>
-
     `;
 
-    preview.classList.remove(
-      "hidden"
-    );
+    preview.classList.remove("hidden");
   }
 
 
-  /* ================================
-     MOYEN DE PAIEMENT
+  /* =================================
+     PAIEMENT
   ================================= */
 
-  function updatePaymentMethod(
-    projectId
-  ) {
+  function updatePaymentMethod(projectId) {
 
     const select =
       document.getElementById(
@@ -1813,46 +1793,27 @@
       return;
     }
 
-    if (orange) {
-      orange.classList.add(
-        "hidden"
-      );
-    }
-
-    if (mtn) {
-      mtn.classList.add(
-        "hidden"
-      );
-    }
+    orange?.classList.add("hidden");
+    mtn?.classList.add("hidden");
 
     if (
       select.value ===
       "orange_money"
     ) {
 
-      orange.classList.remove(
-        "hidden"
-      );
+      orange?.classList.remove("hidden");
 
     } else if (
       select.value ===
       "mtn_mobile_money"
     ) {
 
-      mtn.classList.remove(
-        "hidden"
-      );
+      mtn?.classList.remove("hidden");
     }
   }
 
 
-  /* ================================
-     FORMULAIRE INVESTISSEMENT
-  ================================= */
-
-  function showInvestmentBox(
-    projectId
-  ) {
+  function showInvestmentBox(projectId) {
 
     if (!currentUser) {
 
@@ -1860,9 +1821,7 @@
         "Vous devez être connecté pour investir."
       );
 
-      showSection(
-        "authSection"
-      );
+      showSection("authSection");
 
       return;
     }
@@ -1874,28 +1833,19 @@
       );
 
     if (box) {
-
-      box.classList.toggle(
-        "hidden"
-      );
+      box.classList.toggle("hidden");
     }
   }
 
 
-  /* ================================
+  /* =================================
      CREATION INVESTISSEMENT
   ================================= */
 
-  async function submitInvestment(
-    projectId
-  ) {
+  async function submitInvestment(projectId) {
 
     if (!currentUser) {
-
-      alert(
-        "Vous devez être connecté."
-      );
-
+      alert("Vous devez être connecté.");
       return;
     }
 
@@ -1931,9 +1881,7 @@
 
     const project =
       projects.find(
-        p =>
-          p.id ===
-          projectId
+        p => p.id === projectId
       );
 
     if (
@@ -1952,14 +1900,10 @@
       paymentSelect.value;
 
     const returnRate =
-      getProjectReturn(
-        project
-      );
+      getProjectReturn(project);
 
     const duration =
-      getProjectDuration(
-        project
-      );
+      getProjectDuration(project);
 
     const expectedProfit =
       calculateExpectedProfit(
@@ -2010,8 +1954,7 @@
 
         message.innerHTML = `
           <div class="error-box">
-            ❌ Entrez le numéro Orange
-            utilisé pour le paiement.
+            ❌ Entrez le numéro Orange utilisé.
           </div>
         `;
 
@@ -2025,8 +1968,7 @@
 
         message.innerHTML = `
           <div class="error-box">
-            ❌ Entrez la référence
-            de la transaction Orange Money.
+            ❌ Entrez la référence de transaction.
           </div>
         `;
 
@@ -2041,8 +1983,7 @@
 
       message.innerHTML = `
         <div class="error-box">
-          🟡 Le paiement MTN sera disponible
-          prochainement.
+          🟡 Le paiement MTN sera disponible prochainement.
         </div>
       `;
 
@@ -2093,10 +2034,6 @@
 
     if (investmentError) {
 
-      console.error(
-        investmentError
-      );
-
       message.innerHTML = `
         <div class="error-box">
           ❌ ${escapeHtml(
@@ -2144,24 +2081,14 @@
 
     if (paymentError) {
 
-      console.error(
-        paymentError
-      );
-
       message.innerHTML = `
         <div class="error-box">
-
-          ❌ Votre demande
-          d'investissement a été créée,
-          mais le paiement n'a pas pu
-          être enregistré.
-
+          ❌ Votre investissement a été créé,
+          mais le paiement n'a pas pu être enregistré.
           <br><br>
-
           ${escapeHtml(
             paymentError.message
           )}
-
         </div>
       `;
 
@@ -2171,58 +2098,37 @@
     message.innerHTML = `
       <div class="message">
 
-        ✅
-        <strong>
-          Demande enregistrée.
-        </strong>
+        ✅ <strong>Demande enregistrée.</strong>
 
         <br><br>
 
         💰 Montant :
-        <strong>
-          ${formatMoney(
-            amount
-          )}
-        </strong>
+        <strong>${formatMoney(amount)}</strong>
 
         <br>
 
         📈 Rendement prévu :
-        <strong>
-          ${returnRate}%
-        </strong>
+        <strong>${returnRate}%</strong>
 
         <br>
 
         📅 Durée prévue :
-        <strong>
-          ${duration} mois
-        </strong>
+        <strong>${duration} mois</strong>
 
         <br>
 
         📊 Profit prévu :
-        <strong>
-          ${formatMoney(
-            expectedProfit
-          )}
-        </strong>
+        <strong>${formatMoney(expectedProfit)}</strong>
 
         <br>
 
         💵 Valeur totale prévue :
-        <strong>
-          ${formatMoney(
-            expectedTotal
-          )}
-        </strong>
+        <strong>${formatMoney(expectedTotal)}</strong>
 
         <br>
 
         🟠 Paiement :
-        <strong>
-          Orange Money
-        </strong>
+        <strong>Orange Money</strong>
 
         <br>
 
@@ -2236,18 +2142,15 @@
         <br>
 
         ⏳ Statut :
-        <strong>
-          En attente de vérification
-        </strong>
+        <strong>En attente de vérification</strong>
 
         <br><br>
 
-        Un administrateur vérifiera
-        votre paiement.
+        Un administrateur vérifiera votre paiement.
 
         <div class="warning-box">
-          ⚠️ Le rendement affiché est une
-          estimation et n'est pas garanti.
+          ⚠️ Le rendement affiché est une estimation
+          et n'est pas garanti.
         </div>
 
       </div>
@@ -2264,16 +2167,14 @@
       transactionReference.value = "";
     }
 
-    updatePaymentMethod(
-      projectId
-    );
+    updatePaymentMethod(projectId);
 
     await loadMyInvestments();
   }
 
 
-  /* ================================
-     MON PORTEFEUILLE
+  /* =================================
+     PORTEFEUILLE
   ================================= */
 
   async function loadMyInvestments() {
@@ -2287,8 +2188,7 @@
 
       container.innerHTML = `
         <p class="empty">
-          Connectez-vous pour voir
-          vos investissements.
+          Connectez-vous pour voir vos investissements.
         </p>
       `;
 
@@ -2348,8 +2248,7 @@
 
       container.innerHTML = `
         <div class="error-box">
-          ❌ Impossible de charger
-          l'historique des paiements.
+          ❌ Impossible de charger l'historique.
           <br><br>
           ${escapeHtml(
             paymentError.message
@@ -2366,69 +2265,44 @@
     const paymentList =
       payments || [];
 
-
     const totalInvested =
       investmentList.reduce(
-        (
-          total,
-          item
-        ) =>
+        (total, item) =>
           total +
-          Number(
-            item.amount || 0
-          ),
+          Number(item.amount || 0),
         0
       );
-
 
     const approvedInvestments =
       investmentList.filter(
         item =>
-          item.status ===
-          "approved"
+          item.status === "approved"
       );
-
 
     const approvedAmount =
       approvedInvestments.reduce(
-        (
-          total,
-          item
-        ) =>
+        (total, item) =>
           total +
-          Number(
-            item.amount || 0
-          ),
+          Number(item.amount || 0),
         0
       );
-
 
     const pendingAmount =
       investmentList
         .filter(
           item =>
-            item.status ===
-            "pending"
+            item.status === "pending"
         )
         .reduce(
-          (
-            total,
-            item
-          ) =>
+          (total, item) =>
             total +
-            Number(
-              item.amount || 0
-            ),
+            Number(item.amount || 0),
           0
         );
 
-
     const expectedProfit =
       investmentList.reduce(
-        (
-          total,
-          item
-        ) => {
+        (total, item) => {
 
           const stored =
             Number(
@@ -2436,34 +2310,23 @@
             );
 
           if (
-            Number.isFinite(
-              stored
-            )
+            Number.isFinite(stored)
           ) {
             return total + stored;
           }
 
-          const rate =
-            Number(
-              item.return_rate
-            ) || 0;
-
           return total +
             calculateExpectedProfit(
               item.amount,
-              rate
+              item.return_rate
             );
         },
         0
       );
 
-
     const expectedTotal =
       investmentList.reduce(
-        (
-          total,
-          item
-        ) => {
+        (total, item) => {
 
           const stored =
             Number(
@@ -2471,123 +2334,79 @@
             );
 
           if (
-            Number.isFinite(
-              stored
-            ) &&
+            Number.isFinite(stored) &&
             stored > 0
           ) {
             return total + stored;
           }
 
           return total +
-            Number(
-              item.amount || 0
-            ) +
-            calculateExpectedProfit(
+            calculateExpectedTotal(
               item.amount,
               item.return_rate
             );
-
         },
         0
       );
 
-
     const confirmedPayments =
       paymentList.filter(
         payment =>
-          payment.status ===
-          "verified"
+          payment.status === "verified"
       ).length;
-
 
     const projectCount =
       new Set(
         investmentList.map(
-          item =>
-            item.project_id
+          item => item.project_id
         )
       ).size;
 
+    document.getElementById(
+      "portfolioTotal"
+    ).textContent =
+      formatMoney(totalInvested);
 
-    document
-      .getElementById(
-        "portfolioTotal"
-      )
-      .textContent =
-      formatMoney(
-        totalInvested
-      );
+    document.getElementById(
+      "portfolioApproved"
+    ).textContent =
+      formatMoney(approvedAmount);
 
+    document.getElementById(
+      "portfolioPending"
+    ).textContent =
+      formatMoney(pendingAmount);
 
-    document
-      .getElementById(
-        "portfolioApproved"
-      )
-      .textContent =
-      formatMoney(
-        approvedAmount
-      );
+    document.getElementById(
+      "portfolioProfit"
+    ).textContent =
+      formatMoney(expectedProfit);
 
+    document.getElementById(
+      "portfolioExpectedTotal"
+    ).textContent =
+      formatMoney(expectedTotal);
 
-    document
-      .getElementById(
-        "portfolioPending"
-      )
-      .textContent =
-      formatMoney(
-        pendingAmount
-      );
-
-
-    document
-      .getElementById(
-        "portfolioProfit"
-      )
-      .textContent =
-      formatMoney(
-        expectedProfit
-      );
-
-
-    document
-      .getElementById(
-        "portfolioExpectedTotal"
-      )
-      .textContent =
-      formatMoney(
-        expectedTotal
-      );
-
-
-    document
-      .getElementById(
-        "portfolioProjects"
-      )
-      .textContent =
+    document.getElementById(
+      "portfolioProjects"
+    ).textContent =
       projectCount;
 
-
-    document
-      .getElementById(
-        "portfolioPayments"
-      )
-      .textContent =
+    document.getElementById(
+      "portfolioPayments"
+    ).textContent =
       confirmedPayments;
-
 
     if (!investmentList.length) {
 
       container.innerHTML = `
         <p class="empty">
-          Vous n'avez encore
-          aucun investissement.
+          Vous n'avez encore aucun investissement.
         </p>
       `;
 
       return;
     }
-
 
     container.innerHTML =
       investmentList.map(
@@ -2607,24 +2426,17 @@
                 investment.id
             );
 
-
           const rate =
             Number(
               investment.return_rate
             ) ||
-            getProjectReturn(
-              project
-            );
-
+            getProjectReturn(project);
 
           const duration =
             Number(
               investment.duration_months
             ) ||
-            getProjectDuration(
-              project
-            );
-
+            getProjectDuration(project);
 
           const profit =
             Number(
@@ -2635,7 +2447,6 @@
               rate
             );
 
-
           const total =
             Number(
               investment.expected_total
@@ -2645,28 +2456,23 @@
               rate
             );
 
-
           let investmentStatus =
             "⏳ Investissement en attente";
 
-
           if (
-            investment.status ===
-            "approved"
+            investment.status === "approved"
           ) {
 
             investmentStatus =
               "✅ Investissement approuvé";
 
           } else if (
-            investment.status ===
-            "rejected"
+            investment.status === "rejected"
           ) {
 
             investmentStatus =
               "❌ Investissement refusé";
           }
-
 
           let paymentStatus =
             "⏳ Paiement en attente";
@@ -2674,10 +2480,8 @@
           let paymentClass =
             "badge-pending";
 
-
           if (
-            payment?.status ===
-            "verified"
+            payment?.status === "verified"
           ) {
 
             paymentStatus =
@@ -2687,8 +2491,7 @@
               "badge-verified";
 
           } else if (
-            payment?.status ===
-            "rejected"
+            payment?.status === "rejected"
           ) {
 
             paymentStatus =
@@ -2698,20 +2501,15 @@
               "badge-rejected";
           }
 
-
           let finalMessage = "";
 
-
           if (
-            investment.status ===
-            "approved" &&
-            payment?.status ===
-            "verified"
+            investment.status === "approved" &&
+            payment?.status === "verified"
           ) {
 
             finalMessage = `
               <div class="confirmed-box">
-
                 🎉
                 <strong>
                   Investissement confirmé !
@@ -2722,20 +2520,16 @@
                 Votre paiement a été vérifié
                 et votre investissement est
                 officiellement approuvé.
-
               </div>
             `;
 
           } else if (
-            payment?.status ===
-            "verified" &&
-            investment.status ===
-            "pending"
+            payment?.status === "verified" &&
+            investment.status === "pending"
           ) {
 
             finalMessage = `
               <div class="pending-box">
-
                 🟢
                 <strong>
                   Paiement confirmé
@@ -2750,18 +2544,15 @@
 
                 ⏳ Votre investissement est encore
                 en attente d'approbation.
-
               </div>
             `;
 
           } else if (
-            payment?.status ===
-            "rejected"
+            payment?.status === "rejected"
           ) {
 
             finalMessage = `
               <div class="error-box">
-
                 ❌
                 <strong>
                   Paiement rejeté
@@ -2771,22 +2562,18 @@
 
                 Le paiement associé à cet investissement
                 n'a pas été validé.
-
               </div>
             `;
           }
-
 
           return `
             <div class="investment-item">
 
               <h3 style="margin-top:0;color:#0b5d3b;">
-                ${
-                  escapeHtml(
-                    project?.title ||
-                    "Projet"
-                  )
-                }
+                ${escapeHtml(
+                  project?.title ||
+                  "Projet"
+                )}
               </h3>
 
               <strong>
@@ -2813,26 +2600,21 @@
 
                 📊 Profit prévu :
                 <strong>
-                  ${formatMoney(
-                    profit
-                  )}
+                  ${formatMoney(profit)}
                 </strong>
 
                 <br><br>
 
                 💵 Valeur totale prévue :
                 <strong>
-                  ${formatMoney(
-                    total
-                  )}
+                  ${formatMoney(total)}
                 </strong>
 
               </div>
 
               <br>
 
-              📅
-              ${formatDate(
+              📅 ${formatDate(
                 investment.created_at
               )}
 
@@ -2846,10 +2628,7 @@
               <br>
 
               <span
-                class="
-                  payment-badge
-                  ${paymentClass}
-                "
+                class="payment-badge ${paymentClass}"
               >
                 ${paymentStatus}
               </span>
@@ -2867,8 +2646,7 @@
 
                       Moyen :
                       ${
-                        payment.method ===
-                        "orange_money"
+                        payment.method === "orange_money"
                           ? "🟠 Orange Money"
                           : escapeHtml(
                               payment.method ||
@@ -2913,12 +2691,7 @@
 
                     </div>
                   `
-                  : `
-                    <div class="pending-box">
-                      💳 Aucun paiement associé
-                      à cet investissement.
-                    </div>
-                  `
+                  : ""
               }
 
               ${finalMessage}
@@ -2930,13 +2703,12 @@
 
             </div>
           `;
-
         }
       ).join("");
   }
 
 
-  /* ================================
+  /* =================================
      ADMIN STATS
   ================================= */
 
@@ -2949,8 +2721,7 @@
 
     if (
       !currentProfile ||
-      currentProfile.role !==
-      "admin"
+      currentProfile.role !== "admin"
     ) {
       return;
     }
@@ -2984,79 +2755,274 @@
 
         sb
           .from("investments")
-          .select(
-            "amount"
-          )
+          .select("amount")
 
       ]);
 
     const investorCount =
-      profilesResult.count ||
-      0;
+      profilesResult.count || 0;
 
     const projectCount =
-      projectsResult.count ||
-      0;
+      projectsResult.count || 0;
 
     const investmentData =
-      investmentsResult.data ||
-      [];
+      investmentsResult.data || [];
 
     const investmentCount =
       investmentData.length;
 
     const totalAmount =
       investmentData.reduce(
-        (
-          total,
-          item
-        ) =>
+        (total, item) =>
           total +
-          Number(
-            item.amount ||
-            0
-          ),
+          Number(item.amount || 0),
         0
       );
 
     container.innerHTML = `
 
       <div class="stat">
-        <strong>
-          ${investorCount}
-        </strong>
+        <strong>${investorCount}</strong>
         Utilisateurs
       </div>
 
       <div class="stat">
-        <strong>
-          ${projectCount}
-        </strong>
+        <strong>${projectCount}</strong>
         Projets
       </div>
 
       <div class="stat">
-        <strong>
-          ${investmentCount}
-        </strong>
+        <strong>${investmentCount}</strong>
         Investissements
       </div>
 
       <div class="stat">
-        <strong>
-          ${formatMoney(
-            totalAmount
-          )}
-        </strong>
+        <strong>${formatMoney(totalAmount)}</strong>
         Montant demandé
       </div>
-
     `;
   }
 
 
-  /* ================================
-     ADMIN PROJETS
+  /* =================================
+     ADMIN CREER PROJET
+  ================================= */
+
+  async function createProject() {
+
+    if (
+      !currentProfile ||
+      currentProfile.role !== "admin"
+    ) {
+
+      alert(
+        "Accès administrateur requis."
+      );
+
+      return;
+    }
+
+    const title =
+      document
+        .getElementById("newProjectTitle")
+        .value
+        .trim();
+
+    const description =
+      document
+        .getElementById("newProjectDescription")
+        .value
+        .trim();
+
+    const sector =
+      document
+        .getElementById("newProjectSector")
+        .value
+        .trim();
+
+    const amount =
+      Number(
+        document
+          .getElementById("newProjectAmount")
+          .value
+      );
+
+    const rate =
+      Number(
+        document
+          .getElementById("newProjectRate")
+          .value
+      );
+
+    const duration =
+      Number(
+        document
+          .getElementById("newProjectDuration")
+          .value
+      );
+
+    const status =
+      document
+        .getElementById("newProjectStatus")
+        .value;
+
+    const message =
+      document.getElementById(
+        "createProjectMessage"
+      );
+
+    if (!title) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Entrez le nom du projet.
+        </div>
+      `;
+
+      return;
+    }
+
+    if (
+      !amount ||
+      amount <= 0
+    ) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Entrez un montant valide.
+        </div>
+      `;
+
+      return;
+    }
+
+    if (
+      !Number.isFinite(rate) ||
+      rate < 0 ||
+      rate > 1000
+    ) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Rendement invalide.
+        </div>
+      `;
+
+      return;
+    }
+
+    if (
+      !Number.isFinite(duration) ||
+      duration < 1 ||
+      duration > 240
+    ) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Durée invalide.
+        </div>
+      `;
+
+      return;
+    }
+
+    message.innerHTML = `
+      <div class="message">
+        ⏳ Création du projet...
+      </div>
+    `;
+
+    const {
+      error
+    } =
+      await sb
+        .from("projects")
+        .insert({
+
+          title:
+            title,
+
+          description:
+            description,
+
+          sector:
+            sector,
+
+          amount_required:
+            Math.round(amount),
+
+          amount:
+            Math.round(amount),
+
+          user_id:
+            currentUser.id,
+
+          status:
+            status,
+
+          return_rate:
+            rate,
+
+          duration_months:
+            Math.round(duration)
+
+        });
+
+    if (error) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ ${escapeHtml(
+            error.message
+          )}
+        </div>
+      `;
+
+      return;
+    }
+
+    message.innerHTML = `
+      <div class="message">
+        ✅ Projet créé avec succès.
+      </div>
+    `;
+
+    document.getElementById(
+      "newProjectTitle"
+    ).value = "";
+
+    document.getElementById(
+      "newProjectDescription"
+    ).value = "";
+
+    document.getElementById(
+      "newProjectSector"
+    ).value = "";
+
+    document.getElementById(
+      "newProjectAmount"
+    ).value = "";
+
+    document.getElementById(
+      "newProjectRate"
+    ).value = "10";
+
+    document.getElementById(
+      "newProjectDuration"
+    ).value = "12";
+
+    document.getElementById(
+      "newProjectStatus"
+    ).value = "pending";
+
+    await loadAdminProjects();
+    await loadAdminStats();
+    await loadProjects();
+  }
+
+
+  /* =================================
+     ADMIN CHARGER PROJETS
   ================================= */
 
   async function loadAdminProjects() {
@@ -3068,8 +3034,7 @@
 
     if (
       !currentProfile ||
-      currentProfile.role !==
-      "admin"
+      currentProfile.role !== "admin"
     ) {
       return;
     }
@@ -3120,14 +3085,13 @@
         project => {
 
           const rate =
-            getProjectReturn(
-              project
-            );
+            getProjectReturn(project);
 
           const duration =
-            getProjectDuration(
-              project
-            );
+            getProjectDuration(project);
+
+          const status =
+            project.status || "pending";
 
           return `
 
@@ -3141,26 +3105,73 @@
               </h4>
 
               <div class="project-meta">
-
-                Secteur :
-                ${escapeHtml(
-                  project.sector ||
-                  "Non précisé"
-                )}
+                ID :
+                ${escapeHtml(project.id)}
 
                 <br>
 
-                Statut :
-                <strong>
-                  ${escapeHtml(
-                    project.status ||
-                    "pending"
-                  )}
-                </strong>
-
+                Créé le :
+                ${formatDate(
+                  project.created_at
+                )}
               </div>
 
+              <label>
+                📝 Nom du projet
+              </label>
+
+              <input
+                id="adminTitle-${project.id}"
+                type="text"
+                value="${escapeHtml(
+                  project.title || ""
+                )}"
+              >
+
+              <label>
+                📝 Description
+              </label>
+
+              <textarea
+                id="adminDescription-${project.id}"
+              >${escapeHtml(
+                project.description || ""
+              )}</textarea>
+
               <div class="admin-form-grid">
+
+                <div>
+
+                  <label>
+                    🏷️ Secteur
+                  </label>
+
+                  <input
+                    id="adminSector-${project.id}"
+                    type="text"
+                    value="${escapeHtml(
+                      project.sector || ""
+                    )}"
+                  >
+
+                </div>
+
+                <div>
+
+                  <label>
+                    💰 Montant recherché
+                  </label>
+
+                  <input
+                    id="adminAmount-${project.id}"
+                    type="number"
+                    min="1"
+                    value="${Number(
+                      project.amount_required || 0
+                    )}"
+                  >
+
+                </div>
 
                 <div>
 
@@ -3169,7 +3180,7 @@
                   </label>
 
                   <input
-                    id="returnRate-${project.id}"
+                    id="adminRate-${project.id}"
                     type="number"
                     min="0"
                     max="1000"
@@ -3186,11 +3197,10 @@
                   </label>
 
                   <input
-                    id="duration-${project.id}"
+                    id="adminDuration-${project.id}"
                     type="number"
                     min="1"
                     max="240"
-                    step="1"
                     value="${duration}"
                   >
 
@@ -3198,19 +3208,127 @@
 
               </div>
 
-              <button
-                class="approve small-btn"
-                onclick="
-                  updateProjectReturn(
-                    '${project.id}'
-                  )
-                "
+              <label>
+                📂 Statut
+              </label>
+
+              <select
+                id="adminStatus-${project.id}"
               >
-                💾 Enregistrer
-              </button>
+
+                <option
+                  value="pending"
+                  ${
+                    status === "pending"
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  ⏳ En attente
+                </option>
+
+                <option
+                  value="approved"
+                  ${
+                    status === "approved"
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  ✅ Approuvé
+                </option>
+
+              </select>
+
+              <div class="return-box">
+
+                📈 Rendement actuel :
+                <strong>
+                  ${rate}%
+                </strong>
+
+                <br>
+
+                📅 Durée actuelle :
+                <strong>
+                  ${duration} mois
+                </strong>
+
+                <br>
+
+                📂 Statut actuel :
+                <strong class="${
+                  status === "approved"
+                    ? "status-approved"
+                    : "status-pending"
+                }">
+                  ${
+                    status === "approved"
+                      ? "🟢 Approuvé"
+                      : "🟡 En attente"
+                  }
+                </strong>
+
+              </div>
+
+              <div class="admin-project-actions">
+
+                <button
+                  class="approve"
+                  onclick="
+                    saveProject(
+                      '${project.id}'
+                    )
+                  "
+                >
+                  💾 Enregistrer
+                </button>
+
+                ${
+                  status === "approved"
+                    ? `
+                      <button
+                        class="warning-btn"
+                        onclick="
+                          changeProjectStatus(
+                            '${project.id}',
+                            'pending'
+                          )
+                        "
+                      >
+                        ⏳ Mettre en attente
+                      </button>
+                    `
+                    : `
+                      <button
+                        class="approve"
+                        onclick="
+                          changeProjectStatus(
+                            '${project.id}',
+                            'approved'
+                          )
+                        "
+                      >
+                        🟢 Approuver
+                      </button>
+                    `
+                }
+
+                <button
+                  class="danger"
+                  onclick="
+                    deleteProject(
+                      '${project.id}'
+                    )
+                  "
+                >
+                  🗑️ Supprimer
+                </button>
+
+              </div>
 
               <div
-                id="projectUpdateMessage-${project.id}"
+                id="adminProjectMessage-${project.id}"
               ></div>
 
             </div>
@@ -3221,18 +3339,15 @@
   }
 
 
-  /* ================================
-     ADMIN MODIFICATION PROJET
+  /* =================================
+     ADMIN SAUVEGARDER PROJET
   ================================= */
 
-  async function updateProjectReturn(
-    projectId
-  ) {
+  async function saveProject(projectId) {
 
     if (
       !currentProfile ||
-      currentProfile.role !==
-      "admin"
+      currentProfile.role !== "admin"
     ) {
 
       alert(
@@ -3242,33 +3357,101 @@
       return;
     }
 
-    const rateInput =
-      document.getElementById(
-        "returnRate-" +
-        projectId
-      );
+    const title =
+      document
+        .getElementById(
+          "adminTitle-" +
+          projectId
+        )
+        .value
+        .trim();
 
-    const durationInput =
-      document.getElementById(
-        "duration-" +
-        projectId
-      );
+    const description =
+      document
+        .getElementById(
+          "adminDescription-" +
+          projectId
+        )
+        .value
+        .trim();
 
-    const message =
-      document.getElementById(
-        "projectUpdateMessage-" +
-        projectId
+    const sector =
+      document
+        .getElementById(
+          "adminSector-" +
+          projectId
+        )
+        .value
+        .trim();
+
+    const amount =
+      Number(
+        document
+          .getElementById(
+            "adminAmount-" +
+            projectId
+          )
+          .value
       );
 
     const rate =
       Number(
-        rateInput?.value
+        document
+          .getElementById(
+            "adminRate-" +
+            projectId
+          )
+          .value
       );
 
     const duration =
       Number(
-        durationInput?.value
+        document
+          .getElementById(
+            "adminDuration-" +
+            projectId
+          )
+          .value
       );
+
+    const status =
+      document
+        .getElementById(
+          "adminStatus-" +
+          projectId
+        )
+        .value;
+
+    const message =
+      document.getElementById(
+        "adminProjectMessage-" +
+        projectId
+      );
+
+    if (!title) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Le titre est obligatoire.
+        </div>
+      `;
+
+      return;
+    }
+
+    if (
+      !amount ||
+      amount <= 0
+    ) {
+
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Montant invalide.
+        </div>
+      `;
+
+      return;
+    }
 
     if (
       !Number.isFinite(rate) ||
@@ -3276,15 +3459,11 @@
       rate > 1000
     ) {
 
-      if (message) {
-
-        message.innerHTML = `
-          <div class="error-box">
-            ❌ Rendement invalide.
-          </div>
-        `;
-
-      }
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Rendement invalide.
+        </div>
+      `;
 
       return;
     }
@@ -3295,28 +3474,20 @@
       duration > 240
     ) {
 
-      if (message) {
-
-        message.innerHTML = `
-          <div class="error-box">
-            ❌ Durée invalide.
-          </div>
-        `;
-
-      }
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ Durée invalide.
+        </div>
+      `;
 
       return;
     }
 
-    if (message) {
-
-      message.innerHTML = `
-        <div class="message">
-          ⏳ Enregistrement...
-        </div>
-      `;
-
-    }
+    message.innerHTML = `
+      <div class="message">
+        ⏳ Enregistrement...
+      </div>
+    `;
 
     const {
       error
@@ -3325,13 +3496,29 @@
         .from("projects")
         .update({
 
+          title:
+            title,
+
+          description:
+            description,
+
+          sector:
+            sector,
+
+          amount_required:
+            Math.round(amount),
+
+          amount:
+            Math.round(amount),
+
           return_rate:
             rate,
 
           duration_months:
-            Math.round(
-              duration
-            )
+            Math.round(duration),
+
+          status:
+            status
 
         })
         .eq(
@@ -3341,38 +3528,145 @@
 
     if (error) {
 
-      if (message) {
-
-        message.innerHTML = `
-          <div class="error-box">
-            ❌ ${escapeHtml(
-              error.message
-            )}
-          </div>
-        `;
-
-      }
+      message.innerHTML = `
+        <div class="error-box">
+          ❌ ${escapeHtml(
+            error.message
+          )}
+        </div>
+      `;
 
       return;
     }
 
-    if (message) {
+    message.innerHTML = `
+      <div class="message">
+        ✅ Projet mis à jour avec succès.
+      </div>
+    `;
 
-      message.innerHTML = `
-        <div class="message">
-          ✅ Rendement et durée enregistrés.
-        </div>
-      `;
-
-    }
-
-    await loadProjects();
     await loadAdminProjects();
-
+    await loadAdminStats();
+    await loadProjects();
   }
 
 
-  /* ================================
+  /* =================================
+     ADMIN STATUT PROJET
+  ================================= */
+
+  async function changeProjectStatus(
+    projectId,
+    status
+  ) {
+
+    if (
+      !currentProfile ||
+      currentProfile.role !== "admin"
+    ) {
+
+      alert(
+        "Accès administrateur requis."
+      );
+
+      return;
+    }
+
+    const {
+      error
+    } =
+      await sb
+        .from("projects")
+        .update({
+          status:
+            status
+        })
+        .eq(
+          "id",
+          projectId
+        );
+
+    if (error) {
+
+      alert(
+        "Erreur : " +
+        error.message
+      );
+
+      return;
+    }
+
+    alert(
+      status === "approved"
+        ? "✅ Projet approuvé."
+        : "⏳ Projet remis en attente."
+    );
+
+    await loadAdminProjects();
+    await loadAdminStats();
+    await loadProjects();
+  }
+
+
+  /* =================================
+     ADMIN SUPPRIMER PROJET
+  ================================= */
+
+  async function deleteProject(projectId) {
+
+    if (
+      !currentProfile ||
+      currentProfile.role !== "admin"
+    ) {
+
+      alert(
+        "Accès administrateur requis."
+      );
+
+      return;
+    }
+
+    const confirmed =
+      confirm(
+        "⚠️ Voulez-vous vraiment supprimer ce projet ?"
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    const {
+      error
+    } =
+      await sb
+        .from("projects")
+        .delete()
+        .eq(
+          "id",
+          projectId
+        );
+
+    if (error) {
+
+      alert(
+        "Impossible de supprimer le projet :\n\n" +
+        error.message
+      );
+
+      return;
+    }
+
+    alert(
+      "✅ Projet supprimé."
+    );
+
+    await loadAdminProjects();
+    await loadAdminStats();
+    await loadProjects();
+  }
+
+
+  /* =================================
      ADMIN INVESTISSEMENTS
   ================================= */
 
@@ -3439,17 +3733,13 @@
             Number(
               investment.return_rate
             ) ||
-            getProjectReturn(
-              project
-            );
+            getProjectReturn(project);
 
           const duration =
             Number(
               investment.duration_months
             ) ||
-            getProjectDuration(
-              project
-            );
+            getProjectDuration(project);
 
           const profit =
             Number(
@@ -3528,18 +3818,14 @@
 
               📊 Profit prévu :
               <strong>
-                ${formatMoney(
-                  profit
-                )}
+                ${formatMoney(profit)}
               </strong>
 
               <br>
 
               💵 Valeur totale prévue :
               <strong>
-                ${formatMoney(
-                  total
-                )}
+                ${formatMoney(total)}
               </strong>
 
               <br><br>
@@ -3561,8 +3847,7 @@
               <div class="admin-actions">
 
                 ${
-                  investment.status ===
-                  "pending"
+                  investment.status === "pending"
                     ? `
                       <button
                         class="approve"
@@ -3596,13 +3881,12 @@
             </div>
 
           `;
-
         }
       ).join("");
   }
 
 
-  /* ================================
+  /* =================================
      ADMIN PAIEMENTS
   ================================= */
 
@@ -3631,11 +3915,8 @@
 
       container.innerHTML = `
         <div class="error-box">
-          ❌ Impossible de charger
-          les paiements.
-
+          ❌ Impossible de charger les paiements.
           <br><br>
-
           ${escapeHtml(
             error.message
           )}
@@ -3737,11 +4018,8 @@
               </span>
 
               ${
-                payment.status ===
-                "pending"
-
+                payment.status === "pending"
                   ? `
-
                     <div class="admin-actions">
 
                       <button
@@ -3769,21 +4047,18 @@
                       </button>
 
                     </div>
-
                   `
-
                   : ""
               }
 
             </div>
-
           `;
         }
       ).join("");
   }
 
 
-  /* ================================
+  /* =================================
      VALIDATION PAIEMENT
   ================================= */
 
@@ -3794,8 +4069,7 @@
 
     if (
       !currentProfile ||
-      currentProfile.role !==
-      "admin"
+      currentProfile.role !== "admin"
     ) {
 
       alert(
@@ -3848,7 +4122,7 @@
   }
 
 
-  /* ================================
+  /* =================================
      STATUT INVESTISSEMENT
   ================================= */
 
@@ -3859,8 +4133,7 @@
 
     if (
       !currentProfile ||
-      currentProfile.role !==
-      "admin"
+      currentProfile.role !== "admin"
     ) {
 
       alert(
@@ -3895,23 +4168,18 @@
     }
 
     alert(
-      status ===
-      "approved"
-
+      status === "approved"
         ? "✅ Investissement approuvé."
-
         : "❌ Investissement refusé."
     );
 
     await loadAdminInvestments();
-
     await loadAdminStats();
-
     await loadMyInvestments();
   }
 
 
-  /* ================================
+  /* =================================
      RECHERCHE
   ================================= */
 
@@ -3945,19 +4213,15 @@
               )
             ).toLowerCase();
 
-          return text.includes(
-            value
-          );
+          return text.includes(value);
         }
       );
 
-    renderProjects(
-      filtered
-    );
+    renderProjects(filtered);
   }
 
 
-  /* ================================
+  /* =================================
      INITIALISATION
   ================================= */
 
