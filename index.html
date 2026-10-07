@@ -6,6 +6,7 @@
 
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Guinée Invest Hub - Investir en Guinée">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <title>Guinée Invest Hub</title>
 
@@ -62,10 +63,17 @@
       padding: 11px 15px;
       cursor: pointer;
       font-weight: 700;
+      transition: .15s;
     }
 
     button:active {
       transform: scale(.98);
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .nav-btn {
@@ -101,6 +109,7 @@
       max-width: 1200px;
       margin: 25px auto;
       padding: 0 15px;
+      min-height: 70vh;
     }
 
     section {
@@ -289,6 +298,21 @@
       padding: 30px 15px;
     }
 
+    details {
+      margin-top: 15px;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 10px 0;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #64748b;
+    }
+
     @media(max-width:600px) {
       .hero h1 {
         font-size: 27px;
@@ -300,6 +324,15 @@
 
       .row > * {
         width: 100%;
+      }
+
+      nav {
+        gap: 5px;
+      }
+
+      .nav-btn {
+        padding: 9px 11px;
+        font-size: 13px;
       }
     }
   </style>
@@ -320,28 +353,33 @@
 
     <nav>
 
-      <button class="nav-btn active"
+      <button
+        class="nav-btn active"
         onclick="showSection('home', this)">
         Accueil
       </button>
 
-      <button class="nav-btn"
+      <button
+        class="nav-btn"
         onclick="showSection('projectsSection', this)">
         Projets
       </button>
 
-      <button class="nav-btn"
+      <button
+        class="nav-btn"
         onclick="showSection('authSection', this)">
         Compte
       </button>
 
-      <button id="portfolioBtn"
+      <button
+        id="portfolioBtn"
         class="nav-btn hidden"
         onclick="showSection('portfolioSection', this)">
         Mon portefeuille
       </button>
 
-      <button id="adminBtn"
+      <button
+        id="adminBtn"
         class="nav-btn hidden"
         onclick="showSection('adminSection', this); loadAdmin()">
         Administration
@@ -351,12 +389,9 @@
   </div>
 </header>
 
-
 <main>
 
-<!-- =====================================================
-     ACCUEIL
-===================================================== -->
+<!-- ACCUEIL -->
 
 <section id="home" class="visible">
 
@@ -372,7 +407,8 @@
       avec des projets guinéens.
     </p>
 
-    <button class="primary"
+    <button
+      class="primary"
       onclick="showSection('projectsSection')">
       Découvrir les projets
     </button>
@@ -410,9 +446,7 @@
 </section>
 
 
-<!-- =====================================================
-     COMPTE
-===================================================== -->
+<!-- COMPTE -->
 
 <section id="authSection">
 
@@ -430,8 +464,7 @@
         id="signupEmail"
         type="email"
         autocomplete="email"
-        placeholder="exemple@email.com"
-      >
+        placeholder="exemple@email.com">
 
       <label>Mot de passe</label>
 
@@ -439,10 +472,11 @@
         id="signupPassword"
         type="password"
         autocomplete="new-password"
-        placeholder="Minimum 6 caractères"
-      >
+        placeholder="Minimum 8 caractères">
 
-      <button class="primary"
+      <button
+        id="signupBtn"
+        class="primary"
         onclick="signup()">
         Créer mon compte
       </button>
@@ -461,23 +495,24 @@
       <input
         id="loginEmail"
         type="email"
-        autocomplete="email"
-      >
+        autocomplete="email">
 
       <label>Mot de passe</label>
 
       <input
         id="loginPassword"
         type="password"
-        autocomplete="current-password"
-      >
+        autocomplete="current-password">
 
-      <button class="primary"
+      <button
+        id="loginBtn"
+        class="primary"
         onclick="login()">
         Se connecter
       </button>
 
-      <button class="secondary"
+      <button
+        class="secondary"
         onclick="logout()">
         Se déconnecter
       </button>
@@ -489,9 +524,7 @@
 </section>
 
 
-<!-- =====================================================
-     PROJETS
-===================================================== -->
+<!-- PROJETS -->
 
 <section id="projectsSection">
 
@@ -504,8 +537,7 @@
       <input
         id="searchInput"
         placeholder="Rechercher un projet..."
-        oninput="renderProjects()"
-      >
+        oninput="renderProjects()">
 
       <select
         id="sectorFilter"
@@ -521,17 +553,12 @@
 
   </div>
 
-
-  <div id="projectsList"
-       class="grid">
-  </div>
+  <div id="projectsList" class="grid"></div>
 
 </section>
 
 
-<!-- =====================================================
-     PORTEFEUILLE
-===================================================== -->
+<!-- PORTEFEUILLE -->
 
 <section id="portfolioSection">
 
@@ -546,13 +573,14 @@
 
   </div>
 
-
   <div class="card">
 
     <h3>Mes investissements</h3>
 
     <div id="investmentsList">
-      Chargement...
+      <div class="loading">
+        Chargement...
+      </div>
     </div>
 
   </div>
@@ -560,9 +588,7 @@
 </section>
 
 
-<!-- =====================================================
-     ADMINISTRATION
-===================================================== -->
+<!-- ADMINISTRATION -->
 
 <section id="adminSection">
 
@@ -572,15 +598,12 @@
 
     <div id="adminMessage"></div>
 
-    <div
-      id="adminStats"
-      class="stats">
-    </div>
+    <div id="adminStats" class="stats"></div>
 
   </div>
 
 
-  <!-- CRÉATION PROJET -->
+  <!-- CREATION PROJET -->
 
   <div class="card admin">
 
@@ -590,22 +613,19 @@
 
     <input
       id="projectTitle"
-      placeholder="Ex : Ferme agricole"
-    >
+      placeholder="Ex : Ferme agricole">
 
     <label>Secteur</label>
 
     <input
       id="projectSector"
-      placeholder="Agriculture"
-    >
+      placeholder="Agriculture">
 
     <label>Description</label>
 
     <textarea
       id="projectDescription"
-      placeholder="Description du projet..."
-    ></textarea>
+      placeholder="Description du projet..."></textarea>
 
     <div class="row">
 
@@ -617,8 +637,7 @@
           id="projectAmount"
           type="number"
           min="1"
-          placeholder="100000000"
-        >
+          placeholder="100000000">
 
       </div>
 
@@ -631,8 +650,7 @@
           type="number"
           min="0"
           step="0.01"
-          placeholder="15"
-        >
+          placeholder="15">
 
       </div>
 
@@ -644,14 +662,14 @@
           id="projectDuration"
           type="number"
           min="1"
-          placeholder="12"
-        >
+          placeholder="12">
 
       </div>
 
     </div>
 
     <button
+      id="createProjectBtn"
       class="primary"
       onclick="createProject()">
       Créer le projet
@@ -667,7 +685,9 @@
     <h3>📁 Gestion des projets</h3>
 
     <div id="adminProjects">
-      Chargement...
+      <div class="loading">
+        Chargement...
+      </div>
     </div>
 
   </div>
@@ -747,7 +767,7 @@
 <script>
 
 /* =====================================================
-   CONFIGURATION SUPABASE
+   SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
@@ -755,16 +775,13 @@ const SUPABASE_URL =
 
 /*
  IMPORTANT :
+ Remplace TON_PUBLISHABLE_KEY par ta Publishable key.
 
- Remplace uniquement TON_PUBLISHABLE_KEY
- par ta clé Publishable/anon Supabase.
-
- NE METS JAMAIS service_role ici.
+ NE JAMAIS mettre service_role ici.
 */
 
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_NnsdG_LLkZswoTm4nRohNA_XF-WFlOK";
-
 
 const sb =
   window.supabase.createClient(
@@ -781,11 +798,6 @@ let currentUser = null;
 let currentProfile = null;
 let projects = [];
 
-
-/*
- Numéro de paiement public
-*/
-
 const ORANGE_MONEY_NUMBER =
   "+224 612 78 22 19";
 
@@ -797,7 +809,7 @@ const ORANGE_MONEY_NUMBER =
 function escapeHtml(value) {
 
   return String(value ?? "")
-    .replace(/[&<>"']/g, function(char) {
+    .replace(/[&<>"']/g, char => {
 
       const map = {
         "&": "&amp;",
@@ -827,16 +839,26 @@ function formatDate(value) {
 
   if (!value) return "—";
 
-  return new Date(value)
-    .toLocaleString("fr-FR");
+  try {
+
+    return new Date(value)
+      .toLocaleString("fr-FR");
+
+  } catch {
+
+    return "—";
+
+  }
 
 }
 
 
 function isAdmin() {
 
-  return !!currentProfile &&
-         currentProfile.role === "admin";
+  return Boolean(
+    currentProfile &&
+    currentProfile.role === "admin"
+  );
 
 }
 
@@ -853,15 +875,17 @@ function showMessage(
   if (!element) return;
 
   if (!message) {
+
     element.innerHTML = "";
     return;
+
   }
 
   element.innerHTML = `
     <div class="${
       success
-      ? "message-success"
-      : "message-error"
+        ? "message-success"
+        : "message-error"
     }">
       ${escapeHtml(message)}
     </div>
@@ -870,51 +894,120 @@ function showMessage(
 }
 
 
+function setButtonLoading(
+  buttonId,
+  loading,
+  loadingText = "Chargement..."
+) {
+
+  const button =
+    document.getElementById(buttonId);
+
+  if (!button) return;
+
+  if (loading) {
+
+    button.dataset.originalText =
+      button.textContent;
+
+    button.disabled = true;
+
+    button.textContent =
+      loadingText;
+
+  } else {
+
+    button.disabled = false;
+
+    button.textContent =
+      button.dataset.originalText ||
+      button.textContent;
+
+  }
+
+}
+
+
 /* =====================================================
    NAVIGATION
 ===================================================== */
 
-function showSection(sectionId, button) {
+function showSection(
+  sectionId,
+  button = null
+) {
 
   document
     .querySelectorAll("main section")
     .forEach(section => {
-      section.classList.remove("visible");
+
+      section.classList.remove(
+        "visible"
+      );
+
     });
 
 
   const section =
-    document.getElementById(sectionId);
+    document.getElementById(
+      sectionId
+    );
+
 
   if (section) {
-    section.classList.add("visible");
+
+    section.classList.add(
+      "visible"
+    );
+
   }
 
 
   document
     .querySelectorAll(".nav-btn")
     .forEach(btn => {
-      btn.classList.remove("active");
+
+      btn.classList.remove(
+        "active"
+      );
+
     });
 
 
   if (button) {
-    button.classList.add("active");
+
+    button.classList.add(
+      "active"
+    );
+
   }
 
 
   if (sectionId === "projectsSection") {
+
     loadProjects();
+
   }
 
 
   if (sectionId === "portfolioSection") {
+
+    if (!currentUser) {
+
+      showSection("authSection");
+      return;
+
+    }
+
     loadPortfolio();
+
   }
 
 
   if (sectionId === "adminSection") {
+
     loadAdmin();
+
   }
 
 }
@@ -928,17 +1021,26 @@ async function signup() {
 
   const email =
     document
-      .getElementById("signupEmail")
+      .getElementById(
+        "signupEmail"
+      )
       .value
-      .trim();
+      .trim()
+      .toLowerCase();
+
 
   const password =
     document
-      .getElementById("signupPassword")
+      .getElementById(
+        "signupPassword"
+      )
       .value;
 
 
-  showMessage("signupMessage", "");
+  showMessage(
+    "signupMessage",
+    ""
+  );
 
 
   if (!email) {
@@ -949,48 +1051,78 @@ async function signup() {
     );
 
     return;
+
   }
 
 
-  if (password.length < 6) {
+  if (password.length < 8) {
 
     showMessage(
       "signupMessage",
-      "Le mot de passe doit contenir au moins 6 caractères."
+      "Le mot de passe doit contenir au moins 8 caractères."
     );
 
     return;
+
   }
 
 
-  const {
-    data,
-    error
-  } =
-    await sb.auth.signUp({
-      email,
-      password
-    });
-
-
-  if (error) {
-
-    showMessage(
-      "signupMessage",
-      error.message
-    );
-
-    return;
-  }
-
-
-  showMessage(
-    "signupMessage",
-    data.user
-      ? "Compte créé. Vérifie ton email si la confirmation est activée."
-      : "Compte créé.",
-    true
+  setButtonLoading(
+    "signupBtn",
+    true,
+    "Création..."
   );
+
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await sb.auth.signUp({
+        email,
+        password
+      });
+
+
+    if (error) {
+
+      showMessage(
+        "signupMessage",
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      "signupMessage",
+      data.user
+        ? "Compte créé. Vérifie ton email si la confirmation est activée."
+        : "Compte créé.",
+      true
+    );
+
+
+  } catch (error) {
+
+    showMessage(
+      "signupMessage",
+      error.message ||
+      "Erreur lors de la création du compte."
+    );
+
+  } finally {
+
+    setButtonLoading(
+      "signupBtn",
+      false
+    );
+
+  }
 
 }
 
@@ -1003,26 +1135,115 @@ async function login() {
 
   const email =
     document
-      .getElementById("loginEmail")
+      .getElementById(
+        "loginEmail"
+      )
       .value
-      .trim();
+      .trim()
+      .toLowerCase();
+
 
   const password =
     document
-      .getElementById("loginPassword")
+      .getElementById(
+        "loginPassword"
+      )
       .value;
 
 
-  showMessage("loginMessage", "");
+  showMessage(
+    "loginMessage",
+    ""
+  );
 
+
+  if (!email || !password) {
+
+    showMessage(
+      "loginMessage",
+      "Email et mot de passe obligatoires."
+    );
+
+    return;
+
+  }
+
+
+  setButtonLoading(
+    "loginBtn",
+    true,
+    "Connexion..."
+  );
+
+
+  try {
+
+    const {
+      error
+    } =
+      await sb.auth.signInWithPassword({
+        email,
+        password
+      });
+
+
+    if (error) {
+
+      showMessage(
+        "loginMessage",
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    await loadUser();
+
+
+    showMessage(
+      "loginMessage",
+      "Connexion réussie.",
+      true
+    );
+
+
+    showSection(
+      "projectsSection"
+    );
+
+
+  } catch (error) {
+
+    showMessage(
+      "loginMessage",
+      error.message ||
+      "Erreur de connexion."
+    );
+
+  } finally {
+
+    setButtonLoading(
+      "loginBtn",
+      false
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   DECONNEXION
+===================================================== */
+
+async function logout() {
 
   const {
     error
   } =
-    await sb.auth.signInWithPassword({
-      email,
-      password
-    });
+    await sb.auth.signOut();
 
 
   if (error) {
@@ -1033,31 +1254,9 @@ async function login() {
     );
 
     return;
+
   }
 
-
-  await loadUser();
-
-
-  showMessage(
-    "loginMessage",
-    "Connexion réussie.",
-    true
-  );
-
-
-  showSection("projectsSection");
-
-}
-
-
-/* =====================================================
-   DÉCONNEXION
-===================================================== */
-
-async function logout() {
-
-  await sb.auth.signOut();
 
   currentUser = null;
   currentProfile = null;
@@ -1070,64 +1269,96 @@ async function logout() {
 
 
 /* =====================================================
-   CHARGER UTILISATEUR
+   UTILISATEUR
 ===================================================== */
 
 async function loadUser() {
 
-  const {
-    data: {
-      user
-    }
-  } =
-    await sb.auth.getUser();
-
-
-  currentUser =
-    user || null;
-
-  currentProfile =
-    null;
-
-
-  if (currentUser) {
+  try {
 
     const {
       data,
       error
     } =
-      await sb
-        .from("profiles")
-        .select("*")
-        .eq("id", currentUser.id)
-        .maybeSingle();
+      await sb.auth.getUser();
 
 
-    if (!error) {
-      currentProfile = data;
+    if (error) {
+
+      currentUser = null;
+      currentProfile = null;
+      updateUI();
+
+      return;
+
     }
 
+
+    currentUser =
+      data?.user || null;
+
+    currentProfile =
+      null;
+
+
+    if (currentUser) {
+
+      const {
+        data: profile,
+        error: profileError
+      } =
+        await sb
+          .from("profiles")
+          .select("id, role")
+          .eq(
+            "id",
+            currentUser.id
+          )
+          .maybeSingle();
+
+
+      if (!profileError) {
+
+        currentProfile =
+          profile || null;
+
+      }
+
+    }
+
+
+    updateUI();
+
+
+  } catch {
+
+    currentUser = null;
+    currentProfile = null;
+
+    updateUI();
+
   }
-
-
-  updateUI();
 
 }
 
 
 /* =====================================================
-   INTERFACE UTILISATEUR
+   INTERFACE
 ===================================================== */
 
 function updateUI() {
 
   const status =
-    document.getElementById("userStatus");
+    document.getElementById(
+      "userStatus"
+    );
+
 
   if (currentUser) {
 
     status.textContent =
-      currentUser.email || "Connecté";
+      currentUser.email ||
+      "Connecté";
 
   } else {
 
@@ -1138,7 +1369,9 @@ function updateUI() {
 
 
   document
-    .getElementById("portfolioBtn")
+    .getElementById(
+      "portfolioBtn"
+    )
     .classList
     .toggle(
       "hidden",
@@ -1147,7 +1380,9 @@ function updateUI() {
 
 
   document
-    .getElementById("adminBtn")
+    .getElementById(
+      "adminBtn"
+    )
     .classList
     .toggle(
       "hidden",
@@ -1163,6 +1398,19 @@ function updateUI() {
 
 async function loadProjects() {
 
+  const container =
+    document.getElementById(
+      "projectsList"
+    );
+
+
+  container.innerHTML = `
+    <div class="loading">
+      Chargement des projets...
+    </div>
+  `;
+
+
   const {
     data,
     error
@@ -1170,27 +1418,35 @@ async function loadProjects() {
     await sb
       .from("projects")
       .select("*")
-      .eq("status", "approved")
-      .order("created_at", {
-        ascending: false
-      });
+      .eq(
+        "status",
+        "approved"
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
 
 
   if (error) {
 
-    document.getElementById(
-      "projectsList"
-    ).innerHTML = `
+    container.innerHTML = `
       <div class="message-error">
-        ${escapeHtml(error.message)}
+        ${escapeHtml(
+          error.message
+        )}
       </div>
     `;
 
     return;
+
   }
 
 
-  projects = data || [];
+  projects =
+    data || [];
 
 
   updateSectorFilter();
@@ -1201,7 +1457,7 @@ async function loadProjects() {
 
 
 /* =====================================================
-   FILTRE SECTEUR
+   FILTRE
 ===================================================== */
 
 function updateSectorFilter() {
@@ -1220,7 +1476,10 @@ function updateSectorFilter() {
     [
       ...new Set(
         projects
-          .map(project => project.sector)
+          .map(
+            project =>
+              project.sector
+          )
           .filter(Boolean)
       )
     ]
@@ -1234,20 +1493,30 @@ function updateSectorFilter() {
   `;
 
 
-  sectors.forEach(sector => {
+  sectors.forEach(
+    sector => {
 
-    const option =
-      document.createElement("option");
+      const option =
+        document.createElement(
+          "option"
+        );
 
-    option.value = sector;
-    option.textContent = sector;
+      option.value =
+        sector;
 
-    filter.appendChild(option);
+      option.textContent =
+        sector;
 
-  });
+      filter.appendChild(
+        option
+      );
+
+    }
+  );
 
 
-  filter.value = current;
+  filter.value =
+    current;
 
 }
 
@@ -1260,7 +1529,9 @@ function renderProjects() {
 
   const search =
     document
-      .getElementById("searchInput")
+      .getElementById(
+        "searchInput"
+      )
       .value
       .toLowerCase()
       .trim();
@@ -1268,28 +1539,32 @@ function renderProjects() {
 
   const sector =
     document
-      .getElementById("sectorFilter")
+      .getElementById(
+        "sectorFilter"
+      )
       .value;
 
 
   const filtered =
-    projects.filter(project => {
+    projects.filter(
+      project => {
 
-      const text =
-        `
-        ${project.title || ""}
-        ${project.description || ""}
-        ${project.sector || ""}
-        `
-        .toLowerCase();
+        const text = `
+          ${project.title || ""}
+          ${project.description || ""}
+          ${project.sector || ""}
+        `.toLowerCase();
 
 
-      return (
-        (!search || text.includes(search)) &&
-        (!sector || project.sector === sector)
-      );
+        return (
+          (!search ||
+            text.includes(search)) &&
+          (!sector ||
+            project.sector === sector)
+        );
 
-    });
+      }
+    );
 
 
   const container =
@@ -1307,12 +1582,15 @@ function renderProjects() {
     `;
 
     return;
+
   }
 
 
   container.innerHTML =
     filtered
-      .map(projectCard)
+      .map(
+        projectCard
+      )
       .join("");
 
 }
@@ -1325,7 +1603,9 @@ function renderProjects() {
 function projectCard(project) {
 
   const id =
-    escapeHtml(project.id);
+    escapeHtml(
+      project.id
+    );
 
 
   return `
@@ -1336,15 +1616,23 @@ function projectCard(project) {
       </span>
 
       <h3>
-        ${escapeHtml(project.title)}
+        ${escapeHtml(
+          project.title
+        )}
       </h3>
 
       <div class="small">
-        ${escapeHtml(project.sector || "Secteur non précisé")}
+        ${escapeHtml(
+          project.sector ||
+          "Secteur non précisé"
+        )}
       </div>
 
       <p>
-        ${escapeHtml(project.description || "")}
+        ${escapeHtml(
+          project.description ||
+          ""
+        )}
       </p>
 
       <div class="project-amount">
@@ -1357,25 +1645,30 @@ function projectCard(project) {
       <p>
         Rendement :
         <strong>
-          ${Number(project.return_rate || 0)}%
+          ${Number(
+            project.return_rate || 0
+          )}%
         </strong>
+
         <br>
 
         Durée :
         <strong>
-          ${Number(project.duration_months || 0)}
+          ${Number(
+            project.duration_months || 0
+          )}
           mois
         </strong>
       </p>
 
       ${
         currentUser
-        ? investmentForm(project)
-        : `
-          <p class="small">
-            Connecte-toi pour investir dans ce projet.
-          </p>
-        `
+          ? investmentForm(project)
+          : `
+            <p class="small">
+              Connecte-toi pour investir dans ce projet.
+            </p>
+          `
       }
 
     </div>
@@ -1391,7 +1684,9 @@ function projectCard(project) {
 function investmentForm(project) {
 
   const id =
-    escapeHtml(project.id);
+    escapeHtml(
+      project.id
+    );
 
 
   return `
@@ -1413,8 +1708,9 @@ function investmentForm(project) {
           id="amount_${id}"
           type="number"
           min="1"
-          placeholder="Ex : 1000000"
-        >
+          step="1"
+          inputmode="numeric"
+          placeholder="Ex : 1000000">
 
 
         <label>
@@ -1437,13 +1733,12 @@ function investmentForm(project) {
 
 
         <div id="paymentFields_${id}">
-
           ${orangeFields(id)}
-
         </div>
 
 
         <button
+          id="investBtn_${id}"
           class="primary"
           onclick="submitInvestment('${id}')">
 
@@ -1463,7 +1758,7 @@ function investmentForm(project) {
 
 
 /* =====================================================
-   CHAMPS PAIEMENT
+   PAIEMENT
 ===================================================== */
 
 function orangeFields(id) {
@@ -1481,16 +1776,15 @@ function orangeFields(id) {
 
     </p>
 
-
     <label>
       Ton numéro de téléphone
     </label>
 
     <input
       id="phone_${id}"
-      placeholder="+224..."
-    >
-
+      type="tel"
+      inputmode="tel"
+      placeholder="+224...">
 
     <label>
       Référence de transaction
@@ -1498,8 +1792,7 @@ function orangeFields(id) {
 
     <input
       id="reference_${id}"
-      placeholder="Référence du transfert"
-    >
+      placeholder="Référence du transfert">
 
   `;
 
@@ -1510,7 +1803,9 @@ function updatePaymentFields(id) {
 
   const method =
     document
-      .getElementById("method_" + id)
+      .getElementById(
+        "method_" + id
+      )
       .value;
 
 
@@ -1526,16 +1821,15 @@ function updatePaymentFields(id) {
       orangeFields(id);
 
     return;
+
   }
 
 
   container.innerHTML = `
 
     <p class="small">
-
       MTN Money sera disponible
       après intégration de son API.
-
     </p>
 
     <label>
@@ -1544,8 +1838,9 @@ function updatePaymentFields(id) {
 
     <input
       id="phone_${id}"
-      placeholder="+224..."
-    >
+      type="tel"
+      inputmode="tel"
+      placeholder="+224...">
 
     <label>
       Référence
@@ -1553,8 +1848,7 @@ function updatePaymentFields(id) {
 
     <input
       id="reference_${id}"
-      placeholder="Référence"
-    >
+      placeholder="Référence">
 
   `;
 
@@ -1562,62 +1856,66 @@ function updatePaymentFields(id) {
 
 
 /* =====================================================
-   INVESTISSEMENT SÉCURISÉ
+   INVESTISSEMENT
 ===================================================== */
 
-async function submitInvestment(projectId) {
+async function submitInvestment(
+  projectId
+) {
 
   if (!currentUser) {
 
-    alert(
-      "Connecte-toi avant d'investir."
+    showSection(
+      "authSection"
     );
 
     return;
+
   }
 
 
   const amount =
     Number(
       document.getElementById(
-        "amount_" + projectId
-      ).value
+        "amount_" +
+        projectId
+      )?.value
     );
 
 
   const method =
     document.getElementById(
-      "method_" + projectId
-    ).value;
-
-
-  const phoneElement =
-    document.getElementById(
-      "phone_" + projectId
-    );
-
-
-  const referenceElement =
-    document.getElementById(
-      "reference_" + projectId
-    );
+      "method_" +
+      projectId
+    )?.value;
 
 
   const phone =
-    phoneElement
-      ? phoneElement.value.trim()
-      : "";
+    document.getElementById(
+      "phone_" +
+      projectId
+    )?.value
+    .trim() || "";
 
 
   const reference =
-    referenceElement
-      ? referenceElement.value.trim()
-      : "";
+    document.getElementById(
+      "reference_" +
+      projectId
+    )?.value
+    .trim() || "";
 
 
   const messageId =
     "investmentMessage_" +
     projectId;
+
+
+  const button =
+    document.getElementById(
+      "investBtn_" +
+      projectId
+    );
 
 
   showMessage(
@@ -1626,7 +1924,10 @@ async function submitInvestment(projectId) {
   );
 
 
-  if (!amount || amount <= 0) {
+  if (
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ) {
 
     showMessage(
       messageId,
@@ -1634,17 +1935,19 @@ async function submitInvestment(projectId) {
     );
 
     return;
+
   }
 
 
-  if (method === "mtn_money") {
+  if (method !== "orange_money") {
 
     showMessage(
       messageId,
-      "MTN Money n'est pas encore activé."
+      "Cette méthode de paiement n'est pas encore activée."
     );
 
     return;
+
   }
 
 
@@ -1656,41 +1959,113 @@ async function submitInvestment(projectId) {
     );
 
     return;
+
   }
 
 
-  const {
-    data,
-    error
-  } =
-    await sb.rpc(
-      "create_investment",
-      {
-        p_project_id: projectId,
-        p_amount: amount,
-        p_payment_method: method,
-        p_payer_phone: phone,
-        p_transaction_reference: reference
-      }
-    );
+  if (button) {
+
+    button.disabled = true;
+    button.textContent =
+      "Enregistrement...";
+
+  }
 
 
-  if (error) {
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await sb.rpc(
+        "create_investment",
+        {
+          p_project_id:
+            projectId,
+
+          p_amount:
+            amount,
+
+          p_payment_method:
+            method,
+
+          p_payer_phone:
+            phone,
+
+          p_transaction_reference:
+            reference
+        }
+      );
+
+
+    if (error) {
+
+      showMessage(
+        messageId,
+        error.message
+      );
+
+      return;
+
+    }
+
 
     showMessage(
       messageId,
-      error.message
+      "Investissement enregistré. Le paiement sera vérifié par l'administration.",
+      true
     );
 
-    return;
+
+    const amountInput =
+      document.getElementById(
+        "amount_" +
+        projectId
+      );
+
+    const phoneInput =
+      document.getElementById(
+        "phone_" +
+        projectId
+      );
+
+    const referenceInput =
+      document.getElementById(
+        "reference_" +
+        projectId
+      );
+
+
+    if (amountInput)
+      amountInput.value = "";
+
+    if (phoneInput)
+      phoneInput.value = "";
+
+    if (referenceInput)
+      referenceInput.value = "";
+
+
+  } catch (error) {
+
+    showMessage(
+      messageId,
+      error.message ||
+      "Erreur lors de l'investissement."
+    );
+
+  } finally {
+
+    if (button) {
+
+      button.disabled = false;
+      button.textContent =
+        "Envoyer la demande";
+
+    }
+
   }
-
-
-  showMessage(
-    messageId,
-    "Investissement enregistré. Le paiement sera vérifié par l'administration.",
-    true
-  );
 
 }
 
@@ -1701,7 +2076,28 @@ async function submitInvestment(projectId) {
 
 async function loadPortfolio() {
 
-  if (!currentUser) return;
+  if (!currentUser) {
+
+    showSection(
+      "authSection"
+    );
+
+    return;
+
+  }
+
+
+  const container =
+    document.getElementById(
+      "investmentsList"
+    );
+
+
+  container.innerHTML = `
+    <div class="loading">
+      Chargement...
+    </div>
+  `;
 
 
   const {
@@ -1731,15 +2127,16 @@ async function loadPortfolio() {
 
   if (error) {
 
-    document.getElementById(
-      "investmentsList"
-    ).innerHTML = `
+    container.innerHTML = `
       <div class="message-error">
-        ${escapeHtml(error.message)}
+        ${escapeHtml(
+          error.message
+        )}
       </div>
     `;
 
     return;
+
   }
 
 
@@ -1750,7 +2147,10 @@ async function loadPortfolio() {
   const total =
     investments.reduce(
       (sum, item) =>
-        sum + Number(item.amount || 0),
+        sum +
+        Number(
+          item.amount || 0
+        ),
       0
     );
 
@@ -1759,11 +2159,15 @@ async function loadPortfolio() {
     investments
       .filter(
         item =>
-          item.status === "approved"
+          item.status ===
+          "approved"
       )
       .reduce(
         (sum, item) =>
-          sum + Number(item.amount || 0),
+          sum +
+          Number(
+            item.amount || 0
+          ),
         0
       );
 
@@ -1772,11 +2176,15 @@ async function loadPortfolio() {
     investments
       .filter(
         item =>
-          item.status === "pending"
+          item.status ===
+          "pending"
       )
       .reduce(
         (sum, item) =>
-          sum + Number(item.amount || 0),
+          sum +
+          Number(
+            item.amount || 0
+          ),
         0
       );
 
@@ -1785,13 +2193,15 @@ async function loadPortfolio() {
     investments
       .filter(
         item =>
-          item.status === "approved"
+          item.status ===
+          "approved"
       )
       .reduce(
         (sum, item) =>
           sum +
           Number(
-            item.expected_profit || 0
+            item.expected_profit ||
+            0
           ),
         0
       );
@@ -1801,13 +2211,15 @@ async function loadPortfolio() {
     investments
       .filter(
         item =>
-          item.status === "approved"
+          item.status ===
+          "approved"
       )
       .reduce(
         (sum, item) =>
           sum +
           Number(
-            item.expected_total || 0
+            item.expected_total ||
+            0
           ),
         0
       );
@@ -1864,30 +2276,41 @@ async function loadPortfolio() {
 
   if (!investments.length) {
 
-    document.getElementById(
-      "investmentsList"
-    ).innerHTML =
+    container.innerHTML =
       "<p>Aucun investissement.</p>";
 
     return;
+
   }
 
 
-  document.getElementById(
-    "investmentsList"
-  ).innerHTML =
+  container.innerHTML =
     investments
       .map(item => {
 
         let badge =
           "badge-pending";
 
-        if (item.status === "approved") {
-          badge = "badge-approved";
+
+        if (
+          item.status ===
+          "approved"
+        ) {
+
+          badge =
+            "badge-approved";
+
         }
 
-        if (item.status === "rejected") {
-          badge = "badge-rejected";
+
+        if (
+          item.status ===
+          "rejected"
+        ) {
+
+          badge =
+            "badge-rejected";
+
         }
 
 
@@ -1903,20 +2326,36 @@ async function loadPortfolio() {
             </h3>
 
             <p>
+              Secteur :
+              ${escapeHtml(
+                item.projects?.sector ||
+                "—"
+              )}
+            </p>
+
+            <p>
               Montant :
               <strong>
-                ${formatMoney(item.amount)}
+                ${formatMoney(
+                  item.amount
+                )}
               </strong>
             </p>
 
             <p>
               Rendement :
-              ${Number(item.return_rate || 0)}%
+              ${Number(
+                item.return_rate ||
+                0
+              )}%
             </p>
 
             <p>
               Durée :
-              ${Number(item.duration_months || 0)}
+              ${Number(
+                item.duration_months ||
+                0
+              )}
               mois
             </p>
 
@@ -1930,11 +2369,15 @@ async function loadPortfolio() {
             </p>
 
             <span class="badge ${badge}">
-              ${escapeHtml(item.status)}
+              ${escapeHtml(
+                item.status
+              )}
             </span>
 
             <p class="small">
-              ${formatDate(item.created_at)}
+              ${formatDate(
+                item.created_at
+              )}
             </p>
 
           </div>
@@ -1953,18 +2396,34 @@ async function loadPortfolio() {
 
 async function loadAdmin() {
 
-  if (!isAdmin()) {
+  if (!currentUser) {
 
-    document.getElementById(
-      "adminMessage"
-    ).innerHTML = `
-      <div class="message-error">
-        Accès administrateur refusé.
-      </div>
-    `;
+    showMessage(
+      "adminMessage",
+      "Connecte-toi d'abord."
+    );
 
     return;
+
   }
+
+
+  if (!isAdmin()) {
+
+    showMessage(
+      "adminMessage",
+      "Accès administrateur refusé."
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "adminMessage",
+    ""
+  );
 
 
   const [
@@ -1993,7 +2452,10 @@ async function loadAdmin() {
         .from("investments")
         .select(`
           *,
-          projects(title)
+          projects (
+            title,
+            sector
+          )
         `)
         .order(
           "created_at",
@@ -2015,19 +2477,14 @@ async function loadAdmin() {
     ]);
 
 
-  if (
+  const error =
     profilesResult.error ||
     projectsResult.error ||
     investmentsResult.error ||
-    paymentsResult.error
-  ) {
+    paymentsResult.error;
 
-    const error =
-      profilesResult.error ||
-      projectsResult.error ||
-      investmentsResult.error ||
-      paymentsResult.error;
 
+  if (error) {
 
     showMessage(
       "adminMessage",
@@ -2035,6 +2492,7 @@ async function loadAdmin() {
     );
 
     return;
+
   }
 
 
@@ -2054,7 +2512,10 @@ async function loadAdmin() {
   const volume =
     investments.reduce(
       (sum, item) =>
-        sum + Number(item.amount || 0),
+        sum +
+        Number(
+          item.amount || 0
+        ),
       0
     );
 
@@ -2085,6 +2546,13 @@ async function loadAdmin() {
     </div>
 
     <div class="stat">
+      Paiements
+      <strong>
+        ${payments.length}
+      </strong>
+    </div>
+
+    <div class="stat">
       Volume
       <strong>
         ${formatMoney(volume)}
@@ -2098,11 +2566,9 @@ async function loadAdmin() {
     adminProjects
   );
 
-
   renderAdminInvestments(
     investments
   );
-
 
   renderAdminPayments(
     payments
@@ -2112,10 +2578,12 @@ async function loadAdmin() {
 
 
 /* =====================================================
-   ADMIN — PROJETS
+   ADMIN PROJETS
 ===================================================== */
 
-function renderAdminProjects(projectsList) {
+function renderAdminProjects(
+  projectsList
+) {
 
   const container =
     document.getElementById(
@@ -2129,105 +2597,124 @@ function renderAdminProjects(projectsList) {
       "<p>Aucun projet.</p>";
 
     return;
+
   }
 
 
   container.innerHTML =
     projectsList
-      .map(project => `
+      .map(project => {
 
-        <div class="card">
+        const id =
+          escapeHtml(
+            project.id
+          );
 
-          <h3>
-            ${escapeHtml(
-              project.title
-            )}
-          </h3>
 
-          <p>
-            ${escapeHtml(
-              project.sector || ""
-            )}
-          </p>
+        return `
 
-          <p>
-            ${formatMoney(
-              project.amount_required ??
-              project.amount
-            )}
-          </p>
+          <div class="card">
 
-          <p>
-            Rendement :
-            ${Number(
-              project.return_rate || 0
-            )}%
-          </p>
+            <h3>
+              ${escapeHtml(
+                project.title
+              )}
+            </h3>
 
-          <span class="badge">
-            ${escapeHtml(
-              project.status
-            )}
-          </span>
+            <p>
+              ${escapeHtml(
+                project.sector ||
+                ""
+              )}
+            </p>
 
-          <div class="row"
-               style="margin-top:12px">
+            <p>
+              ${formatMoney(
+                project.amount_required ??
+                project.amount
+              )}
+            </p>
 
-            <button
-              class="success"
-              onclick="setProjectStatus(
-                '${project.id}',
-                'approved'
-              )">
+            <p>
+              Rendement :
+              ${Number(
+                project.return_rate ||
+                0
+              )}%
+            </p>
 
-              Approuver
+            <p>
+              Durée :
+              ${Number(
+                project.duration_months ||
+                0
+              )}
+              mois
+            </p>
 
-            </button>
+            <span class="badge">
+              ${escapeHtml(
+                project.status
+              )}
+            </span>
 
-            <button
-              class="secondary"
-              onclick="setProjectStatus(
-                '${project.id}',
-                'pending'
-              )">
+            <div
+              class="row"
+              style="margin-top:12px">
 
-              En attente
+              <button
+                class="success"
+                onclick="setProjectStatus(
+                  '${id}',
+                  'approved'
+                )">
+                Approuver
+              </button>
 
-            </button>
+              <button
+                class="secondary"
+                onclick="setProjectStatus(
+                  '${id}',
+                  'pending'
+                )">
+                En attente
+              </button>
 
-            <button
-              class="danger"
-              onclick="deleteProject(
-                '${project.id}'
-              )">
+              <button
+                class="danger"
+                onclick="deleteProject(
+                  '${id}'
+                )">
+                Supprimer
+              </button>
 
-              Supprimer
-
-            </button>
+            </div>
 
           </div>
 
-        </div>
+        `;
 
-      `)
+      })
       .join("");
 
 }
 
 
 /* =====================================================
-   ADMIN — CRÉER PROJET
+   CREER PROJET
 ===================================================== */
 
 async function createProject() {
 
   if (!isAdmin()) {
 
-    alert(
+    showMessage(
+      "adminMessage",
       "Accès administrateur requis."
     );
 
     return;
+
   }
 
 
@@ -2290,109 +2777,162 @@ async function createProject() {
 
   if (
     !title ||
-    !amount ||
+    !Number.isFinite(amount) ||
     amount <= 0
   ) {
 
     showMessage(
       "adminMessage",
-      "Le titre et le montant sont obligatoires."
+      "Le titre et un montant valide sont obligatoires."
     );
 
     return;
+
   }
 
 
-  const {
-    error
-  } =
-    await sb
-      .from("projects")
-      .insert({
-
-        title,
-
-        sector,
-
-        description,
-
-        amount_required:
-          amount,
-
-        amount:
-
-          amount,
-
-        return_rate:
-          returnRate,
-
-        duration_months:
-          duration,
-
-        status:
-          "pending",
-
-        user_id:
-          currentUser.id
-
-      });
-
-
-  if (error) {
+  if (
+    !Number.isFinite(returnRate) ||
+    returnRate < 0
+  ) {
 
     showMessage(
       "adminMessage",
-      error.message
+      "Le rendement doit être valide."
     );
 
     return;
+
   }
 
 
-  showMessage(
-    "adminMessage",
-    "Projet créé avec succès. Il est actuellement en attente.",
-    true
+  if (
+    !Number.isInteger(duration) ||
+    duration <= 0
+  ) {
+
+    showMessage(
+      "adminMessage",
+      "La durée doit être un nombre entier positif."
+    );
+
+    return;
+
+  }
+
+
+  setButtonLoading(
+    "createProjectBtn",
+    true,
+    "Création..."
   );
 
 
-  document.getElementById(
-    "projectTitle"
-  ).value = "";
+  try {
+
+    const {
+      error
+    } =
+      await sb
+        .from("projects")
+        .insert({
+
+          title,
+
+          sector,
+
+          description,
+
+          amount_required:
+            amount,
+
+          amount:
+            amount,
+
+          return_rate:
+            returnRate,
+
+          duration_months:
+            duration,
+
+          status:
+            "pending",
+
+          user_id:
+            currentUser.id
+
+        });
 
 
-  document.getElementById(
-    "projectSector"
-  ).value = "";
+    if (error) {
+
+      showMessage(
+        "adminMessage",
+        error.message
+      );
+
+      return;
+
+    }
 
 
-  document.getElementById(
-    "projectDescription"
-  ).value = "";
+    showMessage(
+      "adminMessage",
+      "Projet créé avec succès. Il est actuellement en attente.",
+      true
+    );
 
 
-  document.getElementById(
-    "projectAmount"
-  ).value = "";
+    document.getElementById(
+      "projectTitle"
+    ).value = "";
+
+    document.getElementById(
+      "projectSector"
+    ).value = "";
+
+    document.getElementById(
+      "projectDescription"
+    ).value = "";
+
+    document.getElementById(
+      "projectAmount"
+    ).value = "";
+
+    document.getElementById(
+      "projectReturn"
+    ).value = "";
+
+    document.getElementById(
+      "projectDuration"
+    ).value = "";
 
 
-  document.getElementById(
-    "projectReturn"
-  ).value = "";
+    await loadAdmin();
 
 
-  document.getElementById(
-    "projectDuration"
-  ).value = "";
+  } catch (error) {
 
+    showMessage(
+      "adminMessage",
+      error.message ||
+      "Erreur lors de la création."
+    );
 
-  await loadAdmin();
+  } finally {
+
+    setButtonLoading(
+      "createProjectBtn",
+      false
+    );
+
+  }
 
 }
 
 
 /* =====================================================
-   ADMIN — STATUT PROJET
+   STATUT PROJET
 ===================================================== */
 
 async function setProjectStatus(
@@ -2400,7 +2940,11 @@ async function setProjectStatus(
   status
 ) {
 
-  if (!isAdmin()) return;
+  if (!isAdmin()) {
+
+    return;
+
+  }
 
 
   const {
@@ -2419,9 +2963,13 @@ async function setProjectStatus(
 
   if (error) {
 
-    alert(error.message);
+    showMessage(
+      "adminMessage",
+      error.message
+    );
 
     return;
+
   }
 
 
@@ -2431,14 +2979,18 @@ async function setProjectStatus(
 
 
 /* =====================================================
-   ADMIN — SUPPRIMER PROJET
+   SUPPRIMER PROJET
 ===================================================== */
 
 async function deleteProject(
   projectId
 ) {
 
-  if (!isAdmin()) return;
+  if (!isAdmin()) {
+
+    return;
+
+  }
 
 
   const confirmed =
@@ -2447,7 +2999,11 @@ async function deleteProject(
     );
 
 
-  if (!confirmed) return;
+  if (!confirmed) {
+
+    return;
+
+  }
 
 
   const {
@@ -2464,9 +3020,13 @@ async function deleteProject(
 
   if (error) {
 
-    alert(error.message);
+    showMessage(
+      "adminMessage",
+      error.message
+    );
 
     return;
+
   }
 
 
@@ -2476,7 +3036,7 @@ async function deleteProject(
 
 
 /* =====================================================
-   ADMIN — INVESTISSEMENTS
+   ADMIN INVESTISSEMENTS
 ===================================================== */
 
 function renderAdminInvestments(
@@ -2500,76 +3060,83 @@ function renderAdminInvestments(
     `;
 
     return;
+
   }
 
 
   tbody.innerHTML =
     investments
-      .map(item => `
+      .map(item => {
 
-        <tr>
+        const id =
+          escapeHtml(
+            item.id
+          );
 
-          <td>
-            ${escapeHtml(
-              item.user_id
-            )}
-          </td>
 
-          <td>
-            ${escapeHtml(
-              item.projects?.title ||
-              item.project_id
-            )}
-          </td>
+        return `
 
-          <td>
-            ${formatMoney(
-              item.amount
-            )}
-          </td>
+          <tr>
 
-          <td>
-            ${escapeHtml(
-              item.status
-            )}
-          </td>
+            <td>
+              ${escapeHtml(
+                item.user_id
+              )}
+            </td>
 
-          <td>
+            <td>
+              ${escapeHtml(
+                item.projects?.title ||
+                item.project_id
+              )}
+            </td>
 
-            <button
-              class="success"
-              onclick="setInvestmentStatus(
-                '${item.id}',
-                'approved'
-              )">
+            <td>
+              ${formatMoney(
+                item.amount
+              )}
+            </td>
 
-              Approuver
+            <td>
+              ${escapeHtml(
+                item.status
+              )}
+            </td>
 
-            </button>
+            <td>
 
-            <button
-              class="danger"
-              onclick="setInvestmentStatus(
-                '${item.id}',
-                'rejected'
-              )">
+              <button
+                class="success"
+                onclick="setInvestmentStatus(
+                  '${id}',
+                  'approved'
+                )">
+                Approuver
+              </button>
 
-              Rejeter
+              <button
+                class="danger"
+                onclick="setInvestmentStatus(
+                  '${id}',
+                  'rejected'
+                )">
+                Rejeter
+              </button>
 
-            </button>
+            </td>
 
-          </td>
+          </tr>
 
-        </tr>
+        `;
 
-      `)
+      })
       .join("");
 
 }
 
 
 /* =====================================================
-   ADMIN — STATUT INVESTISSEMENT
+   STATUT INVESTISSEMENT
 ===================================================== */
 
 async function setInvestmentStatus(
@@ -2577,7 +3144,11 @@ async function setInvestmentStatus(
   status
 ) {
 
-  if (!isAdmin()) return;
+  if (!isAdmin()) {
+
+    return;
+
+  }
 
 
   const {
@@ -2597,9 +3168,13 @@ async function setInvestmentStatus(
 
   if (error) {
 
-    alert(error.message);
+    showMessage(
+      "adminMessage",
+      error.message
+    );
 
     return;
+
   }
 
 
@@ -2609,7 +3184,7 @@ async function setInvestmentStatus(
 
 
 /* =====================================================
-   ADMIN — PAIEMENTS
+   ADMIN PAIEMENTS
 ===================================================== */
 
 function renderAdminPayments(
@@ -2633,76 +3208,83 @@ function renderAdminPayments(
     `;
 
     return;
+
   }
 
 
   tbody.innerHTML =
     payments
-      .map(payment => `
+      .map(payment => {
 
-        <tr>
+        const id =
+          escapeHtml(
+            payment.id
+          );
 
-          <td>
-            ${formatMoney(
-              payment.amount
-            )}
-          </td>
 
-          <td>
-            ${escapeHtml(
-              payment.method
-            )}
-          </td>
+        return `
 
-          <td>
-            ${escapeHtml(
-              payment.transaction_reference ||
-              "—"
-            )}
-          </td>
+          <tr>
 
-          <td>
-            ${escapeHtml(
-              payment.status
-            )}
-          </td>
+            <td>
+              ${formatMoney(
+                payment.amount
+              )}
+            </td>
 
-          <td>
+            <td>
+              ${escapeHtml(
+                payment.method
+              )}
+            </td>
 
-            <button
-              class="success"
-              onclick="setPaymentStatus(
-                '${payment.id}',
-                'verified'
-              )">
+            <td>
+              ${escapeHtml(
+                payment.transaction_reference ||
+                "—"
+              )}
+            </td>
 
-              Vérifier
+            <td>
+              ${escapeHtml(
+                payment.status
+              )}
+            </td>
 
-            </button>
+            <td>
 
-            <button
-              class="danger"
-              onclick="setPaymentStatus(
-                '${payment.id}',
-                'rejected'
-              )">
+              <button
+                class="success"
+                onclick="setPaymentStatus(
+                  '${id}',
+                  'verified'
+                )">
+                Vérifier
+              </button>
 
-              Rejeter
+              <button
+                class="danger"
+                onclick="setPaymentStatus(
+                  '${id}',
+                  'rejected'
+                )">
+                Rejeter
+              </button>
 
-            </button>
+            </td>
 
-          </td>
+          </tr>
 
-        </tr>
+        `;
 
-      `)
+      })
       .join("");
 
 }
 
 
 /* =====================================================
-   ADMIN — STATUT PAIEMENT
+   STATUT PAIEMENT
 ===================================================== */
 
 async function setPaymentStatus(
@@ -2710,7 +3292,11 @@ async function setPaymentStatus(
   status
 ) {
 
-  if (!isAdmin()) return;
+  if (!isAdmin()) {
+
+    return;
+
+  }
 
 
   const {
@@ -2730,9 +3316,13 @@ async function setPaymentStatus(
 
   if (error) {
 
-    alert(error.message);
+    showMessage(
+      "adminMessage",
+      error.message
+    );
 
     return;
+
   }
 
 
@@ -2746,9 +3336,22 @@ async function setPaymentStatus(
 ===================================================== */
 
 sb.auth.onAuthStateChange(
-  async function() {
+  function(event, session) {
 
-    await loadUser();
+    currentUser =
+      session?.user || null;
+
+    /*
+      On ne met pas de gros traitement await
+      directement dans le callback Supabase.
+    */
+
+    setTimeout(
+      () => {
+        loadUser();
+      },
+      0
+    );
 
   }
 );
