@@ -278,6 +278,29 @@
       color: #0b5d3b;
     }
 
+    .return-box {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #eef8f2;
+      border: 1px solid #cce8d7;
+    }
+
+    .return-value {
+      color: #0b5d3b;
+      font-weight: bold;
+    }
+
+    .warning-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 9px;
+      background: #fff8e6;
+      color: #8a5a00;
+      border: 1px solid #f4d58b;
+      font-size: 13px;
+    }
+
     .confirmed-box {
       margin-top: 15px;
       padding: 15px;
@@ -339,7 +362,41 @@
       padding: 20px;
     }
 
+    .admin-project {
+      border: 1px solid #dce3ea;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    .admin-project h4 {
+      margin: 0 0 8px;
+      color: #0b5d3b;
+      font-size: 18px;
+    }
+
+    .admin-form-grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(180px, 1fr)
+      );
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .small-btn {
+      margin-top: 5px;
+    }
+
+    .success-text {
+      color: #146c43;
+      font-weight: bold;
+    }
+
     @media (max-width: 600px) {
+
       header h1 {
         font-size: 21px;
       }
@@ -351,6 +408,7 @@
       .section {
         padding: 15px;
       }
+
     }
   </style>
 </head>
@@ -359,6 +417,7 @@
 
 <header>
   <h1>🇬🇳 Guinée Invest Hub</h1>
+
   <p>
     Connecter les investisseurs aux projets guinéens
   </p>
@@ -570,6 +629,32 @@
       </div>
 
       <div class="portfolio-card">
+        <div class="icon">📈</div>
+        <div class="label">
+          Profit prévu
+        </div>
+        <div
+          id="portfolioProfit"
+          class="value"
+        >
+          0 GNF
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="icon">💵</div>
+        <div class="label">
+          Valeur totale prévue
+        </div>
+        <div
+          id="portfolioExpectedTotal"
+          class="value"
+        >
+          0 GNF
+        </div>
+      </div>
+
+      <div class="portfolio-card">
         <div class="icon">📊</div>
         <div class="label">
           Nombre de projets
@@ -595,6 +680,12 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="warning-box">
+      ⚠️ Les rendements affichés sont des
+      <strong>rendements prévus</strong>.
+      Ils ne constituent pas une garantie de bénéfice.
     </div>
 
     <h3>
@@ -654,6 +745,27 @@
 
     <br>
 
+    <!-- GESTION PROJETS -->
+
+    <h3>
+      📁 Gestion des projets
+    </h3>
+
+    <p class="project-meta">
+      Modifiez ici le rendement prévu et la durée
+      de chaque projet.
+    </p>
+
+    <div id="adminProjects">
+      <p class="empty">
+        Chargement des projets...
+      </p>
+    </div>
+
+    <br>
+
+    <!-- INVESTISSEMENTS -->
+
     <h3>
       💰 Demandes d'investissement
     </h3>
@@ -665,6 +777,8 @@
     </div>
 
     <br>
+
+    <!-- PAIEMENTS -->
 
     <h3>
       💳 Paiements Orange Money
@@ -710,7 +824,7 @@
 
 
   /* ================================
-     NUMERO ORANGE MONEY
+     ORANGE MONEY
   ================================= */
 
   const ORANGE_MONEY_NUMBER =
@@ -768,6 +882,72 @@
   }
 
 
+  function getProjectReturn(project) {
+
+    const rate =
+      Number(project?.return_rate);
+
+    if (
+      Number.isFinite(rate) &&
+      rate >= 0
+    ) {
+      return rate;
+    }
+
+    return 10;
+  }
+
+
+  function getProjectDuration(project) {
+
+    const duration =
+      Number(project?.duration_months);
+
+    if (
+      Number.isFinite(duration) &&
+      duration > 0
+    ) {
+      return duration;
+    }
+
+    return 12;
+  }
+
+
+  function calculateExpectedProfit(
+    amount,
+    rate
+  ) {
+
+    const value =
+      Number(amount) || 0;
+
+    const percentage =
+      Number(rate) || 0;
+
+    return Math.round(
+      value *
+      percentage /
+      100
+    );
+  }
+
+
+  function calculateExpectedTotal(
+    amount,
+    rate
+  ) {
+
+    return (
+      Number(amount) || 0
+    ) +
+    calculateExpectedProfit(
+      amount,
+      rate
+    );
+  }
+
+
   /* ================================
      NAVIGATION
   ================================= */
@@ -779,15 +959,21 @@
         ".container > section"
       );
 
-    sections.forEach(section => {
-      section.classList.add("hidden");
-    });
+    sections.forEach(
+      section => {
+        section.classList.add(
+          "hidden"
+        );
+      }
+    );
 
     const target =
       document.getElementById(id);
 
     if (target) {
-      target.classList.remove("hidden");
+      target.classList.remove(
+        "hidden"
+      );
     }
 
     if (
@@ -815,6 +1001,7 @@
       ) {
 
         loadAdminStats();
+        loadAdminProjects();
         loadAdminInvestments();
         loadAdminPayments();
 
@@ -1251,6 +1438,16 @@
       list.map(
         project => {
 
+          const rate =
+            getProjectReturn(
+              project
+            );
+
+          const duration =
+            getProjectDuration(
+              project
+            );
+
           return `
             <div class="project-card">
 
@@ -1284,9 +1481,29 @@
                 )}
               </div>
 
+              <div class="return-box">
+
+                📈 Rendement prévu :
+                <strong class="return-value">
+                  ${rate}%
+                </strong>
+
+                <br><br>
+
+                📅 Durée prévue :
+                <strong>
+                  ${duration} mois
+                </strong>
+
+              </div>
+
+              <div class="warning-box">
+                ⚠️ Rendement prévu, non garanti.
+              </div>
+
               <button
                 class="secondary"
-                style="width:100%;"
+                style="width:100%; margin-top:12px;"
                 onclick="
                   showInvestmentBox(
                     '${project.id}'
@@ -1305,10 +1522,13 @@
                   id="investmentAmount-${project.id}"
                   type="number"
                   min="1"
-                  placeholder="
-                    Montant à investir en GNF
-                  "
+                  placeholder="Montant à investir en GNF"
                 >
+
+                <div
+                  id="investmentPreview-${project.id}"
+                  class="return-box hidden"
+                ></div>
 
                 <label>
                   💳 Moyen de paiement
@@ -1364,17 +1584,13 @@
                   <input
                     id="payerPhone-${project.id}"
                     type="tel"
-                    placeholder="
-                      📱 Numéro Orange utilisé
-                    "
+                    placeholder="📱 Numéro Orange utilisé"
                   >
 
                   <input
                     id="transactionReference-${project.id}"
                     type="text"
-                    placeholder="
-                      🧾 Référence de transaction
-                    "
+                    placeholder="🧾 Référence de transaction"
                   >
 
                 </div>
@@ -1420,6 +1636,150 @@
           `;
         }
       ).join("");
+
+    list.forEach(
+      project => {
+
+        const input =
+          document.getElementById(
+            "investmentAmount-" +
+            project.id
+          );
+
+        if (input) {
+
+          input.addEventListener(
+            "input",
+            function() {
+
+              updateInvestmentPreview(
+                project.id
+              );
+
+            }
+          );
+
+        }
+
+      }
+    );
+  }
+
+
+  /* ================================
+     PREVIEW RENDEMENT
+  ================================= */
+
+  function updateInvestmentPreview(
+    projectId
+  ) {
+
+    const input =
+      document.getElementById(
+        "investmentAmount-" +
+        projectId
+      );
+
+    const preview =
+      document.getElementById(
+        "investmentPreview-" +
+        projectId
+      );
+
+    const project =
+      projects.find(
+        p =>
+          p.id ===
+          projectId
+      );
+
+    if (
+      !input ||
+      !preview ||
+      !project
+    ) {
+      return;
+    }
+
+    const amount =
+      Number(input.value);
+
+    if (
+      !amount ||
+      amount <= 0
+    ) {
+
+      preview.classList.add(
+        "hidden"
+      );
+
+      return;
+    }
+
+    const rate =
+      getProjectReturn(
+        project
+      );
+
+    const duration =
+      getProjectDuration(
+        project
+      );
+
+    const profit =
+      calculateExpectedProfit(
+        amount,
+        rate
+      );
+
+    const total =
+      calculateExpectedTotal(
+        amount,
+        rate
+      );
+
+    preview.innerHTML = `
+
+      📈 Rendement prévu :
+      <strong>
+        ${rate}%
+      </strong>
+
+      <br><br>
+
+      📅 Durée prévue :
+      <strong>
+        ${duration} mois
+      </strong>
+
+      <br><br>
+
+      💰 Profit prévu :
+      <strong>
+        ${formatMoney(
+          profit
+        )}
+      </strong>
+
+      <br><br>
+
+      💵 Valeur totale prévue :
+      <strong>
+        ${formatMoney(
+          total
+        )}
+      </strong>
+
+      <div class="warning-box">
+        ⚠️ Estimation uniquement.
+        Le rendement n'est pas garanti.
+      </div>
+
+    `;
+
+    preview.classList.remove(
+      "hidden"
+    );
   }
 
 
@@ -1487,7 +1847,7 @@
 
 
   /* ================================
-     AFFICHER FORMULAIRE
+     FORMULAIRE INVESTISSEMENT
   ================================= */
 
   function showInvestmentBox(
@@ -1523,7 +1883,7 @@
 
 
   /* ================================
-     INVESTISSEMENT
+     CREATION INVESTISSEMENT
   ================================= */
 
   async function submitInvestment(
@@ -1569,10 +1929,18 @@
         projectId
       );
 
+    const project =
+      projects.find(
+        p =>
+          p.id ===
+          projectId
+      );
+
     if (
       !input ||
       !paymentSelect ||
-      !message
+      !message ||
+      !project
     ) {
       return;
     }
@@ -1582,6 +1950,28 @@
 
     const method =
       paymentSelect.value;
+
+    const returnRate =
+      getProjectReturn(
+        project
+      );
+
+    const duration =
+      getProjectDuration(
+        project
+      );
+
+    const expectedProfit =
+      calculateExpectedProfit(
+        amount,
+        returnRate
+      );
+
+    const expectedTotal =
+      calculateExpectedTotal(
+        amount,
+        returnRate
+      );
 
     if (
       !amount ||
@@ -1672,6 +2062,7 @@
       await sb
         .from("investments")
         .insert({
+
           user_id:
             currentUser.id,
 
@@ -1682,7 +2073,20 @@
             Math.round(amount),
 
           status:
-            "pending"
+            "pending",
+
+          return_rate:
+            returnRate,
+
+          duration_months:
+            duration,
+
+          expected_profit:
+            expectedProfit,
+
+          expected_total:
+            expectedTotal
+
         })
         .select()
         .single();
@@ -1783,6 +2187,38 @@
 
         <br>
 
+        📈 Rendement prévu :
+        <strong>
+          ${returnRate}%
+        </strong>
+
+        <br>
+
+        📅 Durée prévue :
+        <strong>
+          ${duration} mois
+        </strong>
+
+        <br>
+
+        📊 Profit prévu :
+        <strong>
+          ${formatMoney(
+            expectedProfit
+          )}
+        </strong>
+
+        <br>
+
+        💵 Valeur totale prévue :
+        <strong>
+          ${formatMoney(
+            expectedTotal
+          )}
+        </strong>
+
+        <br>
+
         🟠 Paiement :
         <strong>
           Orange Money
@@ -1808,6 +2244,11 @@
 
         Un administrateur vérifiera
         votre paiement.
+
+        <div class="warning-box">
+          ⚠️ Le rendement affiché est une
+          estimation et n'est pas garanti.
+        </div>
 
       </div>
     `;
@@ -1925,19 +2366,20 @@
     const paymentList =
       payments || [];
 
-    /* ================================
-       CALCULS PORTEFEUILLE
-    ================================= */
 
     const totalInvested =
       investmentList.reduce(
-        (total, item) =>
+        (
+          total,
+          item
+        ) =>
           total +
           Number(
             item.amount || 0
           ),
         0
       );
+
 
     const approvedInvestments =
       investmentList.filter(
@@ -1946,15 +2388,20 @@
           "approved"
       );
 
+
     const approvedAmount =
       approvedInvestments.reduce(
-        (total, item) =>
+        (
+          total,
+          item
+        ) =>
           total +
           Number(
             item.amount || 0
           ),
         0
       );
+
 
     const pendingAmount =
       investmentList
@@ -1964,7 +2411,10 @@
             "pending"
         )
         .reduce(
-          (total, item) =>
+          (
+            total,
+            item
+          ) =>
             total +
             Number(
               item.amount || 0
@@ -1972,12 +2422,84 @@
           0
         );
 
+
+    const expectedProfit =
+      investmentList.reduce(
+        (
+          total,
+          item
+        ) => {
+
+          const stored =
+            Number(
+              item.expected_profit
+            );
+
+          if (
+            Number.isFinite(
+              stored
+            )
+          ) {
+            return total + stored;
+          }
+
+          const rate =
+            Number(
+              item.return_rate
+            ) || 0;
+
+          return total +
+            calculateExpectedProfit(
+              item.amount,
+              rate
+            );
+        },
+        0
+      );
+
+
+    const expectedTotal =
+      investmentList.reduce(
+        (
+          total,
+          item
+        ) => {
+
+          const stored =
+            Number(
+              item.expected_total
+            );
+
+          if (
+            Number.isFinite(
+              stored
+            ) &&
+            stored > 0
+          ) {
+            return total + stored;
+          }
+
+          return total +
+            Number(
+              item.amount || 0
+            ) +
+            calculateExpectedProfit(
+              item.amount,
+              item.return_rate
+            );
+
+        },
+        0
+      );
+
+
     const confirmedPayments =
       paymentList.filter(
         payment =>
           payment.status ===
           "verified"
       ).length;
+
 
     const projectCount =
       new Set(
@@ -1997,6 +2519,7 @@
         totalInvested
       );
 
+
     document
       .getElementById(
         "portfolioApproved"
@@ -2005,6 +2528,7 @@
       formatMoney(
         approvedAmount
       );
+
 
     document
       .getElementById(
@@ -2015,12 +2539,34 @@
         pendingAmount
       );
 
+
+    document
+      .getElementById(
+        "portfolioProfit"
+      )
+      .textContent =
+      formatMoney(
+        expectedProfit
+      );
+
+
+    document
+      .getElementById(
+        "portfolioExpectedTotal"
+      )
+      .textContent =
+      formatMoney(
+        expectedTotal
+      );
+
+
     document
       .getElementById(
         "portfolioProjects"
       )
       .textContent =
       projectCount;
+
 
     document
       .getElementById(
@@ -2043,10 +2589,6 @@
     }
 
 
-    /* ================================
-       HISTORIQUE
-    ================================= */
-
     container.innerHTML =
       investmentList.map(
         investment => {
@@ -2066,8 +2608,47 @@
             );
 
 
+          const rate =
+            Number(
+              investment.return_rate
+            ) ||
+            getProjectReturn(
+              project
+            );
+
+
+          const duration =
+            Number(
+              investment.duration_months
+            ) ||
+            getProjectDuration(
+              project
+            );
+
+
+          const profit =
+            Number(
+              investment.expected_profit
+            ) ||
+            calculateExpectedProfit(
+              investment.amount,
+              rate
+            );
+
+
+          const total =
+            Number(
+              investment.expected_total
+            ) ||
+            calculateExpectedTotal(
+              investment.amount,
+              rate
+            );
+
+
           let investmentStatus =
             "⏳ Investissement en attente";
+
 
           if (
             investment.status ===
@@ -2092,6 +2673,7 @@
 
           let paymentClass =
             "badge-pending";
+
 
           if (
             payment?.status ===
@@ -2129,11 +2711,18 @@
 
             finalMessage = `
               <div class="confirmed-box">
-                🎉 <strong>Investissement confirmé !</strong>
+
+                🎉
+                <strong>
+                  Investissement confirmé !
+                </strong>
+
                 <br><br>
+
                 Votre paiement a été vérifié
                 et votre investissement est
                 officiellement approuvé.
+
               </div>
             `;
 
@@ -2146,13 +2735,22 @@
 
             finalMessage = `
               <div class="pending-box">
-                🟢 <strong>Paiement confirmé</strong>
+
+                🟢
+                <strong>
+                  Paiement confirmé
+                </strong>
+
                 <br><br>
+
                 Votre paiement Orange Money
                 a été vérifié par l'administrateur.
+
                 <br><br>
+
                 ⏳ Votre investissement est encore
                 en attente d'approbation.
+
               </div>
             `;
 
@@ -2163,10 +2761,17 @@
 
             finalMessage = `
               <div class="error-box">
-                ❌ <strong>Paiement rejeté</strong>
+
+                ❌
+                <strong>
+                  Paiement rejeté
+                </strong>
+
                 <br><br>
+
                 Le paiement associé à cet investissement
                 n'a pas été validé.
+
               </div>
             `;
           }
@@ -2191,6 +2796,40 @@
               </strong>
 
               <br><br>
+
+              📈 Rendement prévu :
+              <strong class="success-text">
+                ${rate}%
+              </strong>
+
+              <br>
+
+              📅 Durée prévue :
+              <strong>
+                ${duration} mois
+              </strong>
+
+              <div class="return-box">
+
+                📊 Profit prévu :
+                <strong>
+                  ${formatMoney(
+                    profit
+                  )}
+                </strong>
+
+                <br><br>
+
+                💵 Valeur totale prévue :
+                <strong>
+                  ${formatMoney(
+                    total
+                  )}
+                </strong>
+
+              </div>
+
+              <br>
 
               📅
               ${formatDate(
@@ -2283,6 +2922,11 @@
               }
 
               ${finalMessage}
+
+              <div class="warning-box">
+                ⚠️ Le rendement affiché est prévu
+                et non garanti.
+              </div>
 
             </div>
           `;
@@ -2412,6 +3056,323 @@
 
 
   /* ================================
+     ADMIN PROJETS
+  ================================= */
+
+  async function loadAdminProjects() {
+
+    const container =
+      document.getElementById(
+        "adminProjects"
+      );
+
+    if (
+      !currentProfile ||
+      currentProfile.role !==
+      "admin"
+    ) {
+      return;
+    }
+
+    const {
+      data,
+      error
+    } =
+      await sb
+        .from("projects")
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+    if (error) {
+
+      container.innerHTML = `
+        <div class="error-box">
+          ❌ ${escapeHtml(
+            error.message
+          )}
+        </div>
+      `;
+
+      return;
+    }
+
+    if (
+      !data ||
+      !data.length
+    ) {
+
+      container.innerHTML = `
+        <p class="empty">
+          Aucun projet.
+        </p>
+      `;
+
+      return;
+    }
+
+    container.innerHTML =
+      data.map(
+        project => {
+
+          const rate =
+            getProjectReturn(
+              project
+            );
+
+          const duration =
+            getProjectDuration(
+              project
+            );
+
+          return `
+
+            <div class="admin-project">
+
+              <h4>
+                📁
+                ${escapeHtml(
+                  project.title
+                )}
+              </h4>
+
+              <div class="project-meta">
+
+                Secteur :
+                ${escapeHtml(
+                  project.sector ||
+                  "Non précisé"
+                )}
+
+                <br>
+
+                Statut :
+                <strong>
+                  ${escapeHtml(
+                    project.status ||
+                    "pending"
+                  )}
+                </strong>
+
+              </div>
+
+              <div class="admin-form-grid">
+
+                <div>
+
+                  <label>
+                    📈 Rendement prévu (%)
+                  </label>
+
+                  <input
+                    id="returnRate-${project.id}"
+                    type="number"
+                    min="0"
+                    max="1000"
+                    step="0.1"
+                    value="${rate}"
+                  >
+
+                </div>
+
+                <div>
+
+                  <label>
+                    📅 Durée (mois)
+                  </label>
+
+                  <input
+                    id="duration-${project.id}"
+                    type="number"
+                    min="1"
+                    max="240"
+                    step="1"
+                    value="${duration}"
+                  >
+
+                </div>
+
+              </div>
+
+              <button
+                class="approve small-btn"
+                onclick="
+                  updateProjectReturn(
+                    '${project.id}'
+                  )
+                "
+              >
+                💾 Enregistrer
+              </button>
+
+              <div
+                id="projectUpdateMessage-${project.id}"
+              ></div>
+
+            </div>
+
+          `;
+        }
+      ).join("");
+  }
+
+
+  /* ================================
+     ADMIN MODIFICATION PROJET
+  ================================= */
+
+  async function updateProjectReturn(
+    projectId
+  ) {
+
+    if (
+      !currentProfile ||
+      currentProfile.role !==
+      "admin"
+    ) {
+
+      alert(
+        "Accès administrateur requis."
+      );
+
+      return;
+    }
+
+    const rateInput =
+      document.getElementById(
+        "returnRate-" +
+        projectId
+      );
+
+    const durationInput =
+      document.getElementById(
+        "duration-" +
+        projectId
+      );
+
+    const message =
+      document.getElementById(
+        "projectUpdateMessage-" +
+        projectId
+      );
+
+    const rate =
+      Number(
+        rateInput?.value
+      );
+
+    const duration =
+      Number(
+        durationInput?.value
+      );
+
+    if (
+      !Number.isFinite(rate) ||
+      rate < 0 ||
+      rate > 1000
+    ) {
+
+      if (message) {
+
+        message.innerHTML = `
+          <div class="error-box">
+            ❌ Rendement invalide.
+          </div>
+        `;
+
+      }
+
+      return;
+    }
+
+    if (
+      !Number.isFinite(duration) ||
+      duration < 1 ||
+      duration > 240
+    ) {
+
+      if (message) {
+
+        message.innerHTML = `
+          <div class="error-box">
+            ❌ Durée invalide.
+          </div>
+        `;
+
+      }
+
+      return;
+    }
+
+    if (message) {
+
+      message.innerHTML = `
+        <div class="message">
+          ⏳ Enregistrement...
+        </div>
+      `;
+
+    }
+
+    const {
+      error
+    } =
+      await sb
+        .from("projects")
+        .update({
+
+          return_rate:
+            rate,
+
+          duration_months:
+            Math.round(
+              duration
+            )
+
+        })
+        .eq(
+          "id",
+          projectId
+        );
+
+    if (error) {
+
+      if (message) {
+
+        message.innerHTML = `
+          <div class="error-box">
+            ❌ ${escapeHtml(
+              error.message
+            )}
+          </div>
+        `;
+
+      }
+
+      return;
+    }
+
+    if (message) {
+
+      message.innerHTML = `
+        <div class="message">
+          ✅ Rendement et durée enregistrés.
+        </div>
+      `;
+
+    }
+
+    await loadProjects();
+    await loadAdminProjects();
+
+  }
+
+
+  /* ================================
      ADMIN INVESTISSEMENTS
   ================================= */
 
@@ -2474,6 +3435,40 @@
                 investment.project_id
             );
 
+          const rate =
+            Number(
+              investment.return_rate
+            ) ||
+            getProjectReturn(
+              project
+            );
+
+          const duration =
+            Number(
+              investment.duration_months
+            ) ||
+            getProjectDuration(
+              project
+            );
+
+          const profit =
+            Number(
+              investment.expected_profit
+            ) ||
+            calculateExpectedProfit(
+              investment.amount,
+              rate
+            );
+
+          const total =
+            Number(
+              investment.expected_total
+            ) ||
+            calculateExpectedTotal(
+              investment.amount,
+              rate
+            );
+
           let statusText =
             "⏳ En attente";
 
@@ -2512,6 +3507,38 @@
                 ${escapeHtml(
                   project?.title ||
                   "Projet"
+                )}
+              </strong>
+
+              <br><br>
+
+              📈 Rendement prévu :
+              <strong>
+                ${rate}%
+              </strong>
+
+              <br>
+
+              📅 Durée :
+              <strong>
+                ${duration} mois
+              </strong>
+
+              <br>
+
+              📊 Profit prévu :
+              <strong>
+                ${formatMoney(
+                  profit
+                )}
+              </strong>
+
+              <br>
+
+              💵 Valeur totale prévue :
+              <strong>
+                ${formatMoney(
+                  total
                 )}
               </strong>
 
@@ -2817,6 +3844,7 @@
     );
 
     await loadAdminPayments();
+    await loadMyInvestments();
   }
 
 
@@ -2878,6 +3906,8 @@
     await loadAdminInvestments();
 
     await loadAdminStats();
+
+    await loadMyInvestments();
   }
 
 
