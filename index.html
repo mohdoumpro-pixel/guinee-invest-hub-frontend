@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#071a12">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Invest Hub">
 
-  <title>Guinée Invest Hub</title>
+  <title>Guinée Invest Hub — Investir • Entreprendre • Développer</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -21,41 +21,103 @@
     }
 
     :root {
-      --green: #0b7a4b;
-      --green-dark: #075b38;
-      --green-light: #e8f7f0;
+      --green: #087f4e;
+      --green-2: #0aa66a;
+      --green-dark: #043d28;
+      --green-deep: #071a12;
+      --green-light: #eaf8f1;
+
       --gold: #d9a441;
-      --bg: #f5f7f9;
+      --gold-light: #fff7df;
+
+      --navy: #071a12;
+      --navy-2: #0d261b;
+
+      --bg: #f4f7f5;
       --card: #ffffff;
-      --text: #17202a;
-      --muted: #667085;
-      --border: #e5e7eb;
-      --danger: #c62828;
+      --text: #12251c;
+      --muted: #66756e;
+
+      --border: #e1e9e4;
+
       --success: #15803d;
-      --shadow: 0 8px 30px rgba(0,0,0,.07);
+      --danger: #c62828;
+      --warning: #c2410c;
+
+      --shadow-sm: 0 4px 15px rgba(7, 26, 18, .06);
+      --shadow: 0 12px 35px rgba(7, 26, 18, .08);
+      --shadow-lg: 0 25px 70px rgba(7, 26, 18, .16);
+
+      --radius: 18px;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(
+          circle at top left,
+          rgba(10,166,106,.05),
+          transparent 35%
+        ),
+        var(--bg);
       color: var(--text);
       line-height: 1.55;
     }
 
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    ::selection {
+      background: rgba(10,166,106,.2);
+    }
+
+    /* =========================================
+       HEADER
+       ========================================= */
+
     header {
-      background: #0f172a;
-      color: white;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 3px 15px rgba(0,0,0,.15);
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          #06160f,
+          #0a2418 55%,
+          #082016
+        );
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,.18);
+      backdrop-filter: blur(18px);
     }
 
     .header-inner {
-      max-width: 1200px;
+      width: min(1240px, calc(100% - 30px));
       margin: auto;
-      padding: 14px 20px;
+      min-height: 74px;
+      padding: 11px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -63,153 +125,560 @@
     }
 
     .brand {
-      font-size: 19px;
-      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 210px;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -.3px;
+    }
+
+    .brand-logo {
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(
+          135deg,
+          var(--green-2),
+          var(--green)
+        );
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow:
+        0 8px 25px rgba(10,166,106,.25);
+      font-size: 22px;
+    }
+
+    .brand-text {
+      line-height: 1.15;
     }
 
     .brand small {
       display: block;
-      color: #cbd5e1;
-      font-size: 11px;
-      font-weight: 500;
+      margin-top: 4px;
+      color: #9fb2a8;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .3px;
     }
 
     nav {
       display: flex;
-      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
       flex-wrap: wrap;
     }
 
     nav button {
-      border: 0;
+      border: 1px solid transparent;
       background: transparent;
-      color: #e2e8f0;
+      color: #dce8e2;
       padding: 9px 11px;
-      border-radius: 9px;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 750;
+      transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
     }
 
     nav button:hover {
-      background: rgba(255,255,255,.1);
+      background: rgba(255,255,255,.08);
+      color: white;
+      transform: translateY(-1px);
     }
 
+    #adminNav {
+      color: #f7d98b;
+      border-color: rgba(217,164,65,.22);
+    }
+
+    /* =========================================
+       MAIN
+       ========================================= */
+
     main {
-      max-width: 1200px;
+      width: min(1240px, calc(100% - 30px));
       margin: auto;
-      padding: 25px 18px 50px;
+      padding: 30px 0 60px;
     }
 
     .section {
       display: none;
+      animation: sectionAppear .35s ease;
     }
 
     .section.active {
       display: block;
     }
 
+    @keyframes sectionAppear {
+      from {
+        opacity: 0;
+        transform: translateY(7px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================================
+       HERO
+       ========================================= */
+
     .hero {
-      background: linear-gradient(135deg,#075b38,#0b7a4b);
+      position: relative;
+      overflow: hidden;
+      min-height: 430px;
+      padding: 58px 48px;
+      border-radius: 30px;
       color: white;
-      border-radius: 24px;
-      padding: 45px 30px;
-      box-shadow: var(--shadow);
-      margin-bottom: 25px;
+      background:
+        radial-gradient(
+          circle at 90% 10%,
+          rgba(217,164,65,.20),
+          transparent 27%
+        ),
+        radial-gradient(
+          circle at 10% 100%,
+          rgba(10,166,106,.30),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #043d28 0%,
+          #087f4e 55%,
+          #075b38 100%
+        );
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      right: -120px;
+      bottom: -150px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow:
+        0 0 0 35px rgba(255,255,255,.025),
+        0 0 0 70px rgba(255,255,255,.018);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      right: 14%;
+      top: -60px;
+      border-radius: 50%;
+      background: rgba(217,164,65,.13);
+      filter: blur(5px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.13);
+      color: #effaf5;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
     }
 
     .hero h1 {
-      font-size: clamp(30px,5vw,52px);
-      line-height: 1.1;
-      margin: 0 0 15px;
+      max-width: 800px;
+      margin: 18px 0 16px;
+      font-size: clamp(36px, 6vw, 66px);
+      line-height: 1.02;
+      letter-spacing: -2.5px;
+    }
+
+    .hero h1 span {
+      color: #f1ca6b;
     }
 
     .hero p {
-      max-width: 720px;
-      color: #e7f8ef;
-      font-size: 18px;
+      max-width: 710px;
+      margin: 0;
+      color: #dceee5;
+      font-size: clamp(15px, 2vw, 18px);
     }
 
     .hero-actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 24px;
+      margin-top: 28px;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-      gap: 18px;
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 27px;
     }
+
+    .trust-chip {
+      padding: 8px 11px;
+      border-radius: 10px;
+      background: rgba(0,0,0,.13);
+      border: 1px solid rgba(255,255,255,.10);
+      color: #e7f6ee;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* =========================================
+       BUTTONS
+       ========================================= */
+
+    button.primary,
+    button.secondary,
+    button.danger {
+      border: 0;
+      border-radius: 11px;
+      padding: 12px 17px;
+      cursor: pointer;
+      font-weight: 800;
+      transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+    }
+
+    button.primary {
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          var(--green-2),
+          var(--green)
+        );
+      box-shadow:
+        0 7px 20px rgba(8,127,78,.18);
+    }
+
+    button.primary:hover {
+      background:
+        linear-gradient(
+          135deg,
+          #0bb875,
+          #076d43
+        );
+      transform: translateY(-1px);
+      box-shadow:
+        0 10px 25px rgba(8,127,78,.25);
+    }
+
+    button.secondary {
+      color: var(--text);
+      background: #e9efec;
+    }
+
+    button.secondary:hover {
+      background: #dde7e1;
+      transform: translateY(-1px);
+    }
+
+    .hero button.secondary {
+      color: #effaf5;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .hero button.secondary:hover {
+      background: rgba(255,255,255,.16);
+    }
+
+    button.danger {
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          #dc3b3b,
+          #b91c1c
+        );
+    }
+
+    button.danger:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* =========================================
+       STATS
+       ========================================= */
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-      gap: 15px;
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(170px,1fr)
+        );
+      gap: 14px;
       margin: 20px 0;
     }
 
-    .stat,
-    .card,
-    .project-card {
+    .stat {
+      position: relative;
+      overflow: hidden;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: var(--radius);
       padding: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat::after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      bottom: -30px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(8,127,78,.045);
     }
 
     .stat-label {
+      position: relative;
+      z-index: 1;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
+      font-weight: 700;
     }
 
     .stat-value {
-      font-size: 25px;
-      font-weight: 800;
+      position: relative;
+      z-index: 1;
       margin-top: 5px;
+      color: var(--green-dark);
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -.5px;
+    }
+
+    /* =========================================
+       CARDS
+       ========================================= */
+
+    .grid {
+      display: grid;
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(240px,1fr)
+        );
+      gap: 18px;
+    }
+
+    .card,
+    .project-card {
+      background: rgba(255,255,255,.96);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card {
+      transition:
+        box-shadow .2s ease,
+        transform .2s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow);
     }
 
     .card h2,
     .card h3 {
       margin-top: 0;
+      letter-spacing: -.4px;
+    }
+
+    .card h2 {
+      font-size: 23px;
+    }
+
+    .card h3 {
+      font-size: 18px;
     }
 
     .muted {
       color: var(--muted);
     }
 
+    /* =========================================
+       HOME FEATURES
+       ========================================= */
+
+    .home-feature {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      padding: 15px;
+      border-radius: 14px;
+      background: #f7faf8;
+      border: 1px solid #edf2ef;
+    }
+
+    .home-feature-icon {
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--green-light);
+      font-size: 19px;
+    }
+
+    .home-feature b {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* =========================================
+       SECTEURS
+       ========================================= */
+
     .sector-card {
+      position: relative;
+      overflow: hidden;
       text-align: center;
-      background: #fff;
+      background: white;
       border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 22px;
+      border-radius: 16px;
+      padding: 23px 15px;
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+    }
+
+    .sector-card:hover {
+      transform: translateY(-4px);
+      border-color: #b9d9ca;
+      box-shadow: var(--shadow);
     }
 
     .sector-icon {
-      font-size: 35px;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 11px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      background:
+        linear-gradient(
+          135deg,
+          #edf9f3,
+          #fffaf0
+        );
+      font-size: 29px;
+    }
+
+    .sector-card b {
+      font-size: 14px;
+    }
+
+    /* =========================================
+       PROJETS
+       ========================================= */
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 4px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--green),
+          var(--green-2),
+          var(--gold)
+        );
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: #cfe1d7;
     }
 
     .project-card h3 {
-      margin: 0 0 7px;
+      margin: 3px 0 7px;
       color: var(--green-dark);
+      font-size: 19px;
+    }
+
+    .project-description {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
     }
 
     .project-meta {
       display: flex;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
       margin: 12px 0;
     }
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
       padding: 5px 9px;
       border-radius: 999px;
-      background: #e5e7eb;
-      font-size: 12px;
-      font-weight: 700;
+      background: #eef2f0;
+      color: #47554f;
+      font-size: 11px;
+      font-weight: 800;
     }
 
     .badge.pending {
@@ -229,74 +698,285 @@
       color: #991b1b;
     }
 
+    .progress-wrap {
+      margin: 15px 0 7px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 9px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e7eee9;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background:
+        linear-gradient(
+          90deg,
+          var(--green),
+          var(--green-2)
+        );
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .project-numbers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .project-number {
+      padding: 11px;
+      border-radius: 12px;
+      background: #f7faf8;
+      border: 1px solid #edf2ef;
+    }
+
+    .project-number span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .project-number strong {
+      display: block;
+      margin-top: 2px;
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    /* =========================================
+       FORMULAIRES
+       ========================================= */
+
     label {
       display: block;
-      font-weight: 700;
-      font-size: 13px;
-      margin: 12px 0 6px;
+      margin: 13px 0 6px;
+      color: #33463d;
+      font-size: 12px;
+      font-weight: 800;
     }
 
     input,
     select,
     textarea {
       width: 100%;
+      border: 1px solid #d6e0da;
+      border-radius: 11px;
       padding: 12px 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      background: #fff;
-      font: inherit;
+      background: #fbfdfc;
+      color: var(--text);
       outline: none;
+      transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+    }
+
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: #b9ccc1;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
       border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(11,122,75,.1);
+      background: white;
+      box-shadow:
+        0 0 0 4px rgba(8,127,78,.09);
     }
 
     textarea {
-      min-height: 110px;
+      min-height: 115px;
       resize: vertical;
     }
 
-    button {
-      font: inherit;
+    /* =========================================
+       ACCOUNT
+       ========================================= */
+
+    .account-intro {
+      margin-bottom: 18px;
+      padding: 26px;
+      border-radius: 22px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          var(--navy),
+          #0b3524
+        );
+      box-shadow: var(--shadow);
     }
 
-    button.primary,
-    button.secondary,
-    button.danger {
-      border: 0;
-      border-radius: 10px;
-      padding: 11px 16px;
-      cursor: pointer;
-      font-weight: 800;
+    .account-intro h1 {
+      margin: 0 0 5px;
+      font-size: 28px;
     }
 
-    button.primary {
-      background: var(--green);
-      color: #fff;
+    .account-intro p {
+      margin: 0;
+      color: #bcd1c5;
+      font-size: 13px;
     }
 
-    button.primary:hover {
-      background: var(--green-dark);
+    .profile-box {
+      padding: 20px;
+      border-radius: 16px;
+      background:
+        linear-gradient(
+          135deg,
+          #edf9f3,
+          #f8fcfa
+        );
+      border: 1px solid #d6eee0;
     }
 
-    button.secondary {
-      background: #e2e8f0;
-      color: #17202a;
+    .profile-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 11px 0;
+      border-bottom: 1px solid #dbece3;
     }
 
-    button.danger {
-      background: var(--danger);
-      color: #fff;
+    .profile-row:last-child {
+      border-bottom: 0;
     }
 
-    button:disabled {
-      opacity: .55;
-      cursor: not-allowed;
+    .profile-row span {
+      color: var(--muted);
+      font-size: 12px;
     }
+
+    /* =========================================
+       MESSAGES
+       ========================================= */
+
+    .message {
+      display: none;
+      padding: 13px 15px;
+      border-radius: 12px;
+      margin: 12px 0;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.success {
+      background: #ecfdf5;
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+
+    .message.error {
+      background: #fef2f2;
+      color: #991b1b;
+      border-color: #fecaca;
+    }
+
+    /* =========================================
+       ADMIN
+       ========================================= */
+
+    .admin-title {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin: 0 0 18px;
+      padding: 13px 16px;
+      border-radius: 14px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          var(--navy),
+          #0a3523
+        );
+      box-shadow: var(--shadow-sm);
+    }
+
+    .admin-title::before {
+      content: "⚙️";
+    }
+
+    .admin-section-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: var(--green-dark);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .admin-section-label::before {
+      content: "";
+      width: 5px;
+      height: 19px;
+      border-radius: 99px;
+      background: var(--gold);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 12px;
+      vertical-align: top;
+    }
+
+    th {
+      color: #51635a;
+      background: #f6f9f7;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.4);
+    }
+
+    /* =========================================
+       ACTIONS
+       ========================================= */
 
     .actions {
       display: flex;
@@ -305,108 +985,72 @@
       margin-top: 15px;
     }
 
-    .message {
-      display: none;
-      padding: 12px 14px;
-      border-radius: 10px;
-      margin: 12px 0;
-      font-weight: 600;
+    .actions button {
+      font-size: 11px;
+      padding: 9px 11px;
     }
 
-    .message.show {
-      display: block;
-    }
-
-    .message.success {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .message.error {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    .profile-box {
-      background: var(--green-light);
-      padding: 20px;
-      border-radius: 15px;
-    }
-
-    .admin-title {
-      border-left: 5px solid var(--gold);
-      padding-left: 12px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #fff;
-    }
-
-    th,
-    td {
-      padding: 11px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      font-size: 13px;
-      vertical-align: top;
-    }
-
-    .table-wrap {
-      overflow: auto;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-    }
+    /* =========================================
+       LOADER / EMPTY
+       ========================================= */
 
     .empty {
+      width: 100%;
       text-align: center;
-      padding: 35px;
+      padding: 42px 20px;
       color: var(--muted);
+      background: #fafcfb;
+      border: 1px dashed #ccd9d1;
+      border-radius: 15px;
+      font-size: 13px;
     }
 
     .loader {
       display: none;
       text-align: center;
-      padding: 25px;
+      padding: 30px;
       color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .loader.show {
       display: block;
     }
 
-    .home-feature {
-      display: flex;
-      gap: 13px;
-      align-items: flex-start;
+    .loader::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+      vertical-align: -5px;
+      border: 3px solid #d9e6df;
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
     }
 
-    .home-feature-icon {
-      font-size: 25px;
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      font-size: 13px;
-    }
-
-    /* ================================
-       MODALE PAIEMENT
-       ================================ */
+    /* =========================================
+       PAYMENT MODAL
+       ========================================= */
 
     .payment-modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.65);
       z-index: 9999;
-      padding: 20px;
+      padding: 16px;
       align-items: center;
       justify-content: center;
+      background: rgba(2,12,8,.72);
+      backdrop-filter: blur(7px);
     }
 
     .payment-modal.show {
@@ -415,20 +1059,21 @@
 
     .payment-box {
       width: 100%;
-      max-width: 480px;
-      max-height: 92vh;
+      max-width: 510px;
+      max-height: 94vh;
       overflow-y: auto;
+      padding: 26px;
+      border-radius: 24px;
       background: white;
-      border-radius: 22px;
-      padding: 25px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.25);
-      animation: paymentAppear .2s ease;
+      box-shadow:
+        0 30px 90px rgba(0,0,0,.35);
+      animation: paymentAppear .22s ease;
     }
 
     @keyframes paymentAppear {
       from {
         opacity: 0;
-        transform: translateY(15px) scale(.98);
+        transform: translateY(18px) scale(.97);
       }
 
       to {
@@ -442,60 +1087,87 @@
       justify-content: space-between;
       align-items: center;
       gap: 15px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .payment-header h2 {
       margin: 0;
+      color: var(--green-dark);
+      font-size: 22px;
     }
 
     .payment-close {
       border: 0;
-      background: #f1f5f9;
+      background: #eef2f0;
+      color: #415149;
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      font-size: 20px;
+      font-size: 17px;
       cursor: pointer;
+      transition: background .2s ease;
     }
 
-    .orange-payment {
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      border-radius: 15px;
-      padding: 15px;
-      margin-bottom: 18px;
-    }
-
-    .orange-title {
-      font-weight: 800;
-      color: #ea580c;
-      font-size: 18px;
-      margin-bottom: 6px;
+    .payment-close:hover {
+      background: #e1e9e4;
     }
 
     .payment-project {
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 18px;
+      padding: 16px;
+      margin-bottom: 15px;
+      border-radius: 14px;
+      background:
+        linear-gradient(
+          135deg,
+          #edf9f3,
+          #f8fbf9
+        );
+      border: 1px solid #d6eee0;
     }
 
     .payment-project strong {
       color: var(--green-dark);
     }
 
+    .orange-payment {
+      padding: 16px;
+      margin-bottom: 15px;
+      border-radius: 15px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+    }
+
+    .orange-title {
+      margin-bottom: 5px;
+      color: #ea580c;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
     .payment-info {
+      padding: 15px;
+      margin-bottom: 16px;
+      border-radius: 14px;
       background: #ecfdf5;
       border: 1px solid #bbf7d0;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 18px;
-      line-height: 1.6;
+      font-size: 12px;
+      line-height: 1.65;
     }
 
     .payment-info strong {
       color: #166534;
+    }
+
+    .payment-number {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 8px 11px;
+      border-radius: 9px;
+      background: white;
+      color: #075b38;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .4px;
     }
 
     .payment-actions {
@@ -509,42 +1181,173 @@
     }
 
     .secure-note {
-      font-size: 12px;
-      color: var(--muted);
       margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
     }
 
-    @media (max-width:700px) {
+    /* =========================================
+       FOOTER
+       ========================================= */
+
+    footer {
+      margin-top: 10px;
+      padding: 32px 20px;
+      color: #718078;
+      background: #edf2ef;
+      border-top: 1px solid #dfe7e2;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .footer-brand {
+      margin-bottom: 5px;
+      color: var(--green-dark);
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    /* =========================================
+       RESPONSIVE
+       ========================================= */
+
+    @media (max-width: 850px) {
+
       .header-inner {
         align-items: flex-start;
         flex-direction: column;
+        gap: 9px;
       }
 
-      .header-inner nav {
+      nav {
         width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+      }
+
+      nav::-webkit-scrollbar {
+        display: none;
       }
 
       nav button {
-        font-size: 12px;
-        padding: 8px;
+        flex: 0 0 auto;
       }
 
       .hero {
-        padding: 32px 20px;
+        padding: 43px 28px;
+        min-height: 390px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.8px;
       }
     }
 
-    @media (max-width:500px) {
+    @media (max-width: 600px) {
+
+      .header-inner,
+      main {
+        width: min(100% - 20px, 1240px);
+      }
+
+      main {
+        padding-top: 18px;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .hero {
+        padding: 34px 20px;
+        border-radius: 23px;
+      }
+
+      .hero h1 {
+        font-size: 37px;
+        letter-spacing: -1.5px;
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions button {
+        width: 100%;
+      }
+
+      .hero-trust {
+        gap: 6px;
+      }
+
+      .trust-chip {
+        font-size: 10px;
+      }
+
       .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stat {
+        padding: 16px;
+      }
+
+      .stat-value {
+        font-size: 20px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card,
+      .project-card {
+        padding: 18px;
+        border-radius: 16px;
+      }
+
+      .project-numbers {
         grid-template-columns: 1fr;
       }
 
       .payment-box {
         padding: 20px;
+        border-radius: 20px;
       }
 
       .payment-actions {
         flex-direction: column;
+      }
+
+      .payment-actions button {
+        width: 100%;
+      }
+
+      .table-wrap {
+        border-radius: 11px;
+      }
+    }
+
+    @media (max-width: 390px) {
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 33px;
+      }
+
+      nav button {
+        font-size: 11px;
+        padding: 8px 9px;
       }
     }
   </style>
@@ -556,15 +1359,38 @@
   <div class="header-inner">
 
     <div class="brand">
-      🇬🇳 Guinée Invest Hub
-      <small>Investir • Entreprendre • Développer</small>
+
+      <div class="brand-logo">
+        🇬🇳
+      </div>
+
+      <div class="brand-text">
+        Guinée Invest Hub
+
+        <small>
+          Investir • Entreprendre • Développer
+        </small>
+      </div>
+
     </div>
 
     <nav>
-      <button onclick="showSection('homeSection')">Accueil</button>
-      <button onclick="showSection('accountSection')">Compte</button>
-      <button onclick="showSection('projectsSection')">Projets</button>
-      <button onclick="showSection('portfolioSection')">Portefeuille</button>
+
+      <button onclick="showSection('homeSection')">
+        Accueil
+      </button>
+
+      <button onclick="showSection('accountSection')">
+        Compte
+      </button>
+
+      <button onclick="showSection('projectsSection')">
+        Projets
+      </button>
+
+      <button onclick="showSection('portfolioSection')">
+        Portefeuille
+      </button>
 
       <button
         id="adminNav"
@@ -572,54 +1398,85 @@
         style="display:none;">
         Administration
       </button>
+
     </nav>
 
   </div>
 </header>
 
+
 <main>
 
-<!-- ================================
+<!-- =========================================
      ACCUEIL
-     ================================ -->
+     ========================================= -->
 
 <section id="homeSection" class="section active">
 
   <div class="hero">
 
-    <div>🇬🇳 PLATEFORME D'INVESTISSEMENT</div>
+    <div class="hero-content">
 
-    <h1>
-      Investissez dans les projets guinéens.
-    </h1>
+      <div class="hero-kicker">
+        🇬🇳 Plateforme d'investissement guinéenne
+      </div>
 
-    <p>
-      Guinée Invest Hub connecte les investisseurs
-      aux entrepreneurs et aux opportunités de
-      développement en Guinée.
-    </p>
+      <h1>
+        Investissez dans
+        <span>les projets guinéens.</span>
+      </h1>
 
-    <div class="hero-actions">
+      <p>
+        Guinée Invest Hub connecte les investisseurs
+        aux entrepreneurs et aux opportunités de
+        développement en Guinée.
+      </p>
 
-      <button
-        class="primary"
-        onclick="showSection('projectsSection')">
-        Voir les projets
-      </button>
+      <div class="hero-actions">
 
-      <button
-        class="secondary"
-        onclick="showSection('accountSection')">
-        Créer un compte
-      </button>
+        <button
+          class="primary"
+          onclick="showSection('projectsSection')">
+
+          💼 Voir les projets
+
+        </button>
+
+        <button
+          class="secondary"
+          onclick="showSection('accountSection')">
+
+          Créer un compte
+
+        </button>
+
+      </div>
+
+      <div class="hero-trust">
+
+        <div class="trust-chip">
+          🔐 Espace sécurisé
+        </div>
+
+        <div class="trust-chip">
+          📊 Suivi des investissements
+        </div>
+
+        <div class="trust-chip">
+          🤝 Projets guinéens
+        </div>
+
+      </div>
 
     </div>
 
   </div>
 
+
   <div class="stats">
 
     <div class="stat">
+
       <div class="stat-label">
         Projets disponibles
       </div>
@@ -629,9 +1486,11 @@
         class="stat-value">
         —
       </div>
+
     </div>
 
     <div class="stat">
+
       <div class="stat-label">
         Secteurs
       </div>
@@ -639,9 +1498,11 @@
       <div class="stat-value">
         6+
       </div>
+
     </div>
 
     <div class="stat">
+
       <div class="stat-label">
         Marché
       </div>
@@ -649,9 +1510,11 @@
       <div class="stat-value">
         Guinée
       </div>
+
     </div>
 
     <div class="stat">
+
       <div class="stat-label">
         Accès
       </div>
@@ -659,9 +1522,11 @@
       <div class="stat-value">
         24/7
       </div>
+
     </div>
 
   </div>
+
 
   <div class="card">
 
@@ -669,65 +1534,112 @@
       Pourquoi Guinée Invest Hub ?
     </h2>
 
+    <p class="muted">
+      Une plateforme pensée pour rapprocher les capitaux
+      des opportunités économiques guinéennes.
+    </p>
+
     <div class="grid">
 
       <div class="home-feature">
-        <div class="home-feature-icon">🔎</div>
+
+        <div class="home-feature-icon">
+          🔎
+        </div>
 
         <div>
-          <b>Opportunités</b>
-          <br>
+
+          <b>
+            Opportunités
+          </b>
+
           <span class="muted">
-            Découvrez des projets guinéens.
+            Découvrez des projets guinéens sélectionnés.
           </span>
+
         </div>
+
       </div>
 
+
       <div class="home-feature">
-        <div class="home-feature-icon">📊</div>
+
+        <div class="home-feature-icon">
+          📊
+        </div>
 
         <div>
-          <b>Suivi</b>
-          <br>
+
+          <b>
+            Suivi
+          </b>
+
           <span class="muted">
-            Suivez vos investissements.
+            Consultez vos investissements depuis votre espace.
           </span>
+
         </div>
+
       </div>
 
+
       <div class="home-feature">
-        <div class="home-feature-icon">🤝</div>
+
+        <div class="home-feature-icon">
+          🤝
+        </div>
 
         <div>
-          <b>Connexion</b>
-          <br>
+
+          <b>
+            Connexion
+          </b>
+
           <span class="muted">
-            Connectez capitaux et projets.
+            Connectez investisseurs et porteurs de projets.
           </span>
+
         </div>
+
       </div>
 
+
       <div class="home-feature">
-        <div class="home-feature-icon">🇬🇳</div>
+
+        <div class="home-feature-icon">
+          🇬🇳
+        </div>
 
         <div>
-          <b>Impact local</b>
-          <br>
+
+          <b>
+            Impact local
+          </b>
+
           <span class="muted">
-            Participez au développement économique.
+            Participez au développement économique de la Guinée.
           </span>
+
         </div>
+
       </div>
 
     </div>
 
   </div>
 
+
   <div
     class="card"
     style="margin-top:20px;">
 
-    <h2>Secteurs</h2>
+    <h2>
+      Secteurs d'opportunités
+    </h2>
+
+    <p class="muted">
+      Explorez différents domaines de l'économie guinéenne.
+    </p>
 
     <div class="grid">
 
@@ -767,16 +1679,31 @@
 
 </section>
 
-<!-- ================================
+
+<!-- =========================================
      COMPTE
-     ================================ -->
+     ========================================= -->
 
 <section id="accountSection" class="section">
+
+  <div class="account-intro">
+
+    <h1>
+      Votre espace personnel
+    </h1>
+
+    <p>
+      Créez votre compte ou connectez-vous pour
+      accéder aux investissements et à votre portefeuille.
+    </p>
+
+  </div>
 
   <div
     id="accountMessage"
     class="message">
   </div>
+
 
   <div
     id="loggedOutBox"
@@ -784,105 +1711,179 @@
 
     <div class="card">
 
-      <h2>Créer un compte</h2>
+      <h2>
+        Créer un compte
+      </h2>
+
+      <p class="muted">
+        Rejoignez Guinée Invest Hub en quelques secondes.
+      </p>
 
       <form onsubmit="signup(event)">
 
-        <label>Email</label>
+        <label>
+          Adresse email
+        </label>
 
         <input
           id="signupEmail"
           type="email"
+          autocomplete="email"
+          placeholder="vous@email.com"
           required>
 
-        <label>Mot de passe</label>
+        <label>
+          Mot de passe
+        </label>
 
         <input
           id="signupPassword"
           type="password"
           minlength="6"
+          autocomplete="new-password"
+          placeholder="Minimum 6 caractères"
           required>
 
         <button
           id="signupButton"
           class="primary"
           type="submit"
-          style="margin-top:15px;">
-          Créer mon compte
+          style="margin-top:16px; width:100%;">
+
+          🚀 Créer mon compte
+
         </button>
 
       </form>
 
     </div>
 
+
     <div class="card">
 
-      <h2>Se connecter</h2>
+      <h2>
+        Se connecter
+      </h2>
+
+      <p class="muted">
+        Retrouvez votre espace investisseur.
+      </p>
 
       <form onsubmit="login(event)">
 
-        <label>Email</label>
+        <label>
+          Adresse email
+        </label>
 
         <input
           id="loginEmail"
           type="email"
+          autocomplete="email"
+          placeholder="vous@email.com"
           required>
 
-        <label>Mot de passe</label>
+        <label>
+          Mot de passe
+        </label>
 
         <input
           id="loginPassword"
           type="password"
+          autocomplete="current-password"
+          placeholder="Votre mot de passe"
           required>
 
         <button
           id="loginButton"
           class="primary"
           type="submit"
-          style="margin-top:15px;">
-          Connexion
+          style="margin-top:16px; width:100%;">
+
+          🔐 Connexion
+
         </button>
 
       </form>
 
       <button
         class="secondary"
-        style="margin-top:10px;"
+        style="margin-top:10px; width:100%;"
         onclick="resetPassword()">
-        Mot de passe oublié
+
+        Mot de passe oublié ?
+
       </button>
 
     </div>
 
   </div>
 
+
   <div
     id="loggedInBox"
     class="card"
     style="display:none;">
 
-    <h2>Mon compte</h2>
+    <h2>
+      👋 Bienvenue dans votre espace
+    </h2>
+
+    <p class="muted">
+      Votre compte Guinée Invest Hub est actif.
+    </p>
 
     <div class="profile-box">
 
-      <p>
-        <b>Email :</b>
-        <span id="profileEmail">—</span>
-      </p>
+      <div class="profile-row">
 
-      <p>
-        <b>Rôle :</b>
-        <span id="profileRole">—</span>
-      </p>
+        <span>
+          Adresse email
+        </span>
+
+        <b id="profileEmail">
+          —
+        </b>
+
+      </div>
+
+      <div class="profile-row">
+
+        <span>
+          Rôle
+        </span>
+
+        <b id="profileRole">
+          —
+        </b>
+
+      </div>
 
     </div>
 
     <div class="actions">
 
       <button
+        class="primary"
+        onclick="showSection('projectsSection')">
+
+        💼 Découvrir les projets
+
+      </button>
+
+      <button
+        class="secondary"
+        onclick="showSection('portfolioSection')">
+
+        📊 Mon portefeuille
+
+      </button>
+
+      <button
         class="danger"
         onclick="logout()">
+
         Se déconnecter
+
       </button>
 
     </div>
@@ -891,26 +1892,30 @@
 
 </section>
 
-<!-- ================================
+
+<!-- =========================================
      PROJETS
-     ================================ -->
+     ========================================= -->
 
 <section id="projectsSection" class="section">
 
   <div class="card">
 
     <h2>
-      Projets disponibles
+      💼 Projets disponibles
     </h2>
 
     <p class="muted">
-      Découvrez les opportunités approuvées.
+      Découvrez les opportunités approuvées
+      disponibles sur la plateforme.
     </p>
 
     <div
       id="projectsLoader"
       class="loader">
+
       Chargement des projets…
+
     </div>
 
     <div
@@ -922,9 +1927,10 @@
 
 </section>
 
-<!-- ================================
+
+<!-- =========================================
      PORTEFEUILLE
-     ================================ -->
+     ========================================= -->
 
 <section id="portfolioSection" class="section">
 
@@ -933,11 +1939,20 @@
     class="message">
   </div>
 
-  <div class="card">
+  <div class="account-intro">
 
-    <h2>
-      Mon portefeuille
-    </h2>
+    <h1>
+      📊 Mon portefeuille
+    </h1>
+
+    <p>
+      Suivez vos investissements, leurs statuts
+      et vos rendements prévisionnels.
+    </p>
+
+  </div>
+
+  <div class="card">
 
     <div
       id="portfolioStats"
@@ -947,7 +1962,9 @@
     <div
       id="portfolioLoader"
       class="loader">
+
       Chargement…
+
     </div>
 
     <div
@@ -958,9 +1975,10 @@
 
 </section>
 
-<!-- ================================
+
+<!-- =========================================
      ADMINISTRATION
-     ================================ -->
+     ========================================= -->
 
 <section id="adminSection" class="section">
 
@@ -970,14 +1988,16 @@
     style="display:none;">
 
     <h2>
-      Accès refusé
+      🔒 Accès refusé
     </h2>
 
-    <p>
-      Cette section est réservée à l'administration.
+    <p class="muted">
+      Cette section est réservée aux administrateurs
+      autorisés de Guinée Invest Hub.
     </p>
 
   </div>
+
 
   <div
     id="adminContent"
@@ -992,9 +2012,11 @@
       class="message">
     </div>
 
+
     <div class="stats">
 
       <div class="stat">
+
         <div class="stat-label">
           Utilisateurs
         </div>
@@ -1004,9 +2026,12 @@
           class="stat-value">
           0
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           Projets
         </div>
@@ -1016,9 +2041,12 @@
           class="stat-value">
           0
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           Investissements
         </div>
@@ -1028,9 +2056,12 @@
           class="stat-value">
           0
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           Investissements en attente
         </div>
@@ -1040,9 +2071,12 @@
           class="stat-value">
           0
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           Paiements en attente
         </div>
@@ -1052,9 +2086,12 @@
           class="stat-value">
           0
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           Montant investi
         </div>
@@ -1064,19 +2101,26 @@
           class="stat-value">
           0 GNF
         </div>
+
       </div>
 
     </div>
 
-    <!-- CRÉER PROJET -->
+
+    <!-- CREER PROJET -->
 
     <div
       class="card"
       style="margin-top:20px;">
 
-      <h3>
+      <div class="admin-section-label">
         Créer un projet
-      </h3>
+      </div>
+
+      <p class="muted">
+        Ajoutez une nouvelle opportunité.
+        Elle restera en attente jusqu'à sa validation.
+      </p>
 
       <form onsubmit="createProject(event)">
 
@@ -1084,17 +2128,23 @@
 
           <div>
 
-            <label>Titre</label>
+            <label>
+              Titre du projet
+            </label>
 
             <input
               id="projectTitle"
+              placeholder="Ex : Ferme agricole"
               required>
 
           </div>
 
+
           <div>
 
-            <label>Secteur</label>
+            <label>
+              Secteur
+            </label>
 
             <select
               id="projectSector"
@@ -1111,6 +2161,7 @@
 
           </div>
 
+
           <div>
 
             <label>
@@ -1121,9 +2172,11 @@
               id="projectAmount"
               type="number"
               min="1"
+              placeholder="500000000"
               required>
 
           </div>
+
 
           <div>
 
@@ -1135,9 +2188,11 @@
               id="projectReturn"
               type="number"
               min="0"
-              step="0.01">
+              step="0.01"
+              placeholder="15">
 
           </div>
+
 
           <div>
 
@@ -1148,9 +2203,11 @@
             <input
               id="projectDuration"
               type="number"
-              min="1">
+              min="1"
+              placeholder="12">
 
           </div>
+
 
           <div>
 
@@ -1166,26 +2223,31 @@
 
         </div>
 
+
         <label>
-          Description
+          Description du projet
         </label>
 
         <textarea
           id="projectDescription"
-          required>
-        </textarea>
+          placeholder="Présentez le projet, son activité, ses objectifs et son potentiel..."
+          required></textarea>
+
 
         <button
           id="createProjectButton"
           class="primary"
           type="submit"
-          style="margin-top:15px;">
-          Créer le projet
+          style="margin-top:16px;">
+
+          ➕ Créer le projet
+
         </button>
 
       </form>
 
     </div>
+
 
     <!-- GESTION PROJETS -->
 
@@ -1193,13 +2255,14 @@
       class="card"
       style="margin-top:20px;">
 
-      <h3>
+      <div class="admin-section-label">
         Gestion des projets
-      </h3>
+      </div>
 
       <div id="adminProjectsList"></div>
 
     </div>
+
 
     <!-- INVESTISSEMENTS -->
 
@@ -1207,13 +2270,14 @@
       class="card"
       style="margin-top:20px;">
 
-      <h3>
+      <div class="admin-section-label">
         Investissements
-      </h3>
+      </div>
 
       <div id="adminInvestmentsList"></div>
 
     </div>
+
 
     <!-- PAIEMENTS -->
 
@@ -1221,9 +2285,9 @@
       class="card"
       style="margin-top:20px;">
 
-      <h3>
-        Paiements
-      </h3>
+      <div class="admin-section-label">
+        Vérification des paiements
+      </div>
 
       <div id="adminPaymentsList"></div>
 
@@ -1235,9 +2299,10 @@
 
 </main>
 
-<!-- ================================
-     MODALE ORANGE MONEY
-     ================================ -->
+
+<!-- =========================================
+     MODALE PAIEMENT
+     ========================================= -->
 
 <div
   id="paymentModal"
@@ -1248,21 +2313,26 @@
     <div class="payment-header">
 
       <h2>
-        💳 Investissement
+        💳 Investir
       </h2>
 
       <button
         class="payment-close"
-        onclick="closePaymentModal()">
+        onclick="closePaymentModal()"
+        aria-label="Fermer">
+
         ✕
+
       </button>
 
     </div>
+
 
     <div
       id="paymentProject"
       class="payment-project">
     </div>
+
 
     <div class="orange-payment">
 
@@ -1272,27 +2342,36 @@
 
       <div>
         Effectuez votre paiement Orange Money
-        puis renseignez les informations ci-dessous.
+        puis renseignez les informations de transaction
+        ci-dessous.
       </div>
 
     </div>
 
+
     <div class="payment-info">
 
       <strong>
-        Important
+        📌 Instructions
       </strong>
-
-      <br>
-
-      Après votre paiement Orange Money,
-      saisissez le numéro utilisé et la
-      référence de la transaction.
 
       <br><br>
 
-      Votre paiement sera ensuite vérifié
-      par l'administration.
+      1. Envoyez le montant de votre investissement
+      au numéro Orange Money indiqué.
+
+      <br>
+
+      2. Conservez la référence de la transaction.
+
+      <br>
+
+      3. Renseignez votre numéro et votre référence
+      dans le formulaire.
+
+      <br>
+
+      4. L'administration vérifiera le paiement.
 
       <br><br>
 
@@ -1300,9 +2379,14 @@
         Numéro de paiement :
       </b>
 
-      +224 612 78 22 19
+      <br>
+
+      <span class="payment-number">
+        +224 612 78 22 19
+      </span>
 
     </div>
+
 
     <label>
       Montant à investir (GNF)
@@ -1314,6 +2398,7 @@
       min="1"
       placeholder="Exemple : 500000">
 
+
     <label>
       Numéro Orange Money
     </label>
@@ -1321,7 +2406,9 @@
     <input
       id="paymentPhone"
       type="tel"
+      inputmode="tel"
       placeholder="Exemple : 620000000">
+
 
     <label>
       Référence de transaction
@@ -1332,26 +2419,31 @@
       type="text"
       placeholder="Exemple : OM123456789">
 
+
     <div class="secure-note">
 
-      🔒 Ne partage jamais ton code PIN
-      Orange Money.
+      🔒 Ne partage jamais ton code PIN Orange Money.
 
     </div>
+
 
     <div class="payment-actions">
 
       <button
         class="secondary"
         onclick="closePaymentModal()">
+
         Annuler
+
       </button>
 
       <button
         id="confirmPaymentButton"
         class="primary"
         onclick="confirmInvestment()">
+
         ✅ Confirmer
+
       </button>
 
     </div>
@@ -1360,10 +2452,18 @@
 
 </div>
 
+
 <footer>
+
+  <div class="footer-brand">
+    🇬🇳 Guinée Invest Hub
+  </div>
+
   © 2026 Guinée Invest Hub —
-  Plateforme d'investissement en Guinée
+  Investir • Entreprendre • Développer
+
 </footer>
+
 
 <script>
 
@@ -1377,7 +2477,10 @@ const SUPABASE_URL =
 /*
   IMPORTANT :
   Mets ici ta clé Publishable/Anon Supabase.
-  NE METS JAMAIS la clé service_role.
+
+  NE METS JAMAIS :
+  - service_role
+  - secret key
 */
 
 const SUPABASE_PUBLISHABLE_KEY =
@@ -1456,7 +2559,8 @@ function showMessage(
   element.className =
     "message show " + type;
 
-  element.textContent = text;
+  element.textContent =
+    text;
 
 }
 
@@ -1998,7 +3102,7 @@ async function loadProjects() {
     container.innerHTML = `
       <div class="empty">
         Impossible de charger les projets.
-        <br>
+        <br><br>
         ${escapeHtml(
           error.message
         )}
@@ -2088,49 +3192,71 @@ async function loadProjects() {
 
         </div>
 
-        <p>
+        <p class="project-description">
           ${escapeHtml(
             project.description ||
             "Aucune description."
           )}
         </p>
 
-        <p>
-          <b>Objectif :</b>
-          ${formatMoney(
-            required
-          )}
-        </p>
+        <div class="project-numbers">
 
-        <p>
-          <b>Déjà collecté :</b>
-          ${formatMoney(
-            collected
-          )}
-        </p>
+          <div class="project-number">
 
-        <div
-          style="
-            height:8px;
-            background:#e5e7eb;
-            border-radius:99px;
-            overflow:hidden;
-          ">
+            <span>
+              Objectif
+            </span>
 
-          <div
-            style="
-              height:100%;
-              width:${percent}%;
-              background:var(--green);
-            ">
+            <strong>
+              ${formatMoney(
+                required
+              )}
+            </strong>
+
+          </div>
+
+          <div class="project-number">
+
+            <span>
+              Déjà collecté
+            </span>
+
+            <strong>
+              ${formatMoney(
+                collected
+              )}
+            </strong>
+
           </div>
 
         </div>
 
-        <p class="muted">
-          ${percent.toFixed(1)}%
-          financé
-        </p>
+        <div class="progress-wrap">
+
+          <div class="progress-track">
+
+            <div
+              class="progress-fill"
+              style="
+                width:${percent}%;
+              ">
+            </div>
+
+          </div>
+
+          <div class="progress-info">
+
+            <span>
+              Financement
+            </span>
+
+            <strong>
+              ${percent.toFixed(1)}%
+            </strong>
+
+          </div>
+
+        </div>
 
         <div class="project-meta">
 
@@ -2156,7 +3282,7 @@ async function loadProjects() {
             class="primary"
             onclick="openInvestment('${project.id}')">
 
-            💰 Investir
+            💰 Investir dans ce projet
 
           </button>
 
@@ -2198,7 +3324,7 @@ async function loadPortfolio() {
 
     list.innerHTML = `
       <div class="empty">
-        Connecte-toi pour voir ton portefeuille.
+        🔐 Connecte-toi pour voir ton portefeuille.
       </div>
     `;
 
@@ -2348,7 +3474,9 @@ async function loadPortfolio() {
 
     list.innerHTML = `
       <div class="empty">
-        Tu n’as pas encore d’investissement.
+        Aucun investissement pour le moment.
+        <br><br>
+        Découvre les projets disponibles pour commencer.
       </div>
     `;
 
@@ -2674,12 +3802,6 @@ async function confirmInvestment() {
     return;
 
   }
-
-  /*
-    On sauvegarde le nom du projet AVANT
-    closePaymentModal(), car cette fonction
-    met selectedInvestmentProject à null.
-  */
 
   const projectTitle =
     selectedInvestmentProject.title;
@@ -3409,10 +4531,12 @@ function renderAdminInvestments(
 
           <td
             style="font-size:11px;">
+
             ${escapeHtml(
               investment.user_id ||
               "—"
             )}
+
           </td>
 
           <td>
